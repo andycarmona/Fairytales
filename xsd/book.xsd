@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:simpleType name="objectType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="character"/>
+      <xs:enumeration value="text"/>
+      <xs:enumeration value="dialog"/>
+      <xs:enumeration value="model"/>
+      <xs:enumeration value="entity"/>
+      <xs:enumeration value="background"/>
+      <xs:enumeration value="sound"/>
+      <xs:enumeration value="image"/>
+      <xs:enumeration value="sprite"/>
+      <xs:enumeration value="animatedsprite"/>
+      <xs:enumeration value="texture2d"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+
+  <xs:simpleType name="borderType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="triangle"/>
+      <xs:enumeration value="rectangle"/>
+      <xs:enumeration value="square"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+
+  <xs:simpleType name="contentTarget">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="fill"/>
+      <xs:enumeration value="left"/>
+      <xs:enumeration value="right"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="contentType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="none"/>
+      <xs:enumeration value="default"/>
+      <xs:enumeration value="choice"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+
+  <xs:element name="book">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="metadata">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="title" type="xs:string" />
+              <xs:element name="description" type="xs:string" />
+              <xs:element name="author" type="xs:string" />
+              <xs:element name="date" type="xs:string" />
+              <xs:element name="version" type="xs:decimal" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="chapters">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="chapter">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="metadata">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="title" type="xs:string" />
+                          <xs:element name="description" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="pages">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="page">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="frames">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element maxOccurs="unbounded" name="frame">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="scene">
+                                              <xs:complexType>
+                                                <xs:attribute name="id" type="xs:string" use="required" />
+                                              </xs:complexType>
+                                            </xs:element>
+                                            <xs:element name="contents">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element maxOccurs="unbounded" name="content">
+                                                    <xs:complexType>
+                                                      <xs:sequence>
+                                                        <xs:element name="objects">
+                                                          <xs:complexType>
+                                                            <xs:sequence>
+                                                              <xs:element maxOccurs="unbounded" name="object">
+                                                                <xs:complexType>
+                                                                  <xs:attribute name="type" type="objectType" use="required" />
+                                                                  <xs:attribute name="id" type="xs:string" use="required" />
+                                                                  <xs:attribute name="animation" type="xs:string" use="optional" />
+                                                                  <xs:attribute name="string" type="xs:string" use="optional" />
+                                                                </xs:complexType>
+                                                              </xs:element>
+                                                            </xs:sequence>
+                                                          </xs:complexType>
+                                                        </xs:element>
+                                                        <xs:element minOccurs="0" name="choice">
+                                                          <xs:complexType>
+                                                            <xs:sequence>
+                                                              <xs:element name="question">
+                                                                <xs:complexType>
+                                                                  <xs:attribute name="id" type="xs:string" use="required" />
+                                                                </xs:complexType>
+                                                              </xs:element>
+                                                              <xs:element name="positive">
+                                                                <xs:complexType>
+                                                                  <xs:sequence>
+                                                                    <xs:element name="text">
+                                                                      <xs:complexType>
+                                                                        <xs:attribute name="id" type="xs:string" use="required" />
+                                                                      </xs:complexType>
+                                                                    </xs:element>
+                                                                    <xs:element name="result">
+                                                                      <xs:complexType>
+                                                                        <xs:sequence>
+                                                                          <xs:element name="success">
+                                                                            <xs:complexType>
+                                                                              <xs:attribute name="goto" type="xs:string" use="required" />
+                                                                            </xs:complexType>
+                                                                          </xs:element>
+                                                                          <xs:element name="failed">
+                                                                            <xs:complexType>
+                                                                              <xs:attribute name="goto" type="xs:string" use="required" />
+                                                                            </xs:complexType>
+                                                                          </xs:element>
+                                                                        </xs:sequence>
+                                                                      </xs:complexType>
+                                                                    </xs:element>
+                                                                  </xs:sequence>
+                                                                </xs:complexType>
+                                                              </xs:element>
+                                                              <xs:element name="negative">
+                                                                <xs:complexType>
+                                                                  <xs:sequence>
+                                                                    <xs:element name="text">
+                                                                      <xs:complexType>
+                                                                        <xs:attribute name="id" type="xs:string" use="required" />
+                                                                      </xs:complexType>
+                                                                    </xs:element>
+                                                                    <xs:element name="result">
+                                                                      <xs:complexType>
+                                                                        <xs:sequence>
+                                                                          <xs:element name="success">
+                                                                            <xs:complexType>
+                                                                              <xs:attribute name="goto" type="xs:string" use="required" />
+                                                                            </xs:complexType>
+                                                                          </xs:element>
+                                                                          <xs:element name="failed">
+                                                                            <xs:complexType>
+                                                                              <xs:attribute name="goto" type="xs:string" use="required" />
+                                                                            </xs:complexType>
+                                                                          </xs:element>
+                                                                        </xs:sequence>
+                                                                      </xs:complexType>
+                                                                    </xs:element>
+                                                                  </xs:sequence>
+                                                                </xs:complexType>
+                                                              </xs:element>
+                                                            </xs:sequence>
+                                                            <xs:attribute name="owner" type="xs:string" use="required" />
+                                                          </xs:complexType>
+                                                        </xs:element>
+                                                      </xs:sequence>
+                                                      <xs:attribute name="target" type="contentTarget" use="required" />
+                                                      <xs:attribute name="type" type="contentType" use="required" />
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                          <xs:attribute name="id" type="xs:string" use="required" />
+                                          <xs:attribute name="bordertype" type="borderType" use="required" />
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                              <xs:attribute name="id" type="xs:string" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="id" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

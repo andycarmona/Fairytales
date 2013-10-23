@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:simpleType name="bubbleType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="none"/>
+      <xs:enumeration value="text"/>
+      <xs:enumeration value="thought"/>
+      <xs:enumeration value="whisper"/>
+      <xs:enumeration value="talk"/>
+      <xs:enumeration value="scream"/>
+      <xs:enumeration value="shout"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+
+  <xs:simpleType name="stringType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="text"/>
+      <xs:enumeration value="dialog"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="fontColor">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="white"/>
+      <xs:enumeration value="black"/>
+      <xs:enumeration value="red"/>
+      <xs:enumeration value="green"/>
+      <xs:enumeration value="blue"/>
+      <xs:enumeration value="yellow"/>
+      <xs:enumeration value="pink"/>
+      <xs:enumeration value="orange"/>
+      <xs:enumeration value="gray"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="strings">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" name="string">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="text" type="xs:string" />
+
+              <xs:element name="size">
+                <xs:simpleType>
+                  <xs:restriction base="xs:float">
+                    <xs:minInclusive value="7"/>
+                    <xs:maxInclusive value="76"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="color" type="fontColor" />
+            </xs:sequence>
+
+            <xs:attribute name="id" type="xs:string" use="required" />
+            <xs:attribute name="type" type="stringType" use="required" />
+            <xs:attribute name="bubble" type="bubbleType" use="required" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

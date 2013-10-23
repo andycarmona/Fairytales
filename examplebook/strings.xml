@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<strings>
+  <string id="dia1" type="dialog" bubble="talk">
+    <text>hello!</text>
+    <size>14</size>
+    <color>#00000</color>
+  </string>
+  <string id="text1" type="text" bubble="text">
+    <text>hello!</text>
+    <size>14</size>
+    <color>#00000</color>
+  </string>
+</strings>
