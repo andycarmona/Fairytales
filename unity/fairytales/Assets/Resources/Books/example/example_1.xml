@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- start of book -->
+<book>
+  <!-- metadata, to group all the information about this book into one element. -->
+ 
+  <!-- define our chapters -->
+  <chapters>
+    <!-- chapter1 - the first chapter to be seen -->
+    <chapter id="chapter1">
+      <!-- grouped chapter information -->
+   
+      <!-- a chapter can have one ore more pages. -->
+      <pages>
+        <!-- our first page! -->
+        <page id="page1">
+          <!-- pages can have one or more frames. most suitable? -->
+          <frames>
+            <!-- Our first frame 
+                    a triangle frame -->
+            <frame id="frame1" bordertype="triangle">
+              <scene id="scene1"></scene>
+
+              <contents>
+                <!-- content for left -->
+                <content target="left" type="none">
+                  <objects>
+                    <object type="character" id="duck"></object>
+                    <object type="character" id="croc" animation="talk" string="dia1"></object>                                        
+                    <object type="text" id="text1" string="text1"></object>                  
+                  </objects>
+                </content>
+
+                <!-- content for right -->
+                <content target="right" type="none">
+                  <objects>
+                    <object type="character" id="duck"></object>
+                    <object type="character" id="croc" animation="talk" string="dia1"></object>
+                  </objects>                
+                </content>
+
+              </contents>
+              <!-- End of frame -->
+            </frame>
+
+            <!-- End of frames -->
+          </frames>
+          <!-- End of page -->
+        </page>               
+        <!-- End of pages -->
+      </pages>
+      <!-- End of chapter -->
+    </chapter>
+    <!-- End of chapters -->
+  </chapters>
+  <!-- End of book -->
+</book>

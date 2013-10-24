@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Xml.Serialization;
 
 using UnityEngine;
 using System.Collections;
@@ -17,20 +20,82 @@ public class BookHandler : MonoBehaviour
 
 	private int _currentPageIndex;
 
+	private byte[] _lastBookContent;
 
 	public List<GameObject> Contents = new List<GameObject>();
 
+	public book ActiveBook;
+
 	public float ContentDistance = 0.03125f;
+
+	private string _lastTargetBook = "";
+
+	public string TargetBook = "Books/example/example";
 
 	// Use this for initialization
 	void Start()
 	{
 		_targetCamera = Camera.main;
-		
-		SetUpPage();
+
+		LoadBook(TargetBook);
 	}
 
-	void SetUpPage()
+
+	void LoadBook(string name)
+	{
+
+		var bookXml = Resources.Load(name, typeof(TextAsset)) as TextAsset;
+		if (bookXml)
+		{
+			_lastBookContent = bookXml.bytes;
+			try
+			{
+				var serializer = new XmlSerializer(typeof(book));
+				// var stream = new FileStream("C:/Users/andresc/Desktop/FairyTales/fairytales/examplebook/book.xml", FileMode.Open);
+				var stream = new MemoryStream(bookXml.bytes);
+				ActiveBook = serializer.Deserialize(stream) as book;
+				stream.Close();
+			}
+			catch
+			{
+				Debug.Log("Unable to load example book.");
+			}
+		}
+		if (ActiveBook != null)
+		{
+			GenerateBookGraphics(ActiveBook);
+			_lastTargetBook = name;
+		}
+	}
+
+	private DateTime lastContentUpdateCheck = DateTime.Now;
+
+	bool BookContentChanged
+	{
+		get
+		{
+			if (DateTime.Now - lastContentUpdateCheck > TimeSpan.FromSeconds(1))
+			{
+				var bookXml = Resources.Load(TargetBook, typeof(TextAsset)) as TextAsset;
+				if (bookXml)
+					Debug.Log(bookXml.bytes.Length);
+				lastContentUpdateCheck = DateTime.Now;
+
+				return bookXml && bookXml.bytes != _lastBookContent;
+			}
+			return false;
+		}
+	}
+
+	bool TargetBookChanged
+	{
+		get
+		{
+			return _lastTargetBook != TargetBook;
+		}
+	}
+
+	void GenerateBookGraphics(book book /*, int chapter, int chapterPageIndex*/)
 	{
 		var pageView = Camera.main.transform.FindChild("PageView");
 
@@ -48,57 +113,117 @@ public class BookHandler : MonoBehaviour
 				Destroy(child.gameObject);
 			}
 
-			int frame = 0; // frame = row
+			int row = 0; // frame = row
 
-			// FRAME:0 - TRIANGLES
+			// Fail safe #1
+			if (book.chapters == null || book.chapters.chapter == null || book.chapters.chapter.pages == null) return;
+
+			var page = book.chapters.chapter.pages.page;
+
+			// Fail safe #2
+			if (page == null) return;
+
+			for (int frameIndex = 0; frameIndex < page.frames.Length; frameIndex++)
 			{
-				var display1 = CreateContentDisplay(ContentBorderType.Triangle, ContentBorderAlignment.Left, 0, 0);
-				display1.transform.parent = pageView;
-				display1.transform.localScale = new Vector3(1f, 1f, 1f);
-				display1.transform.localPosition = new Vector3(-ContentDistance, GetRowY(frame), 0f);
-				Contents.Add(display1);
+				// #warning limited frames to 3
+				// if (frameIndex > 2) break;
 
-				var display2 = CreateContentDisplay(ContentBorderType.Triangle, ContentBorderAlignment.Right, 0, 1);
-				display2.transform.parent = pageView;
-				display2.transform.localScale = new Vector3(1f, 1f, 1f);
-				display2.transform.localPosition = new Vector3(ContentDistance, -GetRowY(frame), 0f);
-				Contents.Add(display2);
+				var frame = page.frames[frameIndex];
+				var borderType = ParseEnum<ContentBorderType>(frame.bordertype);
+				for (int contentIndex = 0; contentIndex < frame.contents.Length; contentIndex++)
+				{
+					var content = frame.contents[contentIndex];
+					var contentAlignment = ParseEnum<ContentBorderAlignment>(content.target);
 
-				frame++;
+					var display = CreateContentDisplay(borderType, contentAlignment, frameIndex, contentIndex);
+					display.transform.parent = pageView;
+					display.transform.localScale = new Vector3(1f, 1f, 1f);
+
+					if (contentAlignment == ContentBorderAlignment.Left)
+					{
+						if (borderType == ContentBorderType.Triangle)
+						{
+							if (frameIndex == 0)
+								display.transform.localPosition = new Vector3(-ContentDistance, GetRowY(frameIndex), 0f);
+							else
+								display.transform.localPosition = new Vector3(-ContentDistance, -GetRowY(frameIndex), 0f);
+						}
+						else
+						{
+							display.transform.localPosition = new Vector3(-ContentDistance, -GetRowY(frameIndex), 0f);
+						}
+					}
+					else if (contentAlignment == ContentBorderAlignment.Right)
+					{
+						if (borderType == ContentBorderType.Triangle)
+							display.transform.localPosition = new Vector3(ContentDistance, -GetRowY(frameIndex), 0f);
+						else
+							display.transform.localPosition = new Vector3(1f + ContentDistance, -GetRowY(frameIndex), 0f);
+					}
+					else
+					{
+						// Only rectangles
+						display.transform.localPosition = new Vector3(-ContentDistance, -GetRowY(frameIndex), 0f);
+					}
+					Contents.Add(display);
+				}
 			}
 
-			// FRAME:1 - RECTANGLE
-			{
-				var display3 = CreateContentDisplay(ContentBorderType.Rectangle, ContentBorderAlignment.Default, 1, 0);
-				display3.transform.parent = pageView;
-				display3.transform.localScale = new Vector3(1f, 1f, 1f);
-				display3.transform.localPosition = new Vector3(-ContentDistance, -GetRowY(frame), 0f);
-				Contents.Add(display3);
-				frame++;
-			}
+			/*		// FRAME:0 - TRIANGLES
+					{
+						var display1 = CreateContentDisplay(ContentBorderType.Triangle, ContentBorderAlignment.Left, 0, 0);
+						display1.transform.parent = pageView;
+						display1.transform.localScale = new Vector3(1f, 1f, 1f);
+						display1.transform.localPosition = new Vector3(-ContentDistance, GetRowY(row), 0f);
+						Contents.Add(display1);
 
-			// FRAME:2 - BOXES
-			{
-				// FILL
-				var display4 = CreateContentDisplay(ContentBorderType.Square, ContentBorderAlignment.Default, 1, 1);
-				display4.transform.parent = pageView;
-				display4.transform.localScale = new Vector3(1f, 1f, 1f);
-				display4.transform.localPosition = new Vector3(-ContentDistance, -GetRowY(frame), 0f);
-				Contents.Add(display4);
+						var display2 = CreateContentDisplay(ContentBorderType.Triangle, ContentBorderAlignment.Right, 0, 1);
+						display2.transform.parent = pageView;
+						display2.transform.localScale = new Vector3(1f, 1f, 1f);
+						display2.transform.localPosition = new Vector3(ContentDistance, -GetRowY(row), 0f);
+						Contents.Add(display2);
 
-				var display5 = CreateContentDisplay(ContentBorderType.Square, ContentBorderAlignment.Default, 2, 0);
-				display5.transform.parent = pageView;
-				display5.transform.localScale = new Vector3(1f, 1f, 1f);
-				display5.transform.localPosition = new Vector3(1f + ContentDistance, -GetRowY(frame), 0f);
-				//display5.transform.position = new Vector3(1f + ContentDistance, -GetRowY(frame), 0f);
-				Contents.Add(display5);
-			}
+						row++;
+					}
+
+					// FRAME:1 - RECTANGLE
+					{
+						var display3 = CreateContentDisplay(ContentBorderType.Rectangle, ContentBorderAlignment.Default, 1, 0);
+						display3.transform.parent = pageView;
+						display3.transform.localScale = new Vector3(1f, 1f, 1f);
+						display3.transform.localPosition = new Vector3(-ContentDistance, -GetRowY(row), 0f);
+						Contents.Add(display3);
+						row++;
+					}
+
+					// FRAME:2 - BOXES
+					{
+						// FILL
+						var display4 = CreateContentDisplay(ContentBorderType.Square, ContentBorderAlignment.Default, 1, 1);
+						display4.transform.parent = pageView;
+						display4.transform.localScale = new Vector3(1f, 1f, 1f);
+						display4.transform.localPosition = new Vector3(-ContentDistance, -GetRowY(row), 0f);
+						Contents.Add(display4);
+
+						var display5 = CreateContentDisplay(ContentBorderType.Square, ContentBorderAlignment.Default, 2, 0);
+						display5.transform.parent = pageView;
+						display5.transform.localScale = new Vector3(1f, 1f, 1f);
+						display5.transform.localPosition = new Vector3(1f + ContentDistance, -GetRowY(row), 0f);
+						//display5.transform.position = new Vector3(1f + ContentDistance, -GetRowY(frame), 0f);
+						Contents.Add(display5);
+					}*/
 		}
 	}
 
 	float GetRowY(int frame)
 	{
 		return (frame * ContentDistance) + frame;
+	}
+
+
+	T ParseEnum<T>(string name)
+	{
+		return (T)Enum.Parse(typeof(T), name, true);
 	}
 
 
@@ -288,7 +413,10 @@ public class BookHandler : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-
+		if ((TargetBookChanged && !string.IsNullOrEmpty(TargetBook)) || BookContentChanged)
+		{
+			LoadBook(TargetBook);
+		}
 	}
 
 	void OnDrawGizmos()
@@ -319,7 +447,7 @@ public enum IndexWindingOrder
 }
 public enum ContentBorderAlignment
 {
-	Default, Left, Right
+	Fill, Default, Left, Right
 }
 public enum ContentBorderType
 {
