@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookXMLLoader", "BookXMLLoader\BookXMLLoader.csproj", "{AACB4FAD-E698-4C33-8525-960B208D4D85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookXMLoaderTest", "BookXMLoaderTest\BookXMLoaderTest.csproj", "{AF66B5F2-C810-4338-B589-3930A7A62629}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AACB4FAD-E698-4C33-8525-960B208D4D85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AACB4FAD-E698-4C33-8525-960B208D4D85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AACB4FAD-E698-4C33-8525-960B208D4D85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AACB4FAD-E698-4C33-8525-960B208D4D85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF66B5F2-C810-4338-B589-3930A7A62629}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF66B5F2-C810-4338-B589-3930A7A62629}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF66B5F2-C810-4338-B589-3930A7A62629}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF66B5F2-C810-4338-B589-3930A7A62629}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
