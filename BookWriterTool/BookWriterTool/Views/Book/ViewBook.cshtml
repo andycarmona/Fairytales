@@ -1,0 +1,69 @@
+﻿@model book
+@{
+    
+    Layout = "~/Views/Shared/Editor_Layout.cshtml";
+    ViewBag.Title = "Viewer";
+    bookChapterPage[] apage = this.Model.chapters[0].pages;
+    string isa = apage[0].id;
+}
+
+<div style="float:left"><h2>Book Viewer</h2></div><div style="float:right"><h2>@Html.ActionLink("Book Editor","EditBook")</h2></div>
+<div class="chaptersView" id="chapters">
+    <ul>
+        <li><a href="#chapters">Chapter1</a></li>
+    </ul>
+    <div class="pagesView" id="pages">
+        <ul>
+            @foreach (bookChapterPage page in @Model.chapters[0].pages)
+            {
+         
+                <li><a href="#@page.id">@page.id</a></li>
+            }
+        </ul>
+        @for (int indexPages = 0; indexPages < @Model.chapters[0].pages.Length; indexPages++)
+        {
+            <div class="page" id="@Model.chapters[0].pages[indexPages].id">
+                @foreach (bookChapterPageFrame t in this.Model.chapters[0].pages[indexPages].frames)
+                {
+                    if (@t.bordertype != "rectangle")
+                    {
+                        <div style="float:right" id="rightObject">rightObject</div>
+                        <div style="text-align: center; width: 767px; margin-left: auto; margin-right: auto;">
+                            <img id="Image-Maps_6201310281722376" src="../Images/@(t.bordertype).png" usemap="#Image-Maps_6201310281722376" border="0" width="767" height="133" alt="" />
+                           
+                     
+                        </div>
+                        <div id="leftObj">leftObject</div>
+                      
+                    }
+                    else
+                    {
+                        <img alt="" src="../Images/@(t.bordertype).png" title="MainContent" />  
+                        <div id="mainObject">main Object</div>
+                    }
+                  
+                }
+
+            </div> 
+        }
+    </div>
+</div>
+ <map id="_Image-Maps_6201310281722376" name="Image-Maps_6201310281722376">
+                                <area shape="poly" coords="2,1,764,4,764,120," href="" alt="" title="righContent" />
+                                <area shape="poly" coords="2,1,1,129,765,126," href="" alt="" title="leftContent"   />
+                                <area shape="rect" coords="765,131,767,133" href="" alt="Image Map" title="Image Map" />
+                            </map>
+@section scripts
+{
+    <script>
+
+
+        $(function () {
+            $("#pages").tabs();
+            $("#chapters").tabs();
+            /*$("#leftObj").dialog();
+            $("#rightObj").dialog();
+            $("#mainObject").dialog();*/
+        });
+    </script>
+}

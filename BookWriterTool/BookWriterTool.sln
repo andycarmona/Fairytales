@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookWriterTool", "BookWriterTool\BookWriterTool.csproj", "{F8FAF296-5B38-476F-B5F5-C92589A65E30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookWriterTool.Tests", "BookWriterTool.Tests\BookWriterTool.Tests.csproj", "{EFE1E6FB-8D45-480F-97F6-455453D9D996}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F8FAF296-5B38-476F-B5F5-C92589A65E30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8FAF296-5B38-476F-B5F5-C92589A65E30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8FAF296-5B38-476F-B5F5-C92589A65E30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8FAF296-5B38-476F-B5F5-C92589A65E30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFE1E6FB-8D45-480F-97F6-455453D9D996}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFE1E6FB-8D45-480F-97F6-455453D9D996}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFE1E6FB-8D45-480F-97F6-455453D9D996}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFE1E6FB-8D45-480F-97F6-455453D9D996}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

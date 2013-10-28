@@ -1,0 +1,20 @@
+﻿  <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - BookEditor</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/css")
+         @Styles.Render("~/Content/customcss")
+        @Styles.Render("~/Content/themes/base/css")
+        @Scripts.Render("~/bundles/modernizr")
+    
+    </head>
+
+<div id="editornav">
+@this.RenderBody()
+      @Scripts.Render("~/bundles/jquery")
+            @Scripts.Render("~/bundles/jqueryui")
+        @RenderSection("scripts", required: false)
+</div>
+
+

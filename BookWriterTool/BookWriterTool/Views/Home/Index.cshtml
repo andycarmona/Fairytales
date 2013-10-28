@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <label>@ViewBag.Message</label><br/>
+        @Html.ActionLink("New book","ViewBook","Book")
+           @Html.ActionLink("Load a book","EditBook","Book")
+          
+        </div>
+    </section>
+}
+

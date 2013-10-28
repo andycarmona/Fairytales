@@ -1,0 +1,92 @@
+﻿body
+{
+    color: azure;
+}
+/*Editor delen*/
+.chapters
+{
+    position: absolute;
+    float: left;
+    left: 20px;
+    top: 50px;
+    width: 800px;
+}
+
+.pages
+{
+
+    width: 800px;
+    height: 600px;
+}
+
+.frames div
+{
+    height: 50px;
+}
+
+.contents
+{
+    position: absolute;
+    top: 82px;
+    left: 420px;
+}
+
+.objects
+{
+    position: absolute;
+    top: 82px;
+    left: 420px;
+}
+
+/*View delen*/
+.chaptersView
+{
+    position: absolute;
+    float: left;
+    top: 50px;
+    width: 800px;
+}
+
+.pagesView
+{
+    
+    width: 800px;
+    height: 600px;
+}
+
+.framesView div
+{
+    height: 50px;
+}
+
+.contentsView
+{
+    position: absolute;
+    width: 760px;
+    height: 125px;
+    top: 82px;
+    left: 20px;
+}
+
+.objectsView
+{
+    position: absolute;
+    top: 82px;
+    left: 420px;
+}
+
+.draggable
+{
+    width: 325px;
+    height: 125px;
+    padding: 0.5em;
+    margin: 10px 10px 10px 0;
+}
+
+.droppable
+{
+    width: 350px;
+    height: 150px;
+    padding: 0.5em;
+    margin: 10px;
+}
