@@ -1,0 +1,132 @@
+﻿@model book
+@{
+    
+    Layout = "~/Views/Shared/Editor_Layout.cshtml";
+    ViewBag.Title = "Editor";
+    bookChapterPage[] apage = this.Model.chapters[0].pages;
+    string isa = apage[0].id;
+}
+<div style="float: left">
+    <h2>Book Editor</h2>
+</div>
+<div style="float: right">
+    <h2>@Html.ActionLink("Book Viewer", "ViewBook")</h2>
+</div>
+<div class="chapters" id="chapters">
+    <ul>
+        <li><a href="#chapters">Chapter1</a></li>
+    </ul>
+    <div class="pages" id="pages">
+        <ul>
+            @foreach (bookChapterPage page in @Model.chapters[0].pages)
+            {
+         
+                <li><a href="#@page.id">@page.id</a><button id="btn@(page.id)" type="button" value="@page.id"></button>
+                </li>
+            }
+        </ul>
+        @foreach (var page in @Model.chapters[0].pages)
+        {
+            <div class="page" id="@page.id">
+
+                <div id="frames">
+                    @foreach (bookChapterPageFrame frame in @Model.chapters[0].pages[0].frames)
+                    {
+                        <div id="@frame.id" class="droppable">
+                            <img id="img@(frame.id)" alt="" src="" />
+                            <p></p>
+                        </div>
+                    }
+                </div>
+                <div class="contents" id="contents">
+                    @foreach (bookChapterPageFrameContent content in @Model.chapters[0].pages[0].frames[0].contents)
+                    {
+                        <div class="draggable" id="@content.target">
+                            target: @content.target
+                            type : @content.type
+
+                            ----------------------
+                            @foreach (bookChapterPageFrameContentObject objeto in @Model.chapters[0].pages[0].frames[0].contents[0].objects)
+                            {
+                                <div>
+                                    <p>@objeto.type - @objeto.id - @objeto.animation</p>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+ 
+        <div id="origin">
+            <img class="draggable" id="triangle" src="../Images/triangle.png"  border="0" width="367" height="133" alt="" />
+            </div>
+
+
+        <img id="rectangle" alt="" class="draggable" src="../Images/rectangle.png" width="367" height="137" title="MainContent" />
+
+
+
+
+
+<div id="configDialog">
+    <div id="myDialogText"></div>
+</div>
+<map  name="Image-Maps_6201310281722376">
+    <area shape="poly" coords="2,1,764,4,764,120," alt="" title="righContent" />
+    <area shape="poly" coords="2,1,1,129,765,126," alt="" title="leftContent" />
+    <area shape="rect" coords="765,131,767,133"  alt="Image Map" title="Image Map" />
+</map>
+@section scripts
+{
+    <script>
+        var draggableId = "No Draggable";
+        var droppableId = "No droppable";
+        $(function () {
+            $("#pages").tabs();
+            $("#chapters").tabs();
+
+        });
+        $("button").click(function () {
+            var id = this.value;
+            $("#configDialog").dialog();
+            $("#myDialogText").text(id);
+        }
+            );
+        $(function () {
+            $(".draggable").draggable({
+                revert : function(event, ui) {
+                    // on older version of jQuery use "draggable"
+                    // $(this).data("draggable")
+                    // on 2.x versions of jQuery use "ui-draggable"
+                    // $(this).data("ui-draggable")
+                    $(this).data("uiDraggable").originalPosition = {
+                        top : 0,
+                        left : 0
+                    };
+                    // return boolean
+                    return !event;
+                    // that evaluate like this:
+                    // return event !== false ? false : true;
+                },
+                drag: function (event, ui) {
+                    draggableId = $(this).attr("id");
+                }
+            }).addClass("ui-state-highlight");
+
+            $(".droppable").droppable({
+                drop: function (event, ui) {
+
+                    var droppableId = $(this).attr("id");
+                    $(this).find("p")
+                        .html("Dropped!" + draggableId + "on" + droppableId);
+                    $(draggableId).hide();
+                }
+            }).addClass("ui-state-highlight");
+        });
+
+    </script>
+}

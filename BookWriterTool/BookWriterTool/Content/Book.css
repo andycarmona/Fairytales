@@ -1,6 +1,6 @@
 ﻿body
 {
-    color: azure;
+    color: white;
 }
 /*Editor delen*/
 .chapters
@@ -23,7 +23,11 @@
 {
     height: 50px;
 }
-
+#components {
+    position: relative;
+    right: -20px;
+    top: 50px;
+}
 .contents
 {
     position: absolute;
@@ -74,7 +78,7 @@
     top: 82px;
     left: 420px;
 }
-
+/*Draggable elements*/
 .draggable
 {
     width: 325px;
@@ -85,7 +89,7 @@
 
 .droppable
 {
-    width: 350px;
+    width: 700px;
     height: 150px;
     padding: 0.5em;
     margin: 10px;

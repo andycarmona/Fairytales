@@ -219,7 +219,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Book.css" />
-    <Content Include="Content\Resources\bookNoMetadata2.xml" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -321,9 +320,11 @@
     <Content Include="Views\Book\EditBook.cshtml" />
     <Content Include="Views\Book\ViewBook.cshtml" />
     <Content Include="Views\Shared\Editor_Layout.cshtml" />
+    <Content Include="Views\Book\EditBookContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Resources\" />
     <Folder Include="Images\" />
     <Folder Include="Views\Shared\Resources\" />
   </ItemGroup>

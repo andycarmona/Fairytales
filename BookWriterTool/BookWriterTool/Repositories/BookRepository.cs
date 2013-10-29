@@ -18,10 +18,21 @@ namespace BookWriterTool.Repositories
 
         private  book aBook;
 
+        private readonly FileOperations handleFiles;
+        private string actualBook;
+
         public BookRepository()
         {
-            FileOperations handleFiles=new FileOperations();
-            aBook = handleFiles.SerializeXmlToObject();
+           
+    
+        }
+
+        public BookRepository(string actualBook)
+        {
+            // TODO: Complete member initialization
+            this.actualBook = actualBook;        
+            handleFiles=new FileOperations();
+            aBook = handleFiles.SerializeXmlToObject(actualBook);
         }
         
 
@@ -68,7 +79,7 @@ namespace BookWriterTool.Repositories
         public void EditChapter(string id)
         {
             XmlDocument xmlDoc= new XmlDocument();
-            xmlDoc.Load(HttpContext.Current.Server.MapPath("/Content/Resources/bookNoMetadata2.xml"));
+            xmlDoc.Load(HttpContext.Current.Server.MapPath(handleFiles.GetActualXml()));
             XmlNodeList chaptersNodes = xmlDoc.SelectNodes("//book/chapters/chapter");
             if (chaptersNodes != null)
             {

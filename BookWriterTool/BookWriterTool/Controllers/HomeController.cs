@@ -23,12 +23,14 @@ namespace BookWriterTool.Controllers
         {
           localizationHandler=new Localization();
           
+
+           
         }
 
         public ActionResult Index()
         {  
             ViewBag.message = localizationHandler.Localize("ChooseOption");
-       
+         
             return View();
         }
 

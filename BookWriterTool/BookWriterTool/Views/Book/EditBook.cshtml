@@ -3,84 +3,134 @@
     
     Layout = "~/Views/Shared/Editor_Layout.cshtml";
     ViewBag.Title = "Editor";
-    bookChapterPage[] apage = this.Model.chapters[0].pages;
-    string isa = apage[0].id;
+   // bookChapterPage[] apage = this.Model.chapters[0].pages;
+    //string isa = apage[0].id;
 }
-<div style="float:left"><h2>Book Editor</h2></div><div style="float:right"><h2>@Html.ActionLink("Book Viewer","ViewBook")</h2></div>
+<h3>Book Editor</h3>
+ <h3> @Html.ActionLink("View Book","ViewBook","Book",null,null)</h3>
+
+
+<div><br/>
+    <input id="editframescontent" name="editcontent" type="button" value="Edit content in frames" />
+<input id="editcontent" name="editcontent" type="button" value="Save" /></div>  <ul id="menu">
+
+
 <div class="chapters" id="chapters">
+    
     <ul>
         <li><a href="#chapters">Chapter1</a></li>
     </ul>
-<div class="pages" id="pages">
-    <ul>
-        @foreach (bookChapterPage page in @Model.chapters[0].pages)
-        {
+    <!--Pages section-->
+    <div class="pages" id="pages">
+        <ul>
+            @foreach (bookChapterPage page in @Model.chapters[0].pages)
+            {
          
-            <li><a href="#@page.id">@page.id</a></li>
-        }
-    </ul>
-    @foreach (var page in @Model.chapters[0].pages)
-    {
-        <div class="page" id="@page.id">
+                <li><a href="#@page.id">@page.id</a><button id="btn@(page.id)" type="button" value="@page.id"></button>
+                </li>
+            }
+        </ul>
+        <!--End Pages section-->
 
-            <div id="frames">
-                @foreach (bookChapterPageFrame frame in @Model.chapters[0].pages[0].frames)
-                {
-                    <div id="@frame.id" class="droppable">
-                        <p>frameId: @frame.id</p>
-                        <p>frameBorderType: @frame.bordertype</p>
-                        <p></p>
+        <!--Frames section-->
+        @foreach (var page in @Model.chapters[0].pages)
+        {
+            <div class="page" id="@page.id">
 
-                    </div>
-                }
-            </div>
-            <div class="contents" id="contents">
-                @foreach (bookChapterPageFrameContent content in @Model.chapters[0].pages[0].frames[0].contents)
-                {
-                    <div class="draggable" id="@content.target">
-                        target: @content.target
-                        type : @content.type
-                      
-                        ----------------------
-                        @foreach (bookChapterPageFrameContentObject objeto in @Model.chapters[0].pages[0].frames[0].contents[0].objects)
-                        {
-                            <div>
-                                <p>@objeto.type - @objeto.id - @objeto.animation</p>
+                <div id="frames">
+                    @foreach (bookChapterPageFrame frame in @Model.chapters[0].pages[0].frames)
+                    {
+                        <div id="@frame.id" class="droppable">
+                            <img id="img@(frame.id)" border="0" width="700" height="133" alt="" src="" />
+                            <div id="listframes">
+                                <span hidden="true">page:@page.id-</span>
+                                
                             </div>
-                        }
-                    </div>
-                }
+                        </div>
+                    }
+                </div>
             </div>
-        </div>
-    }
-</div>
+        }
+        <!--End frames section-->
+     
     </div>
+</div>
+   
+
+
+    <img class="draggable" id="triangle" src="../Images/triangle.png" border="0" width="367" height="133" alt="" />
+
+
+
+<img id="rectangle" alt="" class="draggable" src="../Images/rectangle.png" width="367" height="137" title="MainContent" />
+
+
+<div id="configDialog">
+    <div id="myDialogText"></div>
+</div>
+<map name="Image-Maps_6201310281722376">
+    <area shape="poly" coords="2,1,764,4,764,120," alt="" title="righContent" />
+    <area shape="poly" coords="2,1,1,129,765,126," alt="" title="leftContent" />
+    <area shape="rect" coords="765,131,767,133" alt="Image Map" title="Image Map" />
+</map>
 @section scripts
 {
     <script>
         var draggableId = "No Draggable";
         var droppableId = "No droppable";
-        $(function () {
+        var startPos;
+        var frameDescriptionArray = new Array();
+        var paragraphs = $('div#listframes span');
+        //var spans = $('div#listframes span');
+        
+        $(function() {
             $("#pages").tabs();
-        });
-        $(function () {
             $("#chapters").tabs();
+       
         });
-        $(function () {
+        $("button").click(function() {
+            var id = this.value;
+            $("#configDialog").dialog();
+            $("#myDialogText").text(id);
+        }
+        );
+        $(function() {
             $(".draggable").draggable({
-                drag: function (event, ui) {
+                drag: function(event, ui) {
                     draggableId = $(this).attr("id");
+
                 }
             }).addClass("ui-state-highlight");
 
             $(".droppable").droppable({
-                drop: function (event, ui) {
+                drop: function(event, ui) {
 
                     var droppableId = $(this).attr("id");
-                    $(this).find("p")
-                        .html("Dropped!" + draggableId + "on" + droppableId);
+                    $(this).find("span").append("frame:"+droppableId+"-content:"+draggableId);
+                    $(this).find("img").attr("src", "../Images/" + draggableId + ".png");
+
+
+                    $("#" + draggableId).css({ top: 30, left: 20 });
                 }
             }).addClass("ui-state-highlight");
+        });
+        $("#editcontent").click(function() {
+            for (var i = 0; i < paragraphs.length; i++) {
+                frameDescriptionArray.push($(paragraphs[i]).text());
+            }
+            jQuery.ajax({
+                type: 'POST',
+                url: "EditBookContent",
+                data: JSON.stringify(frameDescriptionArray),
+                contentType: 'application/json; charset=utf-8',
+                async: false,
+                dataType: "json",
+                success: function(msg) {
+                    $("editframescontent").show();
+                    frameDescriptionArray.length = 0;
+                }
+            });
+
         });
 
     </script>

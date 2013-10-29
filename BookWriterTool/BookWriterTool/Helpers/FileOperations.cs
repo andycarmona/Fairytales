@@ -12,16 +12,25 @@ namespace BookWriterTool.Helpers
 
     public class FileOperations
     {
-        public book SerializeXmlToObject()
+        private string actualBook;
+
+        public book SerializeXmlToObject(string actualBook)
         {
             book aBook;
             var serializer = new XmlSerializer(typeof(book));
-            var stream = new FileStream(HttpContext.Current.Server.MapPath("/Content/Resources/bookNoMetadata2.xml"), FileMode.Open);
+            var stream = new FileStream(HttpContext.Current.Server.MapPath(actualBook), FileMode.Open);
             aBook = serializer.Deserialize(stream) as book;
             stream.Close();
             return aBook;
         }
-
+        public void SetActualXml(string file)
+        {
+            actualBook = file;
+        }
+        public string GetActualXml()
+        {
+            return actualBook;
+        }
         public string DeserializeObjectToXml(book aBook)
         {
             StringWriter textWriter=new StringWriter();
@@ -30,6 +39,13 @@ namespace BookWriterTool.Helpers
          
             return textWriter.ToString();
         }
-      
+       /* public List<File> GetListOfFilesinFolder(string user)
+        {
+            FileInfo aFileinfo=  new FileInfo();
+            if (aFileinfo.Directory != null)
+            {
+                FileInfo[] listOfFile=  aFileinfo.Directory.GetFiles()
+            }
+        }*/
     }
 }

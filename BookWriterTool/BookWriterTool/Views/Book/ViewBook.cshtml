@@ -16,7 +16,7 @@
         <ul>
             @foreach (bookChapterPage page in @Model.chapters[0].pages)
             {
-         
+                
                 <li><a href="#@page.id">@page.id</a></li>
             }
         </ul>
@@ -33,13 +33,13 @@
                            
                      
                         </div>
-                        <div id="leftObj">leftObject</div>
+                      
                       
                     }
                     else
                     {
                         <img alt="" src="../Images/@(t.bordertype).png" title="MainContent" />  
-                        <div id="mainObject">main Object</div>
+                       
                     }
                   
                 }
@@ -48,11 +48,12 @@
         }
     </div>
 </div>
- <map id="_Image-Maps_6201310281722376" name="Image-Maps_6201310281722376">
-                                <area shape="poly" coords="2,1,764,4,764,120," href="" alt="" title="righContent" />
-                                <area shape="poly" coords="2,1,1,129,765,126," href="" alt="" title="leftContent"   />
-                                <area shape="rect" coords="765,131,767,133" href="" alt="Image Map" title="Image Map" />
-                            </map>
+<map id="_Image-Maps_6201310281722376" name="Image-Maps_6201310281722376">
+    <area shape="poly" coords="2,1,764,4,764,120," href="" alt="" title="righContent" />
+    <area shape="poly" coords="2,1,1,129,765,126," href="" alt="" title="leftContent"   />
+    <area shape="rect" coords="765,131,767,133" href="" alt="Image Map" title="Image Map" />
+</map>
+
 @section scripts
 {
     <script>
@@ -61,6 +62,8 @@
         $(function () {
             $("#pages").tabs();
             $("#chapters").tabs();
+            
+          
             /*$("#leftObj").dialog();
             $("#rightObj").dialog();
             $("#mainObject").dialog();*/

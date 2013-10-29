@@ -8,29 +8,36 @@ namespace BookWriterTool.Controllers
     public class BookController : Controller
     {
         private readonly IBookRepository _bookRepository;
-        
+
+        private static readonly string actualBook = "/Content/Resources/Users/andresc/bookNoMetadata2.xml";
 
         public BookController()
-            : this(new BookRepository())
+            : this(new BookRepository(actualBook))
         {
             
         }
         public BookController(IBookRepository bookRepository)
         {
-
+       
             _bookRepository = bookRepository;
         }
         
         public ActionResult Index()
         {
             book  aBook = _bookRepository.GetAllContent();
-       
+      
             return View(aBook);
         }
         public ActionResult EditBook(string bookId)
         {
             book aBook = _bookRepository.GetAllContent();
             return this.View(aBook);
+        }
+        [HttpPost]
+        public JsonResult EditBookContent(string[] frameDescriptionArray)
+        {
+            book aBook = _bookRepository.GetAllContent();
+            return Json(new { success = true, msg = "Saved ok" });
         }
         public ActionResult ViewBook(string bookId)
         {
