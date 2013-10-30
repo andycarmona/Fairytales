@@ -9,6 +9,8 @@ namespace BookWriterTool.Models
     {
        bookChapter GetChapterById(string chapterId);
 
+        void SetActualFile(string actualBook);
+        book AddPage(string chapterNumber);
         book GetAllContent();
         void EditChapter(string chapterId);
     }

@@ -3,11 +3,14 @@
     
     Layout = "~/Views/Shared/Editor_Layout.cshtml";
     ViewBag.Title = "Editor";
-   // bookChapterPage[] apage = this.Model.chapters[0].pages;
+     bookChapterPage[] apage = this.Model.chapters[0].pages;
+     bookChapter[] achapter = this.Model.chapters;
+    int numberOfChapters = achapter.Length;
+   int numberOfPages= apage.Length;
     //string isa = apage[0].id;
 }
 <h3>Book Editor</h3>
- <h3> @Html.ActionLink("View Book","ViewBook","Book",null,null)</h3>
+ <h3> @Html.ActionLink("View Book", "ViewBook", "Book", null, null)</h3>
 
 
 <div><br/>
@@ -19,16 +22,19 @@
     
     <ul>
         <li><a href="#chapters">Chapter1</a></li>
+        <li><button id="btnAddChapter" type="button" value="+">+</button></li>
     </ul>
     <!--Pages section-->
     <div class="pages" id="pages">
+       
         <ul>
-            @foreach (bookChapterPage page in @Model.chapters[0].pages)
+            @for (var i = 0; i < numberOfPages;i++ )
             {
          
-                <li><a href="#@page.id">@page.id</a><button id="btn@(page.id)" type="button" value="@page.id"></button>
-                </li>
+                <li><a href="#page@(i+1)">page@(i+1)</a>
+                </li> 
             }
+            <li><button id="btnAddPage" type="button" value="+">+</button></li>
         </ul>
         <!--End Pages section-->
 
@@ -48,6 +54,7 @@
                             </div>
                         </div>
                     }
+<button id="btnAddFrame" type="button" value="+">+</button>
                 </div>
             </div>
         }
@@ -63,16 +70,11 @@
 
 
 <img id="rectangle" alt="" class="draggable" src="../Images/rectangle.png" width="367" height="137" title="MainContent" />
-
-
+<div id="status"></div>
 <div id="configDialog">
     <div id="myDialogText"></div>
 </div>
-<map name="Image-Maps_6201310281722376">
-    <area shape="poly" coords="2,1,764,4,764,120," alt="" title="righContent" />
-    <area shape="poly" coords="2,1,1,129,765,126," alt="" title="leftContent" />
-    <area shape="rect" coords="765,131,767,133" alt="Image Map" title="Image Map" />
-</map>
+
 @section scripts
 {
     <script>
@@ -82,31 +84,59 @@
         var frameDescriptionArray = new Array();
         var paragraphs = $('div#listframes span');
         //var spans = $('div#listframes span');
-        
-        $(function() {
+
+        $(function () {
             $("#pages").tabs();
             $("#chapters").tabs();
-       
+
         });
-        $("button").click(function() {
+        
+        $("#btnAddPage").click(function () {
+            var chapterNumber = { "chapterNumber": "test" };
+            jQuery.ajax({
+                type: 'POST',
+                url: "AddPage",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(chapterNumber),
+                async: false,
+                dataType: "json",
+                success: function (msg) {
+                    $("editframescontent").show();
+                    frameDescriptionArray.length = 0;
+                }, error: function (msg) {
+                    $('#status').text(msg.Text);
+                }
+            });
+        }
+        );
+        $("#btnAddFrame").click(function () {
             var id = this.value;
             $("#configDialog").dialog();
             $("#myDialogText").text(id);
         }
-        );
-        $(function() {
+     );
+        $("#btnAddChapter").click(function () {
+          //  var id = this.value;
+           $("#configDialog").dialog();
+          
+             @{ numberOfPages = numberOfChapters + 1;};
+            $("#myDialogText").append(@numberOfChapters);
+        }
+  );
+        
+        $(function () {
             $(".draggable").draggable({
-                drag: function(event, ui) {
+                drag: function (event, ui) {
                     draggableId = $(this).attr("id");
 
                 }
             }).addClass("ui-state-highlight");
 
             $(".droppable").droppable({
-                drop: function(event, ui) {
+                drop: function (event, ui) {
 
                     var droppableId = $(this).attr("id");
-                    $(this).find("span").append("frame:"+droppableId+"-content:"+draggableId);
+                    $(this).find("span").append("frame:" + droppableId + "-content:" + draggableId);
                     $(this).find("img").attr("src", "../Images/" + draggableId + ".png");
 
 
@@ -114,7 +144,7 @@
                 }
             }).addClass("ui-state-highlight");
         });
-        $("#editcontent").click(function() {
+        $("#editcontent").click(function () {
             for (var i = 0; i < paragraphs.length; i++) {
                 frameDescriptionArray.push($(paragraphs[i]).text());
             }
@@ -125,9 +155,11 @@
                 contentType: 'application/json; charset=utf-8',
                 async: false,
                 dataType: "json",
-                success: function(msg) {
+                success: function (msg) {
                     $("editframescontent").show();
                     frameDescriptionArray.length = 0;
+                },error:function(msg) {
+                    $('#status').text(msg.Text);
                 }
             });
 

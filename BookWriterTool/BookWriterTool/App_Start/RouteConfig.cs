@@ -23,6 +23,11 @@ namespace BookWriterTool
               url: "{controller}/{action}/{id}",
               defaults: new { controller = "Book", action = "Index", id = UrlParameter.Optional }
           );
+            routes.MapRoute(
+              name: "Page",
+              url: "{controller}/{action}/{id}",
+              defaults: new { controller = "Book", action = "AddPage", id = UrlParameter.Optional }
+          );
         }
     }
 }

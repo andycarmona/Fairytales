@@ -9,59 +9,67 @@ namespace BookWriterTool.Controllers
     {
         private readonly IBookRepository _bookRepository;
 
-        private static readonly string actualBook = "/Content/Resources/Users/andresc/bookNoMetadata2.xml";
+        public static readonly string actualBook = "/Content/Resources/Users/andresc/bookNoMetadata2.xml";
 
         public BookController()
-            : this(new BookRepository(actualBook))
+            : this(new BookRepository())
         {
             
         }
         public BookController(IBookRepository bookRepository)
         {
-       
-            _bookRepository = bookRepository;
+           
+            this._bookRepository = bookRepository; 
+            this._bookRepository.SetActualFile(actualBook);
         }
         
         public ActionResult Index()
         {
-            book  aBook = _bookRepository.GetAllContent();
+            book  aBook = this._bookRepository.GetAllContent();
       
-            return View(aBook);
+            return this.View(aBook);
         }
-        public ActionResult EditBook(string bookId)
+        public ActionResult EditBook()
         {
-            book aBook = _bookRepository.GetAllContent();
+            book aBook = this._bookRepository.GetAllContent();
             return this.View(aBook);
         }
         [HttpPost]
+        public ActionResult AddPage(string chapterNumber)
+        {
+            book aBook = this._bookRepository.AddPage("chapter1");
+            
+            return this.RedirectToAction("EditBook",aBook);
+        }
+
+        [HttpPost]
         public JsonResult EditBookContent(string[] frameDescriptionArray)
         {
-            book aBook = _bookRepository.GetAllContent();
-            return Json(new { success = true, msg = "Saved ok" });
+            book aBook = this._bookRepository.GetAllContent();
+            return this.Json(new { success = true, msg = "Saved ok" });
         }
         public ActionResult ViewBook(string bookId)
         {
-            book aBook = _bookRepository.GetAllContent();
+            book aBook = this._bookRepository.GetAllContent();
             return this.View(aBook);
         }
 
         public ActionResult GetChapter()
         {
-            bookChapter aChapter = _bookRepository.GetChapterById("chapter1");
+            bookChapter aChapter = this._bookRepository.GetChapterById("chapter1");
             string pageName = "No page";
             if (aChapter != null)
             {
                 pageName = aChapter.pages[0].id;
             }
-            ViewBag.PageName = pageName;
-            return View(); 
+            this.ViewBag.PageName = pageName;
+            return this.View(); 
         }
         public ActionResult Edit()
         {
-            _bookRepository.EditChapter("chapter1");
+            this._bookRepository.EditChapter("chapter1");
 
             return this.View();
         }
-
     }
 }

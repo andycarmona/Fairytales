@@ -12,27 +12,33 @@ namespace BookWriterTool.Controllers
     using System.Threading;
 
     using BookWriterTool.Helpers;
+    using BookWriterTool.Models;
+    using BookWriterTool.Repositories;
 
     public class HomeController : Controller
     {
         private ResourceManager aManager;
-
+        private readonly IBookRepository _bookRepository;
         private Localization localizationHandler;
 
         public HomeController()
+            : this(new BookRepository())
         {
-          localizationHandler=new Localization();
-          
 
+        }
+        public HomeController(IBookRepository bookRepository)
+        {
+            this.localizationHandler = new Localization();
+            this._bookRepository = bookRepository;
            
+
         }
 
         public ActionResult Index()
-        {  
-            ViewBag.message = localizationHandler.Localize("ChooseOption");
-         
-            return View();
-        }
+        {
+            this.ViewBag.message = this.localizationHandler.Localize("ChooseOption");
 
+            return this.View();
+        }
     }
 }

@@ -195,6 +195,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\FileOperations.cs" />
+    <Compile Include="Helpers\GlobalVariables.cs" />
     <Compile Include="Helpers\Localization.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\bookModel.cs" />
