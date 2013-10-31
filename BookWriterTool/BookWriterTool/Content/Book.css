@@ -1,6 +1,7 @@
 ﻿body
 {
     color: white;
+    height: 900px;
 }
 /*Editor delen*/
 .chapters
@@ -93,4 +94,11 @@
     height: 150px;
     padding: 0.5em;
     margin: 10px;
+}
+#toolbox {
+    width: 200px;
+height: 500px;
+position: absolute;
+top: 228px;
+right: 0px;
 }

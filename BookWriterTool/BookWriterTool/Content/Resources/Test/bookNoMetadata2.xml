@@ -233,11 +233,6 @@
             <frame id="frame1" bordertype="triangle" />
           </frames>
         </page>
-        <page id="page4">
-          <frames>
-            <frame id="frame1" bordertype="triangle" />
-          </frames>
-        </page>
       </pages>
       <!-- End of chapter -->
     </chapter>

@@ -8,6 +8,7 @@ namespace BookWriterTool.Tests.Classes
     using System.Xml.Serialization;
     using BookWriterTool.Helpers;
     using BookWriterTool.Models;
+    using BookWriterTool.Repositories;
 
     [TestClass]
     public class UnitTestBookRepository
@@ -15,21 +16,30 @@ namespace BookWriterTool.Tests.Classes
         private readonly book aBook;
 
         private readonly bookChapter chapter1;
-
+       // public static readonly string actualBook = "/Content/Resources/Test/bookNoMetadata2.xml";
         private  bookChapter chapter2;
         private readonly bookChapterPage aPage;
         private readonly FileOperations handleFiles;
+        int numberOfChapters ;
+        int numberOfPages ;
+
+        private IBookRepository bookRepository;
 
         private int pathFirstPage;
         public UnitTestBookRepository()
         {
+             bookRepository= new BookRepository();
             aBook = new book();
             var serializer = new XmlSerializer(typeof(book));
-            var stream = new FileStream("C:/Users/andresc/Desktop/Fairy-tales/fairytales/BookWriterTool/BookWriterTool/Content/Resources/Users/andresc/bookNoMetadata2.xml", FileMode.Open);
+            var stream = new FileStream("C:/Users/andresc/Desktop/Fairy-tales/fairytales/BookWriterTool/BookWriterTool/Content/Resources/Test/bookNoMetadata2.xml", FileMode.Open);
             aBook = serializer.Deserialize(stream) as book;
             stream.Close();
             chapter1 = aBook.chapters[0];
             aPage = new bookChapterPage();
+            bookChapterPage[] apage = aBook.chapters[0].pages;
+            bookChapter[] achapter = aBook.chapters;
+            numberOfChapters = achapter.Length;
+            numberOfPages = apage.Length;
         }
         [TestMethod]
         public void TestAddChapter()
@@ -44,15 +54,13 @@ namespace BookWriterTool.Tests.Classes
             Assert.AreEqual(aBook.chapters[1].id, "chapter2");
             Assert.AreEqual(aBook.chapters[0].id, "chapter1");
         }
-        [TestMethod]
-        public void TestAddPage()
-        {
-            aPage.id = "page3";
-            chapter1.pages.SetValue(aPage, 2);
-        }
+    
+      
         [TestMethod]
         public void TestPageExistance()
         {
+             aPage.id = "page3";
+            chapter1.pages.SetValue(aPage, 2);
             bookChapterPage page1 = aBook.chapters[0].pages[0];
             bookChapterPage page2 = aBook.chapters[0].pages[1];
             bookChapterPage page3 = aBook.chapters[0].pages[2];

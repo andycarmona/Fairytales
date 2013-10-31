@@ -35,11 +35,18 @@ namespace BookWriterTool.Controllers
             return this.View(aBook);
         }
         [HttpPost]
-        public ActionResult AddPage(string chapterNumber)
+        public ActionResult AddPage(string[] chapterNumber)
         {
-            book aBook = this._bookRepository.AddPage("chapter1");
+            book aBook = this._bookRepository.AddPage(chapterNumber[0]);
             
-            return this.RedirectToAction("EditBook",aBook);
+            return this.RedirectToActionPermanent("EditBook",aBook);
+        }
+        [HttpPost]
+        public ActionResult AddContentToFrame(string[] frameDescriptionArray)
+        {
+            book aBook = this._bookRepository.AddContentToFrame(frameDescriptionArray);
+
+            return this.RedirectToActionPermanent("EditBook", aBook);
         }
 
         [HttpPost]

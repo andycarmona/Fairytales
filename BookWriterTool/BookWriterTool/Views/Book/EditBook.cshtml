@@ -3,19 +3,15 @@
     
     Layout = "~/Views/Shared/Editor_Layout.cshtml";
     ViewBag.Title = "Editor";
-     bookChapterPage[] apage = this.Model.chapters[0].pages;
-     bookChapter[] achapter = this.Model.chapters;
+    bookChapterPage[] apage = this.Model.chapters[0].pages;
+    bookChapter[] achapter = this.Model.chapters;
     int numberOfChapters = achapter.Length;
-   int numberOfPages= apage.Length;
+    int numberOfPages= apage.Length;
+    int index = 1;
     //string isa = apage[0].id;
 }
 <h3>Book Editor</h3>
  <h3> @Html.ActionLink("View Book", "ViewBook", "Book", null, null)</h3>
-
-
-<div><br/>
-    <input id="editframescontent" name="editcontent" type="button" value="Edit content in frames" />
-<input id="editcontent" name="editcontent" type="button" value="Save" /></div>  <ul id="menu">
 
 
 <div class="chapters" id="chapters">
@@ -49,12 +45,11 @@
                         <div id="@frame.id" class="droppable">
                             <img id="img@(frame.id)" border="0" width="700" height="133" alt="" src="" />
                             <div id="listframes">
-                                <span hidden="true">page:@page.id-</span>
-                                
+                                <span hidden="true">page:@index-</span>
+                               
                             </div>
                         </div>
-                    }
-<button id="btnAddFrame" type="button" value="+">+</button>
+                    } @{ index++; }
                 </div>
             </div>
         }
@@ -64,15 +59,20 @@
 </div>
    
 
-
-    <img class="draggable" id="triangle" src="../Images/triangle.png" border="0" width="367" height="133" alt="" />
-
-
-
-<img id="rectangle" alt="" class="draggable" src="../Images/rectangle.png" width="367" height="137" title="MainContent" />
-<div id="status"></div>
 <div id="configDialog">
     <div id="myDialogText"></div>
+    <div style="width: 235px;right: 0;position: absolute;" class="ui-widget ui-widget-content ui-corner-all">
+
+    <img class="draggable" id="triangle" src="../Images/triangle.png" border="0" width="150" height="133" alt="" />
+
+
+
+    <img id="rectangle" alt="" class="draggable" src="../Images/rectangle.png" width="150" height="137" title="MainContent" />
+    <div id="postButtons"> <input id="editframescontent" name="editcontent" type="button" value="Edit content in frames" />
+        <button id="editcontent" name="editcontent" type="button" value="Save">Save</button> </div>
+    <div id="status"></div>
+
+</div>
 </div>
 
 @section scripts
@@ -90,14 +90,12 @@
             $("#chapters").tabs();
 
         });
-        
-        $("#btnAddPage").click(function () {
-            var chapterNumber = { "chapterNumber": "test" };
+        function PostArray(url) {
             jQuery.ajax({
                 type: 'POST',
-                url: "AddPage",
+                url: url,
                 contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(chapterNumber),
+                data: JSON.stringify(frameDescriptionArray),
                 async: false,
                 dataType: "json",
                 success: function (msg) {
@@ -108,13 +106,16 @@
                 }
             });
         }
-        );
-        $("#btnAddFrame").click(function () {
-            var id = this.value;
-            $("#configDialog").dialog();
-            $("#myDialogText").text(id);
-        }
-     );
+        $("#btnAddPage").click(function () {
+            frameDescriptionArray.push("chapter1");
+            PostArray("AddPage");
+        });
+        $("#editcontent").click(function () {
+            for (var i = 0; i < paragraphs.length; i++) {
+                frameDescriptionArray.push($(paragraphs[i]).text());
+            }
+            PostArray("AddContentToFrame");
+        });
         $("#btnAddChapter").click(function () {
           //  var id = this.value;
            $("#configDialog").dialog();
@@ -144,26 +145,5 @@
                 }
             }).addClass("ui-state-highlight");
         });
-        $("#editcontent").click(function () {
-            for (var i = 0; i < paragraphs.length; i++) {
-                frameDescriptionArray.push($(paragraphs[i]).text());
-            }
-            jQuery.ajax({
-                type: 'POST',
-                url: "EditBookContent",
-                data: JSON.stringify(frameDescriptionArray),
-                contentType: 'application/json; charset=utf-8',
-                async: false,
-                dataType: "json",
-                success: function (msg) {
-                    $("editframescontent").show();
-                    frameDescriptionArray.length = 0;
-                },error:function(msg) {
-                    $('#status').text(msg.Text);
-                }
-            });
-
-        });
-
     </script>
 }
