@@ -1,34 +1,63 @@
 ﻿body
 {
-    color: white;
-    height: 900px;
+    background-color: black;
+    background-image: url('http://fc02.deviantart.net/fs70/f/2011/328/8/8/the_wanderer___color_page_by_genzoman-d3g6d4f.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    height: 700px;
+}
+
+.container
+{
+    max-width: 500px;
+    height: 325px;
+    margin-top: 100px;
+    background-color: rgba(255,255,255,0.90);
+}
+
+.leftContent
+{
+    
+  
+}
+
+.rightContent
+{
+        background-color: rgba(255,255,255,0.90);
+    position: absolute;
+    top: 50px;
+    width: 200px;
 }
 /*Editor delen*/
+
 .chapters
 {
+ background-color: rgba(255,255,255,0.90);
     position: absolute;
-    float: left;
-    left: 20px;
+    margin: 0px auto;
     top: 50px;
     width: 800px;
 }
 
 .pages
 {
-
     width: 800px;
-    height: 600px;
+    height: 500px;
 }
 
 .frames div
 {
-    height: 50px;
+    height: 30px;
 }
-#components {
+
+#components
+{
     position: relative;
     right: -20px;
     top: 50px;
 }
+
 .contents
 {
     position: absolute;
@@ -46,17 +75,17 @@
 /*View delen*/
 .chaptersView
 {
+    background-color: rgba(255,255,255,0.90);
     position: absolute;
-    float: left;
+    margin: 0px auto;
     top: 50px;
     width: 800px;
 }
 
 .pagesView
 {
-    
     width: 800px;
-    height: 600px;
+    height: 500px;
 }
 
 .framesView div
@@ -82,8 +111,8 @@
 /*Draggable elements*/
 .draggable
 {
-    width: 325px;
-    height: 125px;
+  width: 188px;
+height: 84px;
     padding: 0.5em;
     margin: 10px 10px 10px 0;
 }
@@ -91,14 +120,25 @@
 .droppable
 {
     width: 700px;
-    height: 150px;
+    height: 100px;
     padding: 0.5em;
     margin: 10px;
 }
-#toolbox {
+.ui-widget .ui-widget {
+    position: absolute;
+    right: 0px;
+
+}
+.ui-accordion .ui-accordion-content{
+    height: 430px;  
+}
+
+
+#toolbox
+{
     width: 200px;
-height: 500px;
-position: absolute;
-top: 228px;
-right: 0px;
+    height: 500px;
+    position: absolute;
+    top: 228px;
+    right: 0px;
 }

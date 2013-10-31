@@ -8,42 +8,17 @@
         @Styles.Render("~/Content/css")
          @Styles.Render("~/Content/customcss")
         @Styles.Render("~/Content/themes/base/css")
-        @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/bundles/modernizr")  
+             @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryui")  
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        <link href="~/Content/bootstrap/bootstrap.min.css" rel="stylesheet">
+        <link href="~/Content/bootstrap/bootstrap-responsive.min.css" rel="stylesheet">
     </head>
     <body>
-        <header>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("Book editor 1.0", "Index", "Home")</p>
-                  @Html.ActionLink("English", "SetCulture", new {controller = "Culture", culture = "en-GB"})
-                  @Html.ActionLink("Spanish", "SetCulture", new {controller = "Culture", culture = "es-ES"})
-                    @Html.ActionLink("Swedish", "SetCulture", new {controller = "Culture", culture = "sv-SE"})
-
-                </div>
-                <div class="float-right">
-                    <section id="login">
-                        @Html.Partial("_LoginPartial")
-                    </section>
-                    <section>
-                        @RenderBody()
-                    </section>
-                </div>
-            </div>
-        </header>
-        <div id="body">
-            @RenderSection("featured", required: false)
-            
-        </div>
-        <footer>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - FairyTales Project</p>
-                </div>
-            </div>
-        </footer>
-
-        @Scripts.Render("~/bundles/jquery")
-            @Scripts.Render("~/bundles/jqueryui")
+         @RenderBody()
+ 
+       
         @RenderSection("scripts", required: false)
     </body>
 </html>

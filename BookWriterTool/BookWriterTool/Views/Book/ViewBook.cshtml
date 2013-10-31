@@ -8,6 +8,7 @@
 }
 
 <div style="float:left"><h2>Book Viewer</h2></div><div style="float:right"><h2>@Html.ActionLink("Book Editor","EditBook")</h2></div>
+
 <div class="chaptersView" id="chapters">
     <ul>
         <li><a href="#chapters">Chapter1</a></li>
@@ -47,7 +48,6 @@
             </div> 
         }
     </div>
-</div>
 <map id="_Image-Maps_6201310281722376" name="Image-Maps_6201310281722376">
     <area shape="poly" coords="2,1,764,4,764,120," href="" alt="" title="righContent" />
     <area shape="poly" coords="2,1,1,129,765,126," href="" alt="" title="leftContent"   />
@@ -57,13 +57,14 @@
 @section scripts
 {
     <script>
+   
 
 
-        $(function () {
+        $(function() {
             $("#pages").tabs();
             $("#chapters").tabs();
-            
-          
+
+
             /*$("#leftObj").dialog();
             $("#rightObj").dialog();
             $("#mainObject").dialog();*/
