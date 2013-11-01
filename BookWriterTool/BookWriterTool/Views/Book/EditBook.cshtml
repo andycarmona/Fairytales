@@ -25,10 +25,11 @@
     <div class="pages" id="pages">
 
         <ul>
-            @for (var i = 0; i < numberOfPages; i++)
+          @foreach (bookChapterPage page in @Model.chapters[0].pages)
             {
+               
          
-                <li><a href="#page@(i + 1)">page@(i + 1)</a>
+                <li><a href="#@page.id">@page.id</a>
                 </li> 
             }
             <li><button id="btnAddPage" type="button" value="+">+</button></li>
@@ -36,13 +37,14 @@
         <!--End Pages section-->
 
         <!--Frames section-->
-        @foreach (var page in @Model.chapters[0].pages)
+        @for (int indexPages = 0; indexPages < @Model.chapters[0].pages.Length; indexPages++)
         {
-            <div class="page" id="@page.id">
+            <div class="page" id="@Model.chapters[0].pages[indexPages].id">
 
                 <div id="frames">
-                @foreach (bookChapterPageFrame frame in @Model.chapters[0].pages[0].frames)
+                @foreach (bookChapterPageFrame frame in @Model.chapters[0].pages[indexPages].frames)
                     {
+                    
                         <div id="@frame.id" class="droppable">
                             <img id="img@(frame.id)" border="0" width="700" height="95" alt="" src="~/Images/@(frame.bordertype).png" />
                             <div id="listframes">

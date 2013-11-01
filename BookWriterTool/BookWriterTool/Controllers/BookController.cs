@@ -46,14 +46,14 @@ namespace BookWriterTool.Controllers
         {
             book aBook = this._bookRepository.AddContentToFrame(frameDescriptionArray);
 
-            return this.RedirectToActionPermanent("EditBook", aBook);
+            return this.RedirectToAction("EditBookContent");
         }
 
-        [HttpPost]
-        public JsonResult EditBookContent(string[] frameDescriptionArray)
+     
+        public ActionResult EditBookContent()
         {
             book aBook = this._bookRepository.GetAllContent();
-            return this.Json(new { success = true, msg = "Saved ok" });
+            return this.View(aBook);
         }
         public ActionResult ViewBook(string bookId)
         {

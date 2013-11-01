@@ -1,119 +1,150 @@
 ﻿@model book
 @{
     
-    Layout = "~/Views/Shared/Editor_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Editor";
     bookChapterPage[] apage = this.Model.chapters[0].pages;
-    string isa = apage[0].id;
+    bookChapter[] achapter = this.Model.chapters;
+    int numberOfChapters = achapter.Length;
+    int numberOfPages = apage.Length;
+    int index = 1;
+    //string isa = apage[0].id;
 }
-<div style="float: left">
-    <h2>Book Editor</h2>
-</div>
-<div style="float: right">
-    <h2>@Html.ActionLink("Book Viewer", "ViewBook")</h2>
-</div>
+<h3>Book Editor</h3>
+<h3>@Html.ActionLink("View Book", "ViewBook", "Book", null, null)</h3>
+
+
 <div class="chapters" id="chapters">
+
     <ul>
         <li><a href="#chapters">Chapter1</a></li>
+        <li>
+            <button id="btnAddChapter" type="button" value="+">+</button></li>
     </ul>
+    <!--Pages section-->
     <div class="pages" id="pages">
+
         <ul>
-            @foreach (bookChapterPage page in @Model.chapters[0].pages)
+            @for (var i = 0; i < numberOfPages; i++)
             {
          
-                <li><a href="#@page.id">@page.id</a><button id="btn@(page.id)" type="button" value="@page.id"></button>
-                </li>
+                <li><a href="#page@(i + 1)">page@(i + 1)</a>
+                </li> 
             }
+            <li><button id="btnAddPage" type="button" value="+">+</button></li>
         </ul>
+        <!--End Pages section-->
+
+        <!--Frames section-->
         @foreach (var page in @Model.chapters[0].pages)
         {
             <div class="page" id="@page.id">
 
                 <div id="frames">
-                    @foreach (bookChapterPageFrame frame in @Model.chapters[0].pages[0].frames)
+                @foreach (bookChapterPageFrame frame in @Model.chapters[0].pages[0].frames)
                     {
                         <div id="@frame.id" class="droppable">
-                            <img id="img@(frame.id)" alt="" src="" />
-                            <p></p>
-                        </div>
-                    }
-                </div>
-                <div class="contents" id="contents">
-                    @foreach (bookChapterPageFrameContent content in @Model.chapters[0].pages[0].frames[0].contents)
-                    {
-                        <div class="draggable" id="@content.target">
-                            target: @content.target
-                            type : @content.type
+                            <img id="img@(frame.id)" border="0" width="700" height="95" alt="" src="~/Images/@(frame.bordertype).png" />
+                            <div id="listframes">
+                                <span>page:@index-</span>
 
-                            ----------------------
-                            @foreach (bookChapterPageFrameContentObject objeto in @Model.chapters[0].pages[0].frames[0].contents[0].objects)
-                            {
-                                <div>
-                                    <p>@objeto.type - @objeto.id - @objeto.animation</p>
-                                </div>
-                            }
+                            </div>
                         </div>
-                    }
+                    } @{ index++; }
                 </div>
             </div>
         }
+        <!--End frames section-->
+
     </div>
 </div>
 
- 
-        <div id="origin">
-            <img class="draggable" id="triangle" src="../Images/triangle.png"  border="0" width="367" height="133" alt="" />
-            </div>
-
-
-        <img id="rectangle" alt="" class="draggable" src="../Images/rectangle.png" width="367" height="137" title="MainContent" />
-
-
-
-
 
 <div id="configDialog">
-    <div id="myDialogText"></div>
+    <div id="accordion">
+        <h3>Contents</h3>
+        <div class="leftContent">
+
+            <img class="draggable" id="triangle" src="~/Images/triangle.png" border="1" width="150" height="133" alt="" />
+
+            <img id="rectangle" alt="" class="draggable" src="~/Images/rectangle.png" border="1" width="150" height="137" title="MainContent" />
+
+            <img id="cuadratric" alt="" class="draggable" src="~/Images/cuadratric.png" border="1" width="150" height="137" title="MainContent" />
+
+            <div id="postButtons">
+                <input id="editframescontent" name="editcontent" type="button" value="Next >>" />
+                <button id="editcontent" name="editcontent" type="button" value="Save">Save</button>
+            </div>
+        </div>
+        <h3>Status</h3>
+        <div class="leftContent">
+            <p>
+                <textarea id="status" style="width: 256px" cols="20" rows="6"></textarea>
+            </p>
+        </div>
+    </div>
 </div>
-<map  name="Image-Maps_6201310281722376">
-    <area shape="poly" coords="2,1,764,4,764,120," alt="" title="righContent" />
-    <area shape="poly" coords="2,1,1,129,765,126," alt="" title="leftContent" />
-    <area shape="rect" coords="765,131,767,133"  alt="Image Map" title="Image Map" />
-</map>
+
 @section scripts
 {
     <script>
         var draggableId = "No Draggable";
         var droppableId = "No droppable";
+        var startPos;
+        var frameDescriptionArray = new Array();
+        var paragraphs = $('div#listframes span');
+        var dialogOpts = {
+            position: [5, 110]
+        };
+
+        //var spans = $('div#listframes span');
+
         $(function () {
             $("#pages").tabs();
             $("#chapters").tabs();
-
+            $("#configDialog").dialog(dialogOpts);
+            $("#accordion").accordion();
         });
-        $("button").click(function () {
-            var id = this.value;
-            $("#configDialog").dialog();
-            $("#myDialogText").text(id);
+        function PostArray(url) {
+            jQuery.ajax({
+                type: 'POST',
+                url: url,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(frameDescriptionArray),
+                async: false,
+                dataType: "json",
+                success: function (msg) {
+                    $("editframescontent").show();
+                    frameDescriptionArray.length = 0;
+                }, error: function (msg) {
+                    $('#status').text(msg.Text);
+                }
+            });
         }
-            );
+        $("#btnAddPage").click(function () {
+            frameDescriptionArray.push("chapter1");
+            PostArray("AddPage");
+        });
+        $("#editcontent").click(function () {
+            for (var i = 0; i < paragraphs.length; i++) {
+                frameDescriptionArray.push($(paragraphs[i]).text());
+            }
+            PostArray("AddContentToFrame");
+        });
+        $("#btnAddChapter").click(function () {
+            //  var id = this.value;
+
+
+        }
+  );
+
         $(function () {
             $(".draggable").draggable({
-                revert : function(event, ui) {
-                    // on older version of jQuery use "draggable"
-                    // $(this).data("draggable")
-                    // on 2.x versions of jQuery use "ui-draggable"
-                    // $(this).data("ui-draggable")
-                    $(this).data("uiDraggable").originalPosition = {
-                        top : 0,
-                        left : 0
-                    };
-                    // return boolean
-                    return !event;
-                    // that evaluate like this:
-                    // return event !== false ? false : true;
-                },
                 drag: function (event, ui) {
+
                     draggableId = $(this).attr("id");
+                    $('body').css('cursor', 'wait');
+                    $(this).hide();
                 }
             }).addClass("ui-state-highlight");
 
@@ -121,12 +152,12 @@
                 drop: function (event, ui) {
 
                     var droppableId = $(this).attr("id");
-                    $(this).find("p")
-                        .html("Dropped!" + draggableId + "on" + droppableId);
-                    $(draggableId).hide();
+                    $(this).find("span").append("frame:" + droppableId + "-content:" + draggableId);
+                    $(this).find("img").attr("src", "../Images/" + draggableId + ".png");
+                    $("#" + draggableId).css({ top: 0, left: 0 });
+                    $("#" + draggableId).show();
                 }
             }).addClass("ui-state-highlight");
         });
-
     </script>
 }
