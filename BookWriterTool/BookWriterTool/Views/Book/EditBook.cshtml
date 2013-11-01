@@ -41,12 +41,12 @@
         {
             <div class="page" id="@Model.chapters[0].pages[indexPages].id">
 
-                <div id="frames">
+                <div class="frame" id="frames">
                 @foreach (bookChapterPageFrame frame in @Model.chapters[0].pages[indexPages].frames)
                     {
                     
                         <div id="@frame.id" class="droppable">
-                            <img id="img@(frame.id)" border="0" width="700" height="95" alt="" src="~/Images/@(frame.bordertype).png" />
+                            <img id="img@(frame.id)" border="0" width="700" height="120" alt="" src="~/Images/@(frame.bordertype).png" />
                             <div id="listframes">
                                 <span>page:@index-</span>
 
@@ -62,16 +62,13 @@
 </div>
 
 
-<div id="configDialog">
+<div class="droppable" id="configDialog">
     <div id="accordion">
         <h3>Contents</h3>
         <div class="leftContent">
+            
+          @Html.Partial("~/Views/Book/ImageList.cshtml")
 
-            <img class="draggable" id="triangle" src="~/Images/triangle.png" border="1" width="150" height="133" alt="" />
-
-            <img id="rectangle" alt="" class="draggable" src="~/Images/rectangle.png" border="1" width="150" height="137" title="MainContent" />
-
-            <img id="cuadratric" alt="" class="draggable" src="~/Images/cuadratric.png" border="1" width="150" height="137" title="MainContent" />
 
             <div id="postButtons">
                 <input id="editframescontent" name="editcontent" type="button" value="Next >>" />
@@ -122,6 +119,7 @@
                     $('#status').text(msg.Text);
                 }
             });
+            window.location.reload();
         }
         $("#btnAddPage").click(function () {
             frameDescriptionArray.push("chapter1");
@@ -152,12 +150,14 @@
 
             $(".droppable").droppable({
                 drop: function (event, ui) {
-
+               
+             
                     var droppableId = $(this).attr("id");
                     $(this).find("span").append("frame:" + droppableId + "-content:" + draggableId);
-                    $(this).find("img").attr("src", "../Images/" + draggableId + ".png");
-                    $("#" + draggableId).css({ top: 0, left: 0 });
-                    $("#" + draggableId).show();
+             
+                      $(this).find("img").attr("src", "../Images/" + draggableId + ".png");
+                      $("#" + draggableId).css({ position: "relative", top: 0, left: 0 });
+                   $("#" + draggableId).show();      
                 }
             }).addClass("ui-state-highlight");
         });
