@@ -15,7 +15,7 @@
           <frames>
             <!-- Our first frame 
                     a triangle frame -->
-            <frame id="frame1" bordertype="triangle">
+            <frame id="frame1" bordertype="cuadratric">
               <scene id="scene1">
               </scene>
               <contents>
@@ -229,16 +229,6 @@
         </page>
         <!-- End of pages -->
         <page id="page3">
-          <frames>
-            <frame id="frame1" bordertype="triangle" />
-          </frames>
-        </page>
-        <page id="page4">
-          <frames>
-            <frame id="frame1" bordertype="triangle" />
-          </frames>
-        </page>
-        <page id="page5">
           <frames>
             <frame id="frame1" bordertype="triangle" />
           </frames>

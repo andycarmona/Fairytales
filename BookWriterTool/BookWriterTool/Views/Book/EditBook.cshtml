@@ -1,7 +1,7 @@
 ﻿@model book
 @{
     
-    Layout = "~/Views/Shared/Editor_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Editor";
     bookChapterPage[] apage = this.Model.chapters[0].pages;
     bookChapter[] achapter = this.Model.chapters;
@@ -31,8 +31,7 @@
                 <li><a href="#page@(i + 1)">page@(i + 1)</a>
                 </li> 
             }
-            <li>
-                <button id="btnAddPage" type="button" value="+">+</button></li>
+            <li><button id="btnAddPage" type="button" value="+">+</button></li>
         </ul>
         <!--End Pages section-->
 
@@ -42,12 +41,12 @@
             <div class="page" id="@page.id">
 
                 <div id="frames">
-                    @foreach (bookChapterPageFrame frame in @Model.chapters[0].pages[0].frames)
+                @foreach (bookChapterPageFrame frame in @Model.chapters[0].pages[0].frames)
                     {
                         <div id="@frame.id" class="droppable">
-                            <img id="img@(frame.id)" border="0" width="700" height="133" alt="" src="" />
+                            <img id="img@(frame.id)" border="0" width="700" height="95" alt="" src="~/Images/@(frame.bordertype).png" />
                             <div id="listframes">
-                                <span hidden="true">page:@index-</span>
+                                <span>page:@index-</span>
 
                             </div>
                         </div>
@@ -61,26 +60,26 @@
 </div>
 
 
-<div  id="configDialog">
-    <div  id="accordion">
+<div id="configDialog">
+    <div id="accordion">
         <h3>Contents</h3>
         <div class="leftContent">
 
             <img class="draggable" id="triangle" src="~/Images/triangle.png" border="1" width="150" height="133" alt="" />
 
             <img id="rectangle" alt="" class="draggable" src="~/Images/rectangle.png" border="1" width="150" height="137" title="MainContent" />
-            
+
             <img id="cuadratric" alt="" class="draggable" src="~/Images/cuadratric.png" border="1" width="150" height="137" title="MainContent" />
-           
+
             <div id="postButtons">
                 <input id="editframescontent" name="editcontent" type="button" value="Next >>" />
                 <button id="editcontent" name="editcontent" type="button" value="Save">Save</button>
             </div>
         </div>
-           <h3>  Status</h3>
+        <h3>Status</h3>
         <div class="leftContent">
             <p>
-                <textarea id="status" style="width:256px" cols="20" rows="6"></textarea>
+                <textarea id="status" style="width: 256px" cols="20" rows="6"></textarea>
             </p>
         </div>
     </div>
@@ -95,8 +94,7 @@
         var frameDescriptionArray = new Array();
         var paragraphs = $('div#listframes span');
         var dialogOpts = {
-            position: [5, 110],
-            height: 550
+            position: [5, 110]
         };
 
         //var spans = $('div#listframes span');
@@ -105,7 +103,7 @@
             $("#pages").tabs();
             $("#chapters").tabs();
             $("#configDialog").dialog(dialogOpts);
-            $("#accordion").accordion({height:300});
+            $("#accordion").accordion();
         });
         function PostArray(url) {
             jQuery.ajax({
@@ -143,7 +141,7 @@
         $(function () {
             $(".draggable").draggable({
                 drag: function (event, ui) {
-                    
+
                     draggableId = $(this).attr("id");
                     $('body').css('cursor', 'wait');
                     $(this).hide();
