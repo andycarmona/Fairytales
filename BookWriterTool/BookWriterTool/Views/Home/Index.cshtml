@@ -6,32 +6,32 @@
 <div class="container">
     <div class="row">
         <div class="account-wall">
-            <p class="site-title">@Html.ActionLink("Book editor 1.0", "Index", "Home")</p>
+        
 
         </div>
         <div class="col-sm-6 col-md-4 col-md-offset-4">
-
+    <h2>Book editor 1.0</h2>
 
             <form class="form-signin">
                 <input type="text" class="form-control" placeholder="Email address" required autofocus>
                 <input type="password" class="form-control" placeholder="Password" required>
-                <label class="checkbox">
-                    <input type="checkbox" value="remember-me">
-                    Remember me
-                   
-                </label>
+               
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
             </form>
 
 
 
-            @Html.ActionLink("New book", "ViewBook", "Book", null, new { Class = "btn btn-lg btn-primary btn-block" })
+            @Html.ActionLink("New book", "EditBook", "Book", null, new { Class = "btn btn-lg btn-primary btn-block" })
             @Html.ActionLink("English", "SetCulture", new { controller = "Culture", culture = "en-GB" })
             @Html.ActionLink("Spanish", "SetCulture", new { controller = "Culture", culture = "es-ES" })
             @Html.ActionLink("Swedish", "SetCulture", new { controller = "Culture", culture = "sv-SE" })
-
+    <a href="#" class="text-center new-account">Create an account </a> <label class="checkbox">
+                    <input type="checkbox" value="remember-me">
+                    Remember me
+                   
+                </label>
         </div>
-        <a href="#" class="text-center new-account">Create an account </a>
+    
     </div>
 </div>
 

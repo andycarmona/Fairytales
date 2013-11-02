@@ -7,19 +7,19 @@
 
 }
 <div id="panel">
-<div class="chapters" id="chapters">
+    <div class="chapters" id="chapters">
 
-    <ul>
-        @foreach (bookChapter chapter in @Model.chapters)
+        <ul>
+            @foreach (bookChapter chapter in @Model.chapters)
+            {
+                <li><a href="#@chapter.id">@chapter.id</a></li>
+            }
+            <li>
+                <button id="btnAddChapter" type="button" value="+">+</button></li>
+        </ul>
+        <!--Chapters section-->
+        @for (int indexChapters = 0; indexChapters < @Model.chapters.Length; indexChapters++)
         {
-            <li><a href="#@chapter.id">@chapter.id</a></li>
-        }
-        <li>
-            <button id="btnAddChapter" type="button" value="+">+</button></li>
-    </ul>
-    <!--Chapters section-->
-    @for(int indexChapters = 0; indexChapters < @Model.chapters.Length; indexChapters++)
-    {
 
             <!--Pages section-->
             <div class="pages" id="@Model.chapters[indexChapters].id">
@@ -50,7 +50,6 @@
 
                                 </div>
                                 <div style="visibility: hidden;" id="ContentEdit">
-                            
                                 </div>
                             }  @{ index++; }
                         </div>
@@ -59,169 +58,182 @@
                 <!--End frames section-->
 
             </div>
-    }
-</div>
+        }
+    </div>
 
 
-<div class="configDialog" id="configDialog">
-    <div id="accordion" class="toolbox">
-        <h3>Frames</h3>
-        <div class="leftContent">
+    <div class="configDialog" id="configDialog">
+        <div id="accordionConfig" class="toolbox">
+            <h3>Files</h3>
+            <div class="leftContent">
+                <label>Select an option:</label>
+                <select class="selectpicker" id="Select1">
+                    <option>New book</option>
+                    <option>Load book</option>
+                </select>
+            </div>
+            <h3>Status</h3>
+            <div class="leftContent">
+                <label>Status</label>
+                <textarea id="status" style="width: 150px" cols="20" rows="10"></textarea>
 
-            @Html.Partial("~/Views/Book/FrameList.cshtml")
-        
+            </div>
+
         </div>
-          <h3>Objects</h3>
-        <div class="leftContent">
+    </div>
+    <div class="configStatus" id="configStatus">
+        <div id="accordionStatus" class="toolbox">
+            <h3>Frames</h3>
+            <div class="leftContent">
 
-            @Html.Partial("~/Views/Book/ObjectList.cshtml")
- 
-        </div>
-             <h3>Backgrounds</h3>
-        <div class="leftContent">
+                @Html.Partial("~/Views/Book/FrameList.cshtml")
 
-            @Html.Partial("~/Views/Book/ObjectList.cshtml")
- 
-        </div>
-        <h3>Status</h3>
-        <div class="leftContent">
-            <p>
-                <textarea id="status" style="width: 256px" cols="20" rows="6"></textarea>
-            </p>
+            </div>
+            <h3>Objects</h3>
+            <div class="leftContent">
+
+                @Html.Partial("~/Views/Book/ObjectList.cshtml")
+
+            </div>
+            <h3>Backgrounds</h3>
+            <div class="leftContent">
+
+                @Html.Partial("~/Views/Book/ObjectList.cshtml")
+
+            </div>
         </div>
     </div>
 </div>
-</div>
+
 @section scripts
 {
-    <script>
-        var draggableId = "No Draggable";
-        var droppableId = "No droppable";
-        var startPos;
-        var textArea = "";
-        var actualPage = 1;
-        var frameDescriptionArray = [];
-        var framesContent = $('div#frames');
-        var dialogOpts = {
-            position: [5, 110]
-        };
-        $(function () {
-            $("#pages").tabs();
-            $("#chapters").tabs();
-            $("#chapter1").tabs();
-            $("#chapter2").tabs();
-          //  $("#configDialog").dialog(dialogOpts);
-            $("#accordion").accordion();
-         
-        });
+<script>
+    var draggableId = "No Draggable";
+    var droppableId = "No droppable";
+    var startPos;
+    var textArea = "";
+    var actualPage = 1;
+    var frameDescriptionArray = [];
+    var framesContent = $('div#frames');
+    var dialogOpts = {
+        position: [5, 110]
+    };
+    $(function () {
+        $("#pages").tabs();
+        $("#chapters").tabs();
+        $("#chapter1").tabs();
+        $("#chapter2").tabs();
+        //  $("#configDialog").dialog(dialogOpts);
+        $("#accordionConfig").accordion();
+        $("#accordionStatus").accordion();
+    });
 
-        function AddTextToStatus(mssg) {
-            $("#status").val($("#status").val() + mssg + "\n");
+    function AddTextToStatus(mssg) {
+        $("#status").val($("#status").val() + mssg + "\n");
+    }
+    $("#accordion").accordion({
+        active: 0,
+        change: function (event, ui) {
+            var activeIndex = $("#accordion").accordion("option", "active");
+            //alert(activeIndex);
+            switch (activeIndex) {
+                case 0:
+                    $('#chapter2').show();
+                    $('#chapter1').show();
+                    break;
+                case 1:
+
+                    // $("#ContentEdit").show();
+                    $('#chapter2').hide();
+                    $('#chapter1').hide();
+                    break;
+                default:
+
+            }
+
         }
-        $("#accordion").accordion({
-            active: 0,
-            change: function (event, ui) {
-                var activeIndex = $("#accordion").accordion("option", "active");
-                //alert(activeIndex);
-                switch(activeIndex)
-                {
-                    case 0:
-                        $('#chapter2').show();
-                        $('#chapter1').show();
-                        break;
-                    case 1:
-                     
-                        // $("#ContentEdit").show();
-                        $('#chapter2').hide();
-                        $('#chapter1').hide();
-                        break;
-                    default:
-                        
+    });
+    /*Function handle draggable objects. 
+             Objects you pickup and drag*/
+
+    $(function () {
+        $(".draggable").draggable({
+            cursor: 'move',
+            helper: 'clone',
+            drag: function (event, ui) {
+                draggableId = $(this).attr("id");
+                // $('body').css('cursor', 'move');
+                // $(this).hide();
+            }
+        }).addClass("ui-state-highlight");
+        function myHelper(event) {
+            // alert(draggableId);
+            return '<img id="cuadratric" alt="" class="draggable" src="~/Images/cuadratric.png" border="1" width="150" height="137" title="MainContent" />';
+        }
+        /*Function handle droppable objects. 
+          Object where you put your draggable*/
+        $(".droppable").droppable({
+            drop: function (event, ui) {
+                var pageIdAtributte = $(this).parent().parent().attr("id");
+                droppableId = $(this).attr("id");
+                actualPage = pageIdAtributte.substring(pageIdAtributte.length - 1);
+
+                //Add frames in page
+                $(this).each(function (i, elem) {
+                    var spanText = $(elem).find("span").text();
+                    var frameId = $(elem).attr("id");
+                    AddTextToStatus("PageId " + pageIdAtributte);
+                    AddTextToStatus("dropable " + draggableId);
+                    AddTextToStatus("dragable " + spanText);
+                    AddTextToStatus("frameId " + frameId);
+                    frameDescriptionArray.push(pageIdAtributte + "-" + frameId + "-" + draggableId);
+                });
+                if (droppableId != draggableId) {
+                    PostArray("AddContentToFrame");
                 }
-          
+                var temp = $(this).attr("id").substring(0, 5);
+
+                if (temp === "frame") {
+                    $(this).find("img").attr("src", "../Images/" + draggableId + ".png");
+                } else {
+
+                }
+                $("#" + draggableId).css({ position: "relative", top: 0, left: 0 });
+                $("#" + draggableId).show();
+            }
+        }).addClass("ui-state-highlight");
+    });
+    /*All post data to controller go thorugh this function*/
+
+    function PostArray(url) {
+        jQuery.ajax({
+            type: 'POST',
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(frameDescriptionArray),
+            async: false,
+            dataType: "json",
+            success: function (msg) {
+                $("editframescontent").show();
+                frameDescriptionArray.length = 0;
+            },
+            error: function (msg) {
+                $('#status').text(msg.Text);
             }
         });
-        /*Function handle draggable objects. 
-                 Objects you pickup and drag*/
+    }
 
-        $(function () {
-            $(".draggable").draggable({
-                cursor: 'move',
-                helper: 'clone',
-                drag: function (event, ui) {
-                    draggableId = $(this).attr("id");
-                   // $('body').css('cursor', 'move');
-                   // $(this).hide();
-                }
-            }).addClass("ui-state-highlight");
-            function myHelper(event) {
-               // alert(draggableId);
-                return '<img id="cuadratric" alt="" class="draggable" src="~/Images/cuadratric.png" border="1" width="150" height="137" title="MainContent" />';
-            }
-            /*Function handle droppable objects. 
-              Object where you put your draggable*/
-            $(".droppable").droppable({
-                drop: function (event, ui) {
-                    var pageIdAtributte = $(this).parent().parent().attr("id");
-                    droppableId = $(this).attr("id");
-                    actualPage = pageIdAtributte.substring(pageIdAtributte.length - 1);
+    $("#btnAddPage").click(function () {
+        frameDescriptionArray.push("chapter1");
+        PostArray("AddPage");
+    });
 
-                    //Add frames in page
-                    $(this).each(function (i, elem) {
-                        var spanText = $(elem).find("span").text();
-                        var frameId = $(elem).attr("id");
-                        AddTextToStatus("PageId " + pageIdAtributte);
-                        AddTextToStatus("dropable " + draggableId);
-                        AddTextToStatus("dragable " + spanText);
-                        AddTextToStatus("frameId " + frameId);
-                        frameDescriptionArray.push(pageIdAtributte + "-" + frameId + "-" + draggableId);
-                    });
-                    if (droppableId != draggableId) {
-                        PostArray("AddContentToFrame");
-                    }
-                    var temp = $(this).attr("id").substring(0, 5);
-
-                    if (temp === "frame") {
-                        $(this).find("img").attr("src", "../Images/" + draggableId + ".png");
-                    } else {
-
-                    }
-                    $("#" + draggableId).css({ position: "relative", top: 0, left: 0 });
-                    $("#" + draggableId).show();
-                }
-            }).addClass("ui-state-highlight");
-        });
-        /*All post data to controller go thorugh this function*/
-
-        function PostArray(url) {
-            jQuery.ajax({
-                type: 'POST',
-                url: url,
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(frameDescriptionArray),
-                async: false,
-                dataType: "json",
-                success: function (msg) {
-                    $("editframescontent").show();
-                    frameDescriptionArray.length = 0;
-                },
-                error: function (msg) {
-                    $('#status').text(msg.Text);
-                }
-            });
-        }
-
-        $("#btnAddPage").click(function () {
-            frameDescriptionArray.push("chapter1");
-            PostArray("AddPage");
-        });
-
-        $("#btnAddChapter").click(function () {
-            //  var id = this.value;
+    $("#btnAddChapter").click(function () {
+        //  var id = this.value;
 
 
-        }
-        );
+    }
+    );
 
     </script>
 }

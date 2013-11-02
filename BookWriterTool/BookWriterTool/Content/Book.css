@@ -52,6 +52,12 @@
     width: 240px;
 
 }
+.configStatus {
+    position: absolute;
+    top: 0px;
+    width: 240px;
+    right: 0px;
+}
 .contents
 {
     position: absolute;

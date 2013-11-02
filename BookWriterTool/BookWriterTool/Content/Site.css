@@ -331,6 +331,7 @@ aside {
 
 .label {
     font-weight: 700;
+    font-family: Segoe UI,Arial,sans-serif;
 }
 
 /* login page */
@@ -421,7 +422,7 @@ fieldset {
 
 label {
     display: block;
-    font-size: 1.2em;
+    font-size: 1em;
     font-weight: 600;
 }
 
