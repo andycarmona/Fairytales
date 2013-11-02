@@ -329,9 +329,10 @@
     <Content Include="Views\Shared\_BootstrapLayout.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\Book\ImageList.cshtml" />
+    <Content Include="Views\Book\FrameList.cshtml" />
     <Content Include="Views\Shared\ImageList.cshtml" />
     <Content Include="Views\Book\ContentFrames.cshtml" />
+    <Content Include="Views\Book\ObjectList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

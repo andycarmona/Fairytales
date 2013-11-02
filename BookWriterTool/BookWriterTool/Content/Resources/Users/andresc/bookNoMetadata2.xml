@@ -113,7 +113,7 @@
           <frames>
             <!-- Our first frame 
                     a triangle frame -->
-            <frame id="frame1" bordertype="triangle">
+            <frame id="frame1" bordertype="cuadratric">
               <scene id="scene1">
               </scene>
               <contents>

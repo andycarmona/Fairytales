@@ -6,7 +6,7 @@
     int index = 1;
 
 }
-
+<div id="panel">
 <div class="chapters" id="chapters">
 
     <ul>
@@ -42,10 +42,15 @@
                         <div class="frame" id="frames">
                             @foreach (bookChapterPageFrame frame in @Model.chapters[indexChapters].pages[indexPages].frames)
                             {
+                                <div id="FrameEdit">
+                                    <div id="@frame.id" class="droppable">
+                                        <img id="img@(frame.id)" border="0" width="700" height="158" alt="" src="~/Images/@(frame.bordertype).png" />
+                                        <span>@(frame.bordertype)</span>
+                                    </div>
 
-                                <div id="@frame.id" class="droppable">
-                                    <img id="img@(frame.id)" border="0" width="700" height="158" alt="" src="~/Images/@(frame.bordertype).png" />
-                                    <span>@(frame.bordertype)</span>
+                                </div>
+                                <div style="visibility: hidden;" id="ContentEdit">
+                            
                                 </div>
                             }  @{ index++; }
                         </div>
@@ -58,14 +63,25 @@
 </div>
 
 
-<div class="droppable" id="configDialog">
-    <div id="accordion">
-        <h3>Contents</h3>
+<div class="configDialog" id="configDialog">
+    <div id="accordion" class="toolbox">
+        <h3>Frames</h3>
         <div class="leftContent">
 
-            @Html.Partial("~/Views/Book/ImageList.cshtml")
-            <div id="postButtons">
-            </div>
+            @Html.Partial("~/Views/Book/FrameList.cshtml")
+        
+        </div>
+          <h3>Objects</h3>
+        <div class="leftContent">
+
+            @Html.Partial("~/Views/Book/ObjectList.cshtml")
+ 
+        </div>
+             <h3>Backgrounds</h3>
+        <div class="leftContent">
+
+            @Html.Partial("~/Views/Book/ObjectList.cshtml")
+ 
         </div>
         <h3>Status</h3>
         <div class="leftContent">
@@ -75,7 +91,7 @@
         </div>
     </div>
 </div>
-
+</div>
 @section scripts
 {
     <script>
@@ -94,26 +110,54 @@
             $("#chapters").tabs();
             $("#chapter1").tabs();
             $("#chapter2").tabs();
-            $("#configDialog").dialog(dialogOpts);
+          //  $("#configDialog").dialog(dialogOpts);
             $("#accordion").accordion();
+         
         });
 
         function AddTextToStatus(mssg) {
             $("#status").val($("#status").val() + mssg + "\n");
         }
-
+        $("#accordion").accordion({
+            active: 0,
+            change: function (event, ui) {
+                var activeIndex = $("#accordion").accordion("option", "active");
+                //alert(activeIndex);
+                switch(activeIndex)
+                {
+                    case 0:
+                        $('#chapter2').show();
+                        $('#chapter1').show();
+                        break;
+                    case 1:
+                     
+                        // $("#ContentEdit").show();
+                        $('#chapter2').hide();
+                        $('#chapter1').hide();
+                        break;
+                    default:
+                        
+                }
+          
+            }
+        });
         /*Function handle draggable objects. 
                  Objects you pickup and drag*/
 
         $(function () {
             $(".draggable").draggable({
+                cursor: 'move',
+                helper: 'clone',
                 drag: function (event, ui) {
                     draggableId = $(this).attr("id");
-                    $('body').css('cursor', 'wait');
-                    $(this).hide();
+                   // $('body').css('cursor', 'move');
+                   // $(this).hide();
                 }
             }).addClass("ui-state-highlight");
-
+            function myHelper(event) {
+               // alert(draggableId);
+                return '<img id="cuadratric" alt="" class="draggable" src="~/Images/cuadratric.png" border="1" width="150" height="137" title="MainContent" />';
+            }
             /*Function handle droppable objects. 
               Object where you put your draggable*/
             $(".droppable").droppable({

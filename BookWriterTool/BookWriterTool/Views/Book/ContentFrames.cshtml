@@ -3,21 +3,21 @@
     Layout = null;
     int index = 1;
 }  
-@foreach (var page in @Model.chapters[0].pages)
-        {
-            <div class="page" id="@page.id">
+   <!--Frames section-->
+                @for (int indexPages = 0; indexPages < @Model.chapters[indexChapters].pages.Length; indexPages++)
+                {
+                    <div class="page" id="@Model.chapters[indexChapters].pages[indexPages].id">
 
-                <div id="frames">
-                @foreach (bookChapterPageFrame frame in @Model.chapters[0].pages[0].frames)
-                    {
-                        <div id="@frame.id" class="droppable">
-                            <img id="img@(frame.id)" border="0" width="700" height="95" alt="" src="~/Images/@(frame.bordertype).png" />
-                            <div id="listframes">
-                                <span>page:@index-</span>
+                        <div class="frame" id="frames">
+                            @foreach (bookChapterPageFrame frame in @Model.chapters[indexChapters].pages[indexPages].frames)
+                            {
 
-                            </div>
+                                <div id="@frame.id" class="droppable">
+                                    <img id="img@(frame.id)" border="0" width="700" height="158" alt="" src="~/Images/@(frame.bordertype).png" />
+                                    <span>@(frame.bordertype)</span>
+                                </div>
+                            }  @{ index++; }
                         </div>
-                    } @{ index++; }
-                </div>
-            </div>
-        }
+                    </div>
+                }
+                <!--End frames section-->
