@@ -5,13 +5,18 @@
 }
 
 body {
-    background-color: #fff;
     border-top: solid 10px #000;
     color: #333;
     font-size: .85em;
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
     margin: 0;
     padding: 0;
+       background-color: black;
+    background-image: url('http://fc02.deviantart.net/fs70/f/2011/328/8/8/the_wanderer___color_page_by_genzoman-d3g6d4f.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    height: 1000px;
 }
 
 a {

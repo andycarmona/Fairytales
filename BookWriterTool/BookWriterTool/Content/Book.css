@@ -1,14 +1,4 @@
-﻿body
-{
-    background-color: black;
-    background-image: url('http://fc02.deviantart.net/fs70/f/2011/328/8/8/the_wanderer___color_page_by_genzoman-d3g6d4f.jpg');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    height:1000px;
-}
-
-.container
+﻿.container
 {
     max-width: 500px;
     height: 325px;
@@ -16,15 +6,10 @@
     background-color: rgba(255,255,255,0.90);
 }
 
-.leftContent
-{
-    
-  
-}
 
 .rightContent
 {
-        background-color: rgba(255,255,255,0.90);
+    background-color: rgba(255,255,255,0.90);
     position: absolute;
     top: 50px;
     width: 200px;
@@ -33,11 +18,12 @@
 
 .chapters
 {
- background-color: rgba(255,255,255,0.90);
+    background-color: rgba(255,255,255,0.90);
     position: absolute;
     margin: 0px auto;
     top: 50px;
-    width: 800px;
+    width: 822px;
+    height: 700px;
 }
 
 .pages
@@ -110,24 +96,40 @@
 /*Draggable elements*/
 .draggable
 {
-  width: 188px;
-height: 84px;
+    width: 188px;
+    height: 84px;
     padding: 0.5em;
     margin: 10px 10px 10px 0;
 }
 
 .droppable
 {
+    background: black;
     width: 700px;
-    height: 100px;
+    height: 162px;
     padding: 0.5em;
     margin: 10px;
 }
 
-.ui-accordion .ui-accordion-content{
-    height: 390px;  
+.ui-accordion .ui-accordion-content
+{
+    height: 390px;
 }
 
+.ui-tabs .ui-tabs-panel
+{
+    padding: 0em 0.4em;
+}
+
+.ui-widget-content
+{
+    color: #F3C11A;
+}
+
+.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr
+{
+    border-top-right-radius: 45px;
+}
 
 #toolbox
 {

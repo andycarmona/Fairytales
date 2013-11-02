@@ -331,6 +331,7 @@
     </Content>
     <Content Include="Views\Book\ImageList.cshtml" />
     <Content Include="Views\Shared\ImageList.cshtml" />
+    <Content Include="Views\Book\ContentFrames.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

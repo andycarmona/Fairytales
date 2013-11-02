@@ -56,7 +56,7 @@ namespace BookWriterTool.Repositories
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(HttpContext.Current.Server.MapPath(actualBook));
             XmlNode aPageNode;
-            XmlNodeList chaptersNodes = xmlDoc.SelectNodes("//book/chapters/chapter"); 
+            XmlNodeList chaptersNodes = xmlDoc.SelectNodes("//book/chapters/chapter");
             return this.GetAllContent();
         }
 
@@ -65,17 +65,17 @@ namespace BookWriterTool.Repositories
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(HttpContext.Current.Server.MapPath(actualBook));
             XmlNode aPageNode;
-            XmlNodeList chaptersNodes = xmlDoc.SelectNodes("//book/chapters/chapter"); 
+            XmlNodeList chaptersNodes = xmlDoc.SelectNodes("//book/chapters/chapter");
             XmlElement elemPage = xmlDoc.CreateElement("page");
             XmlElement elemFrames = xmlDoc.CreateElement("frames");
-            XmlElement aFrame = xmlDoc.CreateElement("frame"); 
+            XmlElement aFrame = xmlDoc.CreateElement("frame");
             aFrame.SetAttribute("id", "frame1");
             aFrame.SetAttribute("bordertype", "triangle");
-            XmlNode parentNode=null;
-            string pageIdName = string.Format("{0}{1}","page",(this.GetNumberOfpagesInBook() + 1));
-            elemPage.SetAttribute("id",pageIdName);
+            XmlNode parentNode = null;
+            string pageIdName = string.Format("{0}{1}", "page", (this.GetNumberOfpagesInBook() + 1));
+            elemPage.SetAttribute("id", pageIdName);
             elemPage.AppendChild(elemFrames);
-         
+
             elemFrames.AppendChild(aFrame);
             if (chaptersNodes != null)
             {
@@ -100,23 +100,56 @@ namespace BookWriterTool.Repositories
             return this.GetAllContent();
         }
 
-        public book AddContentToFrame(string[] content)
+        public void AddContentToFrame(string[] content)
         {
+
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(HttpContext.Current.Server.MapPath(actualBook));
             XmlNodeList pagesNodes = xmlDoc.SelectNodes("//book/chapters/chapter/pages/page");
+            XmlNodeList frameNodes = null;
             if (pagesNodes != null)
             {
-              
-               foreach (XmlNode page in pagesNodes)
-               {
-                   string id = page.Attributes["id"].Value;
-                   XmlNodeList temp = page.ChildNodes;
-                   XmlNode anode1 = temp[0];
-               }
+                string[] splittedData = content[0].Split('-');
+                var pageToUpdate = splittedData[0];
+                var frameToUpdate = splittedData[1];
+                var borderTypeToUpdate = splittedData[2];
+                foreach (XmlNode page in pagesNodes)
+                {
+                    if (page != null)
+                    {
+                        if (page.Attributes != null && page.Attributes["id"].Value == pageToUpdate)
+                        {
+                        
+                            for(int i=0;i < page.ChildNodes.Count+1;i++)
+                            {
+
+                                if (page.ChildNodes[i].Name == "frames")
+                                {
+                                    frameNodes = page.ChildNodes[i].ChildNodes;
+                                    break;
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+                if (frameNodes != null)
+                {
+                    foreach (XmlNode frame in frameNodes)
+                    {
+
+                        if (frame.Attributes != null && frameToUpdate == frame.Attributes["id"].Value)
+                        {
+                            frame.Attributes["bordertype"].Value = borderTypeToUpdate;
+                            // ((XmlElement)frame).SetAttribute("bordertype", borderTypeToUpdate);
+                        }
+                    }
+                }
             }
-            return aBook;
+            xmlDoc.Save(HttpContext.Current.Server.MapPath(actualBook));
         }
+
 
         public book GetAllContent()
         {

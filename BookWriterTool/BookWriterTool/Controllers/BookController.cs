@@ -42,11 +42,9 @@ namespace BookWriterTool.Controllers
             return this.RedirectToActionPermanent("EditBook",aBook);
         }
         [HttpPost]
-        public ActionResult AddContentToFrame(string[] frameDescriptionArray)
+        public void AddContentToFrame(string[] frameDescriptionArray)
         {
-            book aBook = this._bookRepository.AddContentToFrame(frameDescriptionArray);
-
-            return this.RedirectToAction("EditBookContent");
+         _bookRepository.AddContentToFrame(frameDescriptionArray);
         }
 
      

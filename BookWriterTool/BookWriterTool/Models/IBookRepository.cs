@@ -12,7 +12,7 @@ namespace BookWriterTool.Models
         void SetActualFile(string actualBook);
         book AddPage(string chapterNumber);
 
-        book AddContentToFrame(string[] content);
+        void AddContentToFrame(string[] content);
         book GetAllContent();
         void EditChapter(string chapterId);
     }
