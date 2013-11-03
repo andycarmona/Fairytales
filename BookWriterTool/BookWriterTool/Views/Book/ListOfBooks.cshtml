@@ -1,0 +1,17 @@
+﻿@model string[]
+<div id="userContent">
+    @if (Model != null)
+    {
+        <ul>
+            @foreach (var word in @Model)
+        {
+      var pos = @word.LastIndexOf("\\", System.StringComparison.Ordinal) + 1;
+            var fileName = word.Substring(pos, word.Length - pos);
+           
+                <li>@Html.ActionLink(@fileName, "GetChosenBook", "Book", new { fileName = @word }, new { Class = "btn btn-lg btn-primary" })</li>
+
+            }
+
+        </ul>
+    }
+</div>

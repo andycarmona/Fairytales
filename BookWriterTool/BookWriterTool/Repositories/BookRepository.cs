@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Web;
 
 namespace BookWriterTool.Repositories
 {
     using System.IO;
     using System.Xml;
-    using System.Xml.Linq;
     using System.Xml.Serialization;
 
     using BookWriterTool.Helpers;
@@ -28,10 +25,19 @@ namespace BookWriterTool.Repositories
             handleFiles = new FileOperations();
         }
 
-        public void SetActualFile(string actualBook)
+        public string  SetActualFile(string actualBook)
         {
             this.actualBook = actualBook;
-            aBook = handleFiles.SerializeXmlToObject(actualBook);
+            string status = "Executed with no errors";
+            try
+            {
+                aBook = handleFiles.SerializeXmlToObject(actualBook);
+            }
+            catch (IOException ex)
+            {
+                status = ex.Message;
+            }
+            return status;
         }
         public int GetNumberOfpagesInBook()
         {
@@ -119,8 +125,8 @@ namespace BookWriterTool.Repositories
                     {
                         if (page.Attributes != null && page.Attributes["id"].Value == pageToUpdate)
                         {
-                        
-                            for(int i=0;i < page.ChildNodes.Count+1;i++)
+
+                            for (int i = 0; i < page.ChildNodes.Count + 1; i++)
                             {
 
                                 if (page.ChildNodes[i].Name == "frames")

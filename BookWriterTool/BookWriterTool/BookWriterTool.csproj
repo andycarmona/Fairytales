@@ -321,11 +321,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Book\Index.cshtml" />
     <Content Include="Views\Book\EditBook.cshtml" />
     <Content Include="Views\Book\ViewBook.cshtml" />
     <Content Include="Views\Shared\Editor_Layout.cshtml" />
-    <Content Include="Views\Book\EditBookContent.cshtml" />
     <Content Include="Views\Shared\_BootstrapLayout.cshtml">
       <SubType>Code</SubType>
     </Content>
@@ -333,6 +331,8 @@
     <Content Include="Views\Shared\ImageList.cshtml" />
     <Content Include="Views\Book\ContentFrames.cshtml" />
     <Content Include="Views\Book\ObjectList.cshtml" />
+    <Content Include="Views\Book\BackgroundsList.cshtml" />
+    <Content Include="Views\Book\ListOfBooks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

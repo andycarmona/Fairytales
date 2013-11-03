@@ -3,9 +3,9 @@
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
 }
-           @Html.ActionLink(@Localization.Localize("English"), "SetCulture", new { controller = "Culture", culture = "en-GB" }, new { Class = "btn" })
-            @Html.ActionLink(@Localization.Localize("Spanish"), "SetCulture", new { controller = "Culture", culture = "es-ES" }, new { Class = "btn" })
-            @Html.ActionLink(@Localization.Localize("Swedish"), "SetCulture", new { controller = "Culture", culture = "sv-SE" }, new { Class = "btn" })
+           @Html.ActionLink(@Localization.Localize("English"), "SetCulture", new { controller = "Culture", culture = "en-GB", returnUrl = HttpContext.Current.Request.RawUrl}, new { Class = "btn" })
+            @Html.ActionLink(@Localization.Localize("Spanish"), "SetCulture", new { controller = "Culture", culture = "es-ES", returnUrl = HttpContext.Current.Request.RawUrl }, new { Class = "btn" })
+            @Html.ActionLink(@Localization.Localize("Swedish"), "SetCulture", new { controller = "Culture", culture = "sv-SE" , returnUrl = HttpContext.Current.Request.RawUrl}, new { Class = "btn" })
 
     <h2>Book editor 1.0</h2>
   <form class="form-signin">
@@ -19,7 +19,8 @@
       </form>
 
 
-            @Html.ActionLink("New book", "EditBook", "Book", null, new { Class = "btn btn-lg btn-primary btn-block" })
+            @Html.ActionLink("Kalle's books", "FakeLogin", "Book",new{userName="kallec"}, new { Class = "btn btn-lg btn-primary btn-block" })
+@Html.ActionLink("Andres's books", "FakeLogin", "Book",new{userName="andresc"}, new { Class = "btn btn-lg btn-primary btn-block" })
 
 
 

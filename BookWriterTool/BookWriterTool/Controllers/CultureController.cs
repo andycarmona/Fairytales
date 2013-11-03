@@ -11,13 +11,18 @@ namespace BookWriterTool.Controllers
         //
         // GET: /Culture/
 
-        public ActionResult SetCulture(string culture)
+        public ActionResult SetCulture(string returnUrl,string culture)
         {
             var httpSessionStateBase = this.HttpContext.Session;
             if (httpSessionStateBase != null)
             {
                 httpSessionStateBase["culture"] = culture;
             }
+            if (returnUrl != null)
+            {
+                return this.Redirect(returnUrl);
+            }
+
             return RedirectToAction("Index", "Home");
         }
     }
