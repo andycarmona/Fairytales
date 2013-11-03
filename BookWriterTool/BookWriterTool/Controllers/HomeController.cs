@@ -19,7 +19,7 @@ namespace BookWriterTool.Controllers
     {
         private ResourceManager aManager;
         private readonly IBookRepository _bookRepository;
-        private Localization localizationHandler;
+        //private Localization localizationHandler;
 
         public HomeController()
             : this(new BookRepository())
@@ -28,7 +28,7 @@ namespace BookWriterTool.Controllers
         }
         public HomeController(IBookRepository bookRepository)
         {
-            this.localizationHandler = new Localization();
+        //    this.localizationHandler = new Localization();
             this._bookRepository = bookRepository;
            
 
@@ -36,7 +36,7 @@ namespace BookWriterTool.Controllers
 
         public ActionResult Index()
         {
-            this.ViewBag.message = this.localizationHandler.Localize("ChooseOption");
+          //  this.ViewBag.message = this.localizationHandler.Localize("ChooseOption");
 
             return this.View();
         }

@@ -117,11 +117,47 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="backgrounds" xml:space="preserve">
+    <value>backgrounds</value>
+  </data>
+  <data name="chapter" xml:space="preserve">
+    <value>chapter</value>
+  </data>
   <data name="ChooseOption" xml:space="preserve">
     <value>Choose an option:</value>
   </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>Email address</value>
+  </data>
   <data name="English" xml:space="preserve">
     <value>English</value>
+  </data>
+  <data name="files" xml:space="preserve">
+    <value>Files</value>
+  </data>
+  <data name="Languages" xml:space="preserve">
+    <value>Languages</value>
+  </data>
+  <data name="LoadABook" xml:space="preserve">
+    <value>Load a book</value>
+  </data>
+  <data name="NewBook" xml:space="preserve">
+    <value>New book</value>
+  </data>
+  <data name="objects" xml:space="preserve">
+    <value>objects</value>
+  </data>
+  <data name="page" xml:space="preserve">
+    <value>page</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>password</value>
+  </data>
+  <data name="PleaseSignin" xml:space="preserve">
+    <value>Please Sign in</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Remember me</value>
   </data>
   <data name="Spanish" xml:space="preserve">
     <value>Spanish</value>

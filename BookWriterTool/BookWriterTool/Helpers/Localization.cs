@@ -8,9 +8,9 @@ namespace BookWriterTool.Helpers
     using System.Globalization;
     using System.Threading;
 
-    public class Localization
+    public static class Localization
     {
-        public string Localize(string valueToLocalize)
+        public static string Localize(string valueToLocalize)
         {
             string localizedValue = "";
             string lang=(string)HttpContext.Current.Session["culture"];

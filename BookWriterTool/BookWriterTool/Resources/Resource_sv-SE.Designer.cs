@@ -61,6 +61,24 @@ namespace BookWriterTool.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Backgrunds bilder.
+        /// </summary>
+        internal static string backgrounds {
+            get {
+                return ResourceManager.GetString("backgrounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to avsnitt.
+        /// </summary>
+        internal static string chapter {
+            get {
+                return ResourceManager.GetString("chapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Välj ut ett alternativ:.
         /// </summary>
         internal static string ChooseOption {
@@ -70,11 +88,101 @@ namespace BookWriterTool.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to mejladress.
+        /// </summary>
+        internal static string EmailAddress {
+            get {
+                return ResourceManager.GetString("EmailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Engelska.
         /// </summary>
         internal static string English {
             get {
                 return ResourceManager.GetString("English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filer.
+        /// </summary>
+        internal static string files {
+            get {
+                return ResourceManager.GetString("files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Språk.
+        /// </summary>
+        internal static string Languages {
+            get {
+                return ResourceManager.GetString("Languages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ladda upp en bok.
+        /// </summary>
+        internal static string LoadABook {
+            get {
+                return ResourceManager.GetString("LoadABook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ny bok.
+        /// </summary>
+        internal static string NewBook {
+            get {
+                return ResourceManager.GetString("NewBook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Föremål.
+        /// </summary>
+        internal static string objects {
+            get {
+                return ResourceManager.GetString("objects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sida.
+        /// </summary>
+        internal static string page {
+            get {
+                return ResourceManager.GetString("page", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lösenord.
+        /// </summary>
+        internal static string password {
+            get {
+                return ResourceManager.GetString("password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vänligen ,logga in..
+        /// </summary>
+        internal static string PleaseSignin {
+            get {
+                return ResourceManager.GetString("PleaseSignin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kom ihåg..
+        /// </summary>
+        internal static string RememberMe {
+            get {
+                return ResourceManager.GetString("RememberMe", resourceCulture);
             }
         }
         

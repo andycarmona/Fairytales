@@ -1,39 +1,28 @@
-﻿@{
+﻿@using BookWriterTool.Helpers
+@{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
 }
+           @Html.ActionLink(@Localization.Localize("English"), "SetCulture", new { controller = "Culture", culture = "en-GB" }, new { Class = "btn" })
+            @Html.ActionLink(@Localization.Localize("Spanish"), "SetCulture", new { controller = "Culture", culture = "es-ES" }, new { Class = "btn" })
+            @Html.ActionLink(@Localization.Localize("Swedish"), "SetCulture", new { controller = "Culture", culture = "sv-SE" }, new { Class = "btn" })
 
-<div class="container">
-    <div class="row">
-        <div class="account-wall">
-        
-
-        </div>
-        <div class="col-sm-6 col-md-4 col-md-offset-4">
     <h2>Book editor 1.0</h2>
-
-            <form class="form-signin">
-                <input type="text" class="form-control" placeholder="Email address" required autofocus>
-                <input type="password" class="form-control" placeholder="Password" required>
-               
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-            </form>
-
+  <form class="form-signin">
+        <h2 class="form-signin-heading">@Localization.Localize("PleaseSignin")</h2>
+        <input type="text" class="form-control" placeholder="@Localization.Localize("EmailAddress")" required autofocus>
+        <input type="password" class="form-control" placeholder="Password" required>
+        <label class="checkbox">
+          <input type="checkbox" value="remember-me"> @Localization.Localize("RememberMe")
+        </label>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      </form>
 
 
             @Html.ActionLink("New book", "EditBook", "Book", null, new { Class = "btn btn-lg btn-primary btn-block" })
-            @Html.ActionLink("English", "SetCulture", new { controller = "Culture", culture = "en-GB" })
-            @Html.ActionLink("Spanish", "SetCulture", new { controller = "Culture", culture = "es-ES" })
-            @Html.ActionLink("Swedish", "SetCulture", new { controller = "Culture", culture = "sv-SE" })
-    <a href="#" class="text-center new-account">Create an account </a> <label class="checkbox">
-                    <input type="checkbox" value="remember-me">
-                    Remember me
-                   
-                </label>
-        </div>
-    
-    </div>
-</div>
+
+
+
 
 
 

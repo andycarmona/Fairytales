@@ -61,6 +61,24 @@ namespace BookWriterTool.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Imágenes de fondo.
+        /// </summary>
+        internal static string backgrounds {
+            get {
+                return ResourceManager.GetString("backgrounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to capítulo.
+        /// </summary>
+        internal static string chapter {
+            get {
+                return ResourceManager.GetString("chapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Elije una opción:.
         /// </summary>
         internal static string ChooseOption {
@@ -70,11 +88,101 @@ namespace BookWriterTool.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Correo electrónico.
+        /// </summary>
+        internal static string EmailAddress {
+            get {
+                return ResourceManager.GetString("EmailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inglés.
         /// </summary>
         internal static string English {
             get {
                 return ResourceManager.GetString("English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Archivos.
+        /// </summary>
+        internal static string files {
+            get {
+                return ResourceManager.GetString("files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Idiomas.
+        /// </summary>
+        internal static string Languages {
+            get {
+                return ResourceManager.GetString("Languages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abre un libro.
+        /// </summary>
+        internal static string LoadABook {
+            get {
+                return ResourceManager.GetString("LoadABook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nuevo libro.
+        /// </summary>
+        internal static string NewBook {
+            get {
+                return ResourceManager.GetString("NewBook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Objetos.
+        /// </summary>
+        internal static string objects {
+            get {
+                return ResourceManager.GetString("objects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to página.
+        /// </summary>
+        internal static string page {
+            get {
+                return ResourceManager.GetString("page", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contraseña.
+        /// </summary>
+        internal static string password {
+            get {
+                return ResourceManager.GetString("password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Autentificación.
+        /// </summary>
+        internal static string PleaseSignin {
+            get {
+                return ResourceManager.GetString("PleaseSignin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recuerdame.
+        /// </summary>
+        internal static string RememberMe {
+            get {
+                return ResourceManager.GetString("RememberMe", resourceCulture);
             }
         }
         

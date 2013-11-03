@@ -117,11 +117,47 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="backgrounds" xml:space="preserve">
+    <value>Backgrunds bilder</value>
+  </data>
+  <data name="chapter" xml:space="preserve">
+    <value>avsnitt</value>
+  </data>
   <data name="ChooseOption" xml:space="preserve">
     <value>Välj ut ett alternativ:</value>
   </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>mejladress</value>
+  </data>
   <data name="English" xml:space="preserve">
     <value>Engelska</value>
+  </data>
+  <data name="files" xml:space="preserve">
+    <value>Filer</value>
+  </data>
+  <data name="Languages" xml:space="preserve">
+    <value>Språk</value>
+  </data>
+  <data name="LoadABook" xml:space="preserve">
+    <value>Ladda upp en bok</value>
+  </data>
+  <data name="NewBook" xml:space="preserve">
+    <value>Ny bok</value>
+  </data>
+  <data name="objects" xml:space="preserve">
+    <value>Föremål</value>
+  </data>
+  <data name="page" xml:space="preserve">
+    <value>sida</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>Lösenord</value>
+  </data>
+  <data name="PleaseSignin" xml:space="preserve">
+    <value>Vänligen ,logga in.</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Kom ihåg.</value>
   </data>
   <data name="Spanish" xml:space="preserve">
     <value>Spanska</value>
