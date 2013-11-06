@@ -1,17 +1,31 @@
 ﻿@model string[]
-<div id="userContent">
-    @if (Model != null)
+@{
+    bool newBook=true;
+    if (ViewBag.newBook != null)
     {
-        <ul>
-            @foreach (var word in @Model)
-        {
-      var pos = @word.LastIndexOf("\\", System.StringComparison.Ordinal) + 1;
-            var fileName = word.Substring(pos, word.Length - pos);
-           
-                <li>@Html.ActionLink(@fileName, "GetChosenBook", "Book", new { fileName = @word }, new { Class = "btn btn-lg btn-primary" })</li>
-
-            }
-
-        </ul>
+        newBook = ViewBag.newBook;
     }
+    string[] listofBook=(string[])ViewBag.listbook;
+}
+@if(@Model!=null)
+{
+<div id="userContent">
+    <ul>
+        @foreach (var word in @Model)
+        {
+            if (word != null)
+            {
+                var user = (string)Session["username"];
+                var pos = @word.LastIndexOf("\\", System.StringComparison.Ordinal) + 1;
+                var fileName = word.Substring(pos, word.Length - pos);
+                var path = "";
+                path = !newBook ? ("~/Content/Resources/Users/" + user + "/" + fileName) : ("~/Content/Resources/BookTemplate/" + fileName);
+           
+
+            <li>@Html.ActionLink(@fileName, "GetChosenBook", "Book", new { fileName = @path }, new { Class = "btn btn-lg btn-primary" })</li>
+             }
+        }
+
+    </ul>
 </div>
+}

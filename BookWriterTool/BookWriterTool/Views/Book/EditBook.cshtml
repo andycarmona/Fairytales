@@ -4,9 +4,20 @@
     
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Editor";
+    string statusMsg;
+    if (ViewBag.statusMsg != null)
+    {
+        statusMsg = ViewBag.statusMsg;
+    }
+    else
+    {
+        statusMsg = "No message";
+    }
     int index = 1;
     int chapterIndex = 1;
     int pageIndex = 1;
+    var listOfBooks = new string[1];
+    listOfBooks[0] = "no book";
 }
 @if (Model != null)
 {
@@ -77,16 +88,14 @@
             </select>
             <div id="partialFileResult">
                 @{
-                    this.Html.RenderPartial("~/Views/Book/ListOfBooks.cshtml");
+                    this.Html.RenderPartial("~/Views/Book/ListOfBooks.cshtml", @listOfBooks);
                 }
             </div>
-         
-        </div> 
+        </div>
         <h3>Status</h3>
         <div class="leftContent">
             <label>Status</label>
             <textarea id="status" style="width: 150px" cols="20" rows="10"></textarea>
-
         </div>
         <h3>@Localization.Localize("Languages")</h3>
         <div class="leftContent">
@@ -96,9 +105,10 @@
                 <li>@Html.ActionLink(@Localization.Localize("Swedish"), "SetCulture", new { controller = "Culture", culture = "sv-SE", returnUrl = HttpContext.Current.Request.RawUrl }, new { Class = "btn btn-lg btn-primary" })</li>
             </ul>
         </div>
-
     </div>
 </div>
+}
+<div id="statusMsg">@statusMsg</div>
 <div class="configStatus" id="configStatus">
     <div id="accordionStatus" class="toolbox">
         <h3>Frames</h3>
@@ -131,12 +141,12 @@
         var startPos;
         var textArea = "";
         var actualPage = 1;
-       
+
         var framesContent = $('div#frames');
         var dialogOpts = {
             position: [5, 110]
         };
-        $(function() {
+        $(function () {
             $("#pages").tabs();
             $("#chapters").tabs();
             $("#chapter1").tabs();
@@ -146,35 +156,33 @@
             $("#accordionStatus").accordion();
             $('#userContent').load('/Book/GetAvailableBooks', { fileOption: "newBook" });
         });
-      $(".selectpicker").change(function () {
-            
-          //$.post("Test", { fileOption: $(this).val() }).done(function (data) {
-          $('#userContent').load('/Book/GetAvailableBooks', { fileOption: $(this).val() });
-              //  alert(data.Title);
-            //});
+        $(".selectpicker").change(function () {
+
+            $('#userContent').load('/Book/GetAvailableBooks', { fileOption: $(this).val() });
+
         });
 
-     
+
         function AddTextToStatus(mssg) {
             $("#status").val($("#status").val() + mssg + "\n");
         }
 
         $("#accordion").accordion({
             active: 0,
-            change: function(event, ui) {
+            change: function (event, ui) {
                 var activeIndex = $("#accordion").accordion("option", "active");
-                //alert(activeIndex);
+
                 switch (activeIndex) {
-                case 0:
-                   // $('#chapter2').show();
-                   // $('#chapter1').show();
-                    break;
-                case 1:
-                    // $("#ContentEdit").show();
-                   // $('#chapter2').hide();
-                   // $('#chapter1').hide();
-                    break;
-                default:
+                    case 0:
+                        // $('#chapter2').show();
+                        // $('#chapter1').show();
+                        break;
+                    case 1:
+                        // $("#ContentEdit").show();
+                        // $('#chapter2').hide();
+                        // $('#chapter1').hide();
+                        break;
+                    default:
                 }
 
             }
@@ -182,14 +190,13 @@
         /*Function handle draggable objects. 
                  Objects you pickup and drag*/
 
-        $(function() {
+        $(function () {
             $(".draggable").draggable({
                 cursor: 'move',
                 helper: 'clone',
-                drag: function(event, ui) {
+                drag: function (event, ui) {
                     draggableId = $(this).attr("id");
-                    // $('body').css('cursor', 'move');
-                    // $(this).hide();
+
                 }
             }).addClass("ui-state-highlight");
 
@@ -198,17 +205,17 @@
                 return '<img id="cuadratric" alt="" class="draggable" src="~/Images/cuadratric.png" border="1" width="150" height="137" title="MainContent" />';
             }
 
-/*Function handle droppable objects. 
-              Object where you put your draggable*/
+            /*Function handle droppable objects. 
+                          Object where you put your draggable*/
             $(".droppable").droppable({
-                drop: function(event, ui) {
+                drop: function (event, ui) {
                     var pageIdAtributte = $(this).parent().parent().attr("id");
                     var descriptionArray = [];
                     droppableId = $(this).attr("id");
                     actualPage = pageIdAtributte.substring(pageIdAtributte.length - 1);
 
                     //Add frames in page
-                    $(this).each(function(i, elem) {
+                    $(this).each(function (i, elem) {
                         var spanText = $(elem).find("span").text();
                         var frameId = $(elem).attr("id");
                         AddTextToStatus("PageId " + pageIdAtributte);
@@ -218,7 +225,7 @@
                         descriptionArray.push(pageIdAtributte + "-" + frameId + "-" + draggableId);
                     });
                     if (droppableId != draggableId) {
-                        PostArray("AddContentToFrame",descriptionArray);
+                        PostArray("AddContentToFrame", descriptionArray);
                     }
                     var temp = $(this).attr("id").substring(0, 5);
 
@@ -234,7 +241,7 @@
         });
         /*All post data to controller go thorugh this function*/
 
-        function PostArray(url,descriptionArray) {
+        function PostArray(url, descriptionArray) {
             jQuery.ajax({
                 type: 'POST',
                 url: url,
@@ -242,12 +249,12 @@
                 data: JSON.stringify(descriptionArray),
                 async: false,
                 dataType: "json",
-                success: function(msg) {
-                    alert(msg);
-                   descriptionArray.length = 0;
+                success: function (msg) {
+
+                    descriptionArray.length = 0;
                 },
-                error: function(msg) {
-                    alert(msg);
+                error: function (msg) {
+
                 }
             });
         }
@@ -255,10 +262,10 @@
         $("#btnAddPage").click(function () {
             var descriptionArray = [];
             descriptionArray.push("chapter1");
-            PostArray("AddPage",descriptionArray);
+            PostArray("AddPage", descriptionArray);
         });
 
-        $("#btnAddChapter").click(function() {
+        $("#btnAddChapter").click(function () {
             //  var id = this.value;
 
 

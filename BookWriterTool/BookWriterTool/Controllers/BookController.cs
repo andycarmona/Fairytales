@@ -2,6 +2,7 @@
 
 namespace BookWriterTool.Controllers
 {
+    using System;
 
     using BookWriterTool.Helpers;
     using BookWriterTool.Models;
@@ -13,81 +14,124 @@ namespace BookWriterTool.Controllers
 
         private FileOperations FileHandler;
 
+        private book aBook;
+
+        private string activeUser;
 
         public BookController()
             : this(new BookRepository())
         {
-            
+
         }
         public BookController(IBookRepository bookRepository)
         {
-           
-            _bookRepository = bookRepository; 
-             FileHandler= new FileOperations();
+
+            _bookRepository = bookRepository;
+            FileHandler = new FileOperations();
+
         }
+
         public ActionResult FakeLogin(string userName)
         {
             var httpSessionStateBase = this.HttpContext.Session;
             if (httpSessionStateBase != null)
             {
                 httpSessionStateBase["username"] = userName;
+
             }
             return RedirectToAction("EditBook");
         }
+
         public ActionResult GetChosenBook(string fileName)
         {
-            string msg = _bookRepository.SetActualFile(HttpContext.Server.MapPath(fileName));
-           
-               return this.RedirectToAction("EditBook",new{statusMsg=msg});
+            string msg = _bookRepository.SetActualFile(fileName);
+            aBook = this._bookRepository.GetAllContent();
+            ViewBag.statusMsg = msg;
+            TempData["ActualBook"] = aBook;
+            return this.RedirectToAction("EditBook");
 
         }
-  
+
         public PartialViewResult GetAvailableBooks(string fileOption)
         {
-            string[] listOfBooks=null;
-            var activeUser=(string)this.Session["username"];
-            if (Session["username"] == null)
+            string statusMsg = "Got all books";
+            string[] listOfBooks = null;
+            bool newBook = true;
+            if (Session["username"] != null)
             {
-                activeUser = "andresc";
+                activeUser = (string)this.Session["username"];
+            }
+            else
+            {
+                statusMsg = "Couldn't find files";
             }
 
-            if (fileOption.Equals("loadBook"))
+            try
             {
-                listOfBooks = FileHandler.GetListOfUserFiles(activeUser);
+                if (fileOption.Equals("loadBook"))
+                {
+                    listOfBooks = FileHandler.GetListOfUserFiles(activeUser);
+                    string[] temp = new string[listOfBooks.Length+1];
+                    for (int i = 0; i < listOfBooks.Length; i++)
+                    {
+                        temp[i+1] = listOfBooks[i];
+                    }
+                    listOfBooks = temp;
+                        newBook = false;
+                }
+                else if (fileOption.Equals("newBook"))
+                {
+                    listOfBooks = FileHandler.GetListOfTemplates();
+
+                }
             }
-            else if (fileOption.Equals("newBook"))
+            catch (Exception e)
             {
-                listOfBooks = FileHandler.GetListOfTemplates();
+                statusMsg = e.Message;
             }
-            
+            ViewBag.statusMsg = statusMsg;
+            ViewBag.newBook = newBook;
+            ViewBag.listBook = listOfBooks;
             return this.PartialView("ListOfBooks",listOfBooks);
         }
+
         [HttpPost]
         public JsonResult Test(string fileOption)
         {
             var question = new Question { Title = "What is a the Matrix ? " + fileOption };
             return Json(question);
         }
+
         public class Question
         {
             public string Title { get; set; }
         }
+
         public ActionResult EditBook()
         {
-            book aBook = this._bookRepository.GetAllContent();
+            string[] listOfBooks = FileHandler.GetListOfUserFiles(activeUser);
+
+            if (TempData["ActualBook"] != null)
+            {
+                aBook = TempData["ActualBook"] as book;
+            }
+            ViewBag.arrayBooks = listOfBooks;
+
             return this.View(aBook);
         }
+
         [HttpPost]
         public ActionResult AddPage(string[] chapterNumber)
         {
             book aBook = this._bookRepository.AddPage(chapterNumber[0]);
-            
-            return this.RedirectToActionPermanent("EditBook",aBook);
+
+            return this.RedirectToActionPermanent("EditBook", aBook);
         }
+
         [HttpPost]
         public void AddContentToFrame(string[] frameDescriptionArray)
         {
-         _bookRepository.AddContentToFrame(frameDescriptionArray);
+            _bookRepository.AddContentToFrame(frameDescriptionArray);
         }
 
         public ActionResult ViewBook(string bookId)
