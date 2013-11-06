@@ -12,7 +12,7 @@
         <!-- our first page! -->
         <page id="page1">
           <frames>
-            <frame id="frame1" bordertype="cuadratric">
+            <frame id="frame1" bordertype="triangle">
               <contents>
                 <!-- content for left -->
                 <content target="left" type="none">
@@ -36,8 +36,8 @@
                 </content>
               </contents>
             </frame>
-            <frame id="frame2" bordertype="rectangle" />
-            <frame id="frame3" bordertype="rectangle" />
+            <frame id="frame2" bordertype="triangle" />
+            <frame id="frame3" bordertype="triangle" />
           </frames>
         </page>
         <page id="page2">
@@ -102,198 +102,24 @@
         </page>
         <page id="page4">
           <frames>
-            <frame id="frame1" bordertype="triangle" />
+            <frame id="frame1" bordertype="rectangle" />
           </frames>
         </page>
         <page id="page5">
           <frames>
-            <frame id="frame1" bordertype="triangle" />
+            <frame id="frame1" bordertype="rectangle" />
           </frames>
         </page>
         <page id="page6">
           <frames>
+            <frame id="frame1" bordertype="rectangle" />
+          </frames>
+        </page>
+        <page id="page7">
+          <frames>
             <frame id="frame1" bordertype="triangle" />
           </frames>
         </page>
-      </pages>
-      <!-- End of chapter -->
-    </chapter>
-    <chapter id="chapter2">
-      <!-- grouped chapter information -->
-      <!-- a chapter can have one ore more pages. -->
-      <pages>
-        <!-- our first page! -->
-        <page id="page1">
-          <!-- pages can have one or more frames. most suitable? -->
-          <frames>
-            <!-- Our first frame 
-                    a triangle frame -->
-            <frame id="frame1" bordertype="cuadratric">
-              <scene id="scene1">
-              </scene>
-              <contents>
-                <!-- content for left -->
-                <content target="left" type="none">
-                  <objects>
-                    <object type="character" id="duck">
-                    </object>
-                    <object type="character" id="croc" animation="talk" string="dia1">
-                    </object>
-                    <object type="text" id="text1" string="text1">
-                    </object>
-                  </objects>
-                </content>
-                <!-- content for right -->
-                <content target="right" type="none">
-                  <objects>
-                    <object type="character" id="duck">
-                    </object>
-                    <object type="character" id="croc" animation="talk" string="dia1">
-                    </object>
-                  </objects>
-                </content>
-              </contents>
-              <!-- End of frame -->
-            </frame>
-            <!-- Our second frame 
-              this one is a choice -->
-            <frame id="frame2" bordertype="cuadratric">
-              <!-- we will use the same scene as the first frame. -->
-              <scene id="scene1">
-              </scene>
-              <!-- define contents of this rectangle frame -->
-              <contents>
-                <!-- content type, this case: fill as it takes up the whole frame. -->
-                <content target="fill" type="choice">
-                  <!-- The characters to be in this box -->
-                  <objects>
-                    <object type="character" id="duck">
-                    </object>
-                    <object type="character" id="croc" animation="talk" string="dia1">
-                    </object>
-                  </objects>
-                  <!-- Create a "choice" where the player can choose between a positive and a negative response. -->
-                  <choice owner="croc">
-                    <!-- the actual question text that the user gets to read before making its choice. -->
-                    <question id="questionText1">
-                    </question>
-                    <!-- defines what happens when you choose a positive response -->
-                    <positive>
-                      <text id="positiveResponse1">
-                      </text>
-                      <result>
-                        <success goto="page2">
-                        </success>
-                        <failed goto="gameOver">
-                        </failed>
-                      </result>
-                    </positive>
-                    <!-- defines what happens when you choose a negative response -->
-                    <negative>
-                      <text id="negativeResponse1">
-                      </text>
-                      <result>
-                        <success goto="page3">
-                        </success>
-                        <failed goto="frame2">
-                        </failed>
-                      </result>
-                    </negative>
-                  </choice>
-                </content>
-              </contents>
-              <!-- End of frame -->
-            </frame>
-            <!-- End of frames -->
-          </frames>
-          <!-- End of page -->
-        </page>
-        <page id="page2">
-          <!-- pages can have one or more frames. most suitable? -->
-          <frames>
-            <!-- Our first frame 
-                    a triangle frame -->
-            <frame id="frame1" bordertype="rectangle">
-              <scene id="scene1">
-              </scene>
-              <contents>
-                <!-- content for left -->
-                <content target="left" type="none">
-                  <objects>
-                    <object type="character" id="duck">
-                    </object>
-                    <object type="character" id="croc" animation="talk" string="dia1">
-                    </object>
-                    <object type="text" id="text1" string="text1">
-                    </object>
-                  </objects>
-                </content>
-                <!-- content for right -->
-                <content target="right" type="none">
-                  <objects>
-                    <object type="character" id="duck">
-                    </object>
-                    <object type="character" id="croc" animation="talk" string="dia1">
-                    </object>
-                  </objects>
-                </content>
-              </contents>
-              <!-- End of frame -->
-            </frame>
-            <!-- Our second frame 
-              this one is a choice -->
-            <frame id="frame2" bordertype="rectangle">
-              <!-- we will use the same scene as the first frame. -->
-              <scene id="scene1">
-              </scene>
-              <!-- define contents of this rectangle frame -->
-              <contents>
-                <!-- content type, this case: fill as it takes up the whole frame. -->
-                <content target="fill" type="choice">
-                  <!-- The characters to be in this box -->
-                  <objects>
-                    <object type="character" id="duck">
-                    </object>
-                    <object type="character" id="croc" animation="talk" string="dia1">
-                    </object>
-                  </objects>
-                  <!-- Create a "choice" where the player can choose between a positive and a negative response. -->
-                  <choice owner="croc">
-                    <!-- the actual question text that the user gets to read before making its choice. -->
-                    <question id="questionText1">
-                    </question>
-                    <!-- defines what happens when you choose a positive response -->
-                    <positive>
-                      <text id="positiveResponse1">
-                      </text>
-                      <result>
-                        <success goto="page2">
-                        </success>
-                        <failed goto="gameOver">
-                        </failed>
-                      </result>
-                    </positive>
-                    <!-- defines what happens when you choose a negative response -->
-                    <negative>
-                      <text id="negativeResponse1">
-                      </text>
-                      <result>
-                        <success goto="page3">
-                        </success>
-                        <failed goto="frame2">
-                        </failed>
-                      </result>
-                    </negative>
-                  </choice>
-                </content>
-              </contents>
-              <!-- End of frame -->
-            </frame>
-            <!-- End of frames -->
-          </frames>
-          <!-- End of page -->
-        </page>
-        <!-- End of pages -->
       </pages>
       <!-- End of chapter -->
     </chapter>

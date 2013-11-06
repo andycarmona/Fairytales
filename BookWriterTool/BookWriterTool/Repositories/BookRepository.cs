@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Web;
+﻿using System.Web;
 
 namespace BookWriterTool.Repositories
 {
@@ -15,9 +14,8 @@ namespace BookWriterTool.Repositories
 
 
         private readonly FileOperations handleFiles;
-        private string actualBook;
+
         private book aBook;
-        private int pathFirstPage;
 
         public BookRepository()
         {
@@ -25,13 +23,13 @@ namespace BookWriterTool.Repositories
             handleFiles = new FileOperations();
         }
 
-        public string  SetActualFile(string actualBook)
+        public string SetActualFile(string aFileBook)
         {
-            this.actualBook = actualBook;
+
             string status = "Executed with no errors";
             try
             {
-                aBook = handleFiles.SerializeXmlToObject(actualBook);
+                aBook = handleFiles.SerializeXmlToObject(aFileBook);
             }
             catch (IOException ex)
             {
@@ -39,8 +37,9 @@ namespace BookWriterTool.Repositories
             }
             return status;
         }
-        public int GetNumberOfpagesInBook()
+        public int GetNumberOfpagesInBook(string fileName)
         {
+            this.SetActualFile(fileName);
             bookChapterPage[] apage = aBook.chapters[0].pages;
             return apage.Length;
         }
@@ -57,20 +56,19 @@ namespace BookWriterTool.Repositories
             return aChapter;
         }
 
-        public book AddContentsInFrame()
-        {
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(HttpContext.Current.Server.MapPath(actualBook));
-            XmlNode aPageNode;
-            XmlNodeList chaptersNodes = xmlDoc.SelectNodes("//book/chapters/chapter");
-            return this.GetAllContent();
-        }
+        /* public book AddContentsInFrame()
+         {
+             XmlDocument xmlDoc = new XmlDocument();
+             xmlDoc.Load(HttpContext.Current.Server.MapPath(actualBook));
+             XmlNode aPageNode;
+             XmlNodeList chaptersNodes = xmlDoc.SelectNodes("//book/chapters/chapter");
+             return this.GetAllContent();
+         }*/
 
-        public book AddPage(string chapterId)
+        public book AddPage(string chapterId, string fileName)
         {
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(HttpContext.Current.Server.MapPath(actualBook));
-            XmlNode aPageNode;
+            var xmlDoc = new XmlDocument();
+            xmlDoc.Load(HttpContext.Current.Server.MapPath(fileName));
             XmlNodeList chaptersNodes = xmlDoc.SelectNodes("//book/chapters/chapter");
             XmlElement elemPage = xmlDoc.CreateElement("page");
             XmlElement elemFrames = xmlDoc.CreateElement("frames");
@@ -78,7 +76,7 @@ namespace BookWriterTool.Repositories
             aFrame.SetAttribute("id", "frame1");
             aFrame.SetAttribute("bordertype", "triangle");
             XmlNode parentNode = null;
-            string pageIdName = string.Format("{0}{1}", "page", (this.GetNumberOfpagesInBook() + 1));
+            string pageIdName = string.Format("{0}{1}", "page", (this.GetNumberOfpagesInBook(fileName) + 1));
             elemPage.SetAttribute("id", pageIdName);
             elemPage.AppendChild(elemFrames);
 
@@ -102,15 +100,15 @@ namespace BookWriterTool.Repositories
                     parentNode.AppendChild(elemPage);
                 }
             }
-            xmlDoc.Save(HttpContext.Current.Server.MapPath(actualBook));
+            xmlDoc.Save(HttpContext.Current.Server.MapPath(fileName));
             return this.GetAllContent();
         }
 
-        public void AddContentToFrame(string[] content)
+        public void AddContentToFrame(string[] content, string fileName)
         {
 
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(HttpContext.Current.Server.MapPath(actualBook));
+            var xmlDoc = new XmlDocument();
+            xmlDoc.Load(HttpContext.Current.Server.MapPath(fileName));
             XmlNodeList pagesNodes = xmlDoc.SelectNodes("//book/chapters/chapter/pages/page");
             XmlNodeList frameNodes = null;
             if (pagesNodes != null)
@@ -153,7 +151,9 @@ namespace BookWriterTool.Repositories
                     }
                 }
             }
-            xmlDoc.Save(HttpContext.Current.Server.MapPath(actualBook));
+
+            xmlDoc.Save(HttpContext.Current.Server.MapPath(fileName));
+
         }
 
 
@@ -167,8 +167,12 @@ namespace BookWriterTool.Repositories
             return aBook;
         }
 
+        public void EditChapter(string chapterId)
+        {
+            throw new System.NotImplementedException();
+        }
 
-        public void EditChapter(string id)
+        /*     public void EditChapter(string id)
         {
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(HttpContext.Current.Server.MapPath(actualBook));
@@ -186,6 +190,6 @@ namespace BookWriterTool.Repositories
                     }
                 }
             }
-        }
+        }*/
     }
 }

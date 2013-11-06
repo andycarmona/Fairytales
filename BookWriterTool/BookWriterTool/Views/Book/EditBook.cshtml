@@ -28,8 +28,6 @@
             {
                 <li><a href="#@chapter.id">@Localization.Localize("chapter")@(chapterIndex++)</a></li>
             }
-            <li>
-                <button id="btnAddChapter" type="button" value="+">+</button></li>
         </ul>
         <!--Chapters section-->
         @for (int indexChapters = 0; indexChapters < @Model.chapters.Length; indexChapters++)
@@ -209,19 +207,19 @@
                           Object where you put your draggable*/
             $(".droppable").droppable({
                 drop: function (event, ui) {
-                    var pageIdAtributte = $(this).parent().parent().attr("id");
+                    var pageIdAtributte = $(this).parent().parent().parent().attr("id");
                     var descriptionArray = [];
                     droppableId = $(this).attr("id");
-                    actualPage = pageIdAtributte.substring(pageIdAtributte.length - 1);
+                   // actualPage = pageIdAtributte.substring(pageIdAtributte.length - 1);
 
                     //Add frames in page
                     $(this).each(function (i, elem) {
-                        var spanText = $(elem).find("span").text();
+                       // var spanText = $(elem).find("span").text();
                         var frameId = $(elem).attr("id");
-                        AddTextToStatus("PageId " + pageIdAtributte);
+                       /* AddTextToStatus("PageId " + pageIdAtributte);
                         AddTextToStatus("dropable " + draggableId);
                         AddTextToStatus("dragable " + spanText);
-                        AddTextToStatus("frameId " + frameId);
+                        AddTextToStatus("frameId " + frameId);*/
                         descriptionArray.push(pageIdAtributte + "-" + frameId + "-" + draggableId);
                     });
                     if (droppableId != draggableId) {
@@ -249,12 +247,12 @@
                 data: JSON.stringify(descriptionArray),
                 async: false,
                 dataType: "json",
-                success: function (msg) {
+                success: function (statusMsg) {
 
                     descriptionArray.length = 0;
                 },
-                error: function (msg) {
-
+                error: function (statusMsg) {
+                    AddTextToStatus("Couldn't send message.Wrong parameters");
                 }
             });
         }
@@ -262,7 +260,10 @@
         $("#btnAddPage").click(function () {
             var descriptionArray = [];
             descriptionArray.push("chapter1");
+            AddTextToStatus(descriptionArray[0]);
             PostArray("AddPage", descriptionArray);
+            //Reload tab control
+           // $('#chapters').tabs('load', 0);
         });
 
         $("#btnAddChapter").click(function () {

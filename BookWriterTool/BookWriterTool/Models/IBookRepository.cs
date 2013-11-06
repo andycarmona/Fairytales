@@ -10,9 +10,9 @@ namespace BookWriterTool.Models
        bookChapter GetChapterById(string chapterId);
 
         string SetActualFile(string actualBook);
-        book AddPage(string chapterNumber);
+        book AddPage(string chapterNumber,string fileName);
 
-        void AddContentToFrame(string[] content);
+        void AddContentToFrame(string[] content, string fileName);
         book GetAllContent();
         void EditChapter(string chapterId);
     }

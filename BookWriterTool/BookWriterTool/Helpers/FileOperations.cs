@@ -45,14 +45,14 @@ namespace BookWriterTool.Helpers
         public string[] GetListOfTemplates()
         {
             string[] filesPaths = Directory.GetFiles(HttpContext.Current.Server.MapPath(TemplateDirectory));
-           // filesPaths.SetValue(TemplateDirectory,filesPaths.Length+1);
+     
             return filesPaths;
         }
 
         public string[] GetListOfUserFiles(string user)
         {
             string[] filesPaths = Directory.GetFiles(HttpContext.Current.Server.MapPath(UsersDirectory + "/" + user));
-           // filesPaths.SetValue(UsersDirectory+"/"+user, filesPaths.Length + 1);
+     
             return filesPaths;
         }
     }

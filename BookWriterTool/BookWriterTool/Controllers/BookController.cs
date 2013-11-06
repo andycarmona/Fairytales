@@ -3,6 +3,7 @@
 namespace BookWriterTool.Controllers
 {
     using System;
+    using System.IO;
 
     using BookWriterTool.Helpers;
     using BookWriterTool.Models;
@@ -10,9 +11,9 @@ namespace BookWriterTool.Controllers
 
     public class BookController : Controller
     {
-        private readonly IBookRepository _bookRepository;
+        private readonly IBookRepository aBookRepository;
 
-        private FileOperations FileHandler;
+        private readonly FileOperations fileHandler;
 
         private book aBook;
 
@@ -26,8 +27,8 @@ namespace BookWriterTool.Controllers
         public BookController(IBookRepository bookRepository)
         {
 
-            _bookRepository = bookRepository;
-            FileHandler = new FileOperations();
+            aBookRepository = bookRepository;
+            this.fileHandler = new FileOperations();
 
         }
 
@@ -44,9 +45,10 @@ namespace BookWriterTool.Controllers
 
         public ActionResult GetChosenBook(string fileName)
         {
-            string msg = _bookRepository.SetActualFile(fileName);
-            aBook = this._bookRepository.GetAllContent();
+            string msg = aBookRepository.SetActualFile(fileName);
+            aBook = this.aBookRepository.GetAllContent();
             ViewBag.statusMsg = msg;
+            Session["ActualFile"] = fileName;
             TempData["ActualBook"] = aBook;
             return this.RedirectToAction("EditBook");
 
@@ -70,18 +72,18 @@ namespace BookWriterTool.Controllers
             {
                 if (fileOption.Equals("loadBook"))
                 {
-                    listOfBooks = FileHandler.GetListOfUserFiles(activeUser);
-                    string[] temp = new string[listOfBooks.Length+1];
+                    listOfBooks = this.fileHandler.GetListOfUserFiles(activeUser);
+                    var temp = new string[listOfBooks.Length + 1];
                     for (int i = 0; i < listOfBooks.Length; i++)
                     {
-                        temp[i+1] = listOfBooks[i];
+                        temp[i + 1] = listOfBooks[i];
                     }
                     listOfBooks = temp;
-                        newBook = false;
+                    newBook = false;
                 }
                 else if (fileOption.Equals("newBook"))
                 {
-                    listOfBooks = FileHandler.GetListOfTemplates();
+                    listOfBooks = this.fileHandler.GetListOfTemplates();
 
                 }
             }
@@ -92,7 +94,7 @@ namespace BookWriterTool.Controllers
             ViewBag.statusMsg = statusMsg;
             ViewBag.newBook = newBook;
             ViewBag.listBook = listOfBooks;
-            return this.PartialView("ListOfBooks",listOfBooks);
+            return this.PartialView("ListOfBooks", listOfBooks);
         }
 
         [HttpPost]
@@ -109,7 +111,7 @@ namespace BookWriterTool.Controllers
 
         public ActionResult EditBook()
         {
-            string[] listOfBooks = FileHandler.GetListOfUserFiles(activeUser);
+            string[] listOfBooks = this.fileHandler.GetListOfUserFiles(activeUser);
 
             if (TempData["ActualBook"] != null)
             {
@@ -123,21 +125,50 @@ namespace BookWriterTool.Controllers
         [HttpPost]
         public ActionResult AddPage(string[] chapterNumber)
         {
-            book aBook = this._bookRepository.AddPage(chapterNumber[0]);
+            string statusMsg = "Page added";
+            if (Session["ActualFile"] != null)
+            {
 
-            return this.RedirectToActionPermanent("EditBook", aBook);
+                var fileName = (string)this.Session["ActualFile"];
+                try
+                {
+                    book anotherBook = this.aBookRepository.AddPage(chapterNumber[0], fileName);
+                    return this.RedirectToActionPermanent("EditBook", anotherBook);
+                }
+                catch (Exception e)
+                {
+                    statusMsg = e.Message;
+                }
+
+            }
+            return Json(statusMsg);
         }
 
         [HttpPost]
-        public void AddContentToFrame(string[] frameDescriptionArray)
+        public JsonResult AddContentToFrame(string[] frameDescriptionArray)
         {
-            _bookRepository.AddContentToFrame(frameDescriptionArray);
+            string statusMsg = "Changed frame in page";
+            if (Session["ActualFile"] != null)
+            {
+                try
+                {
+                    var fileName = (string)this.Session["ActualFile"];
+
+                    aBookRepository.AddContentToFrame(frameDescriptionArray, fileName);
+                }
+                catch (IOException e)
+                {
+                    statusMsg = e.Message;
+                }
+
+            }
+            return Json(statusMsg);
         }
 
         public ActionResult ViewBook(string bookId)
         {
-            book aBook = this._bookRepository.GetAllContent();
-            return this.View(aBook);
+            book anotherBook = this.aBookRepository.GetAllContent();
+            return this.View(anotherBook);
         }
 
     }
