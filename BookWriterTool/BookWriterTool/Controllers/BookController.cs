@@ -3,6 +3,7 @@
 namespace BookWriterTool.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
 
     using BookWriterTool.Helpers;
@@ -120,6 +121,35 @@ namespace BookWriterTool.Controllers
             ViewBag.arrayBooks = listOfBooks;
 
             return this.View(aBook);
+        }
+        [HttpGet]
+        public List<bookChapterPageFrameContentObject> GetListObjectsInframe(int indexChapters,int indexPages,string target)
+        {
+           aBookRepository.SetActualFile("fileName");
+            book actualBook = this.aBookRepository.GetAllContent();
+            var listOfObject = new List<bookChapterPageFrameContentObject>();
+           
+            foreach (bookChapterPageFrame frame in actualBook.chapters[indexChapters].pages[indexPages].frames)
+            {
+
+                if (frame.contents != null)
+                {
+                    foreach (bookChapterPageFrameContent content in frame.contents)
+                    {
+                        if (content.target == target)
+                        {
+                            foreach (bookChapterPageFrameContentObject Object in content.objects)
+                            {
+                                listOfObject.Add(Object);
+
+                            }
+
+                        }
+                    }
+
+                }
+            
+            }    return listOfObject;
         }
 
         [HttpPost]

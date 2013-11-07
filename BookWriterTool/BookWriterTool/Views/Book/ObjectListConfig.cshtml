@@ -1,0 +1,19 @@
+﻿@model List<bookChapterPageFrameContentObject>
+@{
+    Layout = null;
+}
+<div id="FrameEdit">
+    @if (@Model != null)
+    {
+        if (@Model[0] != null)
+        {
+            foreach (bookChapterPageFrameContentObject Object in @Model)
+            {
+
+                <text>Object animation: @(Object.animation ?? "No animation")</text>
+                <text>Object type: @(Object.type ?? "No type")</text>
+
+            }
+        }
+    }
+</div>

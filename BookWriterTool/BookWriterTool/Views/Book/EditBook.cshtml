@@ -1,5 +1,8 @@
 ﻿@using BookWriterTool.Helpers
 @model book
+
+
+
 @{
     
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,10 +16,15 @@
     {
         statusMsg = "No message";
     }
+    bookChapterPageFrameContent contentframe;
+    bookChapterPageFrameContentObject aObject = null;
+    int contentIndex = 0;
+    object contentObj;
     int index = 1;
     int chapterIndex = 1;
     int pageIndex = 1;
     var listOfBooks = new string[1];
+    var listOfObjects = new List<bookChapterPageFrameContentObject> { aObject };
     listOfBooks[0] = "no book";
 }
 @if (Model != null)
@@ -55,17 +63,17 @@
                         <div class="frame" id="frames">
                             @foreach (bookChapterPageFrame frame in @Model.chapters[indexChapters].pages[indexPages].frames)
                             {
-                                <div id="FrameEdit">
-                                    <div id="@frame.id" class="droppable">
-                                        <img id="img@(frame.id)" border="0" width="700" height="158" alt="" src="~/Images/@(frame.bordertype).png" />
-                                        <span>@(frame.bordertype)</span>
-                                    </div>
-
-                                </div>
-                                <div style="visibility: hidden;" id="ContentEdit">
-                                </div>
-                            }  @{ index++; }
-                        </div>
+                               
+                                <div id="@frame.id" class="droppable">
+                                    <img id="img@(frame.id)" border="0" width="700" height="158" alt="" src="~/Images/@(frame.bordertype).png" />
+                                   
+                                </div> 
+                                 
+                                <text>Frame: @(frame.id)</text>
+                                <span id="bordertypeIdentifier">Bordertype: @(frame.bordertype)</span>
+                           
+                            }  @{ index++; }<button id="editContent" type="button" value="Edit">Edit</button>
+                        </div> 
                     </div>
                 }
                 <!--End frames section-->
@@ -89,6 +97,11 @@
                     this.Html.RenderPartial("~/Views/Book/ListOfBooks.cshtml", @listOfBooks);
                 }
             </div>
+            <div id="FrameEdit">
+    @{
+        this.Html.RenderPartial("~/Views/Book/ObjectListConfig.cshtml", @listOfObjects);
+    }
+</div>
         </div>
         <h3>Status</h3>
         <div class="leftContent">
@@ -129,7 +142,8 @@
         </div>
     </div>
 </div>
-
+<div id="contentWindow">
+</div>
 
 @section scripts
 {
@@ -149,7 +163,7 @@
             $("#chapters").tabs();
             $("#chapter1").tabs();
             $("#chapter2").tabs();
-            //  $("#configDialog").dialog(dialogOpts);
+            $("#FrameEdit").dialog(dialogOpts);
             $("#accordionConfig").accordion();
             $("#accordionStatus").accordion();
             $('#userContent').load('/Book/GetAvailableBooks', { fileOption: "newBook" });
@@ -160,6 +174,26 @@
 
         });
 
+        $("#editContent").click(function () {
+            alert("clikad");
+            $.get("/Book/GetListObjectsInframe",{ indexChapters: 0,indexPages:0,target:"left" }, function (data) {
+                $("#FrameEdit").load(data);
+            });
+
+    
+        });
+        $("#btnAddPage").click(function () {
+            var descriptionArray = [];
+            descriptionArray.push("chapter1");
+            AddTextToStatus(descriptionArray[0]);
+            PostArray("AddPage", descriptionArray);
+            //Reload tab control
+            // $('#chapters').tabs('load', 0);
+        });
+
+        $("#btnAddChapter").click(function () {
+            //  var id = this.value;
+        });
 
         function AddTextToStatus(mssg) {
             $("#status").val($("#status").val() + mssg + "\n");
@@ -210,16 +244,16 @@
                     var pageIdAtributte = $(this).parent().parent().parent().attr("id");
                     var descriptionArray = [];
                     droppableId = $(this).attr("id");
-                   // actualPage = pageIdAtributte.substring(pageIdAtributte.length - 1);
+                    // actualPage = pageIdAtributte.substring(pageIdAtributte.length - 1);
 
                     //Add frames in page
                     $(this).each(function (i, elem) {
-                       // var spanText = $(elem).find("span").text();
+                        // var spanText = $(elem).find("span").text();
                         var frameId = $(elem).attr("id");
-                       /* AddTextToStatus("PageId " + pageIdAtributte);
-                        AddTextToStatus("dropable " + draggableId);
-                        AddTextToStatus("dragable " + spanText);
-                        AddTextToStatus("frameId " + frameId);*/
+                        /* AddTextToStatus("PageId " + pageIdAtributte);
+                         AddTextToStatus("dropable " + draggableId);
+                         AddTextToStatus("dragable " + spanText);
+                         AddTextToStatus("frameId " + frameId);*/
                         descriptionArray.push(pageIdAtributte + "-" + frameId + "-" + draggableId);
                     });
                     if (droppableId != draggableId) {
@@ -256,22 +290,6 @@
                 }
             });
         }
-
-        $("#btnAddPage").click(function () {
-            var descriptionArray = [];
-            descriptionArray.push("chapter1");
-            AddTextToStatus(descriptionArray[0]);
-            PostArray("AddPage", descriptionArray);
-            //Reload tab control
-           // $('#chapters').tabs('load', 0);
-        });
-
-        $("#btnAddChapter").click(function () {
-            //  var id = this.value;
-
-
-        }
-        );
 
     </script>
 }

@@ -333,6 +333,7 @@
     <Content Include="Views\Book\ObjectList.cshtml" />
     <Content Include="Views\Book\BackgroundsList.cshtml" />
     <Content Include="Views\Book\ListOfBooks.cshtml" />
+    <Content Include="Views\Book\ObjectListConfig.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
