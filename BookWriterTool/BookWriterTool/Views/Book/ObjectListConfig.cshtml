@@ -2,7 +2,6 @@
 @{
     Layout = null;
 }
-<div id="FrameEdit">
     @if (@Model != null)
     {
         if (@Model[0] != null)
@@ -10,10 +9,9 @@
             foreach (bookChapterPageFrameContentObject Object in @Model)
             {
 
-                <text>Object animation: @(Object.animation ?? "No animation")</text>
-                <text>Object type: @(Object.type ?? "No type")</text>
+                <p>Object animation: @(Object.animation ?? "No animation")</p>
+                <p>Object type: @(Object.type ?? "No type")</p>
 
             }
         }
     }
-</div>

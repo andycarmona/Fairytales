@@ -98,18 +98,6 @@ namespace BookWriterTool.Controllers
             return this.PartialView("ListOfBooks", listOfBooks);
         }
 
-        [HttpPost]
-        public JsonResult Test(string fileOption)
-        {
-            var question = new Question { Title = "What is a the Matrix ? " + fileOption };
-            return Json(question);
-        }
-
-        public class Question
-        {
-            public string Title { get; set; }
-        }
-
         public ActionResult EditBook()
         {
             string[] listOfBooks = this.fileHandler.GetListOfUserFiles(activeUser);
@@ -122,34 +110,50 @@ namespace BookWriterTool.Controllers
 
             return this.View(aBook);
         }
-        [HttpGet]
-        public List<bookChapterPageFrameContentObject> GetListObjectsInframe(int indexChapters,int indexPages,string target)
+        [HttpPost]
+        public JsonResult GetListObjectsInframe(int indexChapters,int indexPages,string target)
         {
-           aBookRepository.SetActualFile("fileName");
-            book actualBook = this.aBookRepository.GetAllContent();
             var listOfObject = new List<bookChapterPageFrameContentObject>();
-           
-            foreach (bookChapterPageFrame frame in actualBook.chapters[indexChapters].pages[indexPages].frames)
-            {
+            string msg = "okay";
 
-                if (frame.contents != null)
+            if (Session["ActualFile"] != null)
+            {
+                string fileName = (string)this.Session["ActualFile"];
+
+                msg = aBookRepository.SetActualFile(fileName);
+
+                book actualBook = this.aBookRepository.GetAllContent();
+               
+
+                foreach (bookChapterPageFrame frame in actualBook.chapters[indexChapters].pages[indexPages].frames)
                 {
-                    foreach (bookChapterPageFrameContent content in frame.contents)
+                    if (frame.contents != null)
                     {
-                        if (content.target == target)
+                        foreach (bookChapterPageFrameContent content in frame.contents)
                         {
-                            foreach (bookChapterPageFrameContentObject Object in content.objects)
+                            if (content.target == target)
                             {
-                                listOfObject.Add(Object);
+                                foreach (bookChapterPageFrameContentObject Object in content.objects)
+                                {
+                                    listOfObject.Add(Object);
+
+                                }
 
                             }
-
                         }
+
                     }
 
                 }
-            
-            }    return listOfObject;
+                //bookChapterPageFrameContentObject[] returnValues = listOfObject.ToArray();
+                //return this.Json(returnValues);
+            }
+          
+            return Json(new
+            {
+                msg ,
+                ObjectInquiryView = this.RenderPartialView("ObjectListConfig", listOfObject)
+            });
         }
 
         [HttpPost]
@@ -195,11 +199,6 @@ namespace BookWriterTool.Controllers
             return Json(statusMsg);
         }
 
-        public ActionResult ViewBook(string bookId)
-        {
-            book anotherBook = this.aBookRepository.GetAllContent();
-            return this.View(anotherBook);
-        }
 
     }
 }

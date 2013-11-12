@@ -197,6 +197,7 @@
     <Compile Include="Helpers\FileOperations.cs" />
     <Compile Include="Helpers\GlobalVariables.cs" />
     <Compile Include="Helpers\Localization.cs" />
+    <Compile Include="Helpers\MvcHelpers.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\bookModel.cs" />
     <Compile Include="Models\IBookRepository.cs" />
@@ -322,7 +323,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Book\EditBook.cshtml" />
-    <Content Include="Views\Book\ViewBook.cshtml" />
     <Content Include="Views\Shared\Editor_Layout.cshtml" />
     <Content Include="Views\Shared\_BootstrapLayout.cshtml">
       <SubType>Code</SubType>
@@ -334,6 +334,7 @@
     <Content Include="Views\Book\BackgroundsList.cshtml" />
     <Content Include="Views\Book\ListOfBooks.cshtml" />
     <Content Include="Views\Book\ObjectListConfig.cshtml" />
+    <Content Include="Views\Shared\_MessageBox.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
