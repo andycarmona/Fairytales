@@ -27,6 +27,7 @@
     var listOfObjects = new List<bookChapterPageFrameContentObject> { aObject };
     listOfBooks[0] = "no book";
 }
+<div id="panel">
 @if (Model != null)
 {
     <div class="chapters" id="chapters">
@@ -139,13 +140,26 @@
         <h3>@Localization.Localize("backgrounds")</h3>
         <div class="leftContent">
 
-            @Html.Partial("~/Views/Book/ObjectList.cshtml")
+            @Html.Partial("~/Views/Book/BackgroundsList.cshtml")
 
         </div>
     </div>
 </div>
-
-
+<div id="FrameEdit">
+    <div id="frame">
+        <div  id="terrain">
+            <div class="mermaid"></div>                
+            <div class="fish"></div>
+        </div>
+    </div>
+    <div class="objConfigurator">
+        <label>Position X</label>
+        <input id="posX_txtbox" type="text" value="Position-X" />
+        <label>Position Y</label>
+        <input id="posY_txtbox" type="text" />
+    </div>
+</div>
+    </div>
 
 @section scripts
 {
@@ -165,7 +179,7 @@
             $("#chapters").tabs();
             $("#chapter1").tabs();
             $("#chapter2").tabs();
-            $("#FrameEdit").dialog(dialogOpts);
+           $("#FrameEdit").dialog(dialogOpts);
             $("#accordionConfig").accordion();
             $("#accordionStatus").accordion();
             $('#userContent').load('/Book/GetAvailableBooks', { fileOption: "newBook" });
@@ -188,6 +202,15 @@
                 $("#contentWindow").html(result.ObjectInquiryView);
            
         }
+
+        $(".backgroundContain").click(function () {
+            var bk = $(this).attr("id");
+            var imgChosen = $("#" + bk).attr("src");
+           // alert($(this).attr("id"));
+           // alert($("#" + bk).attr("src"));
+            $("#terrain").css("background-image", "url("+imgChosen+")");
+        });
+        
         $("#btnAddPage").click(function () {
             var descriptionArray = [];
             descriptionArray.push("chapter1");
@@ -204,12 +227,14 @@
         function AddTextToStatus(mssg) {
             $("#status").val($("#status").val() + mssg + "\n");
         }
-
-        $("#accordion").accordion({
+        function GetAccordionStatusIndex() {
+            return $("#accordionStatus").accordion("option", "active");
+        }
+        $("#accordionStatus").accordion({
             active: 0,
             change: function (event, ui) {
-                var activeIndex = $("#accordion").accordion("option", "active");
-
+                var activeIndex = $("#accordionStatus").accordion("option", "active");
+                //alert(activeIndex);
                 switch (activeIndex) {
                     case 0:
                         // $('#chapter2').show();
@@ -246,20 +271,15 @@
             /*Function handle droppable objects. 
                           Object where you put your draggable*/
             $(".droppable").droppable({
-                drop: function (event, ui) {
+                drop: function(event, ui) {
                     var pageIdAtributte = $(this).parent().parent().parent().attr("id");
                     var descriptionArray = [];
                     droppableId = $(this).attr("id");
-                    // actualPage = pageIdAtributte.substring(pageIdAtributte.length - 1);
 
                     //Add frames in page
-                    $(this).each(function (i, elem) {
-                        // var spanText = $(elem).find("span").text();
+                    $(this).each(function(i, elem) {
                         var frameId = $(elem).attr("id");
-                        /* AddTextToStatus("PageId " + pageIdAtributte);
-                         AddTextToStatus("dropable " + draggableId);
-                         AddTextToStatus("dragable " + spanText);
-                         AddTextToStatus("frameId " + frameId);*/
+
                         descriptionArray.push(pageIdAtributte + "-" + frameId + "-" + draggableId);
                     });
                     if (droppableId != draggableId) {
@@ -275,7 +295,7 @@
                     $("#" + draggableId).css({ position: "relative", top: 0, left: 0 });
                     $("#" + draggableId).show();
                 }
-            }).addClass("ui-state-highlight");
+            });
         });
         /*All post data to controller go thorugh this function*/
 

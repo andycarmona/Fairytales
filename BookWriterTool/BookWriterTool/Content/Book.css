@@ -5,10 +5,58 @@
     margin: 0 auto;
     background-color: rgba(255,255,255,0.90);
 }
-.panel {
+
+.objConfigurator
+{
+    border-bottom-left-radius: 8px;
+    border: 1px solid #d19405;
+background: #fece2f url(/Content/themes/sunny/images/ui-bg_gloss-wave_60_fece2f_500x100.png) 50% 50% repeat-x;
+font-weight: bold;
+color: #4c3000;
+}
+
+#FrameEdit
+{
+    background-color: #fece2f;
+    margin: 0 auto;
+    max-width: 500px;
+    height: 480px;
+}
+
+#frame #terrain
+{
+    position: relative;
+    background: url(../Images/cuadratric.png) repeat-x top left;
+    height: 300px;
+    width: 480px;
+}
+
+#frame .mermaid
+{
+    background: url(../Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png) repeat-x bottom left;
+    height: 70px;
+    width: 100px;
+    left: 80px;
+    top: 90px;
     position: absolute;
+}
+
+#frame .fish
+{
+    background: url(../Content/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png) no-repeat;
+    height: 70px;
+    width: 100px;
+    left: 30px;
+    top: 90px;
+    position: absolute;
+}
+
+
+#panel
+{
+ 
     width: 100%;
-    height: 100%;
+   
 }
 
 .rightContent
@@ -23,7 +71,7 @@
 .chapters
 {
     background-color: rgba(255,255,255,0.90);
-    position: absolute;
+    position: fixed;
     margin: 0px auto;
     top: 50px;
     width: 822px;
@@ -46,18 +94,22 @@
     right: -20px;
     top: 50px;
 }
-.configDialog {
-    position: absolute;
+
+.configDialog
+{
+    position:fixed;
     top: 0px;
     width: 240px;
-
 }
-.configStatus {
-    position: absolute;
+
+.configStatus
+{
+    position:fixed;
     top: 0px;
     width: 240px;
     right: 0px;
 }
+
 .contents
 {
     position: absolute;
@@ -111,13 +163,14 @@
 /*Draggable elements*/
 .draggable
 {
+    z-index: 10;
     width: 155px;
     height: 84px;
     padding: 0.5em;
     margin: 10px 10px 10px 0;
 }
 
-.droppable
+.frame .droppable
 {
     background: black;
     width: 700px;
@@ -125,9 +178,12 @@
     padding: 0.5em;
     margin: 10px;
 }
-.ui-dialog-titlebar-close {
-  visibility: hidden;
+
+.ui-dialog-titlebar-close
+{
+    visibility: hidden;
 }
+
 .ui-accordion .ui-accordion-content
 {
     height: 390px;
@@ -140,7 +196,7 @@
 
 .ui-widget-content
 {
-    color: #F3C11A;
+    color: #ffffff;
 }
 
 .ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr
@@ -157,39 +213,52 @@
     right: 0px;
 }
 /*Home page login*/
-.form-signin {
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
+.form-signin
+{
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
     width: 300px;
 }
-.form-signin .form-signin-heading,
-.form-signin .checkbox {
-  margin-bottom: 10px;
-}
-.form-signin .checkbox {
-  font-weight: normal;
-}
-.form-signin .form-control {
-    margin: 0 auto;
-  position: relative;
-  font-size: 16px;
-  height: auto;
-  padding: 10px;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-}
-.form-signin .form-control:focus {
-  z-index: 2;
-}
-.form-signin input[type="text"] {
-  margin-bottom: -1px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
+
+    .form-signin .form-signin-heading,
+    .form-signin .checkbox
+    {
+        margin-bottom: 10px;
+    }
+
+    .form-signin .checkbox
+    {
+        font-weight: normal;
+    }
+
+    .form-signin .form-control
+    {
+        margin: 0 auto;
+        position: relative;
+        font-size: 16px;
+        height: auto;
+        padding: 10px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+        .form-signin .form-control:focus
+        {
+            z-index: 2;
+        }
+
+    .form-signin input[type="text"]
+    {
+        margin-bottom: -1px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .form-signin input[type="password"]
+    {
+        margin-bottom: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
