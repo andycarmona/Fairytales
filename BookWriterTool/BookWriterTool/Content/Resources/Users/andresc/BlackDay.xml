@@ -36,8 +36,54 @@
                 </content>
               </contents>
             </frame>
-            <frame id="frame2" bordertype="triangle" />
-            <frame id="frame3" bordertype="rectangle" />
+            <frame id="frame2" bordertype="cuadratric">
+              <contents>
+                <!-- content for left -->
+                <content target="left" type="none">
+                  <objects>
+                    <object type="character" id="duck">
+                    </object>
+                    <object type="character" id="croc" animation="talk" string="dia1">
+                    </object>
+                    <object type="text" id="text1" string="text1">
+                    </object>
+                  </objects>
+                </content>
+                <!-- content for right -->
+                <content target="right" type="none">
+                  <objects>
+                    <object type="character" id="duck">
+                    </object>
+                    <object type="character" id="croc" animation="talk" string="dia1">
+                    </object>
+                  </objects>
+                </content>
+              </contents>
+            </frame>
+            <frame id="frame3" bordertype="rectangle">
+              <contents>
+                <!-- content for left -->
+                <content type="none">
+                  <objects>
+                    <object type="character" id="duck">
+                    </object>
+                    <object type="character" id="croc" animation="talk" string="dia1">
+                    </object>
+                    <object type="text" id="text1" string="text1">
+                    </object>
+                  </objects>
+                </content>
+                <!-- content for right -->
+                <content type="none">
+                  <objects>
+                    <object type="character" id="duck">
+                    </object>
+                    <object type="character" id="croc" animation="talk" string="dia1">
+                    </object>
+                  </objects>
+                </content>
+              </contents>
+            </frame>
           </frames>
         </page>
         <page id="page2">
@@ -98,36 +144,6 @@
             </frame>
             <frame id="frame2" bordertype="triangle" />
             <frame id="frame3" bordertype="triangle" />
-          </frames>
-        </page>
-        <page id="page4">
-          <frames>
-            <frame id="frame1" bordertype="triangle" />
-          </frames>
-        </page>
-        <page id="page5">
-          <frames>
-            <frame id="frame1" bordertype="triangle" />
-          </frames>
-        </page>
-        <page id="page6">
-          <frames>
-            <frame id="frame1" bordertype="cuadratric" />
-          </frames>
-        </page>
-        <page id="page7">
-          <frames>
-            <frame id="frame1" bordertype="triangle" />
-          </frames>
-        </page>
-        <page id="page8">
-          <frames>
-            <frame id="frame1" bordertype="triangle" />
-          </frames>
-        </page>
-        <page id="page9">
-          <frames>
-            <frame id="frame1" bordertype="triangle" />
           </frames>
         </page>
       </pages>

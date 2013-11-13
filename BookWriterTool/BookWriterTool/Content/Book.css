@@ -31,14 +31,13 @@ color: #4c3000;
     height: 500px;
 }
 
-.object
-{
- 
-    height: 70px;
-    width: 100px;
 
+#terrain img { 
+     position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100px;
 }
-
 
 
 #panel

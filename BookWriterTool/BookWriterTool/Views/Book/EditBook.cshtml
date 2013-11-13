@@ -26,6 +26,7 @@
     var listOfBooks = new string[1];
     var listOfObjects = new List<bookChapterPageFrameContentObject> { aObject };
     listOfBooks[0] = "no book";
+    bool avoidStep;
 }
 <div id="panel">
     @if (Model != null)
@@ -39,43 +40,73 @@
                 }
             </ul>
             <!--Chapters section-->
-            @for (int indexChapters = 0; indexChapters < @Model.chapters.Length; indexChapters++)
+            @foreach (bookChapter chapter in this.Model.chapters)
             {
-
-                <!--Pages section-->
-                <div class="pages" id="@Model.chapters[indexChapters].id">
+                @:<!--Pages section-->
+                <div class="pages" id="@chapter.id">
 
                     <ul>
-                        @foreach (bookChapterPage page in @Model.chapters[indexChapters].pages)
+                        @foreach (bookChapterPage page in chapter.pages)
                         {
                             <li><a href="#@page.id">@Localization.Localize("page")@(pageIndex++)</a></li>
                     
                         }
-                        <li>@{ pageIndex = 1; }
+                        <li>
+                            @{
+                        pageIndex = 1;
+                            }
                             <button id="btnAddPage" type="button" value="+">+</button></li>
                     </ul>
                     <!--End Pages section-->
 
                     <!--Frames section-->
-                    @for (int indexPages = 0; indexPages < @Model.chapters[indexChapters].pages.Length; indexPages++)
+                    @foreach (bookChapterPage page in chapter.pages)
                     {
-                        <div class="page" id="@Model.chapters[indexChapters].pages[indexPages].id">
+                        <div class="page" id="@page.id">
 
                             <div class="frame" id="frames">
-                                @foreach (bookChapterPageFrame frame in @Model.chapters[indexChapters].pages[indexPages].frames)
-                                {
-                  
+                                @{
+                        foreach (bookChapterPageFrame frame in page.frames)
+                        {
+                            avoidStep = false;
                                     <div id="@frame.id" class="droppable">
                                         <img id="img@(frame.id)" border="0" width="700" height="158" alt="" src="~/Images/@(frame.bordertype).png" />
 
                                     </div> 
-                                    <div id="objects">
-                                        <span>Frame: @(frame.id)</span>
-                                        <span id="bordertypeIdentifier">Bordertype: @(frame.bordertype)</span>
-                                        <button class="editContent" type="button" value="@(frame.id)">Edit</button>
-                                    </div>
-                                }  @{ index++; }
+                                    <div id="contents">
+                                        @if (frame.contents != null)
+                                        {
+                                            foreach (bookChapterPageFrameContent content in frame.contents)
+                                            {
+                                                
+                                                if (@content.target == null)
+                                                {
+                                                    if (!avoidStep)
+                                                    {
+                                                        <button id="@(frame.id)@(content.target)" class="editContent" type="button" value="@frame.id">Rectangle edit</button>
+                                                    }
+                                                    avoidStep = true;
+                                                }
+                                                else if (@content.target == "left")
+                                                {
+                                            <button id="@(frame.id)@(content.target)" class="editContent" type="button" value="@frame.id">Left edit</button>
+                                            
+                                                }
+                                                else if (@content.target == "right")
+                                                {
+                                            <button id="@(frame.id)@(content.target)" class="editContent" type="button" value="@frame.id">Right edit</button>
+                                                }
 
+                                            }
+                                        }
+                                    </div>
+                                    <div id="objects">
+                                        <span style="visibility: hidden;">Frame: @frame.id</span>
+                                        <span style="visibility: hidden;" id="bordertypeIdentifier">Bordertype: @frame.bordertype</span>
+
+                                    </div>
+                        } index++;
+                                }
                             </div>
                         </div>
                     }
@@ -149,13 +180,11 @@
     <div id="DialogEditorFrames">
         <div class="FrameEdit" id="FrameEdit">
             <div class="droppable" id="terrain">
-                
-               
             </div>
         </div>
         <div class="objConfigurator">
             <label>Position X</label>
-            <input id="posX_txtbox" type="text"  />
+            <input id="posX_txtbox" type="text" />
             <label>Position Y</label>
             <input id="posY_txtbox" type="text" />
         </div>
@@ -181,7 +210,7 @@
                 width: 600,
                 height: 700
             };
-            $(function() {
+            $(function () {
                 $("#pages").tabs();
                 $("#chapters").tabs();
                 $("#chapter1").tabs();
@@ -191,20 +220,38 @@
                 $("#accordionStatus").accordion();
                 $('#userContent').load('/Book/GetAvailableBooks', { fileOption: "newBook" });
             });
-            $(".selectpicker").change(function() {
+            $(".selectpicker").change(function () {
 
                 $('#userContent').load('/Book/GetAvailableBooks', { fileOption: $(this).val() });
 
             });
-            
+
             $("#objectsGroup img").click(function () {
-                alert($(this).attr("id"));
-                $('#terrain').prepend('<div class="draggable"><img class="object" id="Cloned' + $(this).attr("id") + '" src="' + $(this).attr("src") + '" /></div>');
-            }); 
+                $('#terrain').prepend('<img  id="Cloned' + $(this).attr("id") + '" src="' + $(this).attr("src") + '" />');
+                StartDrag("#Cloned" + $(this).attr("id"));
+            });
             
-            $("#editContent").click(function() {
+            function StartDrag(element) {
+                $(element).draggable({
+                    cursor: 'move',
+                    containment: "parent",
+                    drag: function (event, ui) {
+                        draggableId = $(this).attr("id");
+                        //alert(draggableId);
+                        var offset = $(this).offset();
+                        var imgHeight = parseInt($("#" + draggableId).css("height"), 10);
+                        var xPos = offset.left;
+                        var yPos = offset.top - imgHeight;
+                        $('#posX_txtbox').val('x: ' + xPos);
+                        $('#posY_txtbox').val('y: ' + yPos);
+                    }
+                });
+                StartDrag(element);
+            }
+
+            $("#editContent").click(function () {
                 alert($(this).val());
-                $.post("/Book/GetListObjectsInframe", { indexChapters: 0, indexPages: 0, target: "left" }, function(data) {
+                $.post("/Book/GetListObjectsInframe", { indexChapters: 0, indexPages: 0, target: "left" }, function (data) {
 
                     GetObjectComplete(data);
                 });
@@ -216,7 +263,7 @@
 
             }
 
-            $(".backgroundContain").click(function() {
+            $(".backgroundContain").click(function () {
                 var bk = $(this).attr("id");
                 var imgChosen = $("#" + bk).attr("src");
                 // alert($(this).attr("id"));
@@ -224,16 +271,14 @@
                 $("#terrain").css("background-image", "url(" + imgChosen + ")");
             });
 
-            $("#btnAddPage").click(function() {
+            $("#btnAddPage").click(function () {
                 var descriptionArray = [];
                 descriptionArray.push("chapter1");
                 AddTextToStatus(descriptionArray[0]);
                 PostArray("AddPage", descriptionArray);
-                //Reload tab control
-                // $('#chapters').tabs('load', 0);
             });
 
-            $("#btnAddChapter").click(function() {
+            $("#btnAddChapter").click(function () {
                 //  var id = this.value;
             });
 
@@ -247,32 +292,32 @@
 
             $("#accordionStatus").accordion({
                 active: 0,
-                change: function(event, ui) {
+                change: function (event, ui) {
                     var activeIndex = $("#accordionStatus").accordion("option", "active");
                     //alert(activeIndex);
                     switch (activeIndex) {
-                    case 0:
-                        // $('#chapter2').show();
+                        case 0:
+                            // $('#chapter2').show();
                             // $('#chapter1').show();
-                        break;
-                    case 1:
-                        // $("#ContentEdit").show();
+                            break;
+                        case 1:
+                            // $("#ContentEdit").show();
                             // $('#chapter2').hide();
                             // $('#chapter1').hide();
-                        break;
-                    default:
+                            break;
+                        default:
                     }
 
                 }
             });
+            
             /*Function handle draggable objects. 
                  Objects you pickup and drag*/
-
-            $(function() {
+            $(function () {
                 $("#framesGroup .draggable").draggable({
                     cursor: 'move',
                     helper: 'clone',
-                    drag: function(event, ui) {
+                    drag: function (event, ui) {
                         draggableId = $(this).attr("id");
 
                     }
@@ -282,13 +327,13 @@
                 /*Function handle droppable frames objects. 
                           Object where you put your draggable*/
                 $(".frame .droppable").droppable({
-                    drop: function(event, ui) {
-                        var pageIdAtributte = $(this).parent().parent().parent().attr("id");
+                    drop: function (event, ui) {
+                        var pageIdAtributte = $(this).parent().parent().attr("id");
                         var descriptionArray = [];
                         droppableId = $(this).attr("id");
                         //alert(droppableId);
                         //Add frames in page
-                        $(this).each(function(i, elem) {
+                        $(this).each(function (i, elem) {
                             var frameId = $(elem).attr("id");
 
                             descriptionArray.push(pageIdAtributte + "-" + frameId + "-" + draggableId);
@@ -313,7 +358,7 @@
             $("#terrain .draggable").draggable({
                 cursor: 'move',
                 containment: "parent",
-                drag: function(event, ui) {
+                drag: function (event, ui) {
                     draggableId = $(this).attr("id");
                     var offset = $(this).offset();
                     var imgHeight = parseInt($("#" + draggableId).css("height"), 10);
@@ -323,10 +368,11 @@
                     $('#posY_txtbox').val('y: ' + yPos);
                 }
             }).addClass("ui-state-highlight");
+            
             /*Function handle droppable  objects. 
                        Object where you put your draggable*/
             $(".FrameEdit .droppable").droppable({
-                drop: function(event, ui) {
+                drop: function (event, ui) {
 
                     droppableId = $(this).attr("id");
                     // alert(droppableId);
@@ -342,11 +388,11 @@
                     data: JSON.stringify(descriptionArray),
                     async: false,
                     dataType: "json",
-                    success: function(statusMsg) {
+                    success: function (statusMsg) {
 
                         descriptionArray.length = 0;
                     },
-                    error: function(statusMsg) {
+                    error: function (statusMsg) {
                         AddTextToStatus("Couldn't send message.Wrong parameters");
                     }
                 });

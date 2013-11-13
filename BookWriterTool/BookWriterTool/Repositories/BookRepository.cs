@@ -73,12 +73,17 @@ namespace BookWriterTool.Repositories
             XmlElement elemPage = xmlDoc.CreateElement("page");
             XmlElement elemFrames = xmlDoc.CreateElement("frames");
             XmlElement aFrame = xmlDoc.CreateElement("frame");
+            XmlElement elemContents = xmlDoc.CreateElement("contents");
+            XmlElement aContent = xmlDoc.CreateElement("content");
             aFrame.SetAttribute("id", "frame1");
             aFrame.SetAttribute("bordertype", "triangle");
             XmlNode parentNode = null;
             string pageIdName = string.Format("{0}{1}", "page", (this.GetNumberOfpagesInBook(fileName) + 1));
             elemPage.SetAttribute("id", pageIdName);
+            elemContents.AppendChild(aContent);
+            elemFrames.AppendChild(elemContents);
             elemPage.AppendChild(elemFrames);
+
 
             elemFrames.AppendChild(aFrame);
             if (chaptersNodes != null)
@@ -104,16 +109,17 @@ namespace BookWriterTool.Repositories
             return this.GetAllContent();
         }
 
-        public void AddContentToFrame(string[] content, string fileName)
+        public void AddContentToFrame(string[] contentToSearch, string fileName)
         {
 
             var xmlDoc = new XmlDocument();
             xmlDoc.Load(HttpContext.Current.Server.MapPath(fileName));
             XmlNodeList pagesNodes = xmlDoc.SelectNodes("//book/chapters/chapter/pages/page");
             XmlNodeList frameNodes = null;
+            XmlNodeList contentNodes = null;
             if (pagesNodes != null)
             {
-                string[] splittedData = content[0].Split('-');
+                string[] splittedData = contentToSearch[0].Split('-');
                 var pageToUpdate = splittedData[0];
                 var frameToUpdate = splittedData[1];
                 var borderTypeToUpdate = splittedData[2];
@@ -146,7 +152,24 @@ namespace BookWriterTool.Repositories
                         if (frame.Attributes != null && frameToUpdate == frame.Attributes["id"].Value)
                         {
                             frame.Attributes["bordertype"].Value = borderTypeToUpdate;
-                            // ((XmlElement)frame).SetAttribute("bordertype", borderTypeToUpdate);
+                            if (borderTypeToUpdate == "rectangle")
+                            {
+                                for (int i = 0; i < frame.ChildNodes.Count + 1; i++)
+                                {
+
+                                    if (frame.ChildNodes[i].Name == "contents")
+                                    {
+                                        contentNodes = frame.ChildNodes[i].ChildNodes;
+                                        if (contentNodes != null)
+                                        {
+                                            foreach (XmlNode content in contentNodes)
+                                            {
+                                                content.Attributes["target"].Value = "";
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
