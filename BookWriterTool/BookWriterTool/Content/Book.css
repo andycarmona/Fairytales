@@ -6,7 +6,7 @@
     background-color: rgba(255,255,255,0.90);
 }
 
-.objConfigurator
+.objConfigurator 
 {
     border-bottom-left-radius: 8px;
     border: 1px solid #d19405;
@@ -17,39 +17,28 @@ color: #4c3000;
 
 #FrameEdit
 {
-    background-color: #fece2f;
+   border-bottom-left-radius: 8px;
+    border: 1px solid #d19405;
+background: #fece2f url(/Content/themes/sunny/images/ui-bg_gloss-wave_60_fece2f_500x100.png) 50% 50% repeat-x;
+font-weight: bold;
+color: #4c3000;
     margin: 0 auto;
-    max-width: 500px;
-    height: 480px;
 }
 
-#frame #terrain
+#FrameEdit #terrain
 {
     position: relative;
-    background: url(../Images/cuadratric.png) repeat-x top left;
-    height: 300px;
-    width: 480px;
+    height: 500px;
 }
 
-#frame .mermaid
+.object
 {
-    background: url(../Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png) repeat-x bottom left;
+ 
     height: 70px;
     width: 100px;
-    left: 80px;
-    top: 90px;
-    position: absolute;
+
 }
 
-#frame .fish
-{
-    background: url(../Content/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png) no-repeat;
-    height: 70px;
-    width: 100px;
-    left: 30px;
-    top: 90px;
-    position: absolute;
-}
 
 
 #panel
@@ -161,7 +150,7 @@ color: #4c3000;
     left: 420px;
 }
 /*Draggable elements*/
-.draggable
+#framesGroup .draggable
 {
     z-index: 10;
     width: 155px;
@@ -178,10 +167,26 @@ color: #4c3000;
     padding: 0.5em;
     margin: 10px;
 }
+/*Draggable elements*/
+#FrameEdit .draggable
+{
+
+    width: 20px;
+    height: 20px;
+    padding: 0.5em;
+  
+}
+
+.FrameEdit .droppable
+{
+
+    padding: 0.5em;
+    margin: 10px;
+}
 
 .ui-dialog-titlebar-close
 {
-    visibility: hidden;
+   /* visibility: hidden;*/
 }
 
 .ui-accordion .ui-accordion-content
