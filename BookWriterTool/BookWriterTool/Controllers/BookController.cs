@@ -5,6 +5,7 @@ namespace BookWriterTool.Controllers
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
 
     using BookWriterTool.Helpers;
     using BookWriterTool.Models;
@@ -111,47 +112,41 @@ namespace BookWriterTool.Controllers
             return this.View(aBook);
         }
         [HttpPost]
-        public JsonResult GetListObjectsInframe(int indexChapters,int indexPages,string target)
+        public JsonResult GetListObjectsInframe(string resultFrame)
         {
+            string[] splitResult = resultFrame.Split('-');
+
+            string chapterId = splitResult[0];
+            string pageId = splitResult[1];
+            string frameId = splitResult[2];
+            string target = splitResult[3];
+
             var listOfObject = new List<bookChapterPageFrameContentObject>();
             string msg = "okay";
 
             if (Session["ActualFile"] != null)
             {
-                string fileName = (string)this.Session["ActualFile"];
+                var fileName = (string)this.Session["ActualFile"];
 
                 msg = aBookRepository.SetActualFile(fileName);
 
                 book actualBook = this.aBookRepository.GetAllContent();
-               
-
-                foreach (bookChapterPageFrame frame in actualBook.chapters[indexChapters].pages[indexPages].frames)
-                {
-                    if (frame.contents != null)
-                    {
-                        foreach (bookChapterPageFrameContent content in frame.contents)
-                        {
-                            if (content.target == target)
-                            {
-                                foreach (bookChapterPageFrameContentObject Object in content.objects)
-                                {
-                                    listOfObject.Add(Object);
-
-                                }
-
-                            }
-                        }
-
-                    }
-
-                }
-                //bookChapterPageFrameContentObject[] returnValues = listOfObject.ToArray();
-                //return this.Json(returnValues);
+                listOfObject.AddRange(from aChapter in actualBook.chapters
+                                      where aChapter.id == chapterId
+                                      from page in aChapter.pages
+                                      where page.id == pageId
+                                      from frame in page.frames
+                                      where frame.id == frameId
+                                      where frame.contents != null
+                                      from content in frame.contents
+                                      where content.target == target
+                                      from Object in content.objects
+                                      select Object);
             }
-          
+
             return Json(new
             {
-                msg ,
+                msg,
                 ObjectInquiryView = this.RenderPartialView("ObjectListConfig", listOfObject)
             });
         }

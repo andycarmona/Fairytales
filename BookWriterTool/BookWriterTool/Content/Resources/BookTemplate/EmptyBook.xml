@@ -177,7 +177,7 @@
             </frame>
             <!-- Our second frame 
               this one is a choice -->
-            <frame id="frame2" bordertype="">
+            <frame id="frame2" bordertype="No Draggable">
               <!-- we will use the same scene as the first frame. -->
               <!-- define contents of this rectangle frame -->
               <contents>

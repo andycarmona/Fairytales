@@ -78,23 +78,23 @@
                                         {
                                             foreach (bookChapterPageFrameContent content in frame.contents)
                                             {
-                                                
-                                                if (@content.target == null)
+
+                                                if (@frame.bordertype == "rectangle")
                                                 {
                                                     if (!avoidStep)
                                                     {
-                                                        <button id="@(frame.id)@(content.target)" class="editContent" type="button" value="@frame.id">Rectangle edit</button>
+                                            <button  class="editContent" type="button" value="@(chapter.id)-@(page.id)-@(frame.id)-">Rectangle edit</button>
                                                     }
                                                     avoidStep = true;
                                                 }
                                                 else if (@content.target == "left")
                                                 {
-                                            <button id="@(frame.id)@(content.target)" class="editContent" type="button" value="@frame.id">Left edit</button>
+                                            <button  class="editContent" type="button" value="@(chapter.id)-@(page.id)-@(frame.id)-left">Left edit</button>
                                             
                                                 }
                                                 else if (@content.target == "right")
                                                 {
-                                            <button id="@(frame.id)@(content.target)" class="editContent" type="button" value="@frame.id">Right edit</button>
+                                            <button  class="editContent" type="button" value="@(chapter.id)-@(page.id)-@(frame.id)-right">Right edit</button>
                                                 }
 
                                             }
@@ -108,15 +108,25 @@
                         } index++;
                                 }
                             </div>
+                            <div class="Container3D" id="frames3D">
+                                Testeo views
+                                derty guai
+                            </div>
                         </div>
                     }
                     <!--End frames section-->
 
                 </div>
             }
-        </div>
-    }
+            <div class="ViewChanger" id="ViewChanger">
+                <ul>
 
+                    <input id="View2D" type="button" value="2D View" />
+                    <input id="View3D" type="button" value="3D View" />
+                </ul>
+            </div>
+        </div>  
+    }
     <div class="configDialog" id="configDialog">
         <div id="accordionConfig" class="toolbox">
             <h3>@Localization.Localize("files")</h3>
@@ -151,7 +161,7 @@
             </div>
         </div>
     </div>
-    }
+
 
     <div id="statusMsg">@statusMsg</div>
 
@@ -177,40 +187,13 @@
             </div>
         </div>
     </div>
-    <div id="DialogEditorFrames">
-        <div class="FrameEdit" id="FrameEdit">
-            <div class="droppable" id="terrain">
-            </div>
-        </div>
-        <div class="objConfigurator">
-            <label>Position X</label>
-            <input id="posX_txtbox" type="text" />
-            <label>Position Y</label>
-            <input id="posY_txtbox" type="text" />
-        </div>
-        <p class="header"><span>Unity Web Player | </span>fairytales</p>
-		<div class="content">
-			<div id="unityPlayer">
-				<div class="missing">
-					<a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now!">
-						<img alt="Unity Web Player. Install now!" src="http://webplayer.unity3d.com/installation/getunity.png" width="193" height="63" />
-					</a>
-				</div>
-				<div class="broken">
-					<a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now! Restart your browser after install.">
-						<img alt="Unity Web Player. Install now! Restart your browser after install." src="http://webplayer.unity3d.com/installation/getunityrestart.png" width="193" height="63" />
-					</a>
-				</div>
-			</div>
-		</div>
-		<p class="footer">&laquo; created with <a href="http://unity3d.com/unity/" title="Go to unity3d.com">Unity</a> &raquo;</p>
-    </div>
-    }
+
+
     @section scripts
     {
         <script>
-            
-            var unityObjectUrl = "http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject2.js";
+
+            /* var unityObjectUrl = "http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject2.js";*/
             var config = {
                 width: 660,
                 height: 400,
@@ -218,7 +201,7 @@
 
             };
             var dialogOpts = {
-                position: [50, 5],
+                position: [300, 5],
                 minWidth: 600,
                 maxWidth: 600,
                 maxHeight: 700,
@@ -226,63 +209,64 @@
                 width: 600,
                 height: 700
             };
-            
+
             var draggableId = "No Draggable";
             var droppableId = "No droppable";
             var startPos;
             var textArea = "";
             var actualPage = 1;
             var framesContent = $('div#frames');
-            var u = new UnityObject2(config);
-         
+            //var u = new UnityObject2(config);
 
-            jQuery(function () {
 
-                var $missingScreen = jQuery("#unityPlayer").find(".missing");
-                var $brokenScreen = jQuery("#unityPlayer").find(".broken");
-                $missingScreen.hide();
-                $brokenScreen.hide();
+            /* jQuery(function () {
+ 
+                 var $missingScreen = jQuery("#unityPlayer").find(".missing");
+                 var $brokenScreen = jQuery("#unityPlayer").find(".broken");
+                 $missingScreen.hide();
+                 $brokenScreen.hide();
+ 
+                 u.observeProgress(function (progress) {
+                     switch (progress.pluginStatus) {
+                         case "broken":
+                             $brokenScreen.find("a").click(function (e) {
+                                 e.stopPropagation();
+                                 e.preventDefault();
+                                 u.installPlugin();
+                                 return false;
+                             });
+                             $brokenScreen.show();
+                             break;
+                         case "missing":
+                             $missingScreen.find("a").click(function (e) {
+                                 e.stopPropagation();
+                                 e.preventDefault();
+                                 u.installPlugin();
+                                 return false;
+                             });
+                             $missingScreen.show();
+                             break;
+                         case "installed":
+                             $missingScreen.remove();
+                             break;
+                         case "first":
+                             break;
+                     }
+                 });
+                 u.initPlugin(jQuery("#unityPlayer")[0], "/Content/Resources/WebPlayer/webviewer.unity3d?book=2");
+             });*/
 
-                u.observeProgress(function (progress) {
-                    switch (progress.pluginStatus) {
-                        case "broken":
-                            $brokenScreen.find("a").click(function (e) {
-                                e.stopPropagation();
-                                e.preventDefault();
-                                u.installPlugin();
-                                return false;
-                            });
-                            $brokenScreen.show();
-                            break;
-                        case "missing":
-                            $missingScreen.find("a").click(function (e) {
-                                e.stopPropagation();
-                                e.preventDefault();
-                                u.installPlugin();
-                                return false;
-                            });
-                            $missingScreen.show();
-                            break;
-                        case "installed":
-                            $missingScreen.remove();
-                            break;
-                        case "first":
-                            break;
-                    }
-                });
-                u.initPlugin(jQuery("#unityPlayer")[0], "/Content/Resources/WebPlayer/webviewer.unity3d?book=2");
-            });
-            
             $(function () {
                 $("#pages").tabs();
                 $("#chapters").tabs();
                 $("#chapter1").tabs();
                 $("#chapter2").tabs();
-                $("#DialogEditorFrames").dialog(dialogOpts);
+
                 $("#accordionConfig").accordion();
                 $("#accordionStatus").accordion();
                 $('#userContent').load('/Book/GetAvailableBooks', { fileOption: "newBook" });
             });
+
             $(".selectpicker").change(function () {
 
                 $('#userContent').load('/Book/GetAvailableBooks', { fileOption: $(this).val() });
@@ -293,7 +277,7 @@
                 $('#terrain').prepend('<img  id="Cloned' + $(this).attr("id") + '" src="' + $(this).attr("src") + '" />');
                 StartDrag("#Cloned" + $(this).attr("id"));
             });
-            
+
             function StartDrag(element) {
                 $(element).draggable({
                     cursor: 'move',
@@ -312,9 +296,21 @@
                 StartDrag(element);
             }
 
-            $("#editContent").click(function () {
-                alert($(this).val());
-                $.post("/Book/GetListObjectsInframe", { indexChapters: 0, indexPages: 0, target: "left" }, function (data) {
+            $("#View2D").click(function () {
+                $("#frames").attr("hidden", "false");
+                $("#Container3D").show();
+            });
+
+            $("#View3D").click(function () {
+                $("#Container3D").attr("hidden", "false");
+                $("#frames").show();
+            });
+
+            $(".editContent").click(function () {
+
+                //alert($(this).val());
+                var resultFrame = $(this).val();
+                $.post("/Book/GetListObjectsInframe", { resultFrame: resultFrame }, function (data) {
 
                     GetObjectComplete(data);
                 });
@@ -323,7 +319,25 @@
             function GetObjectComplete(result) {
 
                 $("#contentWindow").html(result.ObjectInquiryView);
-
+                $("#DialogEditorFrames").dialog(dialogOpts);
+               
+                $('#terrain img').each(function () {
+                   // alert($(this).attr("id"));
+                    $(this).draggable({
+                        cursor: 'move',
+                        containment: "parent",
+                        drag: function (event, ui) {
+                            draggableId = $(this).attr("id");
+                            //alert(draggableId);
+                            var offset = $(this).offset();
+                            var imgHeight = parseInt($("#" + draggableId).css("height"), 10);
+                            var xPos = offset.left;
+                            var yPos = offset.top - imgHeight;
+                            $('#posX_txtbox').val('x: ' + xPos);
+                            $('#posY_txtbox').val('y: ' + yPos);
+                        }
+                    });
+                });
             }
 
             $(".backgroundContain").click(function () {
@@ -355,25 +369,25 @@
 
             $("#accordionStatus").accordion({
                 active: 0,
-                change: function (event, ui) {
+                change: function () {
                     var activeIndex = $("#accordionStatus").accordion("option", "active");
                     //alert(activeIndex);
                     switch (activeIndex) {
-                    case 0:
-                        // $('#chapter2').show();
-                        // $('#chapter1').show();
-                        break;
-                    case 1:
-                        // $("#ContentEdit").show();
-                        // $('#chapter2').hide();
+                        case 0:
+                            // $('#chapter2').show();
+                            // $('#chapter1').show();
+                            break;
+                        case 1:
+                            // $("#ContentEdit").show();
+                            // $('#chapter2').hide();
                             // $('#chapter1').hide();
-                        break;
-                    default:
+                            break;
+                        default:
                     }
 
                 }
             });
-            
+
             /*Function handle draggable objects. 
                  Objects you pickup and drag*/
             $(function () {
@@ -421,7 +435,7 @@
             $("#terrain .draggable").draggable({
                 cursor: 'move',
                 containment: "parent",
-                drag: function (event, ui) {
+                drag: function () {
                     draggableId = $(this).attr("id");
                     var offset = $(this).offset();
                     var imgHeight = parseInt($("#" + draggableId).css("height"), 10);
@@ -431,7 +445,7 @@
                     $('#posY_txtbox').val('y: ' + yPos);
                 }
             }).addClass("ui-state-highlight");
-            
+
             /*Function handle droppable  objects. 
                        Object where you put your draggable*/
             $(".FrameEdit .droppable").droppable({

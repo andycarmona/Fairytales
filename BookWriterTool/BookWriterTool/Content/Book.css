@@ -55,7 +55,12 @@ color: #4c3000;
     width: 200px;
 }
 /*Editor delen*/
-
+#ViewChanger {
+width: 245px;
+position: absolute;
+bottom: 0px;
+right: 300px;
+}
 .chapters
 {
     background-color: rgba(255,255,255,0.90);
@@ -63,7 +68,7 @@ color: #4c3000;
     margin: 0px auto;
     top: 50px;
     width: 822px;
-    height: 700px;
+  height: 873px;
 }
 
 .pages

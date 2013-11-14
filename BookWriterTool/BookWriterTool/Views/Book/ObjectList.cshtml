@@ -1,10 +1,10 @@
-﻿@{
+﻿@using BookWriterTool.Helpers
+@{
     Layout = null;
 }
 <div id="objectsGroup">
-    <img  id="object1" src="../../Content/Resources/Backgrounds/../Generic/character2d/anime/female/body_front/normal/default_13.png" border="1" width="150" height="133" alt="" />
+    <img  id="object1" src="@GlobalVariables.ConfigResource("CharacterResource")duck.jpg" border="1" width="150" height="133" alt="" />
 
-    <img id="object2" alt=""  src="../../Content/Resources/Backgrounds/../Generic/character2d/anime/female/body_front/normal/default_0.png" border="1" width="150" height="137" title="MainContent" />
+    <img id="object2" alt=""  src="@GlobalVariables.ConfigResource("CharacterResource")croc.jpg" border="1" width="150" height="137" title="MainContent" />
 
-    <img id="object3" alt=""  src="../../Content/Resources/Backgrounds/../Generic/character2d/anime/female/body_front/normal/default_10.png" border="1" width="150" height="137" title="MainContent" />
 </div>

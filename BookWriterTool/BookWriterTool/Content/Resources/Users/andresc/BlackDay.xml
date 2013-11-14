@@ -12,7 +12,7 @@
         <!-- our first page! -->
         <page id="page1">
           <frames>
-            <frame id="frame1" bordertype="cuadratric">
+            <frame id="frame1" bordertype="ClonedObject1">
               <contents>
                 <!-- content for left -->
                 <content target="left" type="none">
@@ -36,7 +36,7 @@
                 </content>
               </contents>
             </frame>
-            <frame id="frame2" bordertype="cuadratric">
+            <frame id="frame2" bordertype="Clonedobject1">
               <contents>
                 <!-- content for left -->
                 <content target="left" type="none">
@@ -112,8 +112,54 @@
                 </content>
               </contents>
             </frame>
-            <frame id="frame2" bordertype="rectangle" />
-            <frame id="frame3" bordertype="rectangle" />
+            <frame id="frame2" bordertype="rectangle">
+              <contents>
+                <!-- content for left -->
+                <content type="none">
+                  <objects>
+                    <object type="character" id="duck">
+                    </object>
+                    <object type="character" id="croc" animation="talk" string="dia1">
+                    </object>
+                    <object type="text" id="text1" string="text1">
+                    </object>
+                  </objects>
+                </content>
+                <!-- content for right -->
+                <content type="none">
+                  <objects>
+                    <object type="character" id="duck">
+                    </object>
+                    <object type="character" id="croc" animation="talk" string="dia1">
+                    </object>
+                  </objects>
+                </content>
+              </contents>
+            </frame>
+            <frame id="frame3" bordertype="rectangle">
+              <contents>
+                <!-- content for left -->
+                <content type="none">
+                  <objects>
+                    <object type="character" id="duck">
+                    </object>
+                    <object type="character" id="croc" animation="talk" string="dia1">
+                    </object>
+                    <object type="text" id="text1" string="text1">
+                    </object>
+                  </objects>
+                </content>
+                <!-- content for right -->
+                <content type="none">
+                  <objects>
+                    <object type="character" id="duck">
+                    </object>
+                    <object type="character" id="croc" animation="talk" string="dia1">
+                    </object>
+                  </objects>
+                </content>
+              </contents>
+            </frame>
           </frames>
         </page>
         <page id="page3">
