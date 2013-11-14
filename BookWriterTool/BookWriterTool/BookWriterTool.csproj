@@ -231,6 +231,7 @@
     <Content Include="Content\Resources\Generic\character2d\anime\female\body_front\normal\default_13.png" />
     <Content Include="Content\Resources\Generic\character2d\anime\female\body_front\normal\default_2.png" />
     <Content Include="Content\Resources\Generic\character2d\anime\female\body_front\normal\default_3.png" />
+    <Content Include="Content\Resources\WebPlayer\webviewer2.html" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -287,6 +288,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Content\Resources\WebPlayer\webviewer.unity3d" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\cuadratric.png" />

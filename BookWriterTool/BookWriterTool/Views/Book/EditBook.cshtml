@@ -188,19 +188,35 @@
             <label>Position Y</label>
             <input id="posY_txtbox" type="text" />
         </div>
-
+        <p class="header"><span>Unity Web Player | </span>fairytales</p>
+		<div class="content">
+			<div id="unityPlayer">
+				<div class="missing">
+					<a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now!">
+						<img alt="Unity Web Player. Install now!" src="http://webplayer.unity3d.com/installation/getunity.png" width="193" height="63" />
+					</a>
+				</div>
+				<div class="broken">
+					<a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now! Restart your browser after install.">
+						<img alt="Unity Web Player. Install now! Restart your browser after install." src="http://webplayer.unity3d.com/installation/getunityrestart.png" width="193" height="63" />
+					</a>
+				</div>
+			</div>
+		</div>
+		<p class="footer">&laquo; created with <a href="http://unity3d.com/unity/" title="Go to unity3d.com">Unity</a> &raquo;</p>
     </div>
     }
     @section scripts
     {
         <script>
-            var draggableId = "No Draggable";
-            var droppableId = "No droppable";
-            var startPos;
-            var textArea = "";
-            var actualPage = 1;
+            
+            var unityObjectUrl = "http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject2.js";
+            var config = {
+                width: 660,
+                height: 400,
+                params: { enableDebugging: "0" }
 
-            var framesContent = $('div#frames');
+            };
             var dialogOpts = {
                 position: [50, 5],
                 minWidth: 600,
@@ -210,6 +226,53 @@
                 width: 600,
                 height: 700
             };
+            
+            var draggableId = "No Draggable";
+            var droppableId = "No droppable";
+            var startPos;
+            var textArea = "";
+            var actualPage = 1;
+            var framesContent = $('div#frames');
+            var u = new UnityObject2(config);
+         
+
+            jQuery(function () {
+
+                var $missingScreen = jQuery("#unityPlayer").find(".missing");
+                var $brokenScreen = jQuery("#unityPlayer").find(".broken");
+                $missingScreen.hide();
+                $brokenScreen.hide();
+
+                u.observeProgress(function (progress) {
+                    switch (progress.pluginStatus) {
+                        case "broken":
+                            $brokenScreen.find("a").click(function (e) {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                u.installPlugin();
+                                return false;
+                            });
+                            $brokenScreen.show();
+                            break;
+                        case "missing":
+                            $missingScreen.find("a").click(function (e) {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                u.installPlugin();
+                                return false;
+                            });
+                            $missingScreen.show();
+                            break;
+                        case "installed":
+                            $missingScreen.remove();
+                            break;
+                        case "first":
+                            break;
+                    }
+                });
+                u.initPlugin(jQuery("#unityPlayer")[0], "/Content/Resources/WebPlayer/webviewer.unity3d?book=2");
+            });
+            
             $(function () {
                 $("#pages").tabs();
                 $("#chapters").tabs();
@@ -296,16 +359,16 @@
                     var activeIndex = $("#accordionStatus").accordion("option", "active");
                     //alert(activeIndex);
                     switch (activeIndex) {
-                        case 0:
-                            // $('#chapter2').show();
-                            // $('#chapter1').show();
-                            break;
-                        case 1:
-                            // $("#ContentEdit").show();
-                            // $('#chapter2').hide();
+                    case 0:
+                        // $('#chapter2').show();
+                        // $('#chapter1').show();
+                        break;
+                    case 1:
+                        // $("#ContentEdit").show();
+                        // $('#chapter2').hide();
                             // $('#chapter1').hide();
-                            break;
-                        default:
+                        break;
+                    default:
                     }
 
                 }
