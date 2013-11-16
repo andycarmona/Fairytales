@@ -18,12 +18,20 @@
                     {
                         if (@Object.type == "character")
                         {
-                            <img  id="ClonedObject@(index)" src="@(GlobalVariables.ConfigResource("CharacterResource"))@(Object.id).jpg" border="1" width="150" height="133" alt="" />
+                <img  id="ClonedObject@(index)" src="@(GlobalVariables.ConfigResource("CharacterResource"))@(Object.id).jpg" border="1" width="150" height="133" alt="" />
                         }
                         index++;
                     }
                 }
             }
+            <div id='context-menu'>
+                <ul>
+                    <li>Edit</li>
+                    <li id="ctxMenuDelete">Delete></li>
+                    <li>Export</li>
+                </ul>
+                <span style="visibility:hidden;" id="valCtxMenu"></span>
+            </div>
         </div>
     </div>
     <div class="objConfigurator">
@@ -31,6 +39,7 @@
         <input id="posX_txtbox" type="text" />
         <label>Position Y</label>
         <input id="posY_txtbox" type="text" />
+
     </div>
 
 </div>

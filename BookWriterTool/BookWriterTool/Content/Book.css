@@ -131,7 +131,22 @@
     top: 82px;
     left: 420px;
 }
+/*Context menu*/
+div#context-menu {
+   position:fixed;
+   display: none;
+   /*sample style attributes follow*/
+   width: 100px;
+   background: #fece2f;
+   color: #fff;
+   font-size: 12px;
+}
 
+div#context-menu li {
+   margin: 3px;
+   padding: 3px;
+   background: #000;
+}
 /*View delen*/
 .chaptersView
 {

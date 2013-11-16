@@ -36,7 +36,7 @@
                 </content>
               </contents>
             </frame>
-            <frame id="frame2" bordertype="triangle">
+            <frame id="frame2" bordertype="cuadratric">
               <contents>
                 <!-- content for left -->
                 <content target="left" type="none">

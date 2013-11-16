@@ -12,7 +12,7 @@
         <!-- our first page! -->
         <page id="page1">
           <frames>
-            <frame id="frame1" bordertype="Clonedobject1">
+            <frame id="frame1" bordertype="triangle">
               <contents>
                 <!-- content for left -->
                 <content target="left" type="none">
@@ -36,7 +36,7 @@
                 </content>
               </contents>
             </frame>
-            <frame id="frame2" bordertype="Clonedobject1" />
+            <frame id="frame2" bordertype="cuadratric" />
             <frame id="frame3" bordertype="triangle" />
           </frames>
         </page>

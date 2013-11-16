@@ -283,8 +283,9 @@
                     $("#frames3D").addClass("disableControl");
                 });
                 $("#objectsGroup img").click(function () {
-                    $('#terrain').prepend('<img  id="Cloned' + $(this).attr("id") + '" src="' + $(this).attr("src") + '" />');
-                    StartDrag("#Cloned" + $(this).attr("id"));
+                    var randomnumber = Math.floor(Math.random() * 100);
+                    $('#terrain').append('<img  id="Cloned' + randomnumber + '" src="' + $(this).attr("src") + '" />');
+                    StartDrag("#Cloned" + randomnumber);
                 });
 
                 function StartDrag(element) {
@@ -293,18 +294,58 @@
                         containment: "parent",
                         drag: function (event, ui) {
                             draggableId = $(this).attr("id");
-                            alert("StartDrag");
+                          //  alert("StartDrag");
                             var offset = $(this).offset();
                             var imgHeight = parseInt($("#" + draggableId).css("height"), 10);
                             var xPos = offset.left;
                             var yPos = offset.top - imgHeight;
-                            $('#posX_txtbox').val('x: ' + xPos);
-                            $('#posY_txtbox').val('y: ' + yPos);
+                            $('#posX_txtbox').val('xw: ' + xPos);
+                            $('#posY_txtbox').val('yw: ' + yPos);
                         }
                     });
-                    StartDrag(element);
+                    //StartDrag(element);
                 }
+                $(".editContent").click(function () {
 
+                    //alert($(this).val());
+                    var resultFrame = $(this).val();
+                    $.post("/Book/GetListObjectsInframe", { resultFrame: resultFrame }, function (data) {
+
+                        GetObjectComplete(data);
+                    });
+                });
+
+                /*Function callback wich get List of objects in frame*/
+                function GetObjectComplete(result) {
+                    $('#contentWindow').append("#DialogEditorFrames");
+                    $("#contentWindow").html(result.ObjectInquiryView);
+                    $("#DialogEditorFrames").dialog(dialogOpts);
+
+                    $('#terrain img').each(function () {
+                        StartDrag($(this));
+                        $(this).bind('contextmenu', function (e) {
+                           // alert(e.pageX.toString());
+                            $('#context-menu').css('left', e.pageX + 'px');
+                            $('#context-menu').css('top', e.pageY + 'px');
+                            $("#valCtxMenu").html($(this).attr("id"));
+                            $('#context-menu').show();
+                            e.preventDefault();
+                            return false;
+                        });
+                    });
+                }
+                $('html').click(function (e) {
+                    $('#context-menu').hide();
+                    $("#valCtxMenu").text('');
+                });
+                $('#context-menu').click(function (e) {
+                    $("#valCtxMenu").text('');
+                    e.stopPropagation();
+                });
+                $(window).resize(function () {
+                    $('#context-menu').hide();
+                    $("#valCtxMenu").text('');
+                });
                 /*Function handle draggable objects. 
                      Objects you pickup and drag*/
                 $(function () {
@@ -325,7 +366,7 @@
                             var pageIdAtributte = $(this).parent().parent().attr("id");
                             var descriptionArray = [];
                             droppableId = $(this).attr("id");
-                            //alert(draggableId.substr(0, 6));
+                            alert(draggableId.substr(0, 6));
                           
                             //Check if the obejct to be dropped is a Cloned object
                             //T_his is triying to avoid conflict with other draggable obejects on page
@@ -349,6 +390,8 @@
                                 $("#" + draggableId).css({ position: "relative", top: 0, left: 0 });
                                 $("#" + draggableId).show();
                             } else {
+                                
+                                
                                 /*Handle droppable  objects. Object where you put your draggable*/
                                 //droppableId = $(this).attr("id");
                                 //alert(droppableId);
@@ -357,58 +400,6 @@
                     });
                 });
 
-                /*Draggable for object on frames*/
-                $("#FrameEdit .draggable").draggable({
-                    cursor: 'move',
-                    containment: "parent",
-                    drag: function () {
-                        draggableId = $(this).attr("id");
-                        alert("okay");
-                        $(".frame .dropabble").removeClass("dropabble");
-                        var offset = $(this).offset();
-                        var imgHeight = parseInt($("#" + draggableId).css("height"), 10);
-                        var xPos = offset.left;
-                        var yPos = offset.top - imgHeight;
-                        $('#posX_txtbox').val('x: ' + xPos);
-                        $('#posY_txtbox').val('y: ' + yPos);
-                    }
-                }).addClass("ui-state-highlight");
-
-           
-                $(".editContent").click(function () {
-
-                    //alert($(this).val());
-                    var resultFrame = $(this).val();
-                    $.post("/Book/GetListObjectsInframe", { resultFrame: resultFrame }, function (data) {
-
-                        GetObjectComplete(data);
-                    });
-                });
-
-                /*Function callback wich get List of objects in frame*/
-                function GetObjectComplete(result) {
-                    $('#contentWindow').prepend("#DialogEditorFrames");
-                    $("#contentWindow").html(result.ObjectInquiryView);
-                        $("#DialogEditorFrames").dialog(dialogOpts);
-
-                    $('#terrain img').each(function () {
-                        // alert($(this).attr("id"));
-                        $(this).draggable({
-                            cursor: 'move',
-                            containment: "parent",
-                            drag: function (event, ui) {
-                                draggableId = $(this).attr("id");
-                                //alert(draggableId);
-                                var offset = $(this).offset();
-                                var imgHeight = parseInt($("#" + draggableId).css("height"), 10);
-                                var xPos = offset.left;
-                                var yPos = offset.top - imgHeight;
-                                $('#posX_txtbox').val('x: ' + xPos);
-                                $('#posY_txtbox').val('y: ' + yPos);
-                            }
-                        });
-                    });
-                }
 
                 /*Toggle between 2D and 3D View*/
                 /*----------------------------------------------*/
