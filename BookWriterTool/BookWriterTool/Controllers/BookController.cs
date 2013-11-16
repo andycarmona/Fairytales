@@ -111,6 +111,7 @@ namespace BookWriterTool.Controllers
 
             return this.View(aBook);
         }
+
         [HttpPost]
         public JsonResult GetListObjectsInframe(string resultFrame)
         {

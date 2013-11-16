@@ -6,23 +6,37 @@
     background-color: rgba(255,255,255,0.90);
 }
 
-.objConfigurator 
+.objConfigurator
 {
     border-bottom-left-radius: 8px;
     border: 1px solid #d19405;
-background: #fece2f url(/Content/themes/sunny/images/ui-bg_gloss-wave_60_fece2f_500x100.png) 50% 50% repeat-x;
-font-weight: bold;
-color: #4c3000;
+    background: #fece2f url(/Content/themes/sunny/images/ui-bg_gloss-wave_60_fece2f_500x100.png) 50% 50% repeat-x;
+    font-weight: bold;
+    color: #4c3000;
 }
 
 #FrameEdit
 {
-   border-bottom-left-radius: 8px;
+    border-bottom-left-radius: 8px;
     border: 1px solid #d19405;
-background: #fece2f url(/Content/themes/sunny/images/ui-bg_gloss-wave_60_fece2f_500x100.png) 50% 50% repeat-x;
-font-weight: bold;
-color: #4c3000;
+    background: #fece2f url(/Content/themes/sunny/images/ui-bg_gloss-wave_60_fece2f_500x100.png) 50% 50% repeat-x;
+    font-weight: bold;
+    color: #4c3000;
     margin: 0 auto;
+}
+
+.Container3D
+{
+    
+}
+
+.activeControl
+{
+    visibility: visible;
+}
+.disableControl
+{
+    visibility: hidden;
 }
 
 #FrameEdit #terrain
@@ -32,19 +46,18 @@ color: #4c3000;
 }
 
 
-#terrain img { 
-     position: absolute;
+#terrain img
+{
+   /* position: absolute;
     top: 0px;
-    left: 0px;
+    left: 0px;*/
     height: 100px;
 }
 
 
 #panel
 {
- 
     width: 100%;
-   
 }
 
 .rightContent
@@ -55,12 +68,14 @@ color: #4c3000;
     width: 200px;
 }
 /*Editor delen*/
-#ViewChanger {
-width: 245px;
-position: absolute;
-bottom: 0px;
-right: 300px;
+#ViewChanger
+{
+    width: 245px;
+    position: absolute;
+    bottom: 0px;
+    right: 300px;
 }
+
 .chapters
 {
     background-color: rgba(255,255,255,0.90);
@@ -68,7 +83,7 @@ right: 300px;
     margin: 0px auto;
     top: 50px;
     width: 822px;
-  height: 873px;
+    height: 873px;
 }
 
 .pages
@@ -90,14 +105,14 @@ right: 300px;
 
 .configDialog
 {
-    position:fixed;
+    position: fixed;
     top: 0px;
     width: 240px;
 }
 
 .configStatus
 {
-    position:fixed;
+    position: fixed;
     top: 0px;
     width: 240px;
     right: 0px;
@@ -163,34 +178,27 @@ right: 300px;
     margin: 10px 10px 10px 0;
 }
 
-.frame .droppable
+/*.frame .droppable
 {
     background: black;
     width: 700px;
     height: 162px;
     padding: 0.5em;
     margin: 10px;
-}
+}*/
 /*Draggable elements*/
 #FrameEdit .draggable
 {
-
     width: 20px;
     height: 20px;
     padding: 0.5em;
-  
 }
 
-.FrameEdit .droppable
-{
 
-    padding: 0.5em;
-    margin: 10px;
-}
 
 .ui-dialog-titlebar-close
 {
-   /* visibility: hidden;*/
+    /* visibility: hidden;*/
 }
 
 .ui-accordion .ui-accordion-content

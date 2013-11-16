@@ -109,8 +109,22 @@
                                 }
                             </div>
                             <div class="Container3D" id="frames3D">
-                                Testeo views
-                                derty guai
+                                <p class="header"><span>Unity Web Player | </span>fles</p>
+                                <div class="content">
+                                    <div id="unityPlayer">
+                                        <div class="missing">
+                                            <a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now!">
+                                                <img alt="Unity Web Player. Install now!" src="http://webplayer.unity3d.com/installation/getunity.png" width="193" height="63" />
+                                            </a>
+                                        </div>
+                                        <div class="broken">
+                                            <a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now! Restart your browser after install.">
+                                                <img alt="Unity Web Player. Install now! Restart your browser after install." src="http://webplayer.unity3d.com/installation/getunityrestart.png" width="193" height="63" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="footer">&laquo; created with <a href="http://unity3d.com/unity/" title="Go to unity3d.com">Unity</a> &raquo;</p>
                             </div>
                         </div>
                     }
@@ -126,6 +140,7 @@
                 </ul>
             </div>
         </div>  
+         
     }
     <div class="configDialog" id="configDialog">
         <div id="accordionConfig" class="toolbox">
@@ -147,9 +162,7 @@
             <div class="leftContent">
                 <label>Status</label>
                 <textarea id="status" style="width: 150px" cols="20" rows="10"></textarea>
-                <div id="contentWindow">
-                    aaaaa
-                </div>
+
             </div>
             <h3>@Localization.Localize("Languages")</h3>
             <div class="leftContent">
@@ -187,148 +200,100 @@
             </div>
         </div>
     </div>
-
+    <div id="contentWindow">
+    </div>
 
     @section scripts
     {
         <script>
+            $(document).ready(function () {
+                var unityObjectUrl = "http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject2.js";
+                var config = {
+                    width: 660,
+                    height: 400,
+                    params: { enableDebugging: "0" }
 
-            /* var unityObjectUrl = "http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject2.js";*/
-            var config = {
-                width: 660,
-                height: 400,
-                params: { enableDebugging: "0" }
-
-            };
-            var dialogOpts = {
-                position: [300, 5],
-                minWidth: 600,
-                maxWidth: 600,
-                maxHeight: 700,
-                minHeight: 700,
-                width: 600,
-                height: 700
-            };
-
-            var draggableId = "No Draggable";
-            var droppableId = "No droppable";
-            var startPos;
-            var textArea = "";
-            var actualPage = 1;
-            var framesContent = $('div#frames');
-            //var u = new UnityObject2(config);
-
-
-            /* jQuery(function () {
- 
-                 var $missingScreen = jQuery("#unityPlayer").find(".missing");
-                 var $brokenScreen = jQuery("#unityPlayer").find(".broken");
-                 $missingScreen.hide();
-                 $brokenScreen.hide();
- 
-                 u.observeProgress(function (progress) {
-                     switch (progress.pluginStatus) {
-                         case "broken":
-                             $brokenScreen.find("a").click(function (e) {
-                                 e.stopPropagation();
-                                 e.preventDefault();
-                                 u.installPlugin();
-                                 return false;
-                             });
-                             $brokenScreen.show();
-                             break;
-                         case "missing":
-                             $missingScreen.find("a").click(function (e) {
-                                 e.stopPropagation();
-                                 e.preventDefault();
-                                 u.installPlugin();
-                                 return false;
-                             });
-                             $missingScreen.show();
-                             break;
-                         case "installed":
-                             $missingScreen.remove();
-                             break;
-                         case "first":
-                             break;
-                     }
-                 });
-                 u.initPlugin(jQuery("#unityPlayer")[0], "/Content/Resources/WebPlayer/webviewer.unity3d?book=2");
-             });*/
-
-            $(function () {
-                $("#pages").tabs();
-                $("#chapters").tabs();
-                $("#chapter1").tabs();
-                $("#chapter2").tabs();
-
-                $("#accordionConfig").accordion();
-                $("#accordionStatus").accordion();
-                $('#userContent').load('/Book/GetAvailableBooks', { fileOption: "newBook" });
-            });
-
-            $(".selectpicker").change(function () {
-
-                $('#userContent').load('/Book/GetAvailableBooks', { fileOption: $(this).val() });
-
-            });
-
-            $("#objectsGroup img").click(function () {
-                $('#terrain').prepend('<img  id="Cloned' + $(this).attr("id") + '" src="' + $(this).attr("src") + '" />');
-                StartDrag("#Cloned" + $(this).attr("id"));
-            });
-
-            function StartDrag(element) {
-                $(element).draggable({
-                    cursor: 'move',
-                    containment: "parent",
-                    drag: function (event, ui) {
-                        draggableId = $(this).attr("id");
-                        //alert(draggableId);
-                        var offset = $(this).offset();
-                        var imgHeight = parseInt($("#" + draggableId).css("height"), 10);
-                        var xPos = offset.left;
-                        var yPos = offset.top - imgHeight;
-                        $('#posX_txtbox').val('x: ' + xPos);
-                        $('#posY_txtbox').val('y: ' + yPos);
+                };
+                var dialogOpts = {
+                    position: [300, 5],
+                    minWidth: 600,
+                    maxWidth: 600,
+                    maxHeight: 700,
+                    minHeight: 700,
+                    width: 600,
+                    height: 700,
+                    close:function () {
+                        $("#DialogEditorFrames").hide();
                     }
+                };
+
+                var draggableId = "No Draggable";
+                var droppableId = "No droppable";
+                var startPos;
+                var textArea = "";
+                var actualPage = 1;
+                var framesContent = $('div#frames');
+                var u = new UnityObject2(config);
+
+                jQuery(function () {
+
+                    var $missingScreen = jQuery("#unityPlayer").find(".missing");
+                    var $brokenScreen = jQuery("#unityPlayer").find(".broken");
+                    $missingScreen.hide();
+                    $brokenScreen.hide();
+
+                    u.observeProgress(function (progress) {
+                        switch (progress.pluginStatus) {
+                            case "broken":
+                                $brokenScreen.find("a").click(function (e) {
+                                    e.stopPropagation();
+                                    e.preventDefault();
+                                    u.installPlugin();
+                                    return false;
+                                });
+                                $brokenScreen.show();
+                                break;
+                            case "missing":
+                                $missingScreen.find("a").click(function (e) {
+                                    e.stopPropagation();
+                                    e.preventDefault();
+                                    u.installPlugin();
+                                    return false;
+                                });
+                                $missingScreen.show();
+                                break;
+                            case "installed":
+                                $missingScreen.remove();
+                                break;
+                            case "first":
+                                break;
+                        }
+                    });
+                    u.initPlugin(jQuery("#unityPlayer")[0], "/Content/Resources/WebPlayer/webviewer.unity3d?book=2");
                 });
-                StartDrag(element);
-            }
 
-            $("#View2D").click(function () {
-                $("#frames").attr("hidden", "false");
-                $("#Container3D").show();
-            });
-
-            $("#View3D").click(function () {
-                $("#Container3D").attr("hidden", "false");
-                $("#frames").show();
-            });
-
-            $(".editContent").click(function () {
-
-                //alert($(this).val());
-                var resultFrame = $(this).val();
-                $.post("/Book/GetListObjectsInframe", { resultFrame: resultFrame }, function (data) {
-
-                    GetObjectComplete(data);
+                $(function () {
+                    $("#pages").tabs();
+                    $("#chapters").tabs();
+                    $("#chapter1").tabs();
+                    $("#chapter2").tabs();
+                    $("#accordionConfig").accordion();
+                    $("#accordionStatus").accordion();
+                    $('#userContent').load('/Book/GetAvailableBooks', { fileOption: "newBook" });
+                    $("#frames3D").addClass("disableControl");
                 });
-            });
+                $("#objectsGroup img").click(function () {
+                    $('#terrain').prepend('<img  id="Cloned' + $(this).attr("id") + '" src="' + $(this).attr("src") + '" />');
+                    StartDrag("#Cloned" + $(this).attr("id"));
+                });
 
-            function GetObjectComplete(result) {
-
-                $("#contentWindow").html(result.ObjectInquiryView);
-                $("#DialogEditorFrames").dialog(dialogOpts);
-               
-                $('#terrain img').each(function () {
-                   // alert($(this).attr("id"));
-                    $(this).draggable({
+                function StartDrag(element) {
+                    $(element).draggable({
                         cursor: 'move',
                         containment: "parent",
                         drag: function (event, ui) {
                             draggableId = $(this).attr("id");
-                            //alert(draggableId);
+                            alert("StartDrag");
                             var offset = $(this).offset();
                             var imgHeight = parseInt($("#" + draggableId).css("height"), 10);
                             var xPos = offset.left;
@@ -337,144 +302,205 @@
                             $('#posY_txtbox').val('y: ' + yPos);
                         }
                     });
-                });
-            }
-
-            $(".backgroundContain").click(function () {
-                var bk = $(this).attr("id");
-                var imgChosen = $("#" + bk).attr("src");
-                // alert($(this).attr("id"));
-                // alert($("#" + bk).attr("src"));
-                $("#terrain").css("background-image", "url(" + imgChosen + ")");
-            });
-
-            $("#btnAddPage").click(function () {
-                var descriptionArray = [];
-                descriptionArray.push("chapter1");
-                AddTextToStatus(descriptionArray[0]);
-                PostArray("AddPage", descriptionArray);
-            });
-
-            $("#btnAddChapter").click(function () {
-                //  var id = this.value;
-            });
-
-            function AddTextToStatus(mssg) {
-                $("#status").val($("#status").val() + mssg + "\n");
-            }
-
-            function GetAccordionStatusIndex() {
-                return $("#accordionStatus").accordion("option", "active");
-            }
-
-            $("#accordionStatus").accordion({
-                active: 0,
-                change: function () {
-                    var activeIndex = $("#accordionStatus").accordion("option", "active");
-                    //alert(activeIndex);
-                    switch (activeIndex) {
-                        case 0:
-                            // $('#chapter2').show();
-                            // $('#chapter1').show();
-                            break;
-                        case 1:
-                            // $("#ContentEdit").show();
-                            // $('#chapter2').hide();
-                            // $('#chapter1').hide();
-                            break;
-                        default:
-                    }
-
+                    StartDrag(element);
                 }
-            });
 
-            /*Function handle draggable objects. 
-                 Objects you pickup and drag*/
-            $(function () {
-                $("#framesGroup .draggable").draggable({
+                /*Function handle draggable objects. 
+                     Objects you pickup and drag*/
+                $(function () {
+                    $("#framesGroup .draggable").draggable({
+                        cursor: 'move',
+                        helper: 'clone',
+                        drag: function (event, ui) {
+                            draggableId = $(this).attr("id");
+                           // alert("group");
+                        }
+                    }).addClass("ui-state-highlight");
+
+
+                    /*Function handle droppable frames objects. 
+                              Object where you put your draggable*/
+                    $(".frame .droppable").droppable({
+                        drop: function (event, ui) {
+                            var pageIdAtributte = $(this).parent().parent().attr("id");
+                            var descriptionArray = [];
+                            droppableId = $(this).attr("id");
+                            //alert(draggableId.substr(0, 6));
+                          
+                            //Check if the obejct to be dropped is a Cloned object
+                            //T_his is triying to avoid conflict with other draggable obejects on page
+                            if (draggableId.substr(0, 6) != "Cloned") {
+                                //Add frames in page
+                                $(this).each(function (i, elem) {
+                                    var frameId = $(elem).attr("id");
+
+                                    descriptionArray.push(pageIdAtributte + "-" + frameId + "-" + draggableId);
+                                });
+                                if (droppableId != draggableId) {
+                                    PostArray("AddContentToFrame", descriptionArray);
+                                }
+                                var temp = $(this).attr("id").substring(0, 5);
+
+                                if (temp === "frame") {
+                                    $(this).find("img").attr("src", "../Images/" + draggableId + ".png");
+                                } else {
+
+                                }
+                                $("#" + draggableId).css({ position: "relative", top: 0, left: 0 });
+                                $("#" + draggableId).show();
+                            } else {
+                                /*Handle droppable  objects. Object where you put your draggable*/
+                                //droppableId = $(this).attr("id");
+                                //alert(droppableId);
+                            }
+                        }
+                    });
+                });
+
+                /*Draggable for object on frames*/
+                $("#FrameEdit .draggable").draggable({
                     cursor: 'move',
-                    helper: 'clone',
-                    drag: function (event, ui) {
+                    containment: "parent",
+                    drag: function () {
                         draggableId = $(this).attr("id");
-
+                        alert("okay");
+                        $(".frame .dropabble").removeClass("dropabble");
+                        var offset = $(this).offset();
+                        var imgHeight = parseInt($("#" + draggableId).css("height"), 10);
+                        var xPos = offset.left;
+                        var yPos = offset.top - imgHeight;
+                        $('#posX_txtbox').val('x: ' + xPos);
+                        $('#posY_txtbox').val('y: ' + yPos);
                     }
                 }).addClass("ui-state-highlight");
 
+           
+                $(".editContent").click(function () {
 
-                /*Function handle droppable frames objects. 
-                          Object where you put your draggable*/
-                $(".frame .droppable").droppable({
-                    drop: function (event, ui) {
-                        var pageIdAtributte = $(this).parent().parent().attr("id");
-                        var descriptionArray = [];
-                        droppableId = $(this).attr("id");
-                        //alert(droppableId);
-                        //Add frames in page
-                        $(this).each(function (i, elem) {
-                            var frameId = $(elem).attr("id");
+                    //alert($(this).val());
+                    var resultFrame = $(this).val();
+                    $.post("/Book/GetListObjectsInframe", { resultFrame: resultFrame }, function (data) {
 
-                            descriptionArray.push(pageIdAtributte + "-" + frameId + "-" + draggableId);
+                        GetObjectComplete(data);
+                    });
+                });
+
+                /*Function callback wich get List of objects in frame*/
+                function GetObjectComplete(result) {
+                    $('#contentWindow').prepend("#DialogEditorFrames");
+                    $("#contentWindow").html(result.ObjectInquiryView);
+                        $("#DialogEditorFrames").dialog(dialogOpts);
+
+                    $('#terrain img').each(function () {
+                        // alert($(this).attr("id"));
+                        $(this).draggable({
+                            cursor: 'move',
+                            containment: "parent",
+                            drag: function (event, ui) {
+                                draggableId = $(this).attr("id");
+                                //alert(draggableId);
+                                var offset = $(this).offset();
+                                var imgHeight = parseInt($("#" + draggableId).css("height"), 10);
+                                var xPos = offset.left;
+                                var yPos = offset.top - imgHeight;
+                                $('#posX_txtbox').val('x: ' + xPos);
+                                $('#posY_txtbox').val('y: ' + yPos);
+                            }
                         });
-                        if (droppableId != draggableId) {
-                            PostArray("AddContentToFrame", descriptionArray);
-                        }
-                        var temp = $(this).attr("id").substring(0, 5);
+                    });
+                }
 
-                        if (temp === "frame") {
-                            $(this).find("img").attr("src", "../Images/" + draggableId + ".png");
-                        } else {
+                /*Toggle between 2D and 3D View*/
+                /*----------------------------------------------*/
+                $("#View3D").bind("click", function () {
+                    $("#frames").hide();
+                    // $("#frames3D").show();
+                    $("#frames3D").removeClass("disableControl");
+                    $("#frames3D").addClass("activeControl");
+                });
 
+                $("#View2D").bind("click", function () {
+                    $("#frames").show();
+                    $("#frames3D").removeClass("activeControl");
+                    $("#frames3D").addClass("disableControl");
+                });
+                /*--------------------------------------------*/
+
+                $(".selectpicker").change(function () {
+
+                    $('#userContent').load('/Book/GetAvailableBooks', { fileOption: $(this).val() });
+
+                });
+
+                /*Change background image of terrain*/
+                $(".backgroundContain").click(function () {
+                    var bk = $(this).attr("id");
+                    var imgChosen = $("#" + bk).attr("src");
+                    $("#terrain").css("background-image", "url(" + imgChosen + ")");
+                });
+
+                /*Add new page*/
+                $("#btnAddPage").click(function () {
+                    var descriptionArray = [];
+                    descriptionArray.push("chapter1");
+                    AddTextToStatus(descriptionArray[0]);
+                    PostArray("AddPage", descriptionArray);
+                });
+                
+                /*Add new chapter*/
+                $("#btnAddChapter").click(function () {
+                    //  var id = this.value;
+                });
+
+                function AddTextToStatus(mssg) {
+                    $("#status").val($("#status").val() + mssg + "\n");
+                }
+
+                function GetAccordionStatusIndex() {
+                    return $("#accordionStatus").accordion("option", "active");
+                }
+
+                $("#accordionStatus").accordion({
+                    active: 0,
+                    change: function () {
+                        var activeIndex = $("#accordionStatus").accordion("option", "active");
+                        //alert(activeIndex);
+                        switch (activeIndex) {
+                            case 0:
+                                // $('#chapter2').show();
+                                // $('#chapter1').show();
+                                break;
+                            case 1:
+                                // $("#ContentEdit").show();
+                                // $('#chapter2').hide();
+                                // $('#chapter1').hide();
+                                break;
+                            default:
                         }
-                        $("#" + draggableId).css({ position: "relative", top: 0, left: 0 });
-                        $("#" + draggableId).show();
+
                     }
                 });
-            });
 
-            /*Draggable for object on frames*/
-            $("#terrain .draggable").draggable({
-                cursor: 'move',
-                containment: "parent",
-                drag: function () {
-                    draggableId = $(this).attr("id");
-                    var offset = $(this).offset();
-                    var imgHeight = parseInt($("#" + draggableId).css("height"), 10);
-                    var xPos = offset.left;
-                    var yPos = offset.top - imgHeight;
-                    $('#posX_txtbox').val('x: ' + xPos);
-                    $('#posY_txtbox').val('y: ' + yPos);
-                }
-            }).addClass("ui-state-highlight");
+                /*All post data to controller go thorugh this function*/
+                function PostArray(url, descriptionArray) {
+                    jQuery.ajax({
+                        type: 'POST',
+                        url: url,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(descriptionArray),
+                        async: false,
+                        dataType: "json",
+                        success: function (statusMsg) {
 
-            /*Function handle droppable  objects. 
-                       Object where you put your draggable*/
-            $(".FrameEdit .droppable").droppable({
-                drop: function (event, ui) {
-
-                    droppableId = $(this).attr("id");
-                    // alert(droppableId);
+                            descriptionArray.length = 0;
+                        },
+                        error: function (statusMsg) {
+                            AddTextToStatus("Couldn't send message.Wrong parameters");
+                        }
+                    });
                 }
             });
-            /*All post data to controller go thorugh this function*/
-
-            function PostArray(url, descriptionArray) {
-                jQuery.ajax({
-                    type: 'POST',
-                    url: url,
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify(descriptionArray),
-                    async: false,
-                    dataType: "json",
-                    success: function (statusMsg) {
-
-                        descriptionArray.length = 0;
-                    },
-                    error: function (statusMsg) {
-                        AddTextToStatus("Couldn't send message.Wrong parameters");
-                    }
-                });
-            }
-
         </script>
     }
+
 </div>
