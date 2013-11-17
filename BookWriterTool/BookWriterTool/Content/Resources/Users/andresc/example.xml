@@ -1,0 +1,1185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- start of book -->
+<book>
+  <!-- metadata, to group all the information about this book into one element. -->
+  <title>The duck and the eagle!</title>
+  <description>a heartwarming story about a lost duck who found his way back home with the help of a friendly eagle.</description>
+  <author>karl johansson</author>
+  <version>1.0</version>
+  <!-- define our chapters -->
+  <chapters>
+    <!-- chapter1 - the first chapter to be seen -->
+    <chapter id="chapter1">
+      <!-- grouped chapter information -->
+      <!-- a chapter can have one ore more pages. -->
+      <pages>
+        <!-- our first page! -->
+        <page id="page1">
+          <!-- pages can have one or more frames. most suitable? -->
+          <frames>
+            <!-- Our first frame 
+                    a triangle frame -->
+            <frame id="frame1" bordertype="triangle">
+              <scene id="scene1">
+              </scene>
+              <contents>
+                <!-- content for left -->
+                <content target="left" type="none">
+                  <background>day</background>
+                  <objects>
+                    <!--<object type="light" id="light1">
+                      <position xyz="0.0 2.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="1 1 1"/>
+                      <color rgb="255 255 255"/>
+                    </object>
+                    <object type="character2d" id="miko">
+                      <data>0-2-8-8-24-17-1-11-6-120</data>
+                      <position xyz="-2.03 0.0 -3.33" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="1.5 1.5 1.5"/>
+                    </object>-->
+                    <object type="character2d" id="aya">
+                      <data>0-2-10-10-24-17-1-10-5-10</data>
+                      <position xyz="-2.3 0.0 -3.33" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="1.5 1.5 1.5" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="-1.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                    <object type="text" id="text1" string="text1">
+                    </object>
+                  </objects>
+                </content>
+                <!-- content for right -->
+                <content target="right" type="none">
+                  <background>day3</background>
+                  <objects>
+                    <object type="character2d" id="aya">
+                      <data>1-2-10-10-25-15-1-10-5-10</data>
+                      <position xyz="0.44 0.0 -3.33" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="1.5 1.5 1.5" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="1.0 0.5 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                  </objects>
+                </content>
+              </contents>
+              <!-- End of frame -->
+            </frame>
+            <!-- Our second frame 
+              this one is a choice -->
+            <frame id="frame2" bordertype="square">
+              <!-- we will use the same scene as the first frame. -->
+              <scene id="scene1">
+              </scene>
+              <!-- define contents of this rectangle frame -->
+              <contents>
+                <!-- content type, this case: fill as it takes up the whole frame. -->
+                <content target="left" type="none">
+                  <background>day3</background>
+                  <!-- The characters to be in this box -->
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="0.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="3.0 0.0 0.0" />
+                      <rotation xyz="25 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                  </objects>
+                  <choice />
+                </content>
+                <content target="right">
+                  <background>day2</background>
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="0.0 1.0 0.0" />
+                      <rotation xyz="50 50 50" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                  </objects>
+                </content>
+                <choice />
+              </contents>
+              <!-- End of frame -->
+            </frame>
+            <frame id="frame2" bordertype="rectangle">
+              <!-- we will use the same scene as the first frame. -->
+              <scene id="scene1">
+              </scene>
+              <!-- define contents of this rectangle frame -->
+              <contents>
+                <!-- content type, this case: fill as it takes up the whole frame. -->
+                <content target="fill" type="choice">
+                  <background>day2</background>
+                  <!-- The characters to be in this box -->
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="4.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="1.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                  </objects>
+                  <!-- Create a "choice" where the player can choose between a positive and a negative response. -->
+                  <choice owner="eagle">
+                    <!-- the actual question text that the user gets to read before making its choice. -->
+                    <question id="questionText1">
+                    </question>
+                    <!-- defines what happens when you choose a positive response -->
+                    <positive>
+                      <text id="positiveResponse1">
+                      </text>
+                      <result>
+                        <success goto="page2">
+                        </success>
+                        <failed goto="gameOver">
+                        </failed>
+                      </result>
+                    </positive>
+                    <!-- defines what happens when you choose a negative response -->
+                    <negative>
+                      <text id="negativeResponse1">
+                      </text>
+                      <result>
+                        <success goto="page3">
+                        </success>
+                        <failed goto="frame2">
+                        </failed>
+                      </result>
+                    </negative>
+                  </choice>
+                </content>
+              </contents>
+              <!-- End of frame -->
+            </frame>
+            <!-- End of frames -->
+          </frames>
+          <!-- End of page -->
+        </page>
+        <page id="page2">
+          <!-- pages can have one or more frames. most suitable? -->
+          <frames>
+            <!-- Our first frame 
+                    a triangle frame -->
+            <frame id="frame1" bordertype="square">
+              <scene id="scene1">
+              </scene>
+              <contents>
+                <!-- content for left -->
+                <content target="left" type="none">
+                  <background>day</background>
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="-2.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                    <object type="character" id="duck">
+                      <position xyz="-2.0 0.0 -2.0" />
+                      <rotation xyz="0 180 0" />
+                      <scale xyz="60 60 60" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="-1.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                    <object type="text" id="text1" string="text1">
+                    </object>
+                  </objects>
+                </content>
+                <!-- content for right -->
+                <content target="right" type="none">
+                  <background>day</background>
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="2.0 0.5 1.0" />
+                      <rotation xyz="0 100 0" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="1.0 0.5 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                  </objects>
+                </content>
+              </contents>
+              <!-- End of frame -->
+            </frame>
+            <!-- Our second frame 
+              this one is a choice -->
+            <frame id="frame2" bordertype="rectangle">
+              <!-- we will use the same scene as the first frame. -->
+              <scene id="scene1">
+              </scene>
+              <!-- define contents of this rectangle frame -->
+              <contents>
+                <!-- content type, this case: fill as it takes up the whole frame. -->
+                <content target="left" type="none">
+                  <background>day</background>
+                  <!-- The characters to be in this box -->
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="0.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="3.0 0.0 0.0" />
+                      <rotation xyz="25 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                  </objects>
+                  <choice />
+                </content>
+                <!--     <content target="right">
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="0.0 1.0 0.0" />
+                      <rotation xyz="50 50 50" />
+                      <scale xyz="50 50 50"/>
+                    </object>
+                  </objects>
+                <choice/>
+                </content> -->
+              </contents>
+              <!-- End of frame -->
+            </frame>
+            <frame id="frame2" bordertype="triangle">
+              <!-- we will use the same scene as the first frame. -->
+              <scene id="scene1">
+              </scene>
+              <!-- define contents of this rectangle frame -->
+              <contents>
+                <content target="left">
+                  <background>day</background>
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="0.0 1.0 0.0" />
+                      <rotation xyz="50 50 50" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                  </objects>
+                  <choice />
+                </content>
+                <!-- content type, this case: fill as it takes up the whole frame. -->
+                <content target="right" type="choice">
+                  <background>day</background>
+                  <!-- The characters to be in this box -->
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="4.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="1.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                  </objects>
+                  <!-- Create a "choice" where the player can choose between a positive and a negative response. -->
+                  <choice owner="eagle">
+                    <!-- the actual question text that the user gets to read before making its choice. -->
+                    <question id="questionText1">
+                    </question>
+                    <!-- defines what happens when you choose a positive response -->
+                    <positive>
+                      <text id="positiveResponse1">
+                      </text>
+                      <result>
+                        <success goto="page2">
+                        </success>
+                        <failed goto="gameOver">
+                        </failed>
+                      </result>
+                    </positive>
+                    <!-- defines what happens when you choose a negative response -->
+                    <negative>
+                      <text id="negativeResponse1">
+                      </text>
+                      <result>
+                        <success goto="page3">
+                        </success>
+                        <failed goto="frame2">
+                        </failed>
+                      </result>
+                    </negative>
+                  </choice>
+                </content>
+              </contents>
+              <!-- End of frame -->
+            </frame>
+            <!-- End of frames -->
+          </frames>
+          <!-- End of page -->
+        </page>
+        <page id="page3">
+          <!-- pages can have one or more frames. most suitable? -->
+          <frames>
+            <!-- Our first frame 
+                    a triangle frame -->
+            <frame id="frame1" bordertype="square">
+              <scene id="scene1">
+              </scene>
+              <contents>
+                <!-- content for left -->
+                <content target="left" type="none">
+                  <background>day2</background>
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="-2.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                    <object type="character" id="duck">
+                      <position xyz="-2.0 0.0 -2.0" />
+                      <rotation xyz="0 180 0" />
+                      <scale xyz="60 60 60" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="-1.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                    <object type="text" id="text1" string="text1">
+                    </object>
+                  </objects>
+                </content>
+                <!-- content for right -->
+                <content target="right" type="none">
+                  <background>day2</background>
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="2.0 0.5 1.0" />
+                      <rotation xyz="0 100 0" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="1.0 0.5 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                  </objects>
+                </content>
+              </contents>
+              <!-- End of frame -->
+            </frame>
+            <!-- Our second frame 
+              this one is a choice -->
+            <frame id="frame2" bordertype="rectangle">
+              <!-- we will use the same scene as the first frame. -->
+              <scene id="scene1">
+              </scene>
+              <!-- define contents of this rectangle frame -->
+              <contents>
+                <!-- content type, this case: fill as it takes up the whole frame. -->
+                <content target="left" type="none">
+                  <background>day</background>
+                  <!-- The characters to be in this box -->
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="0.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="3.0 0.0 0.0" />
+                      <rotation xyz="25 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                  </objects>
+                  <choice />
+                </content>
+                <!--     <content target="right">
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="0.0 1.0 0.0" />
+                      <rotation xyz="50 50 50" />
+                      <scale xyz="50 50 50"/>
+                    </object>
+                  </objects>
+                <choice/>
+                </content> -->
+              </contents>
+              <!-- End of frame -->
+            </frame>
+            <frame id="frame2" bordertype="triangle">
+              <!-- we will use the same scene as the first frame. -->
+              <scene id="scene1">
+              </scene>
+              <!-- define contents of this rectangle frame -->
+              <contents>
+                <content target="left">
+                  <background>day3</background>
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="0.0 1.0 0.0" />
+                      <rotation xyz="50 50 50" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                  </objects>
+                  <choice />
+                </content>
+                <!-- content type, this case: fill as it takes up the whole frame. -->
+                <content target="right" type="choice">
+                  <background>day3</background>
+                  <!-- The characters to be in this box -->
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="4.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="1.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                  </objects>
+                  <!-- Create a "choice" where the player can choose between a positive and a negative response. -->
+                  <choice owner="eagle">
+                    <!-- the actual question text that the user gets to read before making its choice. -->
+                    <question id="questionText1">
+                    </question>
+                    <!-- defines what happens when you choose a positive response -->
+                    <positive>
+                      <text id="positiveResponse1">
+                      </text>
+                      <result>
+                        <success goto="page2">
+                        </success>
+                        <failed goto="gameOver">
+                        </failed>
+                      </result>
+                    </positive>
+                    <!-- defines what happens when you choose a negative response -->
+                    <negative>
+                      <text id="negativeResponse1">
+                      </text>
+                      <result>
+                        <success goto="page3">
+                        </success>
+                        <failed goto="frame2">
+                        </failed>
+                      </result>
+                    </negative>
+                  </choice>
+                </content>
+              </contents>
+              <!-- End of frame -->
+            </frame>
+            <!-- End of frames -->
+          </frames>
+          <!-- End of page -->
+        </page>
+        <page id="page4">
+          <!-- pages can have one or more frames. most suitable? -->
+          <frames>
+            <!-- Our first frame 
+                    a triangle frame -->
+            <frame id="frame1" bordertype="square">
+              <scene id="scene1">
+              </scene>
+              <contents>
+                <!-- content for left -->
+                <content target="left" type="none">
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="-2.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                    <object type="character" id="duck">
+                      <position xyz="-2.0 0.0 -2.0" />
+                      <rotation xyz="0 180 0" />
+                      <scale xyz="60 60 60" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="-1.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                    <object type="text" id="text1" string="text1">
+                    </object>
+                  </objects>
+                </content>
+                <!-- content for right -->
+                <content target="right" type="none">
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="2.0 0.5 1.0" />
+                      <rotation xyz="0 100 0" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="1.0 0.5 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                  </objects>
+                </content>
+              </contents>
+              <!-- End of frame -->
+            </frame>
+            <!-- Our second frame 
+              this one is a choice -->
+            <frame id="frame2" bordertype="rectangle">
+              <!-- we will use the same scene as the first frame. -->
+              <scene id="scene1">
+              </scene>
+              <!-- define contents of this rectangle frame -->
+              <contents>
+                <!-- content type, this case: fill as it takes up the whole frame. -->
+                <content target="left" type="none">
+                  <!-- The characters to be in this box -->
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="0.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="3.0 0.0 0.0" />
+                      <rotation xyz="25 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                  </objects>
+                  <choice />
+                </content>
+                <!--     <content target="right">
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="0.0 1.0 0.0" />
+                      <rotation xyz="50 50 50" />
+                      <scale xyz="50 50 50"/>
+                    </object>
+                  </objects>
+                <choice/>
+                </content> -->
+              </contents>
+              <!-- End of frame -->
+            </frame>
+            <!-- End of frames -->
+          </frames>
+          <!-- End of page -->
+        </page>
+        <!-- End of pages -->
+      </pages>
+      <!-- End of chapter -->
+    </chapter>
+    <chapter id="chapter2">
+      <!-- grouped chapter information -->
+      <!-- a chapter can have one ore more pages. -->
+      <pages>
+        <!-- our first page! -->
+        <page id="page1">
+          <!-- pages can have one or more frames. most suitable? -->
+          <frames>
+            <!-- Our first frame 
+                    a triangle frame -->
+            <frame id="frame1" bordertype="triangle">
+              <scene id="scene1">
+              </scene>
+              <contents>
+                <!-- content for left -->
+                <content target="left" type="none">
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="-2.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                    <object type="character" id="duck">
+                      <position xyz="-2.0 0.0 -2.0" />
+                      <rotation xyz="0 180 0" />
+                      <scale xyz="60 60 60" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="-1.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                    <object type="text" id="text1" string="text1">
+                    </object>
+                  </objects>
+                </content>
+                <!-- content for right -->
+                <content target="right" type="none">
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="2.0 0.5 1.0" />
+                      <rotation xyz="0 100 0" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="1.0 0.5 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                  </objects>
+                </content>
+              </contents>
+              <!-- End of frame -->
+            </frame>
+            <!-- Our second frame 
+              this one is a choice -->
+            <frame id="frame2" bordertype="square">
+              <!-- we will use the same scene as the first frame. -->
+              <scene id="scene1">
+              </scene>
+              <!-- define contents of this rectangle frame -->
+              <contents>
+                <!-- content type, this case: fill as it takes up the whole frame. -->
+                <content target="left" type="none">
+                  <!-- The characters to be in this box -->
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="0.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="3.0 0.0 0.0" />
+                      <rotation xyz="25 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                  </objects>
+                  <choice />
+                </content>
+                <content target="right">
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="0.0 1.0 0.0" />
+                      <rotation xyz="50 50 50" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                  </objects>
+                </content>
+                <choice />
+              </contents>
+              <!-- End of frame -->
+            </frame>
+            <frame id="frame2" bordertype="rectangle">
+              <!-- we will use the same scene as the first frame. -->
+              <scene id="scene1">
+              </scene>
+              <!-- define contents of this rectangle frame -->
+              <contents>
+                <!-- content type, this case: fill as it takes up the whole frame. -->
+                <content target="fill" type="choice">
+                  <!-- The characters to be in this box -->
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="4.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="1.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                  </objects>
+                  <!-- Create a "choice" where the player can choose between a positive and a negative response. -->
+                  <choice owner="eagle">
+                    <!-- the actual question text that the user gets to read before making its choice. -->
+                    <question id="questionText1">
+                    </question>
+                    <!-- defines what happens when you choose a positive response -->
+                    <positive>
+                      <text id="positiveResponse1">
+                      </text>
+                      <result>
+                        <success goto="page2">
+                        </success>
+                        <failed goto="gameOver">
+                        </failed>
+                      </result>
+                    </positive>
+                    <!-- defines what happens when you choose a negative response -->
+                    <negative>
+                      <text id="negativeResponse1">
+                      </text>
+                      <result>
+                        <success goto="page3">
+                        </success>
+                        <failed goto="frame2">
+                        </failed>
+                      </result>
+                    </negative>
+                  </choice>
+                </content>
+              </contents>
+              <!-- End of frame -->
+            </frame>
+            <!-- End of frames -->
+          </frames>
+          <!-- End of page -->
+        </page>
+        <page id="page2">
+          <!-- pages can have one or more frames. most suitable? -->
+          <frames>
+            <!-- Our first frame 
+                    a triangle frame -->
+            <frame id="frame1" bordertype="triangle">
+              <scene id="scene1">
+              </scene>
+              <contents>
+                <!-- content for left -->
+                <content target="left" type="none">
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="-2.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                    <object type="character" id="duck">
+                      <position xyz="-2.0 0.0 -2.0" />
+                      <rotation xyz="0 180 0" />
+                      <scale xyz="60 60 60" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="-1.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                    <object type="text" id="text1" string="text1">
+                    </object>
+                  </objects>
+                </content>
+                <!-- content for right -->
+                <content target="right" type="none">
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="2.0 0.5 1.0" />
+                      <rotation xyz="0 100 0" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="1.0 0.5 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                  </objects>
+                </content>
+              </contents>
+              <!-- End of frame -->
+            </frame>
+            <!-- Our second frame 
+              this one is a choice -->
+            <frame id="frame2" bordertype="square">
+              <!-- we will use the same scene as the first frame. -->
+              <scene id="scene1">
+              </scene>
+              <!-- define contents of this rectangle frame -->
+              <contents>
+                <!-- content type, this case: fill as it takes up the whole frame. -->
+                <content target="left" type="none">
+                  <!-- The characters to be in this box -->
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="0.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="3.0 0.0 0.0" />
+                      <rotation xyz="25 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                  </objects>
+                  <choice />
+                </content>
+                <content target="right">
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="0.0 1.0 0.0" />
+                      <rotation xyz="50 50 50" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                  </objects>
+                </content>
+                <choice />
+              </contents>
+              <!-- End of frame -->
+            </frame>
+            <frame id="frame2" bordertype="rectangle">
+              <!-- we will use the same scene as the first frame. -->
+              <scene id="scene1">
+              </scene>
+              <!-- define contents of this rectangle frame -->
+              <contents>
+                <!-- content type, this case: fill as it takes up the whole frame. -->
+                <content target="fill" type="choice">
+                  <!-- The characters to be in this box -->
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="4.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="1.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                  </objects>
+                  <!-- Create a "choice" where the player can choose between a positive and a negative response. -->
+                  <choice owner="eagle">
+                    <!-- the actual question text that the user gets to read before making its choice. -->
+                    <question id="questionText1">
+                    </question>
+                    <!-- defines what happens when you choose a positive response -->
+                    <positive>
+                      <text id="positiveResponse1">
+                      </text>
+                      <result>
+                        <success goto="page2">
+                        </success>
+                        <failed goto="gameOver">
+                        </failed>
+                      </result>
+                    </positive>
+                    <!-- defines what happens when you choose a negative response -->
+                    <negative>
+                      <text id="negativeResponse1">
+                      </text>
+                      <result>
+                        <success goto="page3">
+                        </success>
+                        <failed goto="frame2">
+                        </failed>
+                      </result>
+                    </negative>
+                  </choice>
+                </content>
+              </contents>
+              <!-- End of frame -->
+            </frame>
+            <!-- End of frames -->
+          </frames>
+          <!-- End of page -->
+        </page>
+        <page id="page3">
+          <!-- pages can have one or more frames. most suitable? -->
+          <frames>
+            <!-- Our first frame 
+                    a triangle frame -->
+            <frame id="frame1" bordertype="triangle">
+              <scene id="scene1">
+              </scene>
+              <contents>
+                <!-- content for left -->
+                <content target="left" type="none">
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="-2.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                    <object type="character" id="duck">
+                      <position xyz="-2.0 0.0 -2.0" />
+                      <rotation xyz="0 180 0" />
+                      <scale xyz="60 60 60" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="-1.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                    <object type="text" id="text1" string="text1">
+                    </object>
+                  </objects>
+                </content>
+                <!-- content for right -->
+                <content target="right" type="none">
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="2.0 0.5 1.0" />
+                      <rotation xyz="0 100 0" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="1.0 0.5 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                  </objects>
+                </content>
+              </contents>
+              <!-- End of frame -->
+            </frame>
+            <!-- Our second frame 
+              this one is a choice -->
+            <frame id="frame2" bordertype="square">
+              <!-- we will use the same scene as the first frame. -->
+              <scene id="scene1">
+              </scene>
+              <!-- define contents of this rectangle frame -->
+              <contents>
+                <!-- content type, this case: fill as it takes up the whole frame. -->
+                <content target="left" type="none">
+                  <!-- The characters to be in this box -->
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="0.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="3.0 0.0 0.0" />
+                      <rotation xyz="25 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                  </objects>
+                  <choice />
+                </content>
+                <content target="right">
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="0.0 1.0 0.0" />
+                      <rotation xyz="50 50 50" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                  </objects>
+                </content>
+                <choice />
+              </contents>
+              <!-- End of frame -->
+            </frame>
+            <frame id="frame2" bordertype="rectangle">
+              <!-- we will use the same scene as the first frame. -->
+              <scene id="scene1">
+              </scene>
+              <!-- define contents of this rectangle frame -->
+              <contents>
+                <!-- content type, this case: fill as it takes up the whole frame. -->
+                <content target="fill" type="choice">
+                  <!-- The characters to be in this box -->
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="4.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="1.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                  </objects>
+                  <!-- Create a "choice" where the player can choose between a positive and a negative response. -->
+                  <choice owner="eagle">
+                    <!-- the actual question text that the user gets to read before making its choice. -->
+                    <question id="questionText1">
+                    </question>
+                    <!-- defines what happens when you choose a positive response -->
+                    <positive>
+                      <text id="positiveResponse1">
+                      </text>
+                      <result>
+                        <success goto="page2">
+                        </success>
+                        <failed goto="gameOver">
+                        </failed>
+                      </result>
+                    </positive>
+                    <!-- defines what happens when you choose a negative response -->
+                    <negative>
+                      <text id="negativeResponse1">
+                      </text>
+                      <result>
+                        <success goto="page3">
+                        </success>
+                        <failed goto="frame2">
+                        </failed>
+                      </result>
+                    </negative>
+                  </choice>
+                </content>
+              </contents>
+              <!-- End of frame -->
+            </frame>
+            <!-- End of frames -->
+          </frames>
+          <!-- End of page -->
+        </page>
+        <!-- End of pages -->
+      </pages>
+      <!-- End of chapter -->
+    </chapter>
+    <chapter id="chapter3">
+      <!-- grouped chapter information -->
+      <!-- a chapter can have one ore more pages. -->
+      <pages>
+        <!-- our first page! -->
+        <page id="page1">
+          <!-- pages can have one or more frames. most suitable? -->
+          <frames>
+            <!-- Our first frame 
+                    a triangle frame -->
+            <frame id="frame1" bordertype="No Draggable">
+              <scene id="scene1">
+              </scene>
+              <contents>
+                <!-- content for left -->
+                <content target="left" type="none">
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="-2.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                    <object type="character" id="duck">
+                      <position xyz="-2.0 0.0 -2.0" />
+                      <rotation xyz="0 180 0" />
+                      <scale xyz="60 60 60" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="-1.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                    <object type="text" id="text1" string="text1">
+                    </object>
+                  </objects>
+                </content>
+                <!-- content for right -->
+                <content target="right" type="none">
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="2.0 0.5 1.0" />
+                      <rotation xyz="0 100 0" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="1.0 0.5 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                  </objects>
+                </content>
+              </contents>
+              <!-- End of frame -->
+            </frame>
+            <!-- Our second frame 
+              this one is a choice -->
+            <frame id="frame2" bordertype="No Draggable">
+              <!-- we will use the same scene as the first frame. -->
+              <scene id="scene1">
+              </scene>
+              <!-- define contents of this rectangle frame -->
+              <contents>
+                <!-- content type, this case: fill as it takes up the whole frame. -->
+                <content target="left" type="none">
+                  <!-- The characters to be in this box -->
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="0.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="3.0 0.0 0.0" />
+                      <rotation xyz="25 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                  </objects>
+                  <choice />
+                </content>
+                <content target="right">
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="0.0 1.0 0.0" />
+                      <rotation xyz="50 50 50" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                  </objects>
+                </content>
+                <choice />
+              </contents>
+              <!-- End of frame -->
+            </frame>
+            <frame id="frame2" bordertype="No Draggable">
+              <!-- we will use the same scene as the first frame. -->
+              <scene id="scene1">
+              </scene>
+              <!-- define contents of this rectangle frame -->
+              <contents>
+                <!-- content type, this case: fill as it takes up the whole frame. -->
+                <content target="fill" type="choice">
+                  <!-- The characters to be in this box -->
+                  <objects>
+                    <object type="character" id="duck">
+                      <position xyz="4.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="25 25 25" />
+                    </object>
+                    <object type="character" id="eagle" animation="talk" string="dia1">
+                      <position xyz="1.0 0.0 0.0" />
+                      <rotation xyz="0 0 0" />
+                      <scale xyz="50 50 50" />
+                    </object>
+                  </objects>
+                  <!-- Create a "choice" where the player can choose between a positive and a negative response. -->
+                  <choice owner="eagle">
+                    <!-- the actual question text that the user gets to read before making its choice. -->
+                    <question id="questionText1">
+                    </question>
+                    <!-- defines what happens when you choose a positive response -->
+                    <positive>
+                      <text id="positiveResponse1">
+                      </text>
+                      <result>
+                        <success goto="page2">
+                        </success>
+                        <failed goto="gameOver">
+                        </failed>
+                      </result>
+                    </positive>
+                    <!-- defines what happens when you choose a negative response -->
+                    <negative>
+                      <text id="negativeResponse1">
+                      </text>
+                      <result>
+                        <success goto="page3">
+                        </success>
+                        <failed goto="frame2">
+                        </failed>
+                      </result>
+                    </negative>
+                  </choice>
+                </content>
+              </contents>
+              <!-- End of frame -->
+            </frame>
+            <!-- End of frames -->
+          </frames>
+          <!-- End of page -->
+        </page>
+        <!-- End of pages -->
+      </pages>
+      <!-- End of chapter -->
+    </chapter>
+    <!-- End of chapters -->
+  </chapters>
+  <!-- End of book -->
+</book>

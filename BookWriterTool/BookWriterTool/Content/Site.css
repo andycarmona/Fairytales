@@ -125,7 +125,7 @@ header .content-wrapper {
 
 footer {
     clear: both;
-    background-color: #e2e2e2;
+    background-color: #000000;
     font-size: .8em;
     height: 100px;
 }
@@ -142,7 +142,7 @@ footer {
 
 .site-title a, .site-title a:hover, .site-title a:active {
     background: none;
-    color: #c8c8c8;
+    color: #000;
     outline: none;
     text-decoration: none;
 }

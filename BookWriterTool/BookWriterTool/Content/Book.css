@@ -27,7 +27,9 @@
 
 .Container3D
 {
-    
+    position: relative;
+
+    width: 200px;
 }
 
 .activeControl
@@ -107,14 +109,14 @@
 {
     position: fixed;
     top: 0px;
-    width: 240px;
+    width: 15%;
 }
 
 .configStatus
 {
     position: fixed;
     top: 0px;
-    width: 240px;
+    width: 15%;
     right: 0px;
 }
 
@@ -154,7 +156,7 @@ div#context-menu li {
     position: absolute;
     margin: 0px auto;
     top: 50px;
-    width: 800px;
+    width: 70%;
 }
 
 .pagesView
