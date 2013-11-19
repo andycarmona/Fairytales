@@ -177,7 +177,7 @@ namespace BookWriterTool.Controllers
         [HttpPost]
         public JsonResult AddContentToFrame(string[] frameDescriptionArray)
         {
-            string statusMsg = "Changed frame in page";
+            string statusMsg = "";
             if (Session["ActualFile"] != null)
             {
                 try
@@ -195,6 +195,25 @@ namespace BookWriterTool.Controllers
             return Json(statusMsg);
         }
 
+        public JsonResult AddObjectToContent(string[] frameDescriptionArray)
+        {
+            string statusMsg = "";
+            if (Session["ActualFile"] != null)
+            {
+                try
+                {
+                    var fileName = (string)this.Session["ActualFile"];
+
+                    aBookRepository.AddObjectToContent(frameDescriptionArray, fileName);
+                }
+                catch (IOException e)
+                {
+                    statusMsg = e.Message;
+                }
+
+            }
+            return Json("mss2");
+        }
 
     }
 }

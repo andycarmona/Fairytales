@@ -52,6 +52,19 @@ namespace BookWriterTool
                  "~/Content/themes/sunny/jquery.ui.datepicker.css",
                  "~/Content/themes/sunny/jquery.ui.progressbar.css",
                  "~/Content/themes/sunny/jquery.ui.theme.css"));
+            bundles.Add(new StyleBundle("~/Content/themes/black-tie/css").Include(
+      "~/Content/themes/black-tie/jquery.ui.core.css",
+      "~/Content/themes/black-tie/jquery.ui.resizable.css",
+      "~/Content/themes/black-tie/jquery.ui.selectable.css",
+      "~/Content/themes/black-tie/jquery.ui.accordion.css",
+      "~/Content/themes/black-tie/jquery.ui.autocomplete.css",
+      "~/Content/themes/black-tie/jquery.ui.button.css",
+      "~/Content/themes/black-tie/jquery.ui.dialog.css",
+      "~/Content/themes/black-tie/jquery.ui.slider.css",
+      "~/Content/themes/black-tie/jquery.ui.tabs.css",
+      "~/Content/themes/black-tie/jquery.ui.datepicker.css",
+      "~/Content/themes/black-tie/jquery.ui.progressbar.css",
+      "~/Content/themes/black-tie/jquery.ui.theme.css"));
         }
     }
 }

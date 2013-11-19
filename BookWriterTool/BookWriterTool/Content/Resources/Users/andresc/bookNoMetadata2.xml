@@ -117,7 +117,7 @@
         </page>
         <page id="page7">
           <frames>
-            <frame id="frame1" bordertype="triangle" />
+            <frame id="frame1" bordertype="square" />
           </frames>
         </page>
       </pages>

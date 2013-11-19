@@ -55,8 +55,12 @@
     left: 0px;*/
     height: 100px;
 }
-
-
+.gridster li {
+    background-color: white;
+}
+img {
+    
+}
 #panel
 {
     width: 100%;
@@ -74,10 +78,14 @@
 {
     width: 245px;
     position: absolute;
-    bottom: 0px;
+    bottom: 90px;
     right: 300px;
 }
-
+.higlightFrame
+ {
+    border-color: red;
+    border-width: 2px;
+}
 .chapters
 {
     background-color: rgba(255,255,255,0.90);
@@ -108,14 +116,14 @@
 .configDialog
 {
     position: fixed;
-    top: 0px;
+    top: 80px;
     width: 15%;
 }
 
 .configStatus
 {
     position: fixed;
-    top: 0px;
+    top: 80px;
     width: 15%;
     right: 0px;
 }
@@ -143,7 +151,27 @@ div#context-menu {
    color: #fff;
    font-size: 12px;
 }
-
+/*Menu raden*/
+/* Clearfix for the menu */
+.ui-menu {
+    position: fixed;
+    width: 100%;
+}
+.ui-menu:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+.ui-menu .ui-menu-item {
+    display: inline-block;
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: auto;
+}
 div#context-menu li {
    margin: 3px;
    padding: 3px;
@@ -222,7 +250,9 @@ div#context-menu li {
 {
     height: 390px;
 }
-
+.ui-accordion .ui-accordion-header {
+    
+}
 .ui-tabs .ui-tabs-panel
 {
     padding: 0em 0.4em;

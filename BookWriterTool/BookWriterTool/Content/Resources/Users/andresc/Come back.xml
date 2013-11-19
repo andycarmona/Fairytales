@@ -12,7 +12,7 @@
         <!-- our first page! -->
         <page id="page1">
           <frames>
-            <frame id="frame1" bordertype="triangle">
+            <frame id="frame1" bordertype="square">
               <contents>
                 <!-- content for left -->
                 <content target="left" type="none">
@@ -36,13 +36,13 @@
                 </content>
               </contents>
             </frame>
-            <frame id="frame2" bordertype="triangle" />
+            <frame id="frame2" bordertype="square" />
             <frame id="frame3" bordertype="cuadratric" />
           </frames>
         </page>
         <page id="page2">
           <frames>
-            <frame id="frame1" bordertype="triangle">
+            <frame id="frame1" bordertype="square">
               <contents>
                 <!-- content for left -->
                 <content target="left" type="none">
@@ -72,7 +72,7 @@
         </page>
         <page id="page3">
           <frames>
-            <frame id="frame1" bordertype="rectangle">
+            <frame id="frame1" bordertype="square">
               <contents>
                 <!-- content for left -->
                 <content target="left" type="none">
@@ -107,12 +107,12 @@
         </page>
         <page id="page5">
           <frames>
-            <frame id="frame1" bordertype="triangle" />
+            <frame id="frame1" bordertype="square" />
           </frames>
         </page>
         <page id="page6">
           <frames>
-            <frame id="frame1" bordertype="triangle" />
+            <frame id="frame1" bordertype="square" />
           </frames>
         </page>
         <page id="page7">

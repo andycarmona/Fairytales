@@ -1,29 +1,33 @@
 ﻿@using BookWriterTool.Helpers
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>@ViewBag.Title - BookEditor</title>
-        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <meta name="viewport" content="width=device-width" />
-        @Styles.Render("~/Content/css")
-         @Styles.Render("~/Content/customcss")
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - BookEditor</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" type="text/css" href="/Content/themes/gridster/jquery.gridster.min.css">
+     
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/customcss")
 
-        @Styles.Render("~/Content/themes/sunny/css")
-        @Scripts.Render("~/bundles/modernizr")  
-             @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/jqueryui")  
-<script type="text/javascript">
-		var unityObjectUrl = "http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject2.js";
-		if (document.location.protocol == 'https:')
-			unityObjectUrl = unityObjectUrl.replace("http://", "https://ssl-");
-		document.write('<script type="text\/javascript" src="' + unityObjectUrl + '"><\/script>');
-		</script>
-    </head>
-    <body id="body">
-         @RenderBody()
+    @Styles.Render("~/Content/themes/black-tie/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    <script src="/Scripts/jquery.gridster.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="/Scripts/jquery.maphilight.min.js"></script>
+    <script type="text/javascript">
+        var unityObjectUrl = "http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject2.js";
+        if (document.location.protocol == 'https:')
+            unityObjectUrl = unityObjectUrl.replace("http://", "https://ssl-");
+        document.write('<script type="text\/javascript" src="' + unityObjectUrl + '"><\/script>');
+    </script>
+</head>
+<body id="body">
+    @RenderBody()
 
-       
-        @RenderSection("scripts", required: false)
-    </body>
+
+    @RenderSection("scripts", required: false)
+</body>
 </html>

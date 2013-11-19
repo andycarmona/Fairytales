@@ -19,8 +19,6 @@
                   <objects>
                     <object type="character" id="duck">
                     </object>
-                    <object type="character" id="croc" animation="talk" string="dia1">
-                    </object>
                     <object type="text" id="text1" string="text1">
                     </object>
                   </objects>
@@ -63,7 +61,7 @@
             <frame id="frame3" bordertype="square">
               <contents>
                 <!-- content for left -->
-                <content type="none">
+                <content target="left" type="none">
                   <objects>
                     <object type="character" id="duck">
                     </object>
@@ -74,7 +72,7 @@
                   </objects>
                 </content>
                 <!-- content for right -->
-                <content type="none">
+                <content target="right" type="none">
                   <objects>
                     <object type="character" id="duck">
                     </object>
@@ -88,7 +86,7 @@
         </page>
         <page id="page2">
           <frames>
-            <frame id="frame1" bordertype="triangle">
+            <frame id="frame1" bordertype="square">
               <contents>
                 <!-- content for left -->
                 <content target="left" type="none">
@@ -112,7 +110,7 @@
                 </content>
               </contents>
             </frame>
-            <frame id="frame2" bordertype="rectangle">
+            <frame id="frame2" bordertype="square">
               <contents>
                 <!-- content for left -->
                 <content type="none">
@@ -164,7 +162,7 @@
         </page>
         <page id="page3">
           <frames>
-            <frame id="frame1" bordertype="triangle">
+            <frame id="frame1" bordertype="square">
               <contents>
                 <!-- content for left -->
                 <content target="left" type="none">
@@ -188,7 +186,7 @@
                 </content>
               </contents>
             </frame>
-            <frame id="frame2" bordertype="triangle" />
+            <frame id="frame2" bordertype="square" />
             <frame id="frame3" bordertype="cuadratric" />
           </frames>
         </page>

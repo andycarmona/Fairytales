@@ -28,7 +28,13 @@
     listOfBooks[0] = "no book";
     bool avoidStep;
 }
-
+<div class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" style="position: fixed; width: 100%; background-color: gainsboro;">
+    <div style="text-align: center; width: 200px;">
+        <a href="some_url">
+            <span class="ui-icon ui-icon-help"></span>
+        </a>
+    </div>
+</div>
 @if (Model != null)
 {
     <div class="chapters" id="chapters">
@@ -71,36 +77,44 @@
                         {
                             avoidStep = false;
                                     <div id="@frame.id" class="droppable">
-                                        <img id="img@(frame.id)" border="0" width="700" height="158" alt="" src="~/Images/@(frame.bordertype).png" />
+                                        <img id="img@(frame.id)" usemap="#mapRectangle"  border="0" width="700" height="158" alt="" src="~/Images/@(frame.bordertype).png" />
+                                        <map name="mapRectangle" id="mapRectangle">
+                                            <area shape="rect" coords="7,9,140,127" class="map" id="arerates" alt="rectangle" href="#" />
 
-                                    </div> 
-                                    <div id="contents">
-                                        @if (frame.contents != null)
-                                        {
-                                            foreach (bookChapterPageFrameContent content in frame.contents)
+                                        </map>
+
+                                        <map name="mapSquare">
+                                            <area id="areaSquareLeft" shape="rect" coords="8,9,65,127" alt="squareleft" href="http://test" />
+                                            <area id="areaSquareRight" shape="rect" coords="279,9,65,127" alt="squareright" href="http://test" />
+                                        </map>
+                                        <div id="contents">
+                                            @if (frame.contents != null)
                                             {
-
-                                                if (@frame.bordertype == "rectangle")
+                                                foreach (bookChapterPageFrameContent content in frame.contents)
                                                 {
-                                                    if (!avoidStep)
+
+                                                    if (@frame.bordertype == "rectangle")
                                                     {
-                                            <button  class="editContent" type="button" value="@(chapter.id)-@(page.id)-@(frame.id)-">Rectangle edit</button>
+                                                        if (!avoidStep)
+                                                        {
+                                                <button  class="editContent" type="button" value="@(chapter.id)-@(page.id)-@(frame.id)-">Rectangle edit</button>
+                                                        }
+                                                        avoidStep = true;
                                                     }
-                                                    avoidStep = true;
-                                                }
-                                                else if (@content.target == "left")
-                                                {
-                                            <button  class="editContent" type="button" value="@(chapter.id)-@(page.id)-@(frame.id)-left">Left edit</button>
+                                                    else if (@content.target == "left")
+                                                    {
+                                                <button  class="editContent" type="button" value="@(chapter.id)-@(page.id)-@(frame.id)-left">Left edit</button>
                                             
-                                                }
-                                                else if (@content.target == "right")
-                                                {
-                                            <button  class="editContent" type="button" value="@(chapter.id)-@(page.id)-@(frame.id)-right">Right edit</button>
-                                                }
+                                                    }
+                                                    else if (@content.target == "right")
+                                                    {
+                                                <button  class="editContent" type="button" value="@(chapter.id)-@(page.id)-@(frame.id)-right">Right edit</button>
+                                                    }
 
+                                                }
                                             }
-                                        }
-                                    </div>
+                                        </div>
+                                    </div> 
                                     <div id="objects">
                                         <span style="visibility: hidden;">Frame: @frame.id</span>
                                         <span style="visibility: hidden;" id="bordertypeIdentifier">Bordertype: @frame.bordertype</span>
@@ -111,24 +125,25 @@
                             </div>
 
                         </div>
-                    } <div class="Container3D" id="Container3D">
-                                <p class="header"><span>Unity Web Player | </span>fles</p>
-                                <div class="content">
-                                    <div id="unityPlayer">
-                                        <div class="missing">
-                                            <a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now!">
-                                                <img alt="Unity Web Player. Install now!" src="http://webplayer.unity3d.com/installation/getunity.png" width="193" height="63" />
-                                            </a>
-                                        </div>
-                                        <div class="broken">
-                                            <a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now! Restart your browser after install.">
-                                                <img alt="Unity Web Player. Install now! Restart your browser after install." src="http://webplayer.unity3d.com/installation/getunityrestart.png" width="193" height="63" />
-                                            </a>
-                                        </div>
-                                    </div>
+                    }
+                    <div class="Container3D" id="Container3D">
+                        <p class="header"><span>Unity Web Player | </span>fles</p>
+                        <div class="content">
+                            <div id="unityPlayer">
+                                <div class="missing">
+                                    <a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now!">
+                                        <img alt="Unity Web Player. Install now!" src="http://webplayer.unity3d.com/installation/getunity.png" width="193" height="63" />
+                                    </a>
                                 </div>
-                                <p class="footer">&laquo; created with <a href="http://unity3d.com/unity/" title="Go to unity3d.com">Unity</a> &raquo;</p>
+                                <div class="broken">
+                                    <a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now! Restart your browser after install.">
+                                        <img alt="Unity Web Player. Install now! Restart your browser after install." src="http://webplayer.unity3d.com/installation/getunityrestart.png" width="193" height="63" />
+                                    </a>
+                                </div>
                             </div>
+                        </div>
+                        <p class="footer">&laquo; created with <a href="http://unity3d.com/unity/" title="Go to unity3d.com">Unity</a> &raquo;</p>
+                    </div>
                     <!--End frames section-->
 
                 </div>
@@ -139,7 +154,6 @@
 
         <div class="ViewChanger" id="ViewChanger">
             <ul>
-
                 <input id="View2D" type="button" value="2D View" />
                 <input id="View3D" type="button" value="3D View" />
             </ul>
@@ -147,7 +161,7 @@
     </div>  
 
 }
-        
+
 <div class="configDialog" id="configDialog">
     <div id="accordionConfig" class="toolbox">
         <h3>@Localization.Localize("files")</h3>
@@ -207,18 +221,32 @@
     </div>
 </div>
 <div id="contentWindow">
+    <div class="gridster">
+        <ul>
+            <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+                <img  id="object1" src="@GlobalVariables.ConfigResource("CharacterResource")duck.jpg" border="1" width="150" height="133" alt="" /></li>
+            <li data-row="2" data-col="1" data-sizex="1" data-sizey="1"></li>
+            <li data-row="3" data-col="1" data-sizex="1" data-sizey="1"></li>
+            <li data-row="1" data-col="2" data-sizex="1" data-sizey="1"></li>
+            <li data-row="2" data-col="2" data-sizex="1" data-sizey="1"></li>
+            <li data-row="3" data-col="2" data-sizex="1" data-sizey="1"></li>
+
+        </ul>
+    </div>
 </div>
 
 @section scripts
-    {
+{
     <script>
         $(document).ready(function () {
+            // $('.mapSquare').maphilight();            $('.mapRectangle').maphilight({
+                fillColor: '008800'
+            });
             var unityObjectUrl = "http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject2.js";
             var config = {
                 width: 660,
                 height: 400,
                 params: { enableDebugging: "0" }
-
             };
             var dialogOpts = {
                 position: [300, 5],
@@ -229,11 +257,14 @@
                 width: 600,
                 height: 700,
                 close: function () {
-                    $("#DialogEditorFrames").dialog("destroy");
-                    $("#contentWindow").remove();
+                    //$("#DialogEditorFrames").dialog("destroy");
+                    // $("#terrain").remove();
+                    $("#terrain").html("");
+                    // ClearImages();
                 }
             };
 
+            var actualPage;
             var draggableId = "No Draggable";
             var droppableId = "No droppable";
             var startPos;
@@ -285,16 +316,45 @@
                 $("#chapter1").tabs();
                 $("#chapter2").tabs();
                 $("#chapter3").tabs();
+                $("#contentWindow").dialog();
                 $("#accordionConfig").accordion();
                 $("#accordionStatus").accordion();
                 $('#userContent').load('/Book/GetAvailableBooks', { fileOption: "newBook" });
                 $(".Container3D").addClass("disableControl");
+                $(".gridster ul").gridster({
+                    widget_margins: [10, 10],
+                    widget_base_dimensions: [140, 140]
+                });
+
             });
-            $("#objectsGroup img").click(function () {
+            $('.map').mouseover(function () {
+
+                // $(parent().(this).attr('id')).addClass(".higlightFrame");
+
+            }).mouseout(function () {
+                //$("#"+(this).attr('id')).removeClass(".higlightFrame");
+            });
+            $('#objectsGroup img').bind("click", function () {
+                var descriptionArray = [];
                 var randomnumber = Math.floor(Math.random() * 100);
                 $('#terrain').append('<img  id="Cloned' + randomnumber + '" src="' + $(this).attr("src") + '" />');
                 StartDrag("#Cloned" + randomnumber);
+                configurateImgOnTerrain();
+                //  descriptionArray.push(pageIdAtributte + "-" + frameId + "-" + draggableId);
+                // PostArray("AddObjectToContent", descriptionArray);
             });
+
+            // When adding a object I need to get information about page and chapter webgl area on
+
+
+            /*Clear all images in terrain*/
+
+            function ClearImages() {
+                $('#terrain img').each(function () {
+                    $(this).remove();
+                });
+            }
+
 
             function StartDrag(element) {
                 $(element).draggable({
@@ -313,6 +373,7 @@
                 });
                 //StartDrag(element);
             }
+
             $(".editContent").click(function () {
 
                 //alert($(this).val());
@@ -324,17 +385,23 @@
             });
 
             /*Function callback wich get List of objects in frame*/
+
             function GetObjectComplete(result) {
-                $('#contentWindow').append("#DialogEditorFrames");
+                //  $('#contentWindow').append("#DialogEditorFrames");
                 $("#contentWindow").html(result.ObjectInquiryView);
                 $("#DialogEditorFrames").dialog(dialogOpts);
+                configurateImgOnTerrain();
 
+            }
+            function configurateImgOnTerrain() {
                 $('#terrain img').each(function () {
                     StartDrag($(this));
+                    AddTextToStatus($(this).attr("id"));
                     $(this).bind('contextmenu', function (e) {
                         // alert(e.pageX.toString());
                         $('#context-menu').css('left', e.pageX + 'px');
                         $('#context-menu').css('top', e.pageY + 'px');
+                        $('#context-menu').css('z-index', 10);
                         $("#valCtxMenu").html($(this).attr("id"));
                         $('#context-menu').show();
                         e.preventDefault();
@@ -363,7 +430,7 @@
                     helper: 'clone',
                     drag: function (event, ui) {
                         draggableId = $(this).attr("id");
-                        // alert("group");
+                        //alert("group");
                     }
                 }).addClass("ui-state-highlight");
 
@@ -415,7 +482,7 @@
             $("#View3D").bind("click", function () {
                 $(".pages #frames").each(function (i, elem) {
                     $(this).hide(500);
-              
+
                 });
                 $("#Container3D").appendTo($("#pages"));
                 $(".Container3D").removeClass("disableControl");
@@ -426,8 +493,8 @@
                 $(".pages #frames").each(function (i, elem) {
                     $(this).show(500);
                 });
-              //  $("#Container3D").dialog("close");
-               $(".Container3D").removeClass("activeControl");
+                //  $("#Container3D").dialog("close");
+                $(".Container3D").removeClass("activeControl");
                 $(".Container3D").addClass("disableControl");
             });
             /*--------------------------------------------*/
@@ -488,6 +555,7 @@
             });
 
             /*All post data to controller go thorugh this function*/
+
             function PostArray(url, descriptionArray) {
                 jQuery.ajax({
                     type: 'POST',

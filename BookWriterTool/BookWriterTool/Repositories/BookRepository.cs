@@ -17,6 +17,8 @@ namespace BookWriterTool.Repositories
 
         private book aBook;
 
+        private XmlDocument xmlDoc;
+
         public BookRepository()
         {
 
@@ -37,12 +39,14 @@ namespace BookWriterTool.Repositories
             }
             return status;
         }
+
         public int GetNumberOfpagesInBook(string fileName)
         {
             this.SetActualFile(fileName);
             bookChapterPage[] apage = aBook.chapters[0].pages;
             return apage.Length;
         }
+
         public bookChapter GetChapterById(string chapterId)
         {
             var aChapter = new bookChapter();
@@ -109,10 +113,33 @@ namespace BookWriterTool.Repositories
             return this.GetAllContent();
         }
 
+        public string AddObjectToContent(string[] content, string fileName)
+        {
+            xmlDoc = new XmlDocument();
+            xmlDoc.Load(HttpContext.Current.Server.MapPath(fileName));
+            XmlNode pagesNodes = this.xmlDoc.SelectSingleNode("//page[@id=page1]/frames/frame[@id=frame1]/contents/content[@target=left]");
+            if (pagesNodes != null)
+            {
+                XmlAttributeCollection pageAttri = pagesNodes.Attributes;
+                if (pageAttri != null)
+                {
+                    foreach (var node in pageAttri)
+                    {
+                        var temp=node.ToString();
+                        temp = "";
+                    }
+                }
+            }
+
+            //   XmlNodeList frameNodes = null;
+           // XmlNodeList contentNodes = null;
+            return "ok";
+        }
+
         public void AddContentToFrame(string[] contentToSearch, string fileName)
         {
 
-            var xmlDoc = new XmlDocument();
+            xmlDoc = new XmlDocument();
             xmlDoc.Load(HttpContext.Current.Server.MapPath(fileName));
             XmlNodeList pagesNodes = xmlDoc.SelectNodes("//book/chapters/chapter/pages/page");
             XmlNodeList frameNodes = null;
