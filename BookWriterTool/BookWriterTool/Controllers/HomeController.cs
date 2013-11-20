@@ -10,6 +10,7 @@ namespace BookWriterTool.Controllers
     using System.Reflection;
     using System.Resources;
     using System.Threading;
+    using System.Web.Routing;
 
     using BookWriterTool.Helpers;
     using BookWriterTool.Models;
@@ -38,7 +39,7 @@ namespace BookWriterTool.Controllers
         {
           //  this.ViewBag.message = this.localizationHandler.Localize("ChooseOption");
 
-            return this.View();
+            return RedirectToAction("FakeLogin", "Book",new{userName="andresc"});
         }
     }
 }

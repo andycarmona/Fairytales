@@ -466,7 +466,7 @@
     <Content Include="Scripts\jquery.gridster.min.js" />
     <Content Include="Scripts\jquery.gridster.with-extras.js" />
     <Content Include="Scripts\jquery.gridster.with-extras.min.js" />
-    <Content Include="Scripts\jquery.maphilight.min.js" />
+    <Content Include="Scripts\jquery.imagemapster.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />

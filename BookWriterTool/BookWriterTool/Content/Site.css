@@ -1,8 +1,4 @@
-﻿html {
-    background-color: #e2e2e2;
-    margin: 0;
-    padding: 0;
-}
+﻿
 
 body {
     border-top: solid 10px #000;
@@ -103,11 +99,7 @@ h5, h6 {
     max-width: 960px;
 }
 
-#body {
-    background-color: black;
-    clear: both;
-    padding-bottom: 35px;
-}
+
 
     .main-content {
         background: url("../Images/accent.png") no-repeat;

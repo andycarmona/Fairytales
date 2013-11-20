@@ -12,7 +12,7 @@
         <!-- our first page! -->
         <page id="page1">
           <frames>
-            <frame id="frame1" bordertype="square">
+            <frame id="frame1" bordertype="No Draggable">
               <contents>
                 <!-- content for left -->
                 <content target="left" type="none">

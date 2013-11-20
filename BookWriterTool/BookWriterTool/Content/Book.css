@@ -78,7 +78,7 @@ img {
 {
     width: 245px;
     position: absolute;
-    bottom: 90px;
+   bottom: 31px;
     right: 300px;
 }
 .higlightFrame
@@ -88,12 +88,11 @@ img {
 }
 .chapters
 {
-    background-color: rgba(255,255,255,0.90);
     position: fixed;
-    margin: 0px auto;
-    top: 50px;
-    width: 822px;
-    height: 873px;
+  margin: 0px auto;
+top: 83px;
+width: 822px;
+height: 703px;
 }
 
 .pages
