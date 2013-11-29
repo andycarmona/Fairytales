@@ -19,7 +19,6 @@
 {
     border-bottom-left-radius: 8px;
     border: 1px solid #d19405;
-    background: #fece2f url(/Content/themes/sunny/images/ui-bg_gloss-wave_60_fece2f_500x100.png) 50% 50% repeat-x;
     font-weight: bold;
     color: #4c3000;
     margin: 0 auto;
@@ -44,7 +43,7 @@
 #FrameEdit #terrain
 {
     position: relative;
-    height: 500px;
+    height: 100%;
 }
 
 
@@ -85,6 +84,56 @@ img {
  {
     border-color: red;
     border-width: 2px;
+}
+.droppable .GeomForm {
+    width:743px;
+    height: 130px;
+}
+.droppable .squareLeft {
+    float: left;
+      background-image: url(../Images/squarepart.png);
+    background-repeat: no-repeat;
+    border-image:url(../Images/border.png) 25 25 round;
+-webkit-border-image:url(../Images/border.png) 25 25 round; /* Safari 5 and older */
+-o-border-image:url(../Images/border.png) 25 25 round; /* Opera */
+    	background-position: center center;
+   -webkit-background-size:100% auto;
+    -moz-background-size: 100% auto;
+    background-size: 100% auto;
+    height: 83%;
+    width: 48%;
+    /*margin-right: 350px;*/
+}
+.droppable .squareRight {
+    float: right;
+      background-image: url(../Images/squarepart.png);
+      	background-position: center center;
+          background-repeat: no-repeat;
+              border-image:url(../Images/border.png) 25 25 round;
+-webkit-border-image:url(../Images/border.png) 25 25 round; /* Safari 5 and older */
+-o-border-image:url(../Images/border.png) 25 25 round; /* Opera */
+  /*  -webkit-background-size:contain;
+    -moz-background-size: contain;
+    background-size: contain;*/
+      -webkit-background-size:100% auto;
+    -moz-background-size: 100% auto;
+    background-size: 100% auto;
+   height: 83%;
+    width: 48%;
+}
+.droppable .rectangle {
+    float: left;
+      background-image: url(../Images/rectangle.png);
+      background-position: center center;
+       background-repeat: no-repeat;
+           border-image:url(../Images/border.png) 25 25 round;
+-webkit-border-image:url(../Images/border.png) 25 25 round; /* Safari 5 and older */
+-o-border-image:url(../Images/border.png) 25 25 round; /* Opera */
+       -webkit-background-size: 100% auto;
+    -moz-background-size: 100% auto;
+       background-size: 100% auto;
+    height: 83%;
+    width: 100%;
 }
 .chapters
 {
@@ -237,9 +286,17 @@ div#context-menu li {
     height: 20px;
     padding: 0.5em;
 }
-
-
-
+.editContent {
+   position:relative 
+}
+.editContentLeft {
+    position: relative;
+    float: left;
+}
+.editContentRight {
+    position: relative;
+    float: right;
+}
 .ui-dialog-titlebar-close
 {
     /* visibility: hidden;*/

@@ -77,35 +77,27 @@
                         {
                             avoidStep = false;
                                     <div id="@frame.id" class="droppable">
-                                        <img id="img@(frame.id)"   border="0" width="700" height="120" alt="" src="~/Images/@(frame.bordertype).png" />
-                                  
-                                        <div id="contents">
-                                            @if (frame.contents != null)
+
+                                        <!--<img id="img@(frame.id)"   border="0" width="700" height="120" alt="" src="~/Images/@(frame.bordertype).png" />-->
+                                        <div class="GeomForm">
+                                            @if (@frame.bordertype == "rectangle")
                                             {
-                                                foreach (bookChapterPageFrameContent content in frame.contents)
-                                                {
-
-                                                    if (@frame.bordertype == "rectangle")
-                                                    {
-                                                        if (!avoidStep)
-                                                        {
-                                                <button  class="editContent" type="button" value="@(chapter.id)-@(page.id)-@(frame.id)-">Rectangle edit</button>
-                                                        }
-                                                        avoidStep = true;
-                                                    }
-                                                    else if (@content.target == "left")
-                                                    {
-                                                <button  class="editContent" type="button" value="@(chapter.id)-@(page.id)-@(frame.id)-left">Left edit</button>
-                                            
-                                                    }
-                                                    else if (@content.target == "right")
-                                                    {
-                                                <button  class="editContent" type="button" value="@(chapter.id)-@(page.id)-@(frame.id)-right">Right edit</button>
-                                                    }
-
-                                                }
+                                                <div id="@(chapter.id)-@(page.id)-@(frame.id)-rectangle" class="rectangle">
+                                                    <button  class="editContent" type="button" value="@(chapter.id)-@(page.id)-@(frame.id)-rectangle">Rectangle edit</button>
+                                                </div>
+                                            }
+                                            else if (@frame.bordertype == "square")
+                                            {
+                                                <div id="@(chapter.id)-@(page.id)-@(frame.id)-left" class="squareLeft">
+                                                   
+                                                    <button  class="editContent" type="button" value="@(chapter.id)-@(page.id)-@(frame.id)-left">Left edit</button>
+                                                </div>
+                                                <div id="@(chapter.id)-@(page.id)-@(frame.id)-right" class="squareRight">
+                                                    <button  class="editContent" type="button" value="@(chapter.id)-@(page.id)-@(frame.id)-right">Right edit</button>
+                                                </div>
                                             }
                                         </div>
+
                                     </div> 
                                     <div id="objects">
                                         <span style="visibility: hidden;">Frame: @frame.id</span>
@@ -217,95 +209,108 @@
 @section scripts
 {
     <script>
- 
-            var unityObjectUrl = "http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject2.js";
-            var config = {
-                width: 660,
-                height: 400,
-                params: { enableDebugging: "0" }
-            };
 
-            var dialogOpts = {
-                position: [300, 5],
-                minWidth: 600,
-                maxWidth: 600,
-                maxHeight: 700,
-                minHeight: 700,
-                width: 600,
-                height: 700,
-                close: function() {
-                    $("#DialogEditorFrames").dialog("destroy");
-                    $("#terrain").remove();
-                    $("#terrain").html("");
-                    $('#terrain').empty();
-                    clearImages();
-                },
-                open: function() {
-                   configurateImgOnTerrain();
-                }
-            };
+        var unityObjectUrl = "http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject2.js";
+        var config = {
+            width: 660,
+            height: 400,
+            params: { enableDebugging: "0" }
+        };
+        var pageModel = {
+            actualFrame: "",
+            actualPage: "",
+            actualTarget: ""
+        };
+
+        var bookModel = {
+            bookFile: "",
+            username: "",
+            pageModel: []
+        };
+
+        var dialogOpts = {
+            position: [300, 5],
+            minWidth: 600,
+            maxWidth: 600,
+            maxHeight: 700,
+            minHeight: 700,
+            width: 600,
+            height: 700,
+            close: function () {
+                $("#DialogEditorFrames").dialog("destroy");
+                $("#terrain").remove();
+                $("#terrain").html("");
+                $('#terrain').empty();
+                clearImages();
+            },
+            open: function () {
+                configurateImgOnTerrain();
+            }
+        };
 
 
-            var draggableId = "No Draggable";
-            var droppableId = "No droppable";
-            var actualFrame;
-            var actualPage;
-            var actualTarget;
-            var u = new UnityObject2(config);
+        var draggableId = "No Draggable";
+        var droppableId = "No droppable";
+        var actualFrame;
+        var actualPage;
+        var actualTarget;
+        var actualContent;
+        /*
+        var u = new UnityObject2(config);
 
-            jQuery(function() {
-            
-                    var $missingScreen = jQuery("#unityPlayer").find(".missing");
-                    var $brokenScreen = jQuery("#unityPlayer").find(".broken");
-                    $missingScreen.hide();
-                    $brokenScreen.hide();
+        jQuery(function() {
 
-                    u.observeProgress(function(progress) {
-                        switch (progress.pluginStatus) {
-                        case "broken":
-                            $brokenScreen.find("a").click(function(e) {
-                                e.stopPropagation();
-                                e.preventDefault();
-                                u.installPlugin();
-                                return false;
-                            });
-                            $brokenScreen.show();
-                            break;
-                        case "missing":
-                            $missingScreen.find("a").click(function(e) {
-                                e.stopPropagation();
-                                e.preventDefault();
-                                u.installPlugin();
-                                return false;
-                            });
-                            $missingScreen.show();
-                            break;
-                        case "installed":
-                            $missingScreen.remove();
-                            break;
-                        case "first":
-                            break;
-                        }
+            var $missingScreen = jQuery("#unityPlayer").find(".missing");
+            var $brokenScreen = jQuery("#unityPlayer").find(".broken");
+            $missingScreen.hide();
+            $brokenScreen.hide();
+
+            u.observeProgress(function(progress) {
+                switch (progress.pluginStatus) {
+                case "broken":
+                    $brokenScreen.find("a").click(function(e) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        u.installPlugin();
+                        return false;
                     });
-                    u.initPlugin(jQuery("#unityPlayer")[0], "/Content/Resources/WebPlayer/webviewer.unity3d?book=2");
-              
-                });
-            
-
-            $(function() {
-                $("#pages").tabs();
-                $("#chapters").tabs();
-                $("#chapter1").tabs();
-                $("#chapter2").tabs();
-                $("#chapter3").tabs();
-               // $("#DialogEditorFrames").dialog(dialogOpts);
-                $("#accordionConfig").accordion();
-                $("#accordionStatus").accordion();
-                $('#userContent').load('/Book/GetAvailableBooks', { fileOption: "newBook" });
-                $(".Container3D").addClass("disableControl");
-
+                    $brokenScreen.show();
+                    break;
+                case "missing":
+                    $missingScreen.find("a").click(function(e) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        u.installPlugin();
+                        return false;
+                    });
+                    $missingScreen.show();
+                    break;
+                case "installed":
+                    $missingScreen.remove();
+                    break;
+                case "first":
+                    break;
+                }
             });
-           /* $('.map').mouseover(function() {
+            u.initPlugin(jQuery("#unityPlayer")[0], "/Content/Resources/WebPlayer/webviewer.unity3d?book=2");
+
+        });
+
+        */
+        $(function () {
+            $("#pages").tabs();
+            $("#chapters").tabs();
+            $("#chapter1").tabs();
+            $("#chapter2").tabs();
+            $("#chapter3").tabs();
+            // $("#DialogEditorFrames").dialog(dialogOpts);
+            $("#accordionConfig").accordion();
+            $("#accordionStatus").accordion();
+            $('#userContent').load('/Book/GetAvailableBooks', { fileOption: "newBook" });
+            $(".Container3D").addClass("disableControl");
+
+        });
+        /* $('.map').mouseover(function() {
                 $('area').mapster('select');
 
             }).mouseout(function() {
@@ -318,7 +323,7 @@
                 strokeColor: 'ff0000'
             });*/
 
-            /* 
+        /* 
             $(".pages .pageItems").each(function (i, elem) {
                 $(this).children('li').children('a').on("click", function (e) { 
                     actualPage= $(this).attr("href").substr(1,$(this).attr("href").length);
@@ -326,250 +331,273 @@
        
             });
             */
-            $('#objectsGroup img').bind("click", function() {
-                var descriptionArray = [];
-                var randomnumber = Math.floor(Math.random() * 100);
-                $('#terrain').append('<img  id="Cloned' + randomnumber + '" src="' + $(this).attr("src") + '" />');
 
-               configurateImgOnTerrain();
-               descriptionArray.push(actualPage + "-" + actualFrame + "-" + $(this).attr("src"));
-                PostArray("AddObjectToContent", descriptionArray);
+        function RenderBook() {
+            $.each(bookModel.pageModel, function (index, cartItem) {
+
+                var aFrame = pageModel.actualFrame;
+                var aPage = pageModel.actualPage;
             });
 
-            // When adding a object I need to get information about page and chapter webgl area on
-
-
-            /*Clear all images in terrain*/
-
-            function clearImages() {
-                $('#terrain img').each(function() {
-                    $(this).remove();
+        }
+        function addElementToBook() {
+            bookModel.bookFil.push("afile.txt");
+            bookModel.username.push("auername");
+            bookModel.pageModel.push(
+                {
+                    "actualFrame": "frame1",
+                    "actualPage": "page1",
+                    "actualTarget": "left"
                 });
-            }
+        }
+
+        $('#objectsGroup img').bind("click", function () {
+            var descriptionArray = [];
+            var randomnumber = Math.floor(Math.random() * 100);
+            $('#terrain').append('<img  id="Cloned' + randomnumber + '" src="' + $(this).attr("src") + '" />');
+
+            configurateImgOnTerrain();
+            descriptionArray.push(actualPage + "-" + actualFrame + "-" + $(this).attr("src"));
+            PostArray("AddObjectToContent", descriptionArray);
+        });
+
+        // When adding a object I need to get information about page and chapter webgl area on
 
 
-            function startDrag(element) {
-                $(element).draggable({
-                    cursor: 'move',
-                    containment: "parent",
-                    drag: function(event, ui) {
-                        draggableId = $(this).attr("id");
-                        //  alert("StartDrag");
-                        var offset = $(this).offset();
-                        var imgHeight = parseInt($("#" + draggableId).css("height"), 10);
-                        var xPos = offset.left;
-                        var yPos = offset.top - imgHeight;
-                        $('#posX_txtbox').val('xw: ' + xPos);
-                        $('#posY_txtbox').val('yw: ' + yPos);
-                    }
+        /*Clear all images in terrain*/
+
+        function clearImages() {
+            $('#terrain img').each(function () {
+                $(this).remove();
+            });
+        }
+
+
+        function startDrag(element) {
+            $(element).draggable({
+                cursor: 'move',
+                containment: "parent",
+                drag: function (event, ui) {
+                    draggableId = $(this).attr("id");
+                    //  alert("StartDrag");
+                    var offset = $(this).offset();
+                    var imgHeight = parseInt($("#" + draggableId).css("height"), 10);
+                    var xPos = offset.left;
+                    var yPos = offset.top - imgHeight;
+                    $('#posX_txtbox').val('xw: ' + xPos);
+                    $('#posY_txtbox').val('yw: ' + yPos);
+                }
+            });
+            //StartDrag(element);
+        }
+        
+            $(".page .frame .droppable .GeomForm div").each(function () {
+                //alert($(this).attr("id"));
+                actualContent = $(this).attr("id");
+            var resultFrame = actualContent;
+            var splitedString = resultFrame.split('-');
+            actualPage = splitedString[1];
+            actualFrame = splitedString[2];
+            actualTarget = splitedString[3];
+            $.post("/Book/GetListObjectsInframe", { resultFrame: resultFrame }, function (data) {
+                getObjectComplete(data);
+            });
+        });
+   
+        /*Function callback wich get List of objects in frame*/
+
+        function getObjectComplete(result) {
+            // $('#contentWindow').append("#DialogEditorFrames");
+           // alert(actualContent);
+            $("#" + actualContent).append("#DialogEditorFrames");
+            $("#" + actualContent).html(result.ObjectInquiryView);
+            // $("#contentWindow").html(result.ObjectInquiryView);
+            // $("#DialogEditorFrames").dialog(dialogOpts);
+            // alert("cuando el objeto esta completo");
+            configurateImgOnTerrain();
+
+        }
+
+        function configurateImgOnTerrain() {
+            $('#terrain img').each(function () {
+                startDrag($(this));
+                AddTextToStatus($(this).attr("id"));
+                $("#pageName_txtbox").val(actualPage);
+                $("#frameName_txtbox").val(actualFrame);
+                $("#target_txtbox").val(actualTarget);
+                //  alert("dentro de configuraacion para terrain");
+                $(this).bind('contextmenu', function (e) {
+
+                    $('#context-menu').css('left', e.pageX + 'px');
+                    $('#context-menu').css('top', e.pageY + 'px');
+                    $('#context-menu').css('z-index', 10);
+                    $("#valCtxMenu").html($(this).attr("id"));
+                    $('#context-menu').show();
+                    e.preventDefault();
+                    return false;
                 });
-                //StartDrag(element);
-            }
-
-            $(".editContent").click(function() {
-
-                //alert($(this).val());
-                var resultFrame = $(this).val();
-               // $('#contentWindow').append("#DialogEditorFrames");
-                var splitedString = resultFrame.split('-');
-                actualPage = splitedString[1];
-                actualFrame = splitedString[2];
-                actualTarget = splitedString[3];
-               /* $("#target_txtbox").val(splitedString[3]).change();*/
-                $.post("/Book/GetListObjectsInframe", { resultFrame: resultFrame }, function(data) {
-                    getObjectComplete(data);
-                });
             });
+        }
 
-            /*Function callback wich get List of objects in frame*/
+        /*Start Context menu events*/
+        $('html').click(function (e) {
+            $('#context-menu').hide();
+            $("#valCtxMenu").text('');
+        });
+        $('#context-menu').click(function (e) {
+            $("#valCtxMenu").text('');
+            e.stopPropagation();
+        });
+        $(window).resize(function () {
+            $('#context-menu').hide();
+            $("#valCtxMenu").text('');
+        });
+        /*End of contextmenu events*/
 
-            function getObjectComplete(result) {
-               $('#contentWindow').append("#DialogEditorFrames");
-                $("#contentWindow").html(result.ObjectInquiryView);
-                $("#DialogEditorFrames").dialog(dialogOpts);
-              // alert("cuando el objeto esta completo");
-                configurateImgOnTerrain();
-
-            }
-
-            function configurateImgOnTerrain() {
-                $('#terrain img').each(function() {
-                    startDrag($(this));
-                    AddTextToStatus($(this).attr("id"));
-                    $("#pageName_txtbox").val(actualPage);
-                    $("#frameName_txtbox").val(actualFrame);
-                    $("#target_txtbox").val(actualTarget);
-                   //  alert("dentro de configuraacion para terrain");
-                    $(this).bind('contextmenu', function(e) {
-
-                        $('#context-menu').css('left', e.pageX + 'px');
-                        $('#context-menu').css('top', e.pageY + 'px');
-                        $('#context-menu').css('z-index', 10);
-                        $("#valCtxMenu").html($(this).attr("id"));
-                        $('#context-menu').show();
-                        e.preventDefault();
-                        return false;
-                    });
-                });
-            }
-
-/*Start Context menu events*/
-            $('html').click(function(e) {
-                $('#context-menu').hide();
-                $("#valCtxMenu").text('');
-            });
-            $('#context-menu').click(function(e) {
-                $("#valCtxMenu").text('');
-                e.stopPropagation();
-            });
-            $(window).resize(function() {
-                $('#context-menu').hide();
-                $("#valCtxMenu").text('');
-            });
-            /*End of contextmenu events*/
-
-            /*Function handle draggable objects. 
+        /*Function handle draggable objects. 
                  Objects you pickup and drag*/
-            $(function() {
-                $("#framesGroup .draggable").draggable({
-                    cursor: 'move',
-                    helper: 'clone',
-                    drag: function(event, ui) {
-                        draggableId = $(this).attr("id");
-                        //alert("group");
-                    }
-                }).addClass("ui-state-highlight");
+        $(function () {
+            $("#framesGroup .draggable").draggable({
+                cursor: 'move',
+                helper: 'clone',
+                drag: function (event, ui) {
+                    draggableId = $(this).attr("id");
+                    //alert("group");
+                }
+            }).addClass("ui-state-highlight");
 
 
-                /*Function handle droppable frames objects. 
+            /*Function handle droppable frames objects. 
                           Object where you put your draggable*/
-                $(".frame .droppable").droppable({
-                    drop: function(event, ui) {
-                        var pageIdAtributte = $(this).parent().parent().attr("id");
-                        var descriptionArray = [];
-                        droppableId = $(this).attr("id");
+            $(".frame .droppable").droppable({
+                drop: function (event, ui) {
+                    var pageIdAtributte = $(this).parent().parent().attr("id");
+                    var descriptionArray = [];
+                    droppableId = $(this).attr("id");
 
-                        //Check if the object to be dropped is a Cloned object
-                        //This is triying to avoid conflict with other draggable obejects on page
-                        if (draggableId.substr(0, 6) != "Cloned") {
-                            //Add frames in page
-                            $(this).each(function(i, elem) {
-                                var frameId = $(elem).attr("id");
+                    //Check if the object to be dropped is a Cloned object
+                    //This is triying to avoid conflict with other draggable obejects on page
+                    if (draggableId.substr(0, 6) != "Cloned") {
+                        //Add frames in page
+                        $(this).each(function (i, elem) {
+                            var frameId = $(elem).attr("id");
 
-                                descriptionArray.push(pageIdAtributte + "-" + frameId + "-" + draggableId);
-                            });
-                            if (droppableId != draggableId) {
-                                PostArray("AddContentToFrame", descriptionArray);
-                            }
-                            var temp = $(this).attr("id").substring(0, 5);
+                            descriptionArray.push(pageIdAtributte + "-" + frameId + "-" + draggableId);
+                        });
+                        if (droppableId != draggableId) {
+                            PostArray("AddContentToFrame", descriptionArray);
+                        }
+                        var temp = $(this).attr("id").substring(0, 5);
 
-                            if (temp === "frame") {
-                                $(this).find("img").attr("src", "../Images/" + draggableId + ".png");
-                            } else {
+                        if (temp === "frame") {
+                            //$(this).find("img").attr("src", "../Images/" + draggableId + ".png");
+                            $(this).find("div").html("");
 
-                            }
-                            $("#" + draggableId).css({ position: "relative", top: 0, left: 0 });
-                            $("#" + draggableId).show();
                         } else {
 
-
-                            /*Handle droppable  objects. Object where you put your draggable*/
-                            //droppableId = $(this).attr("id");
-                            //alert(droppableId);
                         }
+                        $("#" + draggableId).css({ position: "relative", top: 0, left: 0 });
+                        $("#" + draggableId).show();
+                    } else {
+
+
+                        /*Handle droppable  objects. Object where you put your draggable*/
+                        //droppableId = $(this).attr("id");
+                        //alert(droppableId);
                     }
-                });
+                }
             });
+        });
 
 
-            /*Toggle between 2D and 3D View*/
-            /*----------------------------------------------*/
-            $("#View3D").bind("click", function() {
-                $(".pages #frames").each(function(i, elem) {
-                    $(this).hide(500);
-                });
-                $("#Container3D").appendTo($("#pages"));
-                $(".Container3D").removeClass("disableControl");
-                $(".Container3D").addClass("activeControl");
+        /*Toggle between 2D and 3D View*/
+        /*----------------------------------------------*/
+        $("#View3D").bind("click", function () {
+            $(".pages #frames").each(function (i, elem) {
+                $(this).hide(500);
             });
+            $("#Container3D").appendTo($("#pages"));
+            $(".Container3D").removeClass("disableControl");
+            $(".Container3D").addClass("activeControl");
+        });
 
-            $("#View2D").bind("click", function() {
-                $(".pages #frames").each(function(i, elem) {
-                    $(this).show(500);
-                });
-                $(".Container3D").removeClass("activeControl");
-                $(".Container3D").addClass("disableControl");
+        $("#View2D").bind("click", function () {
+            $(".pages #frames").each(function (i, elem) {
+                $(this).show(500);
             });
-            /*--------------------------------------------*/
+            $(".Container3D").removeClass("activeControl");
+            $(".Container3D").addClass("disableControl");
+        });
+        /*--------------------------------------------*/
 
-            /*Get selecte item of dropdownbox*/
-            $(".selectpicker").change(function() {
+        /*Get selecte item of dropdownbox*/
+        $(".selectpicker").change(function () {
 
-                $('#userContent').load('/Book/GetAvailableBooks', { fileOption: $(this).val() });
+            $('#userContent').load('/Book/GetAvailableBooks', { fileOption: $(this).val() });
 
-            });
+        });
 
-            /*Change background image of terrain*/
-            $(".backgroundContain").click(function() {
-                var bk = $(this).attr("id");
-                var imgChosen = $("#" + bk).attr("src");
-                $("#terrain").css("background-image", "url(" + imgChosen + ")");
-            });
+        /*Change background image of terrain*/
+        $(".backgroundContain").click(function () {
+            var bk = $(this).attr("id");
+            var imgChosen = $("#" + bk).attr("src");
+            $("#terrain").css("background-image", "url(" + imgChosen + ")");
+        });
 
-            /*Add new page*/
-            $("#btnAddPage").click(function() {
-                var descriptionArray = [];
-                descriptionArray.push("chapter1");
-                AddTextToStatus(descriptionArray[0]);
-                PostArray("AddPage", descriptionArray);
-            });
+        /*Add new page*/
+        $("#btnAddPage").click(function () {
+            var descriptionArray = [];
+            descriptionArray.push("chapter1");
+            AddTextToStatus(descriptionArray[0]);
+            PostArray("AddPage", descriptionArray);
+        });
 
-            function AddTextToStatus(mssg) {
-                $("#status").val($("#status").val() + mssg + "\n");
-            }
+        function AddTextToStatus(mssg) {
+            $("#status").val($("#status").val() + mssg + "\n");
+        }
 
 
-            $("#accordionStatus").accordion({
-                active: 0,
-                change: function() {
-                    var activeIndex = $("#accordionStatus").accordion("option", "active");
-                    //alert(activeIndex);
-                    switch (activeIndex) {
+        $("#accordionStatus").accordion({
+            active: 0,
+            change: function () {
+                var activeIndex = $("#accordionStatus").accordion("option", "active");
+                //alert(activeIndex);
+                switch (activeIndex) {
                     case 0:
                         // $('#chapter2').show();
-                            // $('#chapter1').show();
+                        // $('#chapter1').show();
                         break;
                     case 1:
                         // $("#ContentEdit").show();
-                            // $('#chapter2').hide();
-                            // $('#chapter1').hide();
+                        // $('#chapter2').hide();
+                        // $('#chapter1').hide();
                         break;
                     default:
-                    }
+                }
 
+            }
+        });
+
+        /*All post data to controller go thorugh this function*/
+
+        function PostArray(url, descriptionArray) {
+            jQuery.ajax({
+                type: 'POST',
+                url: url,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(descriptionArray),
+                async: false,
+                dataType: "json",
+                success: function (statusMsg) {
+
+                    descriptionArray.length = 0;
+                },
+                error: function (statusMsg) {
+                    AddTextToStatus("Couldn't send message.Wrong parameters");
                 }
             });
+        }
 
-            /*All post data to controller go thorugh this function*/
-
-            function PostArray(url, descriptionArray) {
-                jQuery.ajax({
-                    type: 'POST',
-                    url: url,
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify(descriptionArray),
-                    async: false,
-                    dataType: "json",
-                    success: function(statusMsg) {
-
-                        descriptionArray.length = 0;
-                    },
-                    error: function(statusMsg) {
-                        AddTextToStatus("Couldn't send message.Wrong parameters");
-                    }
-                });
-            }
- 
     </script>
 }
 

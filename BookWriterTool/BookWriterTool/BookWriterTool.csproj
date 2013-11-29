@@ -454,8 +454,10 @@
     <Content Include="Content\assets\css\font\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Images\border.png" />
     <Content Include="Images\rectangle.png" />
     <Content Include="Images\square.png" />
+    <Content Include="Images\squarepart.png" />
     <Content Include="Images\triangle.png" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -562,7 +564,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>50257</DevelopmentServerPort>
+          <DevelopmentServerPort>56651</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
