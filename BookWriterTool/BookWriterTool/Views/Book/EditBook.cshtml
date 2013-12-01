@@ -81,7 +81,6 @@
                                             @if (@frame.bordertype == "rectangle")
                                             {
                                                 <div  id="@(chapter.id)-@(page.id)-@(frame.id)-rectangle" class="rectangle">
-                                         
                                                     @Html.Partial("FrameContentFull", (bookChapterPageFrame)ViewBag.Table, new ViewDataDictionary { { "actualFrame", frame }, { "target", "rectangle" } })
                                                 </div>
                                             }
@@ -89,7 +88,6 @@
                                             { 
                                                 <div id="@(chapter.id)-@(page.id)-@(frame.id)-left" class="squareLeft">
                                                     @Html.Partial("FrameContentSplit", (bookChapterPageFrame)ViewBag.Table, new ViewDataDictionary { { "actualFrame", frame }, { "target", "left" } })
-
                                                 </div>
                                                 <div id="@(chapter.id)-@(page.id)-@(frame.id)-right" class="squareRight">
                                                     @Html.Partial("FrameContentSplit", (bookChapterPageFrame)ViewBag.Table, new ViewDataDictionary { { "actualFrame", frame }, { "target", "right" } })
@@ -101,7 +99,6 @@
                         } index++;
                                 }
                             </div>
-
                         </div>
                     }
                     <div class="Container3D" id="Container3D">
@@ -127,15 +124,13 @@
                 </div>
             }
         </div>
-
         <div class="ViewChanger" id="ViewChanger">
             <ul>
                 <input class="ui-widget ui-widget-content ui-corner-all" id="View2D" type="button" value="2D View" />
                 <input class="ui-widget  ui-corner-all" id="View3D" type="button" value="3D View" />
             </ul>
         </div>
-    </div>  
-
+    </div>
 }
 
 <div class="configDialog" id="configDialog">
@@ -197,14 +192,14 @@
     </div>
 </div>
 <div id="contentWindow"></div>
-  <div class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" id='context-menu'>
-                <ul>
-                    <li>Edit</li>
-                    <li id="ctxMenuDelete">Delete></li>
-                    <li>Export</li>
-                </ul>
-                <span id="valCtxMenu"></span>
-            </div>
+<div class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" id='context-menu'>
+    <ul>
+        <li>Edit</li>
+        <li id="ctxMenuDelete">Delete></li>
+        <li>Export</li>
+    </ul>
+    <span id="valCtxMenu"></span>
+</div>
 @section scripts
 {
     <script>
@@ -235,14 +230,14 @@
             minHeight: 700,
             width: 600,
             height: 700,
-            close: function() {
+            close: function () {
                 $("#DialogEditorFrames").dialog("destroy");
                 $("#terrain").remove();
                 $("#terrain").html("");
                 $('#terrain').empty();
                 clearImages();
             },
-            open: function() {
+            open: function () {
                 configurateImgOnTerrain();
             }
         };
@@ -254,49 +249,49 @@
         var actualPage;
         var actualTarget;
         var actualContent;
-        /*
+
         var u = new UnityObject2(config);
 
-        jQuery(function() {
+        jQuery(function () {
 
             var $missingScreen = jQuery("#unityPlayer").find(".missing");
             var $brokenScreen = jQuery("#unityPlayer").find(".broken");
             $missingScreen.hide();
             $brokenScreen.hide();
 
-            u.observeProgress(function(progress) {
+            u.observeProgress(function (progress) {
                 switch (progress.pluginStatus) {
-                case "broken":
-                    $brokenScreen.find("a").click(function(e) {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        u.installPlugin();
-                        return false;
-                    });
-                    $brokenScreen.show();
-                    break;
-                case "missing":
-                    $missingScreen.find("a").click(function(e) {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        u.installPlugin();
-                        return false;
-                    });
-                    $missingScreen.show();
-                    break;
-                case "installed":
-                    $missingScreen.remove();
-                    break;
-                case "first":
-                    break;
+                    case "broken":
+                        $brokenScreen.find("a").click(function (e) {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            u.installPlugin();
+                            return false;
+                        });
+                        $brokenScreen.show();
+                        break;
+                    case "missing":
+                        $missingScreen.find("a").click(function (e) {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            u.installPlugin();
+                            return false;
+                        });
+                        $missingScreen.show();
+                        break;
+                    case "installed":
+                        $missingScreen.remove();
+                        break;
+                    case "first":
+                        break;
                 }
             });
             u.initPlugin(jQuery("#unityPlayer")[0], "/Content/Resources/WebPlayer/webviewer.unity3d?book=2");
 
         });
 
-        */
-        $(function() {
+
+        $(function () {
             $("#pages").tabs();
             $("#chapters").tabs();
             $("#chapter1").tabs();
@@ -310,19 +305,19 @@
             activateEditorOperations();
 
         });
-        function activateEditorOperations()
-        {
-        $(".editPencil").click(function (e) {
-            $(".squareLeft").css({ "-webkit-border-image": "url(../Images/border.png) 25 25 round" });
-            $(".squareRight").css({ "-webkit-border-image": "url(../Images/border.png) 25 25 round" });
-            $(".rectangle").css({ "-webkit-border-image": "url(../Images/border.png) 25 25 round" });
-            $(this).parent().css({ "-webkit-border-image": "url(../Images/border.png) 8 8 round" });
-            actualContent = $(this).parent().attr("id");
-            configurateImgOnTerrain();
-        });}
+        function activateEditorOperations() {
+            $(".editPencil").click(function (e) {
+                $(".squareLeft").css({ "-webkit-border-image": "url(../Images/border.png) 25 25 round" });
+                $(".squareRight").css({ "-webkit-border-image": "url(../Images/border.png) 25 25 round" });
+                $(".rectangle").css({ "-webkit-border-image": "url(../Images/border.png) 25 25 round" });
+                $(this).parent().css({ "-webkit-border-image": "url(../Images/border.png) 8 8 round" });
+                actualContent = $(this).parent().attr("id");
+                configurateImgOnTerrain();
+            });
+        }
 
         function RenderBook() {
-            $.each(bookModel.pageModel, function(index, cartItem) {
+            $.each(bookModel.pageModel, function (index, cartItem) {
 
                 var aFrame = pageModel.actualFrame;
                 var aPage = pageModel.actualPage;
@@ -352,9 +347,9 @@
             }
 
         }
-        $('#objectsGroup img').bind("click", function() {
+        $('#objectsGroup img').bind("click", function () {
             var descriptionArray = [];
-       
+
             var randomnumber = Math.floor(Math.random() * 100);
             $('#' + actualContent + " .contentIntern").append('<img width="25" height="25" class="clonedImg" id="Cloned' + randomnumber + '" src="' + $(this).attr("src") + '" />');
 
@@ -364,12 +359,12 @@
         });
         function configurateImgOnTerrain() {
             //alert(actualContent);
-            $('#'+actualContent+' .droppable img').each(function () {
+            $('#' + actualContent + ' .droppable img').each(function () {
                 startDrag($(this));
-               // AddTextToStatus($(this).attr("id"));
-               // $("#pageName_txtbox").val(actualPage);
-               // $("#frameName_txtbox").val(actualFrame);
-               // $("#target_txtbox").val(actualTarget);
+                // AddTextToStatus($(this).attr("id"));
+                // $("#pageName_txtbox").val(actualPage);
+                // $("#frameName_txtbox").val(actualFrame);
+                // $("#target_txtbox").val(actualTarget);
                 //  alert("dentro de configuraacion para terrain");
                 $(this).bind('contextmenu', function (e) {
 
@@ -389,7 +384,7 @@
         /*Clear all images in terrain*/
 
         function clearImages() {
-            $('#terrain img').each(function() {
+            $('#terrain img').each(function () {
                 $(this).remove();
             });
         }
@@ -397,10 +392,10 @@
 
         function startDrag(element) {
             $(element).draggable({
-                axis:"x",
+                axis: "x",
                 cursor: 'move',
                 containment: "parent",
-                drag: function(event, ui) {
+                drag: function (event, ui) {
                     draggableId = $(this).attr("id");
                     //  alert("StartDrag");
                     var offset = $(this).offset();
@@ -410,49 +405,49 @@
                     $('#posX_txtbox').val('xw: ' + xPos);
                     $('#posY_txtbox').val('yw: ' + yPos);
                 }
-                
+
             });
             //StartDrag(element);
         }
 
-/*        $(".page .frame .droppable .GeomForm div").each(function() {
-            //alert($(this).attr("id"));
-            actualContent = $(this).attr("id");
-            var resultFrame = actualContent;
-            //var splitedString = resultFrame.split('-');
-            //actualPage = splitedString[1];
-            //actualFrame = splitedString[2];
-            //actualTarget = splitedString[3];
-
-            bookModel.pageModel.push(
-                {
-                    "actualFrame": actualFrame,
-                    "actualPage": actualPage,
-                    "actualTarget": actualTarget
+        /*        $(".page .frame .droppable .GeomForm div").each(function() {
+                    //alert($(this).attr("id"));
+                    actualContent = $(this).attr("id");
+                    var resultFrame = actualContent;
+                    //var splitedString = resultFrame.split('-');
+                    //actualPage = splitedString[1];
+                    //actualFrame = splitedString[2];
+                    //actualTarget = splitedString[3];
+        
+                    bookModel.pageModel.push(
+                        {
+                            "actualFrame": actualFrame,
+                            "actualPage": actualPage,
+                            "actualTarget": actualTarget
+                        });
+        
+                    $.post("/Book/GetListObjectsInframe", { resultFrame: resultFrame }, function(data) {
+                        getObjectComplete(data);
+                    });
                 });
-
-            $.post("/Book/GetListObjectsInframe", { resultFrame: resultFrame }, function(data) {
-                getObjectComplete(data);
-            });
-        });
-        */
+                */
         /*Function callback wich get List of objects in frame*/
 
-    
 
-      
+
+
 
         /*Start Context menu events*/
-        $('html').click(function(e) {
+        $('html').click(function (e) {
             $('#context-menu').hide();
             $("#valCtxMenu").text('');
             e.stopPropagation();
         });
-        $('#context-menu').click(function(e) {
+        $('#context-menu').click(function (e) {
             $("#valCtxMenu").text('');
             e.stopPropagation();
         });
-        $(window).resize(function() {
+        $(window).resize(function () {
             $('#context-menu').hide();
             $("#valCtxMenu").text('');
         });
@@ -460,11 +455,11 @@
 
         /*Function handle draggable objects. 
                  Objects you pickup and drag*/
-        $(function() {
+        $(function () {
             $("#framesGroup .draggable").draggable({
                 cursor: 'move',
                 helper: 'clone',
-                drag: function(event, ui) {
+                drag: function (event, ui) {
                     draggableId = $(this).attr("id");
                     //alert("group");
                 }
@@ -474,17 +469,17 @@
             /*Function handle droppable frames objects. 
                           Object where you put your draggable*/
             $(".frame .droppable").droppable({
-                drop: function(event, ui) {
+                drop: function (event, ui) {
                     var pageIdAtributte = $(this).parent().parent().attr("id");
                     var descriptionArray = [];
                     droppableId = $(this).attr("id");
                     //alert(actualFrame);
-                    
+
                     //Check if the object to be dropped is a Cloned object
                     //This is triying to avoid conflict with other draggable obejects on page
                     if (draggableId.substr(0, 6) != "Cloned") {
                         //Add frames in page
-                        $(this).each(function(i, elem) {
+                        $(this).each(function (i, elem) {
                             var frameId = $(elem).attr("id");
 
                             descriptionArray.push(pageIdAtributte + "-" + frameId + "-" + draggableId);
@@ -496,21 +491,21 @@
 
                         if (temp === "frame") {
                             var originalId = $(this).find(".GeomForm :first-child").attr("id");
-                                $(this).find("div").html("");
+                            $(this).find("div").html("");
                             if (draggableId == "rectangle") {
 
-                                var rectangleId=SplitAndConcanate(originalId, "rectangle");
-                          
-                                $(this).find("div").prepend("<div  id="+rectangleId+" class='rectangle'>" +
+                                var rectangleId = SplitAndConcanate(originalId, "rectangle");
+
+                                $(this).find("div").prepend("<div  id=" + rectangleId + " class='rectangle'>" +
                                     "<div class='editPencil'><span class='ui-icon ui-icon-pencil'></span></div>" +
                                     "<div class='droppable contentIntern ui-droppable' style='background-image: url(../Images/rectangle.png)'></div></div>");
-                                
+
                             }
                             else if (draggableId == "square") {
                                 var squareLeftId = SplitAndConcanate(originalId, "left");
                                 var squareRightId = SplitAndConcanate(originalId, "right");
                                 $(this).find("div").prepend("<div  id=" + squareLeftId + " class='squareLeft'></div><div  id=" + squareRightId + " class='squareRight'></div>");
-                   
+
                             }
                             activateEditorOperations();
                         } else {
@@ -528,18 +523,18 @@
                 }
             });
         });
-        function SplitAndConcanate(stringToSplit,valueToInsert) {
+        function SplitAndConcanate(stringToSplit, valueToInsert) {
             var splitString = stringToSplit.split('-');
             var result;
-            splitString[splitString.length-1] = valueToInsert;
+            splitString[splitString.length - 1] = valueToInsert;
             result = splitString.join('-');
             return result;
         }
 
         /*Toggle between 2D and 3D View*/
         /*----------------------------------------------*/
-        $("#View3D").bind("click", function() {
-            $(".pages #frames").each(function(i, elem) {
+        $("#View3D").bind("click", function () {
+            $(".pages #frames").each(function (i, elem) {
                 $(this).hide(500);
             });
             $("#Container3D").appendTo($("#pages"));
@@ -547,8 +542,8 @@
             $(".Container3D").addClass("activeControl");
         });
 
-        $("#View2D").bind("click", function() {
-            $(".pages #frames").each(function(i, elem) {
+        $("#View2D").bind("click", function () {
+            $(".pages #frames").each(function (i, elem) {
                 $(this).show(500);
             });
             $(".Container3D").removeClass("activeControl");
@@ -557,27 +552,35 @@
         /*--------------------------------------------*/
 
         /*Get selecte item of dropdownbox*/
-        $(".selectpicker").change(function() {
+        $(".selectpicker").change(function () {
 
             $('#userContent').load('/Book/GetAvailableBooks', { fileOption: $(this).val() });
-
+         
         });
 
         /*Change background image of terrain*/
-        $(".backgroundContain").click(function() {
+        $(".backgroundContain").click(function () {
+            //alert(actualContent);
             var bk = $(this).attr("id");
             var imgChosen = $("#" + bk).attr("src");
-            $("#terrain").css("background-image", "url(" + imgChosen + ")");
+            $("#"+actualContent+" .contentIntern").css("background-image", "url(" + imgChosen + ")");
         });
 
         /*Add new page*/
-        $("#btnAddPage").click(function() {
+        $("#btnAddPage").click(function () {
             var descriptionArray = [];
             descriptionArray.push("chapter1");
             AddTextToStatus(descriptionArray[0]);
             PostArray("AddPage", descriptionArray);
+            reloadPage();
         });
-
+        function reloadPage() {
+            $("body").fadeOut(
+        function () {
+            location.reload(true);
+            $(document).ready(function () { $(body).fadeIn(); });
+        });
+        }
         function AddTextToStatus(mssg) {
             $("#status").val($("#status").val() + mssg + "\n");
         }
@@ -585,20 +588,20 @@
 
         $("#accordionStatus").accordion({
             active: 0,
-            change: function() {
+            change: function () {
                 var activeIndex = $("#accordionStatus").accordion("option", "active");
                 //alert(activeIndex);
                 switch (activeIndex) {
-                case 0:
-                    // $('#chapter2').show();
-                    // $('#chapter1').show();
-                    break;
-                case 1:
-                    // $("#ContentEdit").show();
-                    // $('#chapter2').hide();
-                    // $('#chapter1').hide();
-                    break;
-                default:
+                    case 0:
+                        // $('#chapter2').show();
+                        // $('#chapter1').show();
+                        break;
+                    case 1:
+                        // $("#ContentEdit").show();
+                        // $('#chapter2').hide();
+                        // $('#chapter1').hide();
+                        break;
+                    default:
                 }
 
             }
@@ -614,11 +617,11 @@
                 data: JSON.stringify(descriptionArray),
                 async: false,
                 dataType: "json",
-                success: function(statusMsg) {
+                success: function (statusMsg) {
 
                     descriptionArray.length = 0;
                 },
-                error: function(statusMsg) {
+                error: function (statusMsg) {
                     AddTextToStatus("Couldn't send message.Wrong parameters");
                 }
             });

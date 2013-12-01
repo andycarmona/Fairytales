@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- start of book -->
+<book>
+  <!-- metadata, to group all the information about this book into one element. -->
+  <!-- define our chapters -->
+  <chapters>
+    <!-- chapter1 - the first chapter to be seen -->
+    <chapter id="chapter1">
+      <!-- grouped chapter information -->
+      <!-- a chapter can have one ore more pages. -->
+      <pages>
+        <!-- our first page! -->
+        <page id="page1">
+          <frames>
+            <frame id="frame1" bordertype="square">
+              <contents>
+                <!-- content for left -->
+                <content background="" target="left" type="none">
+                  <objects>
+                  </objects>
+                </content>
+                <!-- content for right -->
+                <content background="" target="right" type="none">
+                  <objects>
+                  </objects>
+                </content>
+              </contents>
+            </frame>
+            <frame id="frame2" bordertype="square">
+             <contents>
+                <!-- content for left -->
+                <content background="" target="left" type="none">
+                  <objects>
+                  </objects>
+                </content>
+                <!-- content for right -->
+                <content background="" target="right" type="none">
+                  <objects>
+                  </objects>
+                </content>
+              </contents>
+            </frame>
+            <frame id="frame3" bordertype="square">
+              <contents>
+                <!-- content for left -->
+                <content background="" target="left" type="none">
+                  <objects>
+                  </objects>
+                </content>
+                <!-- content for right -->
+                <content background="" target="right" type="none">
+                  <objects>
+                  </objects>
+                </content>
+              </contents>
+            </frame>
+          </frames>
+        </page>
+        <page id="page2">
+          <frames>
+            <frame id="frame1" bordertype="square">
+              <contents>
+                <!-- content for left -->
+                <content background="" target="left" type="none">
+                  <objects>
+                  </objects>
+                </content>
+                <!-- content for right -->
+                <content target="right" type="none">
+                  <objects>
+                  </objects>
+                </content>
+              </contents>
+            </frame>
+            <frame id="frame2" bordertype="square">
+              <contents>
+                <!-- content for left -->
+                <content target="left" type="none">
+                  <objects>
+                  </objects>
+                </content>
+                <!-- content for right -->
+                <content target="right" type="none">
+                  <objects>
+                  </objects>
+                </content>
+              </contents>
+            </frame>
+            <frame id="frame3" bordertype="square">
+              <contents>
+                <content type="none">
+                  <objects>
+                  </objects>
+                </content>
+              </contents>
+            </frame>
+          </frames>
+        </page>
+        <page id="page3">
+          <frames>
+            <frame id="frame1" bordertype="square">
+              <contents>
+                <!-- content for left -->
+                <content target="left" type="none">
+                  <objects>
+                  </objects>
+                </content>
+                <!-- content for right -->
+                <content target="right" type="none">
+                  <objects>
+                  </objects>
+                </content>
+              </contents>
+            </frame>
+            <frame id="frame2" bordertype="square">
+              <contents>
+                <!-- content for left -->
+                <content target="left" type="none">
+                  <objects>
+                  </objects>
+                </content>
+                <!-- content for right -->
+                <content target="right" type="none">
+                  <objects>
+                  </objects>
+                </content>
+              </contents>
+            </frame>
+            <frame id="frame3" bordertype="square">
+              <contents>
+                <content type="none">
+                  <objects>
+                  </objects>
+                </content>
+              </contents>
+            </frame>
+          </frames>
+        </page>
+      </pages>
+      <!-- End of chapter -->
+    </chapter>
+    <!-- End of chapters -->
+  </chapters>
+  <!-- End of book -->
+</book>

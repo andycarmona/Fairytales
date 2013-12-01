@@ -250,7 +250,7 @@
     <Content Include="Content\assets\js\jquery-1.9.0.min.js" />
     <Content Include="Content\assets\js\jquery-ui-1.10.0.custom.min.js" />
     <Content Include="Content\Book.css" />
-    <Content Include="Content\Resources\BookTemplate\EmptyBook.xml" />
+    <Content Include="Content\Resources\BookTemplate\empty.xml" />
     <Content Include="Content\Resources\Generic\background\background.jpg" />
     <Content Include="Content\Resources\Generic\background\bg2large.jpg" />
     <Content Include="Content\Resources\Generic\character2d\anime\female\body_front\normal\default_0.png" />
@@ -264,9 +264,6 @@
     <Content Include="Content\Resources\Generic\character\croc.jpg" />
     <Content Include="Content\Resources\Generic\character\duck.jpg" />
     <Content Include="Content\Resources\Users\andresc\BlackDay.xml" />
-    <Content Include="Content\Resources\Users\andresc\bookNoMetadata2.xml" />
-    <Content Include="Content\Resources\Users\andresc\Come back.xml" />
-    <Content Include="Content\Resources\Users\andresc\example.xml" />
     <Content Include="Content\Resources\Users\kallec\bookNoMetadata2.xml" />
     <Content Include="Content\Resources\Users\kallec\Come back.xml" />
     <Content Include="Content\Resources\WebPlayer\webviewer2.html" />

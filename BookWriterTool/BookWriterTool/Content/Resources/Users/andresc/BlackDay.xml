@@ -207,6 +207,108 @@
             </frame>
           </frames>
         </page>
+        <page id="page4">
+          <frames>
+            <frame id="frame1" bordertype="square">
+              <contents>
+                <content target="left" background="">
+                  <objects />
+                </content>
+                <content target="right" background="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame id="frame2" bordertype="square">
+              <contents>
+                <content target="left" background="">
+                  <objects />
+                </content>
+                <content target="right" background="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame id="frame3" bordertype="square">
+              <contents>
+                <content target="left" background="">
+                  <objects />
+                </content>
+                <content target="right" background="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+          </frames>
+        </page>
+        <page id="page5">
+          <frames>
+            <frame id="frame1" bordertype="square">
+              <contents>
+                <content target="left" background="">
+                  <objects />
+                </content>
+                <content target="right" background="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame id="frame2" bordertype="square">
+              <contents>
+                <content target="left" background="">
+                  <objects />
+                </content>
+                <content target="right" background="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame id="frame3" bordertype="square">
+              <contents>
+                <content target="left" background="">
+                  <objects />
+                </content>
+                <content target="right" background="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+          </frames>
+        </page>
+        <page id="page6">
+          <frames>
+            <frame id="frame1" bordertype="square">
+              <contents>
+                <content target="left" background="">
+                  <objects />
+                </content>
+                <content target="right" background="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame id="frame2" bordertype="square">
+              <contents>
+                <content target="left" background="">
+                  <objects />
+                </content>
+                <content target="right" background="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame id="frame3" bordertype="square">
+              <contents>
+                <content target="left" background="">
+                  <objects />
+                </content>
+                <content target="right" background="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+          </frames>
+        </page>
       </pages>
       <!-- End of chapter -->
     </chapter>

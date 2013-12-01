@@ -76,20 +76,71 @@ namespace BookWriterTool.Repositories
             XmlNodeList chaptersNodes = xmlDoc.SelectNodes("//book/chapters/chapter");
             XmlElement elemPage = xmlDoc.CreateElement("page");
             XmlElement elemFrames = xmlDoc.CreateElement("frames");
-            XmlElement aFrame = xmlDoc.CreateElement("frame");
-            XmlElement elemContents = xmlDoc.CreateElement("contents");
-            XmlElement aContent = xmlDoc.CreateElement("content");
-            aFrame.SetAttribute("id", "frame1");
-            aFrame.SetAttribute("bordertype", "triangle");
+            XmlElement elemObjectsL1 = xmlDoc.CreateElement("objects");
+            XmlElement elemObjectsL2 = xmlDoc.CreateElement("objects");
+            XmlElement elemObjectsL3 = xmlDoc.CreateElement("objects");
+            XmlElement elemObjectsR1 = xmlDoc.CreateElement("objects");
+            XmlElement elemObjectsR2 = xmlDoc.CreateElement("objects");
+            XmlElement elemObjectsR3 = xmlDoc.CreateElement("objects");
+            XmlElement aFrame1 = xmlDoc.CreateElement("frame");
+            XmlElement aFrame2 = xmlDoc.CreateElement("frame");
+            XmlElement aFrame3 = xmlDoc.CreateElement("frame");
+            XmlElement elemContents1 = xmlDoc.CreateElement("contents");
+            XmlElement elemContents2 = xmlDoc.CreateElement("contents");
+            XmlElement elemContents3 = xmlDoc.CreateElement("contents");
+            XmlElement aContentLeft1 = xmlDoc.CreateElement("content");
+            XmlElement aContentRight1 = xmlDoc.CreateElement("content");
+            XmlElement aContentLeft2 = xmlDoc.CreateElement("content");
+            XmlElement aContentRight2 = xmlDoc.CreateElement("content");
+            XmlElement aContentLeft3 = xmlDoc.CreateElement("content");
+            XmlElement aContentRight3 = xmlDoc.CreateElement("content");  
             XmlNode parentNode = null;
             string pageIdName = string.Format("{0}{1}", "page", (this.GetNumberOfpagesInBook(fileName) + 1));
-            elemPage.SetAttribute("id", pageIdName);
-            elemContents.AppendChild(aContent);
-            elemFrames.AppendChild(elemContents);
+
+            aContentLeft1.SetAttribute("target", "left");
+            aContentRight1.SetAttribute("target", "right");
+            aContentLeft1.SetAttribute("background","");
+            aContentRight1.SetAttribute("background","");
+            aContentLeft2.SetAttribute("target", "left");
+            aContentRight2.SetAttribute("target", "right");
+            aContentLeft2.SetAttribute("background", "");
+            aContentRight2.SetAttribute("background", "");
+            aContentLeft3.SetAttribute("target", "left");
+            aContentRight3.SetAttribute("target", "right");
+            aContentLeft3.SetAttribute("background", "");
+            aContentRight3.SetAttribute("background", "");
+            aFrame1.SetAttribute("id", "frame1");
+            aFrame1.SetAttribute("bordertype", "square");
+            aFrame2.SetAttribute("id", "frame2");
+            aFrame2.SetAttribute("bordertype", "square");
+            aFrame3.SetAttribute("id", "frame3");
+            aFrame3.SetAttribute("bordertype", "square"); 
+           
+            elemContents1.AppendChild(aContentLeft1);
+            elemContents1.AppendChild(aContentRight1);
+            elemContents2.AppendChild(aContentLeft2);
+            elemContents2.AppendChild(aContentRight2);
+            elemContents3.AppendChild(aContentLeft3);
+            elemContents3.AppendChild(aContentRight3);
+           aContentLeft1.AppendChild(elemObjectsL1);
+            aContentLeft2.AppendChild(elemObjectsL2);
+            aContentLeft3.AppendChild(elemObjectsL3);
+            aContentRight1.AppendChild(elemObjectsR1);
+            aContentRight2.AppendChild(elemObjectsR2);
+            aContentRight3.AppendChild(elemObjectsR3);
+
+            aFrame1.AppendChild(elemContents1);
+            aFrame2.AppendChild(elemContents2);
+            aFrame3.AppendChild(elemContents3);
+       
+            elemPage.SetAttribute("id", pageIdName);  
+          
+            elemFrames.AppendChild(aFrame1);
+            elemFrames.AppendChild(aFrame2);
+            elemFrames.AppendChild(aFrame3);
+
             elemPage.AppendChild(elemFrames);
 
-
-            elemFrames.AppendChild(aFrame);
             if (chaptersNodes != null)
             {
                 foreach (XmlNode chaptersNode in chaptersNodes)

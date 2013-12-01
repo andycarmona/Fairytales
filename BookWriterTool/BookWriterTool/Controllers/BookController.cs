@@ -47,11 +47,8 @@ namespace BookWriterTool.Controllers
 
         public ActionResult GetChosenBook(string fileName)
         {
-            string msg = aBookRepository.SetActualFile(fileName);
-            aBook = this.aBookRepository.GetAllContent();
-            ViewBag.statusMsg = msg;
+            ViewBag.statusMsg = "No message";
             Session["ActualFile"] = fileName;
-            TempData["ActualBook"] = aBook;
             return this.RedirectToAction("EditBook");
 
         }
@@ -102,11 +99,9 @@ namespace BookWriterTool.Controllers
         public ActionResult EditBook()
         {
             string[] listOfBooks = this.fileHandler.GetListOfUserFiles(activeUser);
-
-            if (TempData["ActualBook"] != null)
-            {
-                aBook = TempData["ActualBook"] as book;
-            }
+            var fileName = (string)Session["ActualFile"];
+            aBookRepository.SetActualFile(fileName);
+            aBook = this.aBookRepository.GetAllContent();
             ViewBag.arrayBooks = listOfBooks;
 
             return this.View(aBook);
