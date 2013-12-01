@@ -61,11 +61,29 @@ namespace BookWriterTool.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /Content/Resources/character/.
+        ///   Looks up a localized string similar to /Content/Resources/Generic/background/.
         /// </summary>
-        internal static string CharacterResource {
+        internal static string BackgroundRes {
             get {
-                return ResourceManager.GetString("CharacterResource", resourceCulture);
+                return ResourceManager.GetString("BackgroundRes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /Content/Resources/Generic/character2d/.
+        /// </summary>
+        internal static string Character2DRes {
+            get {
+                return ResourceManager.GetString("Character2DRes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /Content/Resources/Generic/character/.
+        /// </summary>
+        internal static string CharacterRes {
+            get {
+                return ResourceManager.GetString("CharacterRes", resourceCulture);
             }
         }
     }

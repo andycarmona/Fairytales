@@ -117,7 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CharacterResource" xml:space="preserve">
-    <value>/Content/Resources/character/</value>
+  <data name="BackgroundRes" xml:space="preserve">
+    <value>/Content/Resources/Generic/background/</value>
+  </data>
+  <data name="Character2DRes" xml:space="preserve">
+    <value>/Content/Resources/Generic/character2d/</value>
+  </data>
+  <data name="CharacterRes" xml:space="preserve">
+    <value>/Content/Resources/Generic/character/</value>
   </data>
 </root>

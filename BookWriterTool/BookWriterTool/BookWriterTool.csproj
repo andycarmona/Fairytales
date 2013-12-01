@@ -250,10 +250,9 @@
     <Content Include="Content\assets\js\jquery-1.9.0.min.js" />
     <Content Include="Content\assets\js\jquery-ui-1.10.0.custom.min.js" />
     <Content Include="Content\Book.css" />
-    <Content Include="Content\Resources\Backgrounds\background.jpg" />
-    <Content Include="Content\Resources\Backgrounds\bg2large.jpg" />
-    <Content Include="Content\Resources\character\croc.jpg" />
-    <Content Include="Content\Resources\character\duck.jpg" />
+    <Content Include="Content\Resources\BookTemplate\EmptyBook.xml" />
+    <Content Include="Content\Resources\Generic\background\background.jpg" />
+    <Content Include="Content\Resources\Generic\background\bg2large.jpg" />
     <Content Include="Content\Resources\Generic\character2d\anime\female\body_front\normal\default_0.png" />
     <Content Include="Content\Resources\Generic\character2d\anime\female\body_front\normal\default_1.png" />
     <Content Include="Content\Resources\Generic\character2d\anime\female\body_front\normal\default_10.png" />
@@ -262,6 +261,8 @@
     <Content Include="Content\Resources\Generic\character2d\anime\female\body_front\normal\default_13.png" />
     <Content Include="Content\Resources\Generic\character2d\anime\female\body_front\normal\default_2.png" />
     <Content Include="Content\Resources\Generic\character2d\anime\female\body_front\normal\default_3.png" />
+    <Content Include="Content\Resources\Generic\character\croc.jpg" />
+    <Content Include="Content\Resources\Generic\character\duck.jpg" />
     <Content Include="Content\Resources\Users\andresc\BlackDay.xml" />
     <Content Include="Content\Resources\Users\andresc\bookNoMetadata2.xml" />
     <Content Include="Content\Resources\Users\andresc\Come back.xml" />
@@ -518,9 +519,12 @@
     <Content Include="Views\Book\ObjectListConfig.cshtml" />
     <Content Include="Views\Shared\_MessageBox.cshtml" />
     <Content Include="Views\Shared\_LayoutWithBootstrap.cshtml" />
+    <Content Include="Views\Book\FrameContentFull.cshtml" />
+    <Content Include="Views\Book\FrameContentSplit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Resources\Generic\model\" />
     <Folder Include="Views\Shared\Resources\" />
   </ItemGroup>
   <ItemGroup>

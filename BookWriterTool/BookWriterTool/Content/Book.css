@@ -40,10 +40,10 @@
     visibility: hidden;
 }
 
-#FrameEdit #terrain
+.FrameEdit .terrain
 {
     position: relative;
-    height: 100%;
+
 }
 
 
@@ -64,7 +64,15 @@ img {
 {
     width: 100%;
 }
-
+.editPencil {
+float: right;
+background-color: black;
+}
+.clonedImg {
+position:relative;
+left:50%;
+top: 75%;
+}
 .rightContent
 {
     background-color: rgba(255,255,255,0.90);
@@ -91,7 +99,6 @@ img {
 }
 .droppable .squareLeft {
     float: left;
-      background-image: url(../Images/squarepart.png);
     background-repeat: no-repeat;
     border-image:url(../Images/border.png) 25 25 round;
 -webkit-border-image:url(../Images/border.png) 25 25 round; /* Safari 5 and older */
@@ -106,7 +113,6 @@ img {
 }
 .droppable .squareRight {
     float: right;
-      background-image: url(../Images/squarepart.png);
       	background-position: center center;
           background-repeat: no-repeat;
               border-image:url(../Images/border.png) 25 25 round;
@@ -123,12 +129,11 @@ img {
 }
 .droppable .rectangle {
     float: left;
-      background-image: url(../Images/rectangle.png);
       background-position: center center;
        background-repeat: no-repeat;
-           border-image:url(../Images/border.png) 25 25 round;
--webkit-border-image:url(../Images/border.png) 25 25 round; /* Safari 5 and older */
--o-border-image:url(../Images/border.png) 25 25 round; /* Opera */
+           border-image:url(../Images/border.png) 30 30 round;
+-webkit-border-image:url(../Images/border.png) 30 30 round; /* Safari 5 and older */
+-o-border-image:url(../Images/border.png) 30 30 round; /* Opera */
        -webkit-background-size: 100% auto;
     -moz-background-size: 100% auto;
        background-size: 100% auto;

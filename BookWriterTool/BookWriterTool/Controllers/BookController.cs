@@ -143,12 +143,15 @@ namespace BookWriterTool.Controllers
                                       where content.target == target
                                       from Object in content.objects
                                       select Object);
-            }
+   
 
+            }
+   
             return Json(new
             {
                 msg,
-                ObjectInquiryView = this.RenderPartialView("ObjectListConfig", listOfObject)
+                ObjectInquiryView = this.RenderPartialView("ObjectListConfig", listOfObject),
+
             });
         }
 

@@ -108,6 +108,8 @@ public partial class bookChapterPageFrame {
     private string idField;
     
     private string bordertypeField;
+
+    
     
     /// <remarks/>
     public bookChapterPageFrameScene scene {
@@ -129,7 +131,8 @@ public partial class bookChapterPageFrame {
             this.contentsField = value;
         }
     }
-    
+ 
+
     /// <remarks/>
     [System.Xml.Serialization.XmlAttributeAttribute()]
     public string id {
@@ -177,6 +180,8 @@ public partial class bookChapterPageFrameContent {
     private bookChapterPageFrameContentObject[] objectsField;
     
     private bookChapterPageFrameContentChoice choiceField;
+
+    private string backgroundField;
     
     private string targetField;
     
@@ -192,7 +197,19 @@ public partial class bookChapterPageFrameContent {
             this.objectsField = value;
         }
     }
-    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string background
+    {
+        get
+        {
+            return this.backgroundField;
+        }
+        set
+        {
+            this.backgroundField = value;
+        }
+    }
     /// <remarks/>
     public bookChapterPageFrameContentChoice choice {
         get {

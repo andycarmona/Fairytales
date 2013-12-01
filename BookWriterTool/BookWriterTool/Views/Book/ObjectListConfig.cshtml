@@ -7,9 +7,9 @@
 }
 
 
-<div id="DialogEditorFrames">
+<div class="DialogEditorFrames">
     <div class="FrameEdit" id="FrameEdit">
-        <div class="droppable" id="terrain">
+        <div class="droppable">
             @if (@Model.Count > 0)
             {
                 if (@Model[0] != null)
@@ -18,7 +18,7 @@
                     {
                         if (@Object.type == "character")
                         {
-                <img  id="ClonedObject@(index)" src="@(GlobalVariables.ConfigResource("CharacterResource"))@(Object.id).jpg" border="1" width="50" height="40" alt="" />
+                <img  id="ClonedObject@(index)" src="@(GlobalVariables.ConfigResource("CharacterRes"))@(Object.id).jpg" border="1" width="50" height="40" alt="" />
                         }
                         index++;
                     }
