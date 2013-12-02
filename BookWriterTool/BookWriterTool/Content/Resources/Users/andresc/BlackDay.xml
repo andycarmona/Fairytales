@@ -17,12 +17,11 @@
                 <!-- content for left -->
                 <content background="background.jpg" target="left" type="none">
                   <objects>
-                    <object type="character" id="duck">
-                    </object>
-                    <object type="character" id="croc" animation="talk" string="dia1">
-                    </object>
-                    <object type="text" id="text1" string="text1">
-                    </object>
+                    <object type="character" id="duck" />
+                    <object type="character" id="croc" animation="talk" string="dia1" />
+                    <object type="text" id="text1" string="text1" />
+                    <object type="character" id="duck" />
+                    <object type="character" id="duck" />
                   </objects>
                 </content>
                 <!-- content for right -->
@@ -229,53 +228,9 @@
                 </content>
               </contents>
             </frame>
-            <frame id="frame3" bordertype="square">
-              <contents>
-                <content target="left" background="">
-                  <objects />
-                </content>
-                <content target="right" background="">
-                  <objects />
-                </content>
-              </contents>
-            </frame>
           </frames>
         </page>
         <page id="page5">
-          <frames>
-            <frame id="frame1" bordertype="square">
-              <contents>
-                <content target="left" background="">
-                  <objects />
-                </content>
-                <content target="right" background="">
-                  <objects />
-                </content>
-              </contents>
-            </frame>
-            <frame id="frame2" bordertype="square">
-              <contents>
-                <content target="left" background="">
-                  <objects />
-                </content>
-                <content target="right" background="">
-                  <objects />
-                </content>
-              </contents>
-            </frame>
-            <frame id="frame3" bordertype="square">
-              <contents>
-                <content target="left" background="">
-                  <objects />
-                </content>
-                <content target="right" background="">
-                  <objects />
-                </content>
-              </contents>
-            </frame>
-          </frames>
-        </page>
-        <page id="page6">
           <frames>
             <frame id="frame1" bordertype="square">
               <contents>

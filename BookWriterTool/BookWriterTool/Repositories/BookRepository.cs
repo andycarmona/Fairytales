@@ -71,76 +71,38 @@ namespace BookWriterTool.Repositories
 
         public book AddPage(string chapterId, string fileName)
         {
-            var xmlDoc = new XmlDocument();
-            xmlDoc.Load(HttpContext.Current.Server.MapPath(fileName));
-            XmlNodeList chaptersNodes = xmlDoc.SelectNodes("//book/chapters/chapter");
-            XmlElement elemPage = xmlDoc.CreateElement("page");
-            XmlElement elemFrames = xmlDoc.CreateElement("frames");
-            XmlElement elemObjectsL1 = xmlDoc.CreateElement("objects");
-            XmlElement elemObjectsL2 = xmlDoc.CreateElement("objects");
-            XmlElement elemObjectsL3 = xmlDoc.CreateElement("objects");
-            XmlElement elemObjectsR1 = xmlDoc.CreateElement("objects");
-            XmlElement elemObjectsR2 = xmlDoc.CreateElement("objects");
-            XmlElement elemObjectsR3 = xmlDoc.CreateElement("objects");
-            XmlElement aFrame1 = xmlDoc.CreateElement("frame");
-            XmlElement aFrame2 = xmlDoc.CreateElement("frame");
-            XmlElement aFrame3 = xmlDoc.CreateElement("frame");
-            XmlElement elemContents1 = xmlDoc.CreateElement("contents");
-            XmlElement elemContents2 = xmlDoc.CreateElement("contents");
-            XmlElement elemContents3 = xmlDoc.CreateElement("contents");
-            XmlElement aContentLeft1 = xmlDoc.CreateElement("content");
-            XmlElement aContentRight1 = xmlDoc.CreateElement("content");
-            XmlElement aContentLeft2 = xmlDoc.CreateElement("content");
-            XmlElement aContentRight2 = xmlDoc.CreateElement("content");
-            XmlElement aContentLeft3 = xmlDoc.CreateElement("content");
-            XmlElement aContentRight3 = xmlDoc.CreateElement("content");  
+            const int NumberOfFrames = 4; //add 1 to number of frames you need
+            const int NumberOfContents = 2;
+            var xmlDocument = new XmlDocument();
+            xmlDocument.Load(HttpContext.Current.Server.MapPath(fileName));
+            XmlNodeList chaptersNodes = xmlDocument.SelectNodes("//book/chapters/chapter");
+            XmlElement elemPage = xmlDocument.CreateElement("page");
+            XmlElement elemFrames = xmlDocument.CreateElement("frames");
+
             XmlNode parentNode = null;
             string pageIdName = string.Format("{0}{1}", "page", (this.GetNumberOfpagesInBook(fileName) + 1));
-
-            aContentLeft1.SetAttribute("target", "left");
-            aContentRight1.SetAttribute("target", "right");
-            aContentLeft1.SetAttribute("background","");
-            aContentRight1.SetAttribute("background","");
-            aContentLeft2.SetAttribute("target", "left");
-            aContentRight2.SetAttribute("target", "right");
-            aContentLeft2.SetAttribute("background", "");
-            aContentRight2.SetAttribute("background", "");
-            aContentLeft3.SetAttribute("target", "left");
-            aContentRight3.SetAttribute("target", "right");
-            aContentLeft3.SetAttribute("background", "");
-            aContentRight3.SetAttribute("background", "");
-            aFrame1.SetAttribute("id", "frame1");
-            aFrame1.SetAttribute("bordertype", "square");
-            aFrame2.SetAttribute("id", "frame2");
-            aFrame2.SetAttribute("bordertype", "square");
-            aFrame3.SetAttribute("id", "frame3");
-            aFrame3.SetAttribute("bordertype", "square"); 
-           
-            elemContents1.AppendChild(aContentLeft1);
-            elemContents1.AppendChild(aContentRight1);
-            elemContents2.AppendChild(aContentLeft2);
-            elemContents2.AppendChild(aContentRight2);
-            elemContents3.AppendChild(aContentLeft3);
-            elemContents3.AppendChild(aContentRight3);
-           aContentLeft1.AppendChild(elemObjectsL1);
-            aContentLeft2.AppendChild(elemObjectsL2);
-            aContentLeft3.AppendChild(elemObjectsL3);
-            aContentRight1.AppendChild(elemObjectsR1);
-            aContentRight2.AppendChild(elemObjectsR2);
-            aContentRight3.AppendChild(elemObjectsR3);
-
-            aFrame1.AppendChild(elemContents1);
-            aFrame2.AppendChild(elemContents2);
-            aFrame3.AppendChild(elemContents3);
-       
-            elemPage.SetAttribute("id", pageIdName);  
+            for (int i = 1; i < NumberOfFrames; i++)
+            {
+                XmlElement tmpFrame = xmlDocument.CreateElement("frame");   
+                XmlElement tmpContents = xmlDocument.CreateElement("contents");
+                tmpFrame.SetAttribute("id", "frame" + i);
+                tmpFrame.SetAttribute("bordertype", "square");
+                elemFrames.AppendChild(tmpFrame);
+                tmpFrame.AppendChild(tmpContents);
           
-            elemFrames.AppendChild(aFrame1);
-            elemFrames.AppendChild(aFrame2);
-            elemFrames.AppendChild(aFrame3);
+                for (int x = 0; x < NumberOfContents; x++)
+                {
+                    XmlElement tmpObjects = xmlDocument.CreateElement("objects");
+                    XmlElement tmpContent = xmlDocument.CreateElement("content");
 
+                    tmpContent.SetAttribute("target", x == 0 ? "left" : "right");
+                    tmpContent.SetAttribute("background", "");
+                    tmpContent.AppendChild((tmpObjects));
+                    tmpContents.AppendChild(tmpContent);
+                }
+            }
+            elemPage.SetAttribute("id", pageIdName);
             elemPage.AppendChild(elemFrames);
-
             if (chaptersNodes != null)
             {
                 foreach (XmlNode chaptersNode in chaptersNodes)
@@ -160,98 +122,59 @@ namespace BookWriterTool.Repositories
                     parentNode.AppendChild(elemPage);
                 }
             }
-            xmlDoc.Save(HttpContext.Current.Server.MapPath(fileName));
+            xmlDocument.Save(HttpContext.Current.Server.MapPath(fileName));
             return this.GetAllContent();
         }
 
         public string AddObjectToContent(string[] content, string fileName)
         {
             xmlDoc = new XmlDocument();
+            var splittedValues = content[0].Split('-');
+            var mssg = "";
+            XmlElement aObject = xmlDoc.CreateElement("object");
             xmlDoc.Load(HttpContext.Current.Server.MapPath(fileName));
-            XmlNode pagesNodes = this.xmlDoc.SelectSingleNode("//page[@id=page1]/frames/frame[@id=frame1]/contents/content[@target=left]");
-            if (pagesNodes != null)
+            var objectsNodes = (XmlElement)this.xmlDoc.SelectSingleNode("//book/chapters/chapter[@id='" + splittedValues[0] + "']/"
+                                                                        + "pages/page[@id='" + splittedValues[1] + "']"
+                                                                        + "/frames/frame[@id='" + splittedValues[2] + "']"
+                                                                        + "/contents/content[@target='" + splittedValues[3] + "']/objects");
+            if (objectsNodes != null)
             {
-                XmlAttributeCollection pageAttri = pagesNodes.Attributes;
-                if (pageAttri != null)
+                aObject.SetAttribute("type", "character");
+                aObject.SetAttribute("id", "duck");
+                objectsNodes.AppendChild(aObject);
+                mssg = "Object added";
+                try
                 {
-                    foreach (var node in pageAttri)
-                    {
-                        var temp=node.ToString();
-                        temp = "";
-                    }
+                    xmlDoc.Save(HttpContext.Current.Server.MapPath(fileName));
                 }
+                catch (DirectoryNotFoundException e)
+                {
+                    mssg = e.Message;
+                }
+               
             }
-
-            //   XmlNodeList frameNodes = null;
-           // XmlNodeList contentNodes = null;
-            return "ok";
+            return mssg;
         }
 
         public void AddContentToFrame(string[] contentToSearch, string fileName)
         {
-
+             string[] splittedValues = contentToSearch[0].Split('-');
             xmlDoc = new XmlDocument();
             xmlDoc.Load(HttpContext.Current.Server.MapPath(fileName));
-            XmlNodeList pagesNodes = xmlDoc.SelectNodes("//book/chapters/chapter/pages/page");
-            XmlNodeList frameNodes = null;
-            XmlNodeList contentNodes = null;
-            if (pagesNodes != null)
+            var frameNode =this.xmlDoc.SelectSingleNode(
+                    "//book/chapters/chapter[@id='" + splittedValues[0] + "']/" + "pages/page[@id='" + splittedValues[1]
+                    + "']" + "/frames/frame[@id='" + splittedValues[2] + "']");
+            if (frameNode != null)
             {
-                string[] splittedData = contentToSearch[0].Split('-');
-                var pageToUpdate = splittedData[0];
-                var frameToUpdate = splittedData[1];
-                var borderTypeToUpdate = splittedData[2];
-                foreach (XmlNode page in pagesNodes)
-                {
-                    if (page != null)
-                    {
-                        if (page.Attributes != null && page.Attributes["id"].Value == pageToUpdate)
-                        {
-
-                            for (int i = 0; i < page.ChildNodes.Count + 1; i++)
-                            {
-
-                                if (page.ChildNodes[i].Name == "frames")
-                                {
-                                    frameNodes = page.ChildNodes[i].ChildNodes;
-                                    break;
-                                }
-                            }
-
-                        }
-                    }
-                }
-
-                if (frameNodes != null)
-                {
-                    foreach (XmlNode frame in frameNodes)
-                    {
-
-                        if (frame.Attributes != null && frameToUpdate == frame.Attributes["id"].Value)
-                        {
-                            frame.Attributes["bordertype"].Value = borderTypeToUpdate;
-                            if (borderTypeToUpdate == "rectangle")
-                            {
-                                for (int i = 0; i < frame.ChildNodes.Count + 1; i++)
-                                {
-
-                                    if (frame.ChildNodes[i].Name == "contents")
-                                    {
-                                        contentNodes = frame.ChildNodes[i].ChildNodes;
-                                        if (contentNodes != null)
-                                        {
-                                            foreach (XmlNode content in contentNodes)
-                                            {
-                                                content.Attributes["target"].Value = "";
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                this.xmlDoc.RemoveChild(frameNode);
             }
+            /* if (objectsNodes != null)
+               { objectsNodes.r
+                   XmlElement aFrame = xmlDoc.CreateElement("frame");
+                   aFrame.SetAttribute("id", "rectangle");
+               }*/
+       
+    
 
             xmlDoc.Save(HttpContext.Current.Server.MapPath(fileName));
 
