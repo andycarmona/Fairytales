@@ -431,10 +431,11 @@
 
                        //Add frames in page
                         var descriptionArray = [];
-                        descriptionArray.push(actualContent + "-" + draggableId);
-                        PostArray("AddContentToFrame", descriptionArray);
                         var originalId = $(this).find(".GeomForm :first-child").attr("id");
-                        //alert(originalId + " - " + draggableId);
+                        descriptionArray.push(originalId + "-" + draggableId);
+                        PostArray("AddContentToFrame", descriptionArray);
+                    
+                       // alert($(this).attr("id"));
                         $(this).find("div").html("");
                         if (draggableId == "rectangle") {
                             var rectangleId = SplitAndConcanate(originalId, "rectangle");

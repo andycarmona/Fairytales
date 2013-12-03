@@ -182,7 +182,7 @@ namespace BookWriterTool.Controllers
                 {
                     var fileName = (string)this.Session["ActualFile"];
 
-                    aBookRepository.AddContentToFrame(frameDescriptionArray, fileName);
+                    aBookRepository.AddFrame(frameDescriptionArray, fileName);
                 }
                 catch (IOException e)
                 {
@@ -202,7 +202,7 @@ namespace BookWriterTool.Controllers
                 {
                     var fileName = (string)this.Session["ActualFile"];
 
-                    aBookRepository.AddObjectToContent(frameDescriptionArray, fileName);
+                    aBookRepository.AddCharacterToContent(frameDescriptionArray, fileName);
                 }
                 catch (IOException e)
                 {

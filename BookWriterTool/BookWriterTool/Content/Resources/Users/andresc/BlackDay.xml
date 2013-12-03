@@ -12,62 +12,43 @@
         <!-- our first page! -->
         <page id="page1">
           <frames>
-            <frame id="frame1" bordertype="square">
+            <frame bordertype="rectangle" id="frame1">
               <contents>
-                <!-- content for left -->
-                <content background="background.jpg" target="left" type="none">
+                <content target="rectangle" type="">
                   <objects>
                     <object type="character" id="duck" />
-                    <object type="character" id="croc" animation="talk" string="dia1" />
-                    <object type="text" id="text1" string="text1" />
                     <object type="character" id="duck" />
-                    <object type="character" id="duck" />
-                  </objects>
-                </content>
-                <!-- content for right -->
-                <content background="background.jpg" target="right" type="none">
-                  <objects>
-                    <object type="character" id="croc" animation="talk" string="dia1">
-                    </object>
+                    <object type="character" id="croc" />
                   </objects>
                 </content>
               </contents>
             </frame>
-            <frame id="frame2" bordertype="square">
+            <frame bordertype="rectangle" id="frame2">
               <contents>
-                <!-- content for left -->
-                <content background="background.jpg" type="none">
+                <content target="rectangle" type="">
                   <objects>
-                    <object type="character" id="duck">
-                    </object>
-                    <object type="character" id="croc" animation="talk" string="dia1">
-                    </object>
-                    <object type="text" id="text1" string="text1">
-                    </object>
+                    <object type="character" id="duck" />
+                    <object type="character" id="duck" />
+                    <object type="character" id="duck" />
                   </objects>
                 </content>
               </contents>
             </frame>
-            <frame id="frame3" bordertype="square">
+            <frame bordertype="square" id="frame3">
               <contents>
-                <!-- content for left -->
                 <content target="left" type="none">
                   <objects>
-                    <object type="character" id="duck">
-                    </object>
-                    <object type="character" id="croc" animation="talk" string="dia1">
-                    </object>
-                    <object type="text" id="text1" string="text1">
-                    </object>
+                    <object type="character" id="duck" />
+                    <object type="character" id="duck" />
+                    <object type="character" id="duck" />
                   </objects>
                 </content>
-                <!-- content for right -->
                 <content target="right" type="none">
                   <objects>
-                    <object type="character" id="duck">
-                    </object>
-                    <object type="character" id="croc" animation="talk" string="dia1">
-                    </object>
+                    <object type="character" id="croc" />
+                    <object type="character" id="croc" />
+                    <object type="character" id="croc" />
+                    <object type="character" id="croc" />
                   </objects>
                 </content>
               </contents>
@@ -76,63 +57,27 @@
         </page>
         <page id="page2">
           <frames>
-            <frame id="frame1" bordertype="square">
+            <frame bordertype="rectangle" id="frame1">
               <contents>
-                <!-- content for left -->
-                <content target="left" type="none">
-                  <objects>
-                    <object type="character" id="duck">
-                    </object>
-                    <object type="character" id="croc" animation="talk" string="dia1">
-                    </object>
-                    <object type="text" id="text1" string="text1">
-                    </object>
-                  </objects>
-                </content>
-                <!-- content for right -->
-                <content target="right" type="none">
-                  <objects>
-                    <object type="character" id="duck">
-                    </object>
-                    <object type="character" id="croc" animation="talk" string="dia1">
-                    </object>
-                  </objects>
+                <content target="rectangle" type="">
+                  <objects />
                 </content>
               </contents>
             </frame>
-            <frame id="frame2" bordertype="square">
+            <frame bordertype="square" id="frame2">
               <contents>
-                <!-- content for left -->
                 <content target="left" type="none">
-                  <objects>
-                    <object type="character" id="duck">
-                    </object>
-                    <object type="character" id="croc" animation="talk" string="dia1">
-                    </object>
-                    <object type="text" id="text1" string="text1">
-                    </object>
-                  </objects>
+                  <objects />
                 </content>
-                <!-- content for right -->
                 <content target="right" type="none">
-                  <objects>
-                    <object type="character" id="duck">
-                    </object>
-                    <object type="character" id="croc" animation="talk" string="dia1">
-                    </object>
-                  </objects>
+                  <objects />
                 </content>
               </contents>
             </frame>
-            <frame id="frame3" bordertype="square">
+            <frame bordertype="rectangle" id="frame3">
               <contents>
-                <content type="none">
-                  <objects>
-                    <object type="character" id="duck">
-                    </object>
-                    <object type="character" id="croc" animation="talk" string="dia1">
-                    </object>
-                  </objects>
+                <content target="rectangle" type="">
+                  <objects />
                 </content>
               </contents>
             </frame>
@@ -140,67 +85,27 @@
         </page>
         <page id="page3">
           <frames>
-            <frame id="frame1" bordertype="square">
+            <frame bordertype="rectangle" id="frame1">
               <contents>
-                <!-- content for left -->
-                <content target="left" type="none">
-                  <objects>
-                    <object type="character" id="duck">
-                    </object>
-                    <object type="character" id="croc" animation="talk" string="dia1">
-                    </object>
-                    <object type="text" id="text1" string="text1">
-                    </object>
-                  </objects>
-                </content>
-                <!-- content for right -->
-                <content target="right" type="none">
-                  <objects>
-                    <object type="character" id="duck">
-                    </object>
-                    <object type="character" id="croc" animation="talk" string="dia1">
-                    </object>
-                  </objects>
+                <content target="rectangle" type="">
+                  <objects />
                 </content>
               </contents>
             </frame>
-            <frame id="frame2" bordertype="square">
+            <frame bordertype="square" id="frame2">
               <contents>
-                <!-- content for left -->
                 <content target="left" type="none">
-                  <objects>
-                    <object type="character" id="duck">
-                    </object>
-                    <object type="character" id="croc" animation="talk" string="dia1">
-                    </object>
-                    <object type="text" id="text1" string="text1">
-                    </object>
-                  </objects>
+                  <objects />
                 </content>
-                <!-- content for right -->
                 <content target="right" type="none">
-                  <objects>
-                    <object type="character" id="duck">
-                    </object>
-                    <object type="character" id="croc" animation="talk" string="dia1">
-                    </object>
-                  </objects>
+                  <objects />
                 </content>
               </contents>
             </frame>
-            <frame id="frame3" bordertype="square">
+            <frame bordertype="rectangle" id="frame3">
               <contents>
-                <content type="none">
-                  <objects>
-                    <object type="character" id="duck">
-                    </object>
-                    <object type="character" id="croc">
-                    </object>
-                    <object type="character" id="duck">
-                    </object>
-                    <object type="character" id="croc" animation="talk" string="dia1">
-                    </object>
-                  </objects>
+                <content target="rectangle" type="">
+                  <objects />
                 </content>
               </contents>
             </frame>
@@ -208,12 +113,9 @@
         </page>
         <page id="page4">
           <frames>
-            <frame id="frame1" bordertype="square">
+            <frame bordertype="rectangle" id="frame1">
               <contents>
-                <content target="left" background="">
-                  <objects />
-                </content>
-                <content target="right" background="">
+                <content target="rectangle" type="">
                   <objects />
                 </content>
               </contents>
@@ -252,12 +154,9 @@
                 </content>
               </contents>
             </frame>
-            <frame id="frame3" bordertype="square">
+            <frame bordertype="rectangle" id="frame3">
               <contents>
-                <content target="left" background="">
-                  <objects />
-                </content>
-                <content target="right" background="">
+                <content target="rectangle" type="">
                   <objects />
                 </content>
               </contents>
