@@ -13,6 +13,7 @@ namespace BookWriterTool.Models
         book AddPage(string chapterNumber,string fileName);
 
         string AddCharacterToContent(string[] content,string fileName);
+        string AddBackgroundToContent(string[] content, string fileName);
         string AddFrame(string[] content, string fileName);
         book GetAllContent();
         void EditChapter(string chapterId);

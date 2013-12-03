@@ -15,41 +15,24 @@
             <frame bordertype="rectangle" id="frame1">
               <contents>
                 <content target="rectangle" type="">
-                  <objects>
-                    <object type="character" id="duck" />
-                    <object type="character" id="duck" />
-                    <object type="character" id="croc" />
-                  </objects>
+                  <objects />
                 </content>
               </contents>
             </frame>
             <frame bordertype="rectangle" id="frame2">
               <contents>
                 <content target="rectangle" type="">
-                  <objects>
-                    <object type="character" id="duck" />
-                    <object type="character" id="duck" />
-                    <object type="character" id="duck" />
-                  </objects>
+                  <objects />
                 </content>
               </contents>
             </frame>
             <frame bordertype="square" id="frame3">
               <contents>
                 <content target="left" type="none">
-                  <objects>
-                    <object type="character" id="duck" />
-                    <object type="character" id="duck" />
-                    <object type="character" id="duck" />
-                  </objects>
+                  <objects />
                 </content>
                 <content target="right" type="none">
-                  <objects>
-                    <object type="character" id="croc" />
-                    <object type="character" id="croc" />
-                    <object type="character" id="croc" />
-                    <object type="character" id="croc" />
-                  </objects>
+                  <objects />
                 </content>
               </contents>
             </frame>

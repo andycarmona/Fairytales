@@ -127,46 +127,82 @@ namespace BookWriterTool.Repositories
             return this.GetAllContent();
         }
 
-        public string AddCharacterToContent(string[] content, string fileName)
+        public string[] GetIdFromFileName(string[] splittedValues)
         {
-         
-            var splittedValues = content[0].Split('-');
             var splittedImg = splittedValues[4].Split('/');
             var typeImg = splittedImg[splittedImg.Length - 1];
             var idOfImg = typeImg.Split('.');
+            return idOfImg;
+        }
+
+        public string AddDialogBoxToContent(string[] content, string fileName)
+        {
+            return null;
+        }
+
+        public string AddCharacterToContent(string[] content, string fileName)
+        {
+
+            var splittedValues = content[0].Split('-');
+            var idOfImg = this.GetIdFromFileName(splittedValues);
             var mssg = "";
-          try
-          {
-              AddGenericObject(fileName, splittedValues, idOfImg[0],"character");
-          }
-          catch (Exception e)
-          {
-              mssg = e.Message;
-          }
-         
+            try
+            {
+                AddGenericObject(fileName, splittedValues, idOfImg[0], "character");
+            }
+            catch (Exception e)
+            {
+                mssg = e.Message;
+            }
+
             return mssg;
         }
 
-        public void AddGenericObject(string fileName,string[] splittedValues,string idOfImg,string type)
+        public string AddBackgroundToContent(string[] content, string fileName)
+        {
+            string[] splittedValues = content[0].Split('-');
+            var splittedImg = this.GetIdFromFileName(splittedValues);
+            string defImg = String.Format("{0}.{1}",splittedImg[0],splittedImg[1]);
+            var mssg = "";
+            xmlDoc = new XmlDocument();
+            xmlDoc.Load(HttpContext.Current.Server.MapPath(fileName));
+            var frameNode = (XmlElement)this.xmlDoc.SelectSingleNode(String.Format("//book/chapters/chapter[@id='{0}']/" +
+                "pages/page[@id='{1}']/frames/frame[@id='{2}']/contents/content[@target='{3}']",
+                splittedValues[0], splittedValues[1], splittedValues[2], splittedValues[3]));
+
+            if (frameNode != null)
+            {
+                frameNode.SetAttribute("background", defImg);
+                try
+                {
+                    xmlDoc.Save(HttpContext.Current.Server.MapPath(fileName));
+                }
+                catch (DirectoryNotFoundException e)
+                {
+                    mssg = e.Message;
+                }
+            }
+            return mssg;
+        }
+
+        public void AddGenericObject(string fileName, string[] splittedValues, string idOfImg, string type)
         {
             xmlDoc = new XmlDocument();
             XmlElement aObject = xmlDoc.CreateElement("object");
             xmlDoc.Load(HttpContext.Current.Server.MapPath(fileName));
-            var objectsNodes =
-                (XmlElement)
-                this.xmlDoc.SelectSingleNode(
-                    "//book/chapters/chapter[@id='" + splittedValues[0] + "']/" + "pages/page[@id='" + splittedValues[1]
-                    + "']" + "/frames/frame[@id='" + splittedValues[2] + "']" + "/contents/content[@target='"
-                    + splittedValues[3] + "']/objects");
+            var objectsNodes =(XmlElement)this.xmlDoc.SelectSingleNode(String.Format("//book/chapters/chapter[@id='{0}']/" +
+                "pages/page[@id='{1}']/frames/frame[@id='{2}']/contents/content[@target='{3}']/objects", 
+                splittedValues[0], splittedValues[1], splittedValues[2], splittedValues[3]));
+
             if (objectsNodes != null)
             {
-                aObject.SetAttribute("type",type);
+                aObject.SetAttribute("type", type);
                 aObject.SetAttribute("id", idOfImg);
                 objectsNodes.AppendChild(aObject);
-          
-                    xmlDoc.Save(HttpContext.Current.Server.MapPath(fileName));
-                }
-            
+
+                xmlDoc.Save(HttpContext.Current.Server.MapPath(fileName));
+            }
+
         }
 
         public string AddFrame(string[] contentToSearch, string fileName)
@@ -178,11 +214,9 @@ namespace BookWriterTool.Repositories
             XmlNode frameNode = this.xmlDoc.SelectSingleNode(
                     "//book/chapters/chapter[@id='" + splittedValues[0] + "']/" + "pages/page[@id='" + splittedValues[1]
                     + "']/frames/frame[@id='" + splittedValues[2] + "']");
-
-            XmlElement tmpContents = xmlDoc.CreateElement("contents");
-          
             if (frameNode != null)
-            {
+            {  
+                XmlElement tmpContents = xmlDoc.CreateElement("contents");
                 frameNode.RemoveAll();
                 XmlAttribute xId = xmlDoc.CreateAttribute("id");
                 XmlAttribute xBorderType = xmlDoc.CreateAttribute("bordertype");
@@ -194,10 +228,10 @@ namespace BookWriterTool.Repositories
                     frameNode.Attributes.Append(xId);
                 }
                 frameNode.AppendChild(tmpContents);
-            }
+            
             if (splittedValues[4] == "rectangle")
             {
-                XmlElement aContent = xmlDoc.CreateElement("content");  
+                XmlElement aContent = xmlDoc.CreateElement("content");
                 XmlElement tmpObjects = xmlDoc.CreateElement("objects");
                 aContent.SetAttribute("target", "rectangle");
                 aContent.SetAttribute("type", "");
@@ -210,8 +244,8 @@ namespace BookWriterTool.Repositories
                 {
                     XmlElement aContent = xmlDoc.CreateElement("content");
                     XmlElement tmpObjects = xmlDoc.CreateElement("objects");
-                    if(i==0)
-                    aContent.SetAttribute("target", "left");
+                    if (i == 0)
+                        aContent.SetAttribute("target", "left");
                     else
                         aContent.SetAttribute("target", "right");
                     aContent.SetAttribute("type", "none");
@@ -227,9 +261,10 @@ namespace BookWriterTool.Repositories
             {
                 mssg = e.Message;
             }
+            }
             return mssg;
         }
-   
+
 
         public book GetAllContent()
         {

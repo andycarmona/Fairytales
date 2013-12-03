@@ -138,10 +138,10 @@ namespace BookWriterTool.Controllers
                                       where content.target == target
                                       from Object in content.objects
                                       select Object);
-   
+
 
             }
-   
+
             return Json(new
             {
                 msg,
@@ -171,46 +171,47 @@ namespace BookWriterTool.Controllers
             }
             return Json(statusMsg);
         }
-
         [HttpPost]
-        public JsonResult AddContentToFrame(string[] frameDescriptionArray)
+        public JsonResult AddBackgroundToFrame(string[] frameDescriptionArray)
         {
             string statusMsg = "";
             if (Session["ActualFile"] != null)
             {
-                try
-                {
-                    var fileName = (string)this.Session["ActualFile"];
+                var fileName = (string)this.Session["ActualFile"];
 
-                    aBookRepository.AddFrame(frameDescriptionArray, fileName);
-                }
-                catch (IOException e)
-                {
-                    statusMsg = e.Message;
-                }
+                statusMsg = aBookRepository.AddBackgroundToContent(frameDescriptionArray, fileName);
 
             }
             return Json(statusMsg);
         }
 
-        public JsonResult AddObjectToContent(string[] frameDescriptionArray)
+        [HttpPost]
+        public JsonResult AddFrame(string[] frameDescriptionArray)
         {
             string statusMsg = "";
             if (Session["ActualFile"] != null)
             {
-                try
-                {
-                    var fileName = (string)this.Session["ActualFile"];
+                var fileName = (string)this.Session["ActualFile"];
 
-                    aBookRepository.AddCharacterToContent(frameDescriptionArray, fileName);
-                }
-                catch (IOException e)
-                {
-                    statusMsg = e.Message;
-                }
+                statusMsg = aBookRepository.AddFrame(frameDescriptionArray, fileName);
 
             }
-            return Json("mss2");
+            return Json(statusMsg);
+        }
+
+        public JsonResult AddCharacterToContent(string[] frameDescriptionArray)
+        {
+            var statusMsg = "";
+            if (Session["ActualFile"] != null)
+            {
+
+                var fileName = (string)this.Session["ActualFile"];
+
+                statusMsg = aBookRepository.AddCharacterToContent(frameDescriptionArray, fileName);
+
+
+            }
+            return Json(statusMsg);
         }
 
     }
