@@ -29,9 +29,8 @@ namespace BookWriterTool.Tests.Controllers
         public void AddPage()
         {
             BookController controller = new BookController();
-            string[] chapters= new string[1];
-            chapters[0] = "chapter1";
-            ActionResult result=controller.AddPage(chapters);
+          
+           // ActionResult result = controller.AddPage("chapter1");
 
 
         }

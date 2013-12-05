@@ -151,7 +151,7 @@ namespace BookWriterTool.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddPage(string[] chapterNumber)
+        public ActionResult AddPage(BookModel model)
         {
             string statusMsg = "Page added";
             if (Session["ActualFile"] != null)
@@ -160,7 +160,7 @@ namespace BookWriterTool.Controllers
                 var fileName = (string)this.Session["ActualFile"];
                 try
                 {
-                    book anotherBook = this.aBookRepository.AddPage(chapterNumber[0], fileName);
+                    book anotherBook = this.aBookRepository.AddPage(model.ChapterId, fileName);
                     return this.RedirectToActionPermanent("EditBook", anotherBook);
                 }
                 catch (Exception e)
@@ -172,7 +172,7 @@ namespace BookWriterTool.Controllers
             return Json(statusMsg);
         }
         [HttpPost]
-        public JsonResult AddBackgroundToFrame(string[] frameDescriptionArray)
+        public JsonResult AddBackgroundToFrame(BookModel frameDescriptionArray)
         {
             string statusMsg = "";
             if (Session["ActualFile"] != null)
@@ -186,7 +186,7 @@ namespace BookWriterTool.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddFrame(string[] frameDescriptionArray)
+        public JsonResult AddFrame(BookModel frameDescriptionArray)
         {
             string statusMsg = "";
             if (Session["ActualFile"] != null)
@@ -199,15 +199,15 @@ namespace BookWriterTool.Controllers
             return Json(statusMsg);
         }
 
-        public JsonResult AddCharacterToContent(string[] frameDescriptionArray)
+        public JsonResult AddCharacterToContent(BookModel model)
         {
             var statusMsg = "";
             if (Session["ActualFile"] != null)
             {
-
+                
                 var fileName = (string)this.Session["ActualFile"];
 
-                statusMsg = aBookRepository.AddCharacterToContent(frameDescriptionArray, fileName);
+              statusMsg = aBookRepository.AddCharacterToContent(model, fileName);
 
 
             }
