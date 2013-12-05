@@ -12,45 +12,24 @@
         <!-- our first page! -->
         <page id="page1">
           <frames>
-            <frame id="frame1" bordertype="square">
+            <frame bordertype="rectangle" id="frame1">
               <contents>
-                <!-- content for left -->
-                <content background="" target="left" type="none">
-                  <objects>
-                  </objects>
-                </content>
-                <!-- content for right -->
-                <content background="" target="right" type="none">
-                  <objects>
-                  </objects>
+                <content target="rectangle" type="">
+                  <objects />
                 </content>
               </contents>
             </frame>
-            <frame id="frame2" bordertype="square">
-             <contents>
-                <!-- content for left -->
-                <content background="" target="left" type="none">
-                  <objects>
-                  </objects>
-                </content>
-                <!-- content for right -->
-                <content background="" target="right" type="none">
-                  <objects>
-                  </objects>
+            <frame bordertype="rectangle" id="frame2">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects />
                 </content>
               </contents>
             </frame>
-            <frame id="frame3" bordertype="square">
+            <frame bordertype="rectangle" id="frame3">
               <contents>
-                <!-- content for left -->
-                <content background="" target="left" type="none">
-                  <objects>
-                  </objects>
-                </content>
-                <!-- content for right -->
-                <content background="" target="right" type="none">
-                  <objects>
-                  </objects>
+                <content target="rectangle" type="">
+                  <objects />
                 </content>
               </contents>
             </frame>
@@ -58,79 +37,24 @@
         </page>
         <page id="page2">
           <frames>
-            <frame id="frame1" bordertype="square">
+            <frame bordertype="rectangle" id="frame1">
               <contents>
-                <!-- content for left -->
-                <content background="" target="left" type="none">
-                  <objects>
-                  </objects>
-                </content>
-                <!-- content for right -->
-                <content target="right" type="none">
-                  <objects>
-                  </objects>
+                <content target="rectangle" type="">
+                  <objects />
                 </content>
               </contents>
             </frame>
-            <frame id="frame2" bordertype="square">
+            <frame bordertype="rectangle" id="frame2">
               <contents>
-                <!-- content for left -->
-                <content target="left" type="none">
-                  <objects>
-                  </objects>
-                </content>
-                <!-- content for right -->
-                <content target="right" type="none">
-                  <objects>
-                  </objects>
+                <content target="rectangle" type="">
+                  <objects />
                 </content>
               </contents>
             </frame>
-            <frame id="frame3" bordertype="square">
+            <frame bordertype="rectangle" id="frame3">
               <contents>
-                <content type="none">
-                  <objects>
-                  </objects>
-                </content>
-              </contents>
-            </frame>
-          </frames>
-        </page>
-        <page id="page3">
-          <frames>
-            <frame id="frame1" bordertype="square">
-              <contents>
-                <!-- content for left -->
-                <content target="left" type="none">
-                  <objects>
-                  </objects>
-                </content>
-                <!-- content for right -->
-                <content target="right" type="none">
-                  <objects>
-                  </objects>
-                </content>
-              </contents>
-            </frame>
-            <frame id="frame2" bordertype="square">
-              <contents>
-                <!-- content for left -->
-                <content target="left" type="none">
-                  <objects>
-                  </objects>
-                </content>
-                <!-- content for right -->
-                <content target="right" type="none">
-                  <objects>
-                  </objects>
-                </content>
-              </contents>
-            </frame>
-            <frame id="frame3" bordertype="square">
-              <contents>
-                <content type="none">
-                  <objects>
-                  </objects>
+                <content target="rectangle" type="">
+                  <objects />
                 </content>
               </contents>
             </frame>

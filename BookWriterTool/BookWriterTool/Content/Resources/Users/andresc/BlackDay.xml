@@ -12,38 +12,6 @@
         <!-- our first page! -->
         <page id="page1">
           <frames>
-            <frame bordertype="square" id="frame1">
-              <contents>
-                <content target="left" type="none">
-                  <objects />
-                </content>
-                <content target="right" type="none">
-                  <objects />
-                </content>
-              </contents>
-            </frame>
-            <frame bordertype="rectangle" id="frame2">
-              <contents>
-                <content target="rectangle" type="">
-                  <objects>
-                  </objects>
-                </content>
-              </contents>
-            </frame>
-            <frame bordertype="square" id="frame3">
-              <contents>
-                <content target="left" type="none">
-                  <objects />
-                </content>
-                <content target="right" type="none">
-                  <objects />
-                </content>
-              </contents>
-            </frame>
-          </frames>
-        </page>
-        <page id="page2">
-          <frames>
             <frame bordertype="rectangle" id="frame1">
               <contents>
                 <content target="rectangle" type="">
@@ -64,6 +32,34 @@
             <frame bordertype="rectangle" id="frame3">
               <contents>
                 <content target="rectangle" type="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+          </frames>
+        </page>
+        <page id="page2">
+          <frames>
+            <frame bordertype="rectangle" id="frame1">
+              <contents>
+                <content target="rectangle" type="" background="bg2large.jpg">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="rectangle" id="frame2">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="square" id="frame3">
+              <contents>
+                <content target="left" type="none">
+                  <objects />
+                </content>
+                <content target="right" type="none">
                   <objects />
                 </content>
               </contents>
@@ -85,89 +81,6 @@
                   <objects />
                 </content>
                 <content target="right" type="none">
-                  <objects />
-                </content>
-              </contents>
-            </frame>
-            <frame bordertype="rectangle" id="frame3">
-              <contents>
-                <content target="rectangle" type="">
-                  <objects />
-                </content>
-              </contents>
-            </frame>
-          </frames>
-        </page>
-        <page id="page4">
-          <frames>
-            <frame bordertype="rectangle" id="frame1">
-              <contents>
-                <content target="rectangle" type="">
-                  <objects />
-                </content>
-              </contents>
-            </frame>
-            <frame id="frame2" bordertype="square">
-              <contents>
-                <content target="left" background="">
-                  <objects />
-                </content>
-                <content target="right" background="">
-                  <objects />
-                </content>
-              </contents>
-            </frame>
-          </frames>
-        </page>
-        <page id="page5">
-          <frames>
-            <frame id="frame1" bordertype="square">
-              <contents>
-                <content target="left" background="">
-                  <objects />
-                </content>
-                <content target="right" background="">
-                  <objects />
-                </content>
-              </contents>
-            </frame>
-            <frame id="frame2" bordertype="square">
-              <contents>
-                <content target="left" background="">
-                  <objects />
-                </content>
-                <content target="right" background="">
-                  <objects />
-                </content>
-              </contents>
-            </frame>
-            <frame bordertype="rectangle" id="frame3">
-              <contents>
-                <content target="rectangle" type="">
-                  <objects />
-                </content>
-              </contents>
-            </frame>
-          </frames>
-        </page>
-        <page id="page6">
-          <frames>
-            <frame id="frame1" bordertype="square">
-              <contents>
-                <content target="left" background="">
-                  <objects />
-                </content>
-                <content target="right" background="">
-                  <objects />
-                </content>
-              </contents>
-            </frame>
-            <frame id="frame2" bordertype="square">
-              <contents>
-                <content target="left" background="">
-                  <objects />
-                </content>
-                <content target="right" background="">
                   <objects />
                 </content>
               </contents>

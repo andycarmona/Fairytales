@@ -27,7 +27,6 @@
 .Container3D
 {
     position: relative;
-
     width: 200px;
 }
 
@@ -35,6 +34,7 @@
 {
     visibility: visible;
 }
+
 .disableControl
 {
     visibility: hidden;
@@ -43,34 +43,42 @@
 .FrameEdit .terrain
 {
     position: relative;
-
 }
 
 
 #terrain img
 {
-   /* position: absolute;
+    /* position: absolute;
     top: 0px;
     left: 0px;*/
     height: 100px;
 }
-.gridster li {
+
+.gridster li
+{
     background-color: white;
 }
-img {
-    
+
+img
+{
 }
+
 #panel
 {
     width: 100%;
 }
-.editPencil {
-float: right;
-background-color: black;
+
+.editPencil
+{
+    float: left;
+    background-color: black;
 }
-.clonedImg {
-position:relative;
+
+.clonedImg
+{
+    position: relative;
 }
+
 .rightContent
 {
     background-color: rgba(255,255,255,0.90);
@@ -81,70 +89,81 @@ position:relative;
 /*Editor delen*/
 #ViewChanger
 {
-    width: 245px;
-    position: absolute;
-   bottom: 31px;
-    right: 300px;
+ width: 245px;
+position: absolute;
+bottom: 3%;
+right: 39%;
 }
+
 .higlightFrame
- {
+{
     border-color: red;
     border-width: 2px;
 }
-.droppable .GeomForm {
-    width:743px;
-    height: 130px;
+
+.droppable .GeomForm
+{
+    width: 100%;
+    height: 190px;
 }
-.droppable .squareLeft {
+
+.droppable .squareLeft
+{
     float: left;
     background-repeat: no-repeat;
-    border-image:url(../Images/border.png) 25 25 round;
--webkit-border-image:url(../Images/border.png) 25 25 round; /* Safari 5 and older */
--o-border-image:url(../Images/border.png) 25 25 round; /* Opera */
-    	background-position: center center;
-   -webkit-background-size:100% auto;
+    border-image: url(../Images/border.png) 25 25 round;
+    -webkit-border-image: url(../Images/border.png) 25 25 round; /* Safari 5 and older */
+    -o-border-image: url(../Images/border.png) 25 25 round; /* Opera */
+    background-position: center center;
+    -webkit-background-size: 100% auto;
     -moz-background-size: 100% auto;
     background-size: 100% auto;
     height: 83%;
-    width: 48%;
+    width: 47%;
     /*margin-right: 350px;*/
 }
-.droppable .squareRight {
-    float: right;
-      	background-position: center center;
-          background-repeat: no-repeat;
-              border-image:url(../Images/border.png) 25 25 round;
--webkit-border-image:url(../Images/border.png) 25 25 round; /* Safari 5 and older */
--o-border-image:url(../Images/border.png) 25 25 round; /* Opera */
-  /*  -webkit-background-size:contain;
-    -moz-background-size: contain;
-    background-size: contain;*/
-      -webkit-background-size:100% auto;
+
+.droppable .squareRight
+{
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-image: url(../Images/border.png) 25 25 round;
+    -webkit-border-image: url(../Images/border.png) 25 25 round;
+    -o-border-image: url(../Images/border.png) 25 25 round;
+    -webkit-background-size: 100% auto;
     -moz-background-size: 100% auto;
     background-size: 100% auto;
-   height: 83%;
-    width: 48%;
-}
-.droppable .rectangle {
-    float: left;
-      background-position: center center;
-       background-repeat: no-repeat;
-           border-image:url(../Images/border.png) 30 30 round;
--webkit-border-image:url(../Images/border.png) 30 30 round; /* Safari 5 and older */
--o-border-image:url(../Images/border.png) 30 30 round; /* Opera */
-       -webkit-background-size: 100% auto;
-    -moz-background-size: 100% auto;
-       background-size: 100% auto;
     height: 83%;
-    width: 100%;
+    width: 47%;
+    float: right;
 }
+
+.droppable .rectangle
+{
+    float: left;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-image: url(../Images/border.png) 30 30 round;
+    -webkit-border-image: url(../Images/border.png) 30 30 round; /* Safari 5 and older */
+    -o-border-image: url(../Images/border.png) 30 30 round; /* Opera */
+    -webkit-background-size: 50% auto;
+    -moz-background-size: 50% auto;
+    background-size: 50% auto;
+    height: 83%;
+    width: 98%;
+}
+
+.containerSquare
+{
+    position: relative;
+    width: 50%;
+    height: 50%;
+}
+
 .chapters
 {
-    position: fixed;
-  margin: 0px auto;
-top: 83px;
-width: 822px;
-height: 703px;
+    margin: 0px auto;
+    top: 83px;
 }
 
 .pages
@@ -185,11 +204,14 @@ height: 703px;
     top: 82px;
     left: 420px;
 }
-.contentIntern {
+
+.contentIntern
+{
     background-repeat: no-repeat;
-    width:100%;
-    height:100%;
+    width: 100%;
+    height: 100%;
 }
+
 .objects
 {
     position: absolute;
@@ -197,40 +219,48 @@ height: 703px;
     left: 420px;
 }
 /*Context menu*/
-div#context-menu {
-   position:fixed;
-   display: none;
-   /*sample style attributes follow*/
-   width: 100px;
-   background: #fece2f;
-   color: #fff;
-   font-size: 12px;
+div#context-menu
+{
+    position: fixed;
+    display: none;
+    /*sample style attributes follow*/
+    width: 100px;
+    background: #fece2f;
+    color: #fff;
+    font-size: 12px;
 }
 /*Menu raden*/
 /* Clearfix for the menu */
-.ui-menu {
+.ui-menu
+{
     position: fixed;
     width: 100%;
 }
-.ui-menu:after {
-    content: ".";
-    display: block;
-    clear: both;
-    visibility: hidden;
-    line-height: 0;
-    height: 0;
-}
-.ui-menu .ui-menu-item {
-    display: inline-block;
-    float: left;
-    margin: 0;
-    padding: 0;
-    width: auto;
-}
-div#context-menu li {
-   margin: 3px;
-   padding: 3px;
-   background: #000;
+
+    .ui-menu:after
+    {
+        content: ".";
+        display: block;
+        clear: both;
+        visibility: hidden;
+        line-height: 0;
+        height: 0;
+    }
+
+    .ui-menu .ui-menu-item
+    {
+        display: inline-block;
+        float: left;
+        margin: 0;
+        padding: 0;
+        width: auto;
+    }
+
+div#context-menu li
+{
+    margin: 3px;
+    padding: 3px;
+    background: #000;
 }
 /*View delen*/
 .chaptersView
@@ -272,20 +302,17 @@ div#context-menu li {
 #framesGroup .draggable
 {
     z-index: 10;
-    width: 155px;
+    width: 75%;
     height: 84px;
     padding: 0.5em;
     margin: 10px 10px 10px 0;
 }
 
-/*.frame .droppable
+.frame .droppable
 {
-    background: black;
-    width: 700px;
-    height: 162px;
-    padding: 0.5em;
-    margin: 10px;
-}*/
+    width: 100%;
+    height: 100%;
+}
 /*Draggable elements*/
 #FrameEdit .draggable
 {
@@ -293,29 +320,49 @@ div#context-menu li {
     height: 20px;
     padding: 0.5em;
 }
-.editContent {
-   position:relative 
+
+.editContent
+{
+    position: relative;
 }
-.editContentLeft {
+
+.editContentLeft
+{
     position: relative;
     float: left;
 }
-.editContentRight {
+
+.editContentRight
+{
     position: relative;
     float: right;
 }
+
 .ui-dialog-titlebar-close
 {
     /* visibility: hidden;*/
+}
+#chapter1 {
+    position: fixed;
+     margin: 0 auto;
+    left: 17%;
+   top: 4%;
+       border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+    border: 2px solid #d19405;
+    font-weight: bold;
+
 }
 
 .ui-accordion .ui-accordion-content
 {
     height: 390px;
 }
-.ui-accordion .ui-accordion-header {
-    
+
+.ui-accordion .ui-accordion-header
+{
 }
+
 .ui-tabs .ui-tabs-panel
 {
     padding: 0em 0.4em;

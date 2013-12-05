@@ -7,13 +7,14 @@
     foreach (bookChapterPageFrameContent content in frame.contents.Where(content=>content.target==target))
     { <div class="editPencil"><span class="ui-icon ui-icon-pencil"></span></div>
         <div class="droppable contentIntern" style="background-image: url(@(!String.IsNullOrEmpty(content.background) ? "/Content/Resources/Generic/background/"+@content.background:"../Images/rectangle.png"))">
+          
             @foreach (bookChapterPageFrameContentObject obj in content.objects.Where(obj => obj.type == "character"))
             {
                 <img id="Cloned@(index)" style="left: 50%;top: 75%;" class="clonedImg" width="25" height="25" alt="" src="@GlobalVariables.ConfigResource("CharacterRes")@(obj.img)" />
                 index++;
             }
-           
+        
 
-      </div>
+        </div>
     }
 }

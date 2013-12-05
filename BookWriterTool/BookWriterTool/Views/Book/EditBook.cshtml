@@ -38,32 +38,12 @@
 @if (Model != null)
 {
     <div class="chapters" id="chapters">
-
-        <ul>
-            @foreach (bookChapter chapter in @Model.chapters)
-            {
-                <li><a href="#@chapter.id">@Localization.Localize("chapter")@(chapterIndex++)</a></li>
-            }
-        </ul>
-        <div id="panel2D">
+        <div  id="panel2D">
             <!--Chapters section-->
             @foreach (bookChapter chapter in this.Model.chapters)
             {
-                @:<!--Pages section-->
-                <div class="pages" id="@chapter.id">
-
-                    <ul class="pageItems">
-                        @foreach (bookChapterPage page in chapter.pages)
-                        {
-                            <li><a href="#@page.id">@Localization.Localize("page")@(pageIndex++)</a></li>
-                    
-                        }
-                        <li>
-                            @{
-                        pageIndex = 1;
-                            }
-                            <button id="btnAddPage" type="button" value="+">+</button></li>
-                    </ul>
+                <!--Pages section-->
+                <div class="pages bb-bookblock" id="@chapter.id">
                     <!--End Pages section-->
 
                     <!--Frames section-->
@@ -86,6 +66,7 @@
                                             }
                                             else if (@frame.bordertype == "square")
                                             { 
+
                                                 <div id="@(chapter.id)-@(page.id)-@(frame.id)-left" class="squareLeft">
                                                     @Html.Partial("FrameContentSplit", (bookChapterPageFrame)ViewBag.Table, new ViewDataDictionary { { "actualFrame", frame }, { "target", "left" } })
                                                 </div>
@@ -125,10 +106,11 @@
             }
         </div>
         <div class="ViewChanger" id="ViewChanger">
-            <ul>
+       
                 <input class="ui-widget ui-widget-content ui-corner-all" id="View2D" type="button" value="2D View" />
                 <input class="ui-widget  ui-corner-all" id="View3D" type="button" value="3D View" />
-            </ul>
+                <input class="ui-widget  ui-corner-all" id="btnAddPage" type="button" value="+" />
+         
         </div>
     </div>
 }
@@ -249,14 +231,14 @@
             minHeight: 700,
             width: 600,
             height: 700,
-            close: function() {
+            close: function () {
                 $("#DialogEditorFrames").dialog("destroy");
                 $("#terrain").remove();
                 $("#terrain").html("");
                 $('#terrain').empty();
                 clearImages();
             },
-            open: function() {
+            open: function () {
                 configurateImgOnTerrain();
             }
         };
@@ -272,38 +254,38 @@
 
         var u = new UnityObject2(config);
 
-        jQuery(function() {
+        jQuery(function () {
 
             var $missingScreen = jQuery("#unityPlayer").find(".missing");
             var $brokenScreen = jQuery("#unityPlayer").find(".broken");
             $missingScreen.hide();
             $brokenScreen.hide();
 
-            u.observeProgress(function(progress) {
+            u.observeProgress(function (progress) {
                 switch (progress.pluginStatus) {
-                case "broken":
-                    $brokenScreen.find("a").click(function(e) {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        u.installPlugin();
-                        return false;
-                    });
-                    $brokenScreen.show();
-                    break;
-                case "missing":
-                    $missingScreen.find("a").click(function(e) {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        u.installPlugin();
-                        return false;
-                    });
-                    $missingScreen.show();
-                    break;
-                case "installed":
-                    $missingScreen.remove();
-                    break;
-                case "first":
-                    break;
+                    case "broken":
+                        $brokenScreen.find("a").click(function (e) {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            u.installPlugin();
+                            return false;
+                        });
+                        $brokenScreen.show();
+                        break;
+                    case "missing":
+                        $missingScreen.find("a").click(function (e) {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            u.installPlugin();
+                            return false;
+                        });
+                        $missingScreen.show();
+                        break;
+                    case "installed":
+                        $missingScreen.remove();
+                        break;
+                    case "first":
+                        break;
                 }
             });
             u.initPlugin(jQuery("#unityPlayer")[0], "/Content/Resources/WebPlayer/webviewer.unity3d?book=2");
@@ -311,13 +293,24 @@
         });
 
 
-        $(function() {
-            $("#pages").tabs();
-            $("#chapters").tabs();
-            $("#chapter1").tabs();
-            $("#chapter2").tabs();
-            $("#chapter3").tabs();
+        $(function () {
+            /*  $("#pages").tabs();
+              $("#chapters").tabs();
+              $("#chapter1").tabs();
+              $("#chapter2").tabs();
+              $("#chapter3").tabs();*/
             // $("#DialogEditorFrames").dialog(dialogOpts);
+            $('.bb-bookblock').booklet(
+      {
+          width: '65%',
+          height: 600,
+          speed: 500,
+          tabs: true,
+          tabWidth: 180,
+          tabHeight:20
+      });
+
+
             $("#accordionConfig").accordion();
             $("#accordionStatus").accordion();
             $('#userContent').load('/Book/GetAvailableBooks', { fileOption: "newBook" });
@@ -326,7 +319,7 @@
 
         });
         /*Tree structure for fils and directories*/
-        $(function() {
+        $(function () {
             $("#objectsGroup").jstree({
                 "plugins": ["themes", "html_data"]
             });
@@ -334,7 +327,7 @@
         /*Activate editor for frame*/
 
         function activateEditorOperations() {
-            $(".editPencil").click(function(e) {
+            $(".editPencil").click(function (e) {
                 $(".squareLeft").css({ "-webkit-border-image": "url(../Images/border.png) 25 25 round" });
                 $(".squareRight").css({ "-webkit-border-image": "url(../Images/border.png) 25 25 round" });
                 $(".rectangle").css({ "-webkit-border-image": "url(../Images/border.png) 25 25 round" });
@@ -373,8 +366,8 @@
             });
         }
 
-/*Add img on content in frame*/
-        $('#objectsGroup img').bind("click", function() {
+        /*Add img on content in frame*/
+        $('#objectsGroup img').bind("click", function () {
             var randomnumber = Math.floor(Math.random() * 100);
             $('#' + actualContent + " .contentIntern").append('<img width="25" height="25" style="left: 50%;top: 75%;" class="clonedImg" id="Cloned' + randomnumber + '" src="' + $(this).attr("src") + '" />');
             var valuesId = [];
@@ -388,7 +381,7 @@
         });
 
         /*Change background image of terrain*/
-        $(".backgroundContain").click(function() {
+        $(".backgroundContain").click(function () {
             //  var descriptionArray = [];
             var valuesId = [];
             var bk = $(this).attr("id");
@@ -400,18 +393,18 @@
                 SetObjectModel(bk, $(this).attr("src"), null, null, null, null);
                 $("#" + actualContent + " .contentIntern").css("background-image", "url(" + imgChosen + ")");
                 PostArray("AddBackgroundToFrame", GetBookModel());
-               
+
             }
         });
 
         /*Add new page*/
         $("#btnAddPage").click(function () {
             //var descriptionArray = [];
-            SetBookModel("chapter1", null,null, null);
+            SetBookModel("chapter1", null, null, null);
             PostArray("AddPage", GetBookModel());
             reloadPage();
         });
-        
+
 
         /*Function handle draggable objects. 
                  Objects you pickup and drag*/
@@ -438,14 +431,11 @@
                         //Add frames in page
                         var valuesId = [];
                         var originalId = $(this).find(".GeomForm :first-child").attr("id");
-                        alert(originalId);
+                        //alert(originalId);
                         valuesId = GetIdFromString(originalId);
                         SetBookModel(valuesId[0], valuesId[1], valuesId[2], draggableId);
-                        //SetObjectModel(bk, $(this).attr("src"), null, null, null, null);
-                        //descriptionArray.push(originalId + "-" + draggableId);
-                        PostArray("AddFrame", GetBookModel());
 
-                        // alert($(this).attr("id"));
+                        PostArray("AddFrame", GetBookModel());
                         $(this).find("div").html("");
                         if (draggableId == "rectangle") {
                             var rectangleId = SplitAndConcanate(originalId, "rectangle");
@@ -474,14 +464,14 @@
             return arrayId;
         }
 
-/*  function RenderBook() {
-            $.each(bookModel.pageModel, function (index, cartItem) {
-
-                var aFrame = pageModel.actualFrame;
-                var aPage = pageModel.actualPage;
-            });
-
-        }*/
+        /*  function RenderBook() {
+                    $.each(bookModel.pageModel, function (index, cartItem) {
+        
+                        var aFrame = pageModel.actualFrame;
+                        var aPage = pageModel.actualPage;
+                    });
+        
+                }*/
 
         /*Callback function*/
 
@@ -492,15 +482,15 @@
                 $("#chapter1" + bookTemp.actualPage + bookTemp.actualFrame + bookTemp.actualTarget).html(result.ObjectInquiryView);
                 configurateImgOnTerrain();
             }
-        }*/ 
+        }*/
 
-     
+
         /*Add some more functions to added image on content frame*/
 
         function configurateImgOnTerrain() {
-            $('#' + actualContent + ' .droppable img').each(function() {
+            $('#' + actualContent + ' .droppable img').each(function () {
                 startDrag($(this));
-                $(this).bind('contextmenu', function(e) {
+                $(this).bind('contextmenu', function (e) {
                     $('#context-menu').css('left', e.pageX + 'px');
                     $('#context-menu').css('top', e.pageY + 'px');
                     $('#context-menu').css('z-index', 10);
@@ -515,7 +505,7 @@
         /*Clear all images in terrain*/
 
         function clearImages() {
-            $('#terrain img').each(function() {
+            $('#terrain img').each(function () {
                 $(this).remove();
             });
         }
@@ -527,7 +517,7 @@
                 axis: "x",
                 cursor: 'move',
                 containment: "parent",
-                drag: function(event, ui) {
+                drag: function (event, ui) {
                     draggableId = $(this).attr("id");
                     //  alert("StartDrag");
                     var offset = $(this).offset();
@@ -541,16 +531,16 @@
         }
 
         /*Start Context menu events*/
-        $('html').click(function(e) {
+        $('html').click(function (e) {
             $('#context-menu').hide();
             $("#valCtxMenu").text('');
             e.stopPropagation();
         });
-        $('#context-menu').click(function(e) {
+        $('#context-menu').click(function (e) {
             $("#valCtxMenu").text('');
             e.stopPropagation();
         });
-        $(window).resize(function() {
+        $(window).resize(function () {
             $('#context-menu').hide();
             $("#valCtxMenu").text('');
         });
@@ -570,8 +560,8 @@
 
         /*Toggle between 2D and 3D View*/
         /*----------------------------------------------*/
-        $("#View3D").bind("click", function() {
-            $(".pages #frames").each(function(i, elem) {
+        $("#View3D").bind("click", function () {
+            $(".pages #frames").each(function (i, elem) {
                 $(this).hide(500);
             });
             $("#Container3D").appendTo($("#pages"));
@@ -579,8 +569,8 @@
             $(".Container3D").addClass("activeControl");
         });
 
-        $("#View2D").bind("click", function() {
-            $(".pages #frames").each(function(i, elem) {
+        $("#View2D").bind("click", function () {
+            $(".pages #frames").each(function (i, elem) {
                 $(this).show(500);
             });
             $(".Container3D").removeClass("activeControl");
@@ -589,18 +579,18 @@
         /*--------------------------------------------*/
 
         /*Get selecte item of dropdownbox*/
-        $(".selectpicker").change(function() {
+        $(".selectpicker").change(function () {
             $('#userContent').load('/Book/GetAvailableBooks', { fileOption: $(this).val() });
         });
 
 
-      
+
 
         function reloadPage() {
             $("body").fadeOut(
-                function() {
+                function () {
                     location.reload(true);
-                    $(document).ready(function() { $(body).fadeIn(); });
+                    $(document).ready(function () { $(body).fadeIn(); });
                 });
         }
 
@@ -618,10 +608,10 @@
                 data: JSON.stringify(BookModel),
                 async: false,
                 dataType: "json",
-                success: function(statusMsg) {
+                success: function (statusMsg) {
                     descriptionArray.length = 0;
                 },
-                error: function(statusMsg) {
+                error: function (statusMsg) {
                     AddTextToStatus("Couldn't send message.Wrong parameters");
                 }
             });

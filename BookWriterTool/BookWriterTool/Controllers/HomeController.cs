@@ -39,6 +39,7 @@ namespace BookWriterTool.Controllers
         {
           //  this.ViewBag.message = this.localizationHandler.Localize("ChooseOption");
 
+            //return this.View();
             return RedirectToAction("FakeLogin", "Book",new{userName="andresc"});
         }
     }

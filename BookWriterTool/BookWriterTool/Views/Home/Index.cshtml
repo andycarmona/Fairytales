@@ -1,27 +1,37 @@
 ﻿@using BookWriterTool.Helpers
 @{
     ViewBag.Title = "Home Page";
-    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-           @Html.ActionLink(@Localization.Localize("English"), "SetCulture", new { controller = "Culture", culture = "en-GB", returnUrl = HttpContext.Current.Request.RawUrl}, new { Class = "btn" })
-            @Html.ActionLink(@Localization.Localize("Spanish"), "SetCulture", new { controller = "Culture", culture = "es-ES", returnUrl = HttpContext.Current.Request.RawUrl }, new { Class = "btn" })
-            @Html.ActionLink(@Localization.Localize("Swedish"), "SetCulture", new { controller = "Culture", culture = "sv-SE" , returnUrl = HttpContext.Current.Request.RawUrl}, new { Class = "btn" })
-
-    <h2>Book editor 1.0</h2>
-  <form class="form-signin">
-        <h2 class="form-signin-heading">@Localization.Localize("PleaseSignin")</h2>
-        <input type="text" class="form-control" placeholder="@Localization.Localize("EmailAddress")" required autofocus>
-        <input type="password" class="form-control" placeholder="Password" required>
-        <label class="checkbox">
-          <input type="checkbox" value="remember-me"> @Localization.Localize("RememberMe")
-        </label>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
-
-
-            @Html.ActionLink("Kalle's books", "FakeLogin", "Book",new{userName="kallec"}, new { Class = "btn btn-lg btn-primary btn-block" })
-@Html.ActionLink("Andres's books", "FakeLogin", "Book",new{userName="andresc"}, new { Class = "btn btn-lg btn-primary btn-block" })
-
+<div id="bb-bookblock" class="bb-bookblock">
+    <div class="bb-item">
+        <!-- custom content -->
+    </div>
+    <div class="bb-item">
+        <!-- ... -->
+    </div>
+    <div class="bb-item">
+        <!-- ... -->
+    </div>
+    <div class="bb-item">
+        <!-- ... -->
+    </div>
+    <!-- ... -->
+</div>
+@section scripts
+{
+    <script>
+$(function() {
+             
+    $('#bb-bookblock').booklet(
+        {
+            width: '75%',
+            height:800
+        });
+ 
+});
+</script>
+}
 
 
 

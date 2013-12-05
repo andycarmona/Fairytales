@@ -251,6 +251,7 @@
     <Content Include="Content\assets\js\jquery-1.9.0.min.js" />
     <Content Include="Content\assets\js\jquery-ui-1.10.0.custom.min.js" />
     <Content Include="Content\Book.css" />
+    <Content Include="Content\Booklet\jquery.booklet.latest.css" />
     <Content Include="Content\Resources\BookTemplate\empty.xml" />
     <Content Include="Content\Resources\Generic\background\background.jpg" />
     <Content Include="Content\Resources\Generic\background\bg2large.jpg" />
@@ -463,6 +464,9 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
+    <Content Include="Scripts\jquery.bookblock.js" />
+    <Content Include="Scripts\jquery.booklet.latest.min.js" />
+    <Content Include="Scripts\jquery.easing.1.3.js" />
     <Content Include="Scripts\jquery.gridster.js" />
     <Content Include="Scripts\jquery.gridster.min.js" />
     <Content Include="Scripts\jquery.gridster.with-extras.js" />
@@ -475,6 +479,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jquerypp.custom.js" />
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
