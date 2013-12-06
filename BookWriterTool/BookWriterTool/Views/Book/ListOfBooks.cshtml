@@ -9,8 +9,8 @@
 }
 @if(@Model!=null)
 {
-<div id="userContent">
-    <ul>
+<div class="fileGroup" id="userContent">
+  <ul><li><a>Books</a><ul>
         @foreach (var word in @Model)
         {
             if (word != null)
@@ -25,7 +25,7 @@
             <li>@Html.ActionLink(@fileName, "GetChosenBook", "Book", new { fileName = @path }, new { Class = "btn btn-lg btn-primary" })</li>
              }
         }
-
+      </ul></li>
     </ul>
 </div>
 }

@@ -140,10 +140,38 @@ namespace BookWriterTool.Repositories
             return null;
         }
 
+      
+
+        public string DeleteObjectFromContent(BookModel content, string fileName)
+        {
+            var mssg = "";
+            //  string[] splittedValues = content[0].Split('-');
+            xmlDoc = new XmlDocument();
+            xmlDoc.Load(HttpContext.Current.Server.MapPath(fileName));
+            XmlNode objectsNodes = this.xmlDoc.SelectSingleNode(String.Format("//book/chapters/chapter[@id='{0}']/pages/page[@id='{1}']/frames/frame[@id='{2}']/contents/content[@target='{3}']/objects/object[@id='{4}']", content.ChapterId, content.PageId, content.FrameId, content.Target, content.Objects[0].ObjectId));
+            if (objectsNodes != null)
+            {
+                XmlNode parentNode = objectsNodes.ParentNode;
+                if (parentNode != null)
+                {
+                    parentNode.RemoveChild(objectsNodes);
+                }
+                try
+                {
+                    xmlDoc.Save(HttpContext.Current.Server.MapPath(fileName));
+                }
+                catch (DirectoryNotFoundException e)
+                {
+                    mssg = e.Message;
+                }
+            }
+            return mssg;
+        }
+
         public string AddObjectToContent(BookModel content, string fileName)
         {
 
-        
+
             var mssg = "";
             try
             {
@@ -174,6 +202,21 @@ namespace BookWriterTool.Repositories
             return mssg;
         }
 
+        public string AddGenericObjectToContent(BookModel content, string fileName)
+        {
+            var mssg = "";
+            try
+            {
+                AddGenericObject(fileName, content, content.Objects[0].ImageObj, "Expression");
+            }
+            catch (Exception e)
+            {
+                mssg = e.Message;
+            }
+
+            return mssg;
+        }
+
         public void AddGenericObject(string fileName, BookModel content, string imgVal, string type)
         {
             
@@ -190,7 +233,10 @@ namespace BookWriterTool.Repositories
                 aObject.SetAttribute("img", image);
                 aObject.SetAttribute("scaleX", "25%");
                 aObject.SetAttribute("scaleY", "25%");
-                aObject.SetAttribute("origo", "25%");
+                aObject.SetAttribute("origoX", "25%");
+                XmlNode node = objectsNodes.Attributes["origoY"];
+                if(node!=null)
+                aObject.SetAttribute("origoY", "25%");
                 aObject.SetAttribute("type", type);
                 aObject.SetAttribute("id", content.Objects[0].ObjectId);
                 objectsNodes.AppendChild(aObject);
@@ -203,15 +249,15 @@ namespace BookWriterTool.Repositories
         public string UpdateObjectPosition(BookModel content, string fileName)
         {
             var mssg = "";
-        /*  //  string[] splittedValues = content[0].Split('-');
+          //  string[] splittedValues = content[0].Split('-');
             xmlDoc = new XmlDocument();
             xmlDoc.Load(HttpContext.Current.Server.MapPath(fileName));
             var objectsNodes = (XmlElement)this.xmlDoc.SelectSingleNode(String.Format("//book/chapters/chapter[@id='{0}']/" +
-                "pages/page[@id='{1}']/frames/frame[@id='{2}']/contents/content[@target='{3}']/objects/object[@id='{4}'",
+                "pages/page[@id='{1}']/frames/frame[@id='{2}']/contents/content[@target='{3}']/objects/object[@id='{4}']",
                content.ChapterId,content.PageId,content.FrameId,content.Target,content.Objects[0].ObjectId));
             if (objectsNodes != null)
             {
-                objectsNodes.SetAttribute("background", image);
+                //objectsNodes.SetAttribute("background", image);
                 try
                 {
                     xmlDoc.Save(HttpContext.Current.Server.MapPath(fileName));
@@ -220,7 +266,7 @@ namespace BookWriterTool.Repositories
                 {
                     mssg = e.Message;
                 }
-            }*/
+            }
             return mssg;
         }
 

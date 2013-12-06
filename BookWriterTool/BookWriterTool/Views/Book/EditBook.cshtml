@@ -119,10 +119,7 @@
         <h3>@Localization.Localize("files")</h3>
         <div class="leftContent">
             <label>@Localization.Localize("ChooseOption")</label>
-            <select class="selectpicker" id="selectpicker">
-                <option value="newBook">@Localization.Localize("NewBook")</option>
-                <option value="loadBook">@Localization.Localize("LoadABook")</option>
-            </select>
+           
             <div id="partialFileResult">
                 @{
                     this.Html.RenderPartial("~/Views/Book/ListOfBooks.cshtml", @listOfBooks);
@@ -189,10 +186,10 @@ magna aliquam erat volutpat.</div>
 <div class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" id='context-menu'>
     <ul>
         <li>Edit</li>
-        <li id="ctxMenuDelete">Delete></li>
+        <li id="ctxMenuDelete">Delete</li>
         <li>Export</li>
     </ul>
-    <span id="valCtxMenu"></span>
+    <span hidden="hidden" id="valCtxMenu"></span>
 </div>
 @section scripts
 {
@@ -234,14 +231,14 @@ magna aliquam erat volutpat.</div>
             minHeight: 700,
             width: 600,
             height: 700,
-            close: function () {
+            close: function() {
                 $("#DialogEditorFrames").dialog("destroy");
                 $("#terrain").remove();
                 $("#terrain").html("");
                 $('#terrain').empty();
                 clearImages();
             },
-            open: function () {
+            open: function() {
                 configurateImgOnTerrain();
             }
         };
@@ -257,38 +254,38 @@ magna aliquam erat volutpat.</div>
 
         var u = new UnityObject2(config);
 
-        jQuery(function () {
+        jQuery(function() {
 
             var $missingScreen = jQuery("#unityPlayer").find(".missing");
             var $brokenScreen = jQuery("#unityPlayer").find(".broken");
             $missingScreen.hide();
             $brokenScreen.hide();
 
-            u.observeProgress(function (progress) {
+            u.observeProgress(function(progress) {
                 switch (progress.pluginStatus) {
-                    case "broken":
-                        $brokenScreen.find("a").click(function (e) {
-                            e.stopPropagation();
-                            e.preventDefault();
-                            u.installPlugin();
-                            return false;
-                        });
-                        $brokenScreen.show();
-                        break;
-                    case "missing":
-                        $missingScreen.find("a").click(function (e) {
-                            e.stopPropagation();
-                            e.preventDefault();
-                            u.installPlugin();
-                            return false;
-                        });
-                        $missingScreen.show();
-                        break;
-                    case "installed":
-                        $missingScreen.remove();
-                        break;
-                    case "first":
-                        break;
+                case "broken":
+                    $brokenScreen.find("a").click(function(e) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        u.installPlugin();
+                        return false;
+                    });
+                    $brokenScreen.show();
+                    break;
+                case "missing":
+                    $missingScreen.find("a").click(function(e) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        u.installPlugin();
+                        return false;
+                    });
+                    $missingScreen.show();
+                    break;
+                case "installed":
+                    $missingScreen.remove();
+                    break;
+                case "first":
+                    break;
                 }
             });
             u.initPlugin(jQuery("#unityPlayer")[0], "/Content/Resources/WebPlayer/webviewer.unity3d?book=2");
@@ -296,16 +293,16 @@ magna aliquam erat volutpat.</div>
         });
 
 
-        $(function () {
+        $(function() {
             $('.bb-bookblock').booklet({
-          width: '65%',
-          height: 600,
-          speed: 500,
-          tabs: true,
-          tabWidth: 180,
-          tabHeight:20
-      });
-        //   $(".rectangle").jqte();
+                width: '65%',
+                height: 600,
+                speed: 500,
+                tabs: true,
+                tabWidth: 180,
+                tabHeight: 20
+            });
+            //   $(".rectangle").jqte();
             $("#accordionConfig").accordion();
             $("#accordionStatus").accordion();
             $('#userContent').load('/Book/GetAvailableBooks', { fileOption: "newBook" });
@@ -326,29 +323,21 @@ magna aliquam erat volutpat.</div>
             tooltip: 'Click to edit...'
         });
         /*Tree structure for fils and directories*/
-        $(function () {
+        $(function() {
             $("#objectsGroup").jstree({
                 "plugins": ["themes", "html_data"]
             });
             $("#characterGroup").jstree({
                 "plugins": ["themes", "html_data"]
             });
-            $("#expressionsGroup").jstree({
+            $("#expressionGroup").jstree({
+                "plugins": ["themes", "html_data"]
+            });
+            $("#userContent").jstree({
                 "plugins": ["themes", "html_data"]
             });
         });
-        /*Activate editor for frame*/
 
-        function activateEditorOperations() {
-            $(".editPencil").click(function (e) {
-                $(".squareLeft").css({ "-webkit-border-image": "url(../Images/border.png) 25 25 round" });
-                $(".squareRight").css({ "-webkit-border-image": "url(../Images/border.png) 25 25 round" });
-                $(".rectangle").css({ "-webkit-border-image": "url(../Images/border.png) 25 25 round" });
-                $(this).parent().css({ "-webkit-border-image": "url(../Images/border.png) 8 8 round" });
-                actualContent = $(this).parent().attr("id");
-                configurateImgOnTerrain();
-            });
-        }
 
         function SetBookModel(chapterId, pageId, frameId, target) {
             BookModel.Objects = [];
@@ -380,46 +369,140 @@ magna aliquam erat volutpat.</div>
         }
 
         /*Add img on content in frame*/
-        $('#objectsGroup img').bind("click", function () {
+        $('#objectsGroup img').bind("click", function() {
             var randomnumber = Math.floor(Math.random() * 100);
             $('#' + actualContent + " .contentIntern").append('<img width="35" height="70" style="left: 50%;top: 55%;" class="clonedImg" id="Cloned' + randomnumber + '" src="' + $(this).attr("src") + '" />');
             var valuesId = [];
-            configurateImgOnTerrain();
+            configurateImgOnTerrain(false);
             if (actualContent != null) {
                 valuesId = GetIdFromString(actualContent);
                 SetBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-                SetObjectModel("Cloned" + randomnumber, $(this).attr("src"), null, null, null, null);
+                SetObjectModel("Object" + randomnumber, $(this).attr("src"), null, null, null, null);
                 PostArray("AddObjectToContent", GetBookModel());
             }
         });
         /*Add img on content in frame*/
-        $('#characterGroup img').bind("click", function () {
-            var randomnumber = Math.floor(Math.random() * 100);
-            $('#' + actualContent + " .contentIntern").append('<img width="35" height="70" style="left: 50%;top: 55%;" class="clonedImg" id="Cloned' + randomnumber + '" src="' + $(this).attr("src") + '" />');
+        $('#characterGroup img').bind("click", function() {
+            var randomnumber = Math.floor(Math.random() * 1000);
+            $('#' + actualContent + " .contentIntern").append('<img width="35" height="70" style="left: 50%;top: 55%;" class="clonedImg" id="Character' + randomnumber + '" src="' + $(this).attr("src") + '" />');
             var valuesId = [];
-            configurateImgOnTerrain();
+            configurateImgOnTerrain(false);
             if (actualContent != null) {
                 valuesId = GetIdFromString(actualContent);
                 SetBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-                SetObjectModel("Cloned" + randomnumber, $(this).attr("src"), null, null, null, null);
+                SetObjectModel("Character" + randomnumber, $(this).attr("src"), null, null, null, null);
                 PostArray("AddCharacter2DToContent", GetBookModel());
             }
         });
         /*Add img on content in frame*/
-        $('#expressionGroup img').bind("click", function () {
-            var randomnumber = Math.floor(Math.random() * 100);
-            $('#' + actualContent + " .contentIntern").append('<img width="35" height="70" style="left: 50%;top: 55%;" class="clonedImg" id="Cloned' + randomnumber + '" src="' + $(this).attr("src") + '" />');
+        $('#expressionGroup img').bind("click", function() {
+            var randomnumber = Math.floor(Math.random() * 1000);
+            $('#' + actualContent + " .contentIntern").append('<img width="25" height="50" style="left: 50%;top: 55%;" class="clonedImg" id="Expression' + randomnumber + '" src="' + $(this).attr("src") + '" />');
+            // alert($(this).attr("src"));
             var valuesId = [];
-            configurateImgOnTerrain();
+            configurateImgOnTerrain(true);
             if (actualContent != null) {
                 valuesId = GetIdFromString(actualContent);
                 SetBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-                SetObjectModel("Cloned" + randomnumber, $(this).attr("src"), null, null, null, null);
-                PostArray("AddCharacter2DToContent", GetBookModel());
+                SetObjectModel("Expression" + randomnumber, $(this).attr("src"), null, null, null, null);
+                PostArray("ExpressionToContent", GetBookModel());
             }
         });
-        /*Change background image of terrain*/
-        $(".backgroundContain").click(function () {
+
+        /*Delete object in content*/
+        $("#ctxMenuDelete").click(function() {
+            var objId = $("#valCtxMenu").html();
+            var valuesId = [];
+            if (actualContent != null) {
+                $("#" + actualContent + " .contentIntern").find('img').each(function() {
+                    if (objId == $(this).attr("id")) {
+                        $(this).remove();
+                        //alert(actualContent);
+                        valuesId = GetIdFromString(actualContent);
+                        SetBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
+                        SetObjectModel(objId, null, null, null, null, null);
+                        PostArray("DeleteObjectFromContent", GetBookModel());
+                    }
+                    destroyContextMenu();
+                });
+            } else {
+                alert("ERROR.Can't find element");
+            }
+        });
+        /*Start drag effect on element*/
+
+        function startDragNoLimit(element) {
+            $(element).draggable({
+                cursor: 'move',
+                containment: "parent",
+                drag: function(event, ui) {
+                    draggableId = $(this).attr("id");
+
+                }
+            });
+        }
+
+        /*Strat drag effect on element*/
+
+        function startDrag(element) {
+            $(element).draggable({
+                axis: "x",
+                cursor: 'move',
+                containment: "parent",
+                drag: function(event, ui) {
+                    draggableId = $(this).attr("id");
+                    //  alert("StartDrag");
+                    var offset = $(this).offset();
+                    var imgHeight = parseInt($("#" + draggableId).css("height"), 10);
+                    var xPos = offset.left;
+                    var yPos = offset.top - imgHeight;
+                    $('#posX_txtbox').val('xw: ' + xPos);
+                    $('#posY_txtbox').val('yw: ' + yPos);
+                }
+            });
+        }
+
+/*Activate editor for frame*/
+
+        function activateEditorOperations() {
+            $(".editPencil").click(function(e) {
+                $(".squareLeft").css({ "-webkit-border-image": "url(../Images/border.png) 25 25 round" });
+                $(".squareRight").css({ "-webkit-border-image": "url(../Images/border.png) 25 25 round" });
+                $(".rectangle").css({ "-webkit-border-image": "url(../Images/border.png) 25 25 round" });
+                $(this).parent().css({ "-webkit-border-image": "url(../Images/border.png) 8 8 round" });
+                if ($("#" + actualContent + " .droppable img") != 'undefined') {
+                    $("#" + actualContent + " .droppable img").draggable("destroy");
+                }
+                actualContent = $(this).parent().attr("id");
+                configurateImgOnTerrain();
+            });
+        }
+
+/*Add some more functions to added image on content frame*/
+
+        function configurateImgOnTerrain(status) {
+            $('#' + actualContent + ' .droppable img').each(function() {
+
+                if (status) {
+                    startDragNoLimit($(this));
+                } else {
+                    startDrag($(this));
+                }
+
+                $(this).bind('contextmenu', function(e) {
+                    $('#context-menu').css('left', e.pageX + 'px');
+                    $('#context-menu').css('top', e.pageY + 'px');
+                    $('#context-menu').css('z-index', 10);
+                    $("#valCtxMenu").html($(this).attr("id"));
+                    $('#context-menu').show();
+                    e.preventDefault();
+                    return false;
+                });
+            });
+        }
+
+/*Change background image of terrain*/
+        $(".backgroundContain").click(function() {
             //  var descriptionArray = [];
             var valuesId = [];
             var bk = $(this).attr("id");
@@ -436,7 +519,7 @@ magna aliquam erat volutpat.</div>
         });
 
         /*Add new page*/
-        $("#btnAddPage").click(function () {
+        $("#btnAddPage").click(function() {
             //var descriptionArray = [];
             SetBookModel("chapter1", null, null, null);
             PostArray("AddPage", GetBookModel());
@@ -446,11 +529,11 @@ magna aliquam erat volutpat.</div>
 
         /*Function handle draggable objects. 
                  Objects you pickup and drag*/
-        $(function () {
+        $(function() {
             $("#framesGroup .draggable").draggable({
                 cursor: 'move',
                 helper: 'clone',
-                drag: function (event, ui) {
+                drag: function(event, ui) {
                     draggableId = $(this).attr("id");
                     //alert("group");
                 }
@@ -460,12 +543,12 @@ magna aliquam erat volutpat.</div>
             /*Function handle droppable frames objects. 
                           Object where you put your draggable*/
             $(".frame .droppable").droppable({
-                drop: function (event, ui) {
+                drop: function(event, ui) {
                     var htmlContent = "<div class='editPencil'><span class='ui-icon ui-icon-pencil'></span></div>"
-                        //+
-                        //"<div class='droppable contentIntern ui-droppable' style='background-image: url(../Images/rectangle.png)'></div>";
+                        +
+                        "<div class='droppable contentIntern ui-droppable' style='background-image: url(../Images/rectangle.png)'></div>";
 
-                    if (draggableId.substr(0, 6) != "Cloned") {
+                    if ((draggableId == "rectangle") || (draggableId == "square")) {
 
                         //Add frames in page
                         var valuesId = [];
@@ -489,17 +572,18 @@ magna aliquam erat volutpat.</div>
                         $("#" + draggableId).css({ position: "relative", bottom: 0, left: 0 });
                         $("#" + draggableId).show();
                     } else {
-                       // alert( $("#"+draggableId).parent().parent().attr("id"));
+                        // alert( $("#"+draggableId).parent().parent().attr("id"));
                         //  var descriptionArray = [];
                         valuesId = GetIdFromString($("#" + draggableId).parent().parent().attr("id"));
                         SetBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
                         SetObjectModel(draggableId, null, null, null, null, null);
                         //descriptionArray.push(actualContent + "-" + $($(this).find("img").attr("id")).attr("src"));
-                        PostArray("UpdateObjectPosition", GetBookModel());
+                        // PostArray("UpdateObjectPosition", GetBookModel());
                     }
                 }
             });
         });
+
         function GetIdFromString(stringToSplit) {
             var arrayId = stringToSplit.split('-');
             return arrayId;
@@ -526,67 +610,36 @@ magna aliquam erat volutpat.</div>
         }*/
 
 
-        /*Add some more functions to added image on content frame*/
-
-        function configurateImgOnTerrain() {
-            $('#' + actualContent + ' .droppable img').each(function () {
-                startDrag($(this));
-                $(this).bind('contextmenu', function (e) {
-                    $('#context-menu').css('left', e.pageX + 'px');
-                    $('#context-menu').css('top', e.pageY + 'px');
-                    $('#context-menu').css('z-index', 10);
-                    $("#valCtxMenu").html($(this).attr("id"));
-                    $('#context-menu').show();
-                    e.preventDefault();
-                    return false;
-                });
-            });
-        }
-
-        /*Clear all images in terrain*/
+        /*Clear all images in terrain
 
         function clearImages() {
-            $('#terrain img').each(function () {
+            $('#terrain img').each(function() {
                 $(this).remove();
             });
-        }
+        }*/
 
-        /*Strat drag effect on element*/
-
-        function startDrag(element) {
-            $(element).draggable({
-                axis: "x",
-                cursor: 'move',
-                containment: "parent",
-                drag: function (event, ui) {
-                    draggableId = $(this).attr("id");
-                    //  alert("StartDrag");
-                    var offset = $(this).offset();
-                    var imgHeight = parseInt($("#" + draggableId).css("height"), 10);
-                    var xPos = offset.left;
-                    var yPos = offset.top - imgHeight;
-                    $('#posX_txtbox').val('xw: ' + xPos);
-                    $('#posY_txtbox').val('yw: ' + yPos);
-                }
-            });
-        }
 
         /*Start Context menu events*/
-        $('html').click(function (e) {
+        $('html').click(function(e) {
             $('#context-menu').hide();
             $("#valCtxMenu").text('');
             e.stopPropagation();
         });
-        $('#context-menu').click(function (e) {
+        $('#context-menu').click(function(e) {
             $("#valCtxMenu").text('');
             e.stopPropagation();
         });
-        $(window).resize(function () {
+        $(window).resize(function() {
             $('#context-menu').hide();
             $("#valCtxMenu").text('');
         });
-        /*End of contextmenu events*/
 
+        function destroyContextMenu() {
+            $('#context-menu').hide();
+            $("#valCtxMenu").text('');
+        }
+
+/*End of contextmenu events*/
 
 
         /*Change Id name of element and replace*/
@@ -601,8 +654,8 @@ magna aliquam erat volutpat.</div>
 
         /*Toggle between 2D and 3D View*/
         /*----------------------------------------------*/
-        $("#View3D").bind("click", function () {
-            $(".pages #frames").each(function (i, elem) {
+        $("#View3D").bind("click", function() {
+            $(".pages #frames").each(function(i, elem) {
                 $(this).hide(500);
             });
             $("#Container3D").appendTo($("#pages"));
@@ -610,8 +663,8 @@ magna aliquam erat volutpat.</div>
             $(".Container3D").addClass("activeControl");
         });
 
-        $("#View2D").bind("click", function () {
-            $(".pages #frames").each(function (i, elem) {
+        $("#View2D").bind("click", function() {
+            $(".pages #frames").each(function(i, elem) {
                 $(this).show(500);
             });
             $(".Container3D").removeClass("activeControl");
@@ -620,18 +673,16 @@ magna aliquam erat volutpat.</div>
         /*--------------------------------------------*/
 
         /*Get selecte item of dropdownbox*/
-        $(".selectpicker").change(function () {
-            $('#userContent').load('/Book/GetAvailableBooks', { fileOption: $(this).val() });
+        $(".selectpicker").change(function() {
+            $('#userContent').load('/Book/GetAvailableBooks', { fileOption: "loadBook" });
         });
-
-
 
 
         function reloadPage() {
             $("body").fadeOut(
-                function () {
+                function() {
                     location.reload(true);
-                    $(document).ready(function () { $(body).fadeIn(); });
+                    $(document).ready(function() { $(body).fadeIn(); });
                 });
         }
 
@@ -649,10 +700,10 @@ magna aliquam erat volutpat.</div>
                 data: JSON.stringify(BookModel),
                 async: false,
                 dataType: "json",
-                success: function (statusMsg) {
+                success: function(statusMsg) {
                     descriptionArray.length = 0;
                 },
-                error: function (statusMsg) {
+                error: function(statusMsg) {
                     AddTextToStatus("Couldn't send message.Wrong parameters");
                 }
             });

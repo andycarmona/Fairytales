@@ -13,7 +13,9 @@ namespace BookWriterTool.Models
         book AddPage(string chapterNumber,string fileName);
 
         string AddObjectToContent(BookModel content, string fileName);
+        string DeleteObjectFromContent(BookModel content, string fileName);
         string AddCharacter2DToContent(BookModel content, string fileName);
+        string AddGenericObjectToContent(BookModel content, string fileName);
         string UpdateObjectPosition(BookModel content, string fileName);
         string AddBackgroundToContent(BookModel content, string fileName);
         string AddFrame(BookModel content, string fileName);

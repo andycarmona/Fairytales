@@ -15,27 +15,25 @@
             <frame bordertype="rectangle" id="frame1">
               <contents>
                 <content target="rectangle" type="" background="background/purple-boardwalk-pier-jetty-pink-sunset-1920x1080-1024x576.jpg">
-                  <objects>
-                    <object img="female/girlInGreen.png" scaleX="25%" scaleY="25%" origo="25%" type="character2D" id="Cloned66" />
-                    <object img="male/redFighter.png" scaleX="25%" scaleY="25%" origo="25%" type="character2D" id="Cloned53" />
-                  </objects>
+                  <objects />
                 </content>
               </contents>
             </frame>
-            <frame bordertype="square" id="frame2">
+            <frame bordertype="rectangle" id="frame2">
               <contents>
-                <content target="left" type="none">
-                  <objects />
-                </content>
-                <content target="right" type="none">
-                  <objects />
+                <content target="rectangle" type="" background="background/anime_joker-1024x576.jpg">
+                  <objects>
+                    <object img="female/girlInGreen.png" scaleX="25%" scaleY="25%" origoX="25%" type="character2D" id="Character693" />
+                  </objects>
                 </content>
               </contents>
             </frame>
             <frame bordertype="rectangle" id="frame3">
               <contents>
-                <content target="rectangle" type="">
-                  <objects />
+                <content target="rectangle" type="" background="background/purple-boardwalk-pier-jetty-pink-sunset-1920x1080-1024x576.jpg">
+                  <objects>
+                    <object img="female/girlInGreen.png" scaleX="25%" scaleY="25%" origoX="25%" type="character2D" id="Character127" />
+                  </objects>
                 </content>
               </contents>
             </frame>
@@ -45,18 +43,22 @@
           <frames>
             <frame bordertype="rectangle" id="frame1">
               <contents>
-                <content target="rectangle" type="">
+                <content target="rectangle" type="" background="background/anime_joker-1024x576.jpg">
                   <objects />
                 </content>
               </contents>
             </frame>
             <frame bordertype="square" id="frame2">
               <contents>
-                <content target="left" type="none">
-                  <objects />
+                <content target="left" type="none" background="background/purple-boardwalk-pier-jetty-pink-sunset-1920x1080-1024x576.jpg">
+                  <objects>
+                    <object img="female/girlInGreen.png" scaleX="25%" scaleY="25%" origoX="25%" type="character2D" id="Character73" />
+                  </objects>
                 </content>
-                <content target="right" type="none">
-                  <objects />
+                <content target="right" type="none" background="background/anime_joker-1024x576.jpg">
+                  <objects>
+                    <object img="male/redFighter.png" scaleX="25%" scaleY="25%" origoX="25%" type="character2D" id="Character105" />
+                  </objects>
                 </content>
               </contents>
             </frame>
@@ -65,7 +67,7 @@
                 <content target="left" type="none">
                   <objects />
                 </content>
-                <content target="right" type="none">
+                <content target="right" type="none" background="background/purple-boardwalk-pier-jetty-pink-sunset-1920x1080-1024x576.jpg">
                   <objects />
                 </content>
               </contents>

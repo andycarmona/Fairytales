@@ -1,7 +1,7 @@
 ﻿@using BookWriterTool.Helpers
 @{ var frame = (bookChapterPageFrame)this.ViewData["actualFrame"];
     var target = (string)this.ViewData["target"];
-    int index = 0;}
+   }
 @if (frame.contents != null)
 {
     foreach (bookChapterPageFrameContent content in frame.contents.Where(content=>content.target==target))
@@ -12,12 +12,12 @@
             {
                 if (obj.type == "character")
                 {
-                    <img id="Cloned@(index)" style="left: 50%; top: 55%;" class="clonedImg" width="35" height="70" alt="" src="@GlobalVariables.ConfigResource("CharacterRes")@(obj.img)" />
+                    <img id="@obj.id" style="left: 50%; top: 55%;" class="clonedImg" width="35" height="70" alt="" src="@GlobalVariables.ConfigResource("CharacterRes")@(obj.img)" />
                 }else if (obj.type == "character2D")
                 {
-                     <img id="Cloned@(index)" style="left: 50%; top: 55%;" class="clonedImg" width="35" height="70" alt="" src="@GlobalVariables.ConfigResource("Character2DRes")@(obj.img)" />
+                     <img id="@obj.id" style="left: 50%; top: 55%;" class="clonedImg" width="35" height="70" alt="" src="@GlobalVariables.ConfigResource("Character2DRes")@(obj.img)" />
                 }
-                index++;
+      
             }
         
 

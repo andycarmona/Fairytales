@@ -252,7 +252,22 @@ namespace BookWriterTool.Controllers
 
                 var fileName = (string)this.Session["ActualFile"];
 
-                statusMsg = aBookRepository.AddCharacter2DToContent(model, fileName);
+                statusMsg = aBookRepository.AddGenericObjectToContent(model, fileName);
+
+
+            }
+            return Json(statusMsg);
+        }
+
+        public JsonResult DeleteObjectFromContent(BookModel model)
+        {
+            var statusMsg = "";
+            if (Session["ActualFile"] != null)
+            {
+
+                var fileName = (string)this.Session["ActualFile"];
+
+                statusMsg = aBookRepository.DeleteObjectFromContent(model, fileName);
 
 
             }
