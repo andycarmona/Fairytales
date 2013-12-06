@@ -126,4 +126,7 @@
   <data name="CharacterRes" xml:space="preserve">
     <value>/Content/Resources/Generic/character/</value>
   </data>
+  <data name="ExpressionRes" xml:space="preserve">
+    <value>/Content/Resources/Generic/expressions/</value>
+  </data>
 </root>

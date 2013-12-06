@@ -69,8 +69,8 @@ namespace BookWriterTool.Controllers
 
             try
             {
-                if (fileOption.Equals("loadBook"))
-                {
+               // if (fileOption.Equals("loadBook"))
+                //{
                     listOfBooks = this.fileHandler.GetListOfUserFiles(activeUser);
                     var temp = new string[listOfBooks.Length + 1];
                     for (int i = 0; i < listOfBooks.Length; i++)
@@ -79,12 +79,12 @@ namespace BookWriterTool.Controllers
                     }
                     listOfBooks = temp;
                     newBook = false;
-                }
-                else if (fileOption.Equals("newBook"))
-                {
-                    listOfBooks = this.fileHandler.GetListOfTemplates();
+               // }
+                //else if (fileOption.Equals("newBook"))
+               // {
+                 //   listOfBooks = this.fileHandler.GetListOfTemplates();
 
-                }
+                //}
             }
             catch (Exception e)
             {
@@ -230,6 +230,21 @@ namespace BookWriterTool.Controllers
         }
 
         public JsonResult AddCharacter2DToContent(BookModel model)
+        {
+            var statusMsg = "";
+            if (Session["ActualFile"] != null)
+            {
+
+                var fileName = (string)this.Session["ActualFile"];
+
+                statusMsg = aBookRepository.AddCharacter2DToContent(model, fileName);
+
+
+            }
+            return Json(statusMsg);
+        }
+
+        public JsonResult AddExpressionToContent(BookModel model)
         {
             var statusMsg = "";
             if (Session["ActualFile"] != null)

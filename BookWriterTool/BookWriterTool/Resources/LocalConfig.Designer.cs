@@ -86,5 +86,14 @@ namespace BookWriterTool.Resources {
                 return ResourceManager.GetString("CharacterRes", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /Content/Resources/Generic/expressions/.
+        /// </summary>
+        internal static string ExpressionRes {
+            get {
+                return ResourceManager.GetString("ExpressionRes", resourceCulture);
+            }
+        }
     }
 }

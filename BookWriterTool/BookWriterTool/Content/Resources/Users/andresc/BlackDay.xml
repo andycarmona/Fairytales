@@ -16,16 +16,18 @@
               <contents>
                 <content target="rectangle" type="" background="background/purple-boardwalk-pier-jetty-pink-sunset-1920x1080-1024x576.jpg">
                   <objects>
-                    <object img="female/girlInGreen.png" scaleX="25%" scaleY="25%" origo="25%" type="character2D" id="Cloned32" />
-                    <object img="male/redFighter.png" scaleX="25%" scaleY="25%" origo="25%" type="character2D" id="Cloned78" />
-                    <object img="male/redFighter.png" scaleX="25%" scaleY="25%" origo="25%" type="character2D" id="Cloned8" />
+                    <object img="female/girlInGreen.png" scaleX="25%" scaleY="25%" origo="25%" type="character2D" id="Cloned66" />
+                    <object img="male/redFighter.png" scaleX="25%" scaleY="25%" origo="25%" type="character2D" id="Cloned53" />
                   </objects>
                 </content>
               </contents>
             </frame>
-            <frame bordertype="rectangle" id="frame2">
+            <frame bordertype="square" id="frame2">
               <contents>
-                <content target="rectangle" type="">
+                <content target="left" type="none">
+                  <objects />
+                </content>
+                <content target="right" type="none">
                   <objects />
                 </content>
               </contents>
@@ -48,19 +50,20 @@
                 </content>
               </contents>
             </frame>
-            <frame bordertype="rectangle" id="frame2">
+            <frame bordertype="square" id="frame2">
               <contents>
-                <content target="rectangle" type="">
+                <content target="left" type="none">
+                  <objects />
+                </content>
+                <content target="right" type="none">
                   <objects />
                 </content>
               </contents>
             </frame>
             <frame bordertype="square" id="frame3">
               <contents>
-                <content target="left" type="none" background="background/anime_joker-1024x576.jpg">
-                  <objects>
-                    <object img="female/girlInGreen.png" scaleX="25%" scaleY="25%" origo="25%" type="character2D" id="Cloned96" />
-                  </objects>
+                <content target="left" type="none">
+                  <objects />
                 </content>
                 <content target="right" type="none">
                   <objects />
@@ -94,6 +97,37 @@
                   <objects />
                 </content>
                 <content target="right" background="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+          </frames>
+        </page>
+        <page id="page4">
+          <frames>
+            <frame bordertype="rectangle" id="frame1">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="square" id="frame2">
+              <contents>
+                <content target="left" type="none">
+                  <objects />
+                </content>
+                <content target="right" type="none">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="square" id="frame3">
+              <contents>
+                <content target="left" type="none">
+                  <objects />
+                </content>
+                <content target="right" type="none">
                   <objects />
                 </content>
               </contents>

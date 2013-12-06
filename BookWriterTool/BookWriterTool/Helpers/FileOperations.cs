@@ -2,8 +2,11 @@
 
 namespace BookWriterTool.Helpers
 {
+    using System.Collections.Generic;
     using System.IO;
     using System.Xml.Serialization;
+
+    using BookWriterTool.Models;
 
     public class FileOperations
     {
@@ -13,6 +16,8 @@ namespace BookWriterTool.Helpers
         public string ActualBook;
 
         public static readonly string UsersDirectory = "~/Content/Resources/Users";
+
+        public static readonly string Character2DDirectory = "~/Content/Resources/Generic/character2d/anime";
 
         public book SerializeXmlToObject(string actualBook)
         {
@@ -45,15 +50,59 @@ namespace BookWriterTool.Helpers
         public string[] GetListOfTemplates()
         {
             string[] filesPaths = Directory.GetFiles(HttpContext.Current.Server.MapPath(TemplateDirectory));
-     
+
             return filesPaths;
         }
 
         public string[] GetListOfUserFiles(string user)
         {
             string[] filesPaths = Directory.GetFiles(HttpContext.Current.Server.MapPath(UsersDirectory + "/" + user));
-     
+
             return filesPaths;
+        }
+
+        public List<BookModel> GetListOf2DCharacter()
+        {
+            var aListObjects = new List<BookModel>();
+            string[] directoryPaths = null;
+            string lastFolderName = "empty";
+            directoryPaths = Directory.GetDirectories(HttpContext.Current.Server.MapPath(Character2DDirectory));
+
+            if (directoryPaths.Length != 0)
+            {
+                foreach (string directoryPath in directoryPaths)
+                {
+                    var fileInfo =new FileInfo(directoryPath);
+                    var temp = fileInfo.DirectoryName;
+                    string[] filesPaths = Directory.GetFiles(HttpContext.Current.Server.MapPath(directoryPath));
+                  
+                    lastFolderName = this.GetFolderName(directoryPath);
+                    var aBookModel = new BookModel { Target = lastFolderName };
+
+                    if (filesPaths.Length != 0)
+                    {
+                        foreach (var aFile in filesPaths)
+                        {     
+                            var aObject = new ObjectModel();
+             
+                            aObject.ImageObj = aFile;
+                            aBookModel.Objects.Add(aObject);
+                            aListObjects.Add(aBookModel);
+                        }
+                    }
+                }
+                //var aObject = new ObjectModel();
+                string path = GlobalVariables.ConfigResource("CharacterRes");
+               
+            } return aListObjects;
+        }
+
+        public string GetFolderName(string aFile)
+        {
+            string folderName=Path.GetFileName(
+                            HttpContext.Current.Server.MapPath(
+                                Path.GetDirectoryName(HttpContext.Current.Server.MapPath(aFile))));
+            return folderName;
         }
     }
 }

@@ -16,23 +16,24 @@
     {
         statusMsg = "No message";
     }
-    bookChapterPageFrameContent contentframe;
+
     bookChapterPageFrameContentObject aObject = null;
-    int contentIndex = 0;
-    object contentObj;
+
     int index = 1;
-    int chapterIndex = 1;
-    int pageIndex = 1;
+
     var listOfBooks = new string[1];
-    var listOfObjects = new List<bookChapterPageFrameContentObject> { aObject };
+
     listOfBooks[0] = "no book";
-    bool avoidStep;
+
 }
 <div class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" style="position: fixed; width: 100%; background-color: gainsboro;">
-    <div style="text-align: center; width: 200px;">
-        <a href="some_url">
+    <div style="text-align: center; width:100%;">
+
             <span class="ui-icon ui-icon-help"></span>
-        </a>
+               <input class="ui-widget ui-widget-content ui-corner-all" id="View2D" type="button" value="2D View" />
+                <input class="ui-widget  ui-corner-all" id="View3D" type="button" value="3D View" />
+                <input class="ui-widget  ui-corner-all" id="btnAddPage" type="button" value="+" />
+       
     </div>
 </div>
 @if (Model != null)
@@ -107,9 +108,7 @@
         </div>
         <div class="ViewChanger" id="ViewChanger">
        
-                <input class="ui-widget ui-widget-content ui-corner-all" id="View2D" type="button" value="2D View" />
-                <input class="ui-widget  ui-corner-all" id="View3D" type="button" value="3D View" />
-                <input class="ui-widget  ui-corner-all" id="btnAddPage" type="button" value="+" />
+             
          
         </div>
     </div>
@@ -133,10 +132,14 @@
         </div>
         <h3>Status</h3>
         <div class="leftContent">
+            <div class="edit" id="div_1">Dolor</div>
+<div class="edit_area" id="div_2">Lorem ipsum dolor sit amet, consectetuer 
+adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore 
+magna aliquam erat volutpat.</div>
             <label>Status</label>
-            <textarea id="status" style="width: 150px" cols="20" rows="10"></textarea>
+            <textarea  id="status" style="width: 150px" cols="20" rows="10"></textarea>
             <label>Position X</label>
-            <input id="posX_txtbox" type="text" />
+            <input  id="posX_txtbox" type="text" />
             <label>Position Y</label>
             <input id="posY_txtbox" type="text" />
             <label>Page Name</label>
@@ -294,14 +297,7 @@
 
 
         $(function () {
-            /*  $("#pages").tabs();
-              $("#chapters").tabs();
-              $("#chapter1").tabs();
-              $("#chapter2").tabs();
-              $("#chapter3").tabs();*/
-            // $("#DialogEditorFrames").dialog(dialogOpts);
-            $('.bb-bookblock').booklet(
-      {
+            $('.bb-bookblock').booklet({
           width: '65%',
           height: 600,
           speed: 500,
@@ -309,8 +305,7 @@
           tabWidth: 180,
           tabHeight:20
       });
-
-
+        //   $(".rectangle").jqte();
             $("#accordionConfig").accordion();
             $("#accordionStatus").accordion();
             $('#userContent').load('/Book/GetAvailableBooks', { fileOption: "newBook" });
@@ -318,12 +313,27 @@
             activateEditorOperations();
 
         });
+        /*Edit on place*/
+        $('.edit').editable('http://www.example.com/save.php', {
+            indicator: 'Saving...',
+            tooltip: 'Click to edit...'
+        });
+        $('.edit_area').editable('http://www.example.com/save.php', {
+            type: 'textarea',
+            cancel: 'Cancel',
+            submit: 'OK',
+            indicator: '<img src="img/indicator.gif">',
+            tooltip: 'Click to edit...'
+        });
         /*Tree structure for fils and directories*/
         $(function () {
             $("#objectsGroup").jstree({
                 "plugins": ["themes", "html_data"]
             });
             $("#characterGroup").jstree({
+                "plugins": ["themes", "html_data"]
+            });
+            $("#expressionsGroup").jstree({
                 "plugins": ["themes", "html_data"]
             });
         });
@@ -385,7 +395,20 @@
         /*Add img on content in frame*/
         $('#characterGroup img').bind("click", function () {
             var randomnumber = Math.floor(Math.random() * 100);
-            $('#' + actualContent + " .contentIntern").append('<img width="35" height="70" style="left: 50%;top: 75%;" class="clonedImg" id="Cloned' + randomnumber + '" src="' + $(this).attr("src") + '" />');
+            $('#' + actualContent + " .contentIntern").append('<img width="35" height="70" style="left: 50%;top: 55%;" class="clonedImg" id="Cloned' + randomnumber + '" src="' + $(this).attr("src") + '" />');
+            var valuesId = [];
+            configurateImgOnTerrain();
+            if (actualContent != null) {
+                valuesId = GetIdFromString(actualContent);
+                SetBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
+                SetObjectModel("Cloned" + randomnumber, $(this).attr("src"), null, null, null, null);
+                PostArray("AddCharacter2DToContent", GetBookModel());
+            }
+        });
+        /*Add img on content in frame*/
+        $('#expressionGroup img').bind("click", function () {
+            var randomnumber = Math.floor(Math.random() * 100);
+            $('#' + actualContent + " .contentIntern").append('<img width="35" height="70" style="left: 50%;top: 55%;" class="clonedImg" id="Cloned' + randomnumber + '" src="' + $(this).attr("src") + '" />');
             var valuesId = [];
             configurateImgOnTerrain();
             if (actualContent != null) {
@@ -438,8 +461,9 @@
                           Object where you put your draggable*/
             $(".frame .droppable").droppable({
                 drop: function (event, ui) {
-                    var htmlContent = "<div class='editPencil'><span class='ui-icon ui-icon-pencil'></span></div>" +
-                        "<div class='droppable contentIntern ui-droppable' style='background-image: url(../Images/rectangle.png)'></div>";
+                    var htmlContent = "<div class='editPencil'><span class='ui-icon ui-icon-pencil'></span></div>"
+                        //+
+                        //"<div class='droppable contentIntern ui-droppable' style='background-image: url(../Images/rectangle.png)'></div>";
 
                     if (draggableId.substr(0, 6) != "Cloned") {
 
@@ -465,7 +489,7 @@
                         $("#" + draggableId).css({ position: "relative", bottom: 0, left: 0 });
                         $("#" + draggableId).show();
                     } else {
-                        alert( $("#"+draggableId).parent().parent().attr("id"));
+                       // alert( $("#"+draggableId).parent().parent().attr("id"));
                         //  var descriptionArray = [];
                         valuesId = GetIdFromString($("#" + draggableId).parent().parent().attr("id"));
                         SetBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
