@@ -130,7 +130,7 @@ namespace BookWriterTool.Repositories
         public string GetIdFromFileName(string splittedValues)
         {
             var splittedImg = splittedValues.Split('/');
-            var typeImg = splittedImg[splittedImg.Length - 1];
+            var typeImg = splittedImg[splittedImg.Length - 2]+"/"+splittedImg[splittedImg.Length - 1];
             
             return typeImg;
         }
@@ -140,7 +140,7 @@ namespace BookWriterTool.Repositories
             return null;
         }
 
-        public string AddCharacterToContent(BookModel content, string fileName)
+        public string AddObjectToContent(BookModel content, string fileName)
         {
 
         
@@ -148,6 +148,23 @@ namespace BookWriterTool.Repositories
             try
             {
                 AddGenericObject(fileName, content, content.Objects[0].ImageObj, "character");
+            }
+            catch (Exception e)
+            {
+                mssg = e.Message;
+            }
+
+            return mssg;
+        }
+
+        public string AddCharacter2DToContent(BookModel content, string fileName)
+        {
+
+
+            var mssg = "";
+            try
+            {
+                AddGenericObject(fileName, content, content.Objects[0].ImageObj, "character2D");
             }
             catch (Exception e)
             {
@@ -182,15 +199,29 @@ namespace BookWriterTool.Repositories
             }
 
         }
+
         public string UpdateObjectPosition(BookModel content, string fileName)
         {
-          //  string[] splittedValues = content[0].Split('-');
+            var mssg = "";
+        /*  //  string[] splittedValues = content[0].Split('-');
             xmlDoc = new XmlDocument();
             xmlDoc.Load(HttpContext.Current.Server.MapPath(fileName));
             var objectsNodes = (XmlElement)this.xmlDoc.SelectSingleNode(String.Format("//book/chapters/chapter[@id='{0}']/" +
-                "pages/page[@id='{1}']/frames/frame[@id='{2}']/contents/content[@target='{3}']/objects",
-               content.ChapterId,content.PageId,content.FrameId,content.Target));
-            return null;
+                "pages/page[@id='{1}']/frames/frame[@id='{2}']/contents/content[@target='{3}']/objects/object[@id='{4}'",
+               content.ChapterId,content.PageId,content.FrameId,content.Target,content.Objects[0].ObjectId));
+            if (objectsNodes != null)
+            {
+                objectsNodes.SetAttribute("background", image);
+                try
+                {
+                    xmlDoc.Save(HttpContext.Current.Server.MapPath(fileName));
+                }
+                catch (DirectoryNotFoundException e)
+                {
+                    mssg = e.Message;
+                }
+            }*/
+            return mssg;
         }
 
         public string AddBackgroundToContent(BookModel content, string fileName)

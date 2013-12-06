@@ -171,6 +171,7 @@ namespace BookWriterTool.Controllers
             }
             return Json(statusMsg);
         }
+
         [HttpPost]
         public JsonResult AddBackgroundToFrame(BookModel frameDescriptionArray)
         {
@@ -185,6 +186,20 @@ namespace BookWriterTool.Controllers
             return Json(statusMsg);
         }
 
+         [HttpPost]
+        public JsonResult UpdateObjectPosition(BookModel frameDescriptionArray)
+        {
+            string statusMsg = "";
+            if (Session["ActualFile"] != null)
+            {
+                var fileName = (string)this.Session["ActualFile"];
+
+                statusMsg = aBookRepository.UpdateObjectPosition(frameDescriptionArray, fileName);
+
+            }
+            return Json(statusMsg);
+        }
+        
         [HttpPost]
         public JsonResult AddFrame(BookModel frameDescriptionArray)
         {
@@ -199,7 +214,7 @@ namespace BookWriterTool.Controllers
             return Json(statusMsg);
         }
 
-        public JsonResult AddCharacterToContent(BookModel model)
+        public JsonResult AddObjectToContent(BookModel model)
         {
             var statusMsg = "";
             if (Session["ActualFile"] != null)
@@ -207,7 +222,22 @@ namespace BookWriterTool.Controllers
                 
                 var fileName = (string)this.Session["ActualFile"];
 
-              statusMsg = aBookRepository.AddCharacterToContent(model, fileName);
+              statusMsg = aBookRepository.AddObjectToContent(model, fileName);
+
+
+            }
+            return Json(statusMsg);
+        }
+
+        public JsonResult AddCharacter2DToContent(BookModel model)
+        {
+            var statusMsg = "";
+            if (Session["ActualFile"] != null)
+            {
+
+                var fileName = (string)this.Session["ActualFile"];
+
+                statusMsg = aBookRepository.AddCharacter2DToContent(model, fileName);
 
 
             }

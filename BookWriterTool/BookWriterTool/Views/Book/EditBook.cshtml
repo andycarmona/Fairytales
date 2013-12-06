@@ -323,6 +323,9 @@
             $("#objectsGroup").jstree({
                 "plugins": ["themes", "html_data"]
             });
+            $("#characterGroup").jstree({
+                "plugins": ["themes", "html_data"]
+            });
         });
         /*Activate editor for frame*/
 
@@ -369,17 +372,29 @@
         /*Add img on content in frame*/
         $('#objectsGroup img').bind("click", function () {
             var randomnumber = Math.floor(Math.random() * 100);
-            $('#' + actualContent + " .contentIntern").append('<img width="25" height="25" style="left: 50%;top: 75%;" class="clonedImg" id="Cloned' + randomnumber + '" src="' + $(this).attr("src") + '" />');
+            $('#' + actualContent + " .contentIntern").append('<img width="35" height="70" style="left: 50%;top: 55%;" class="clonedImg" id="Cloned' + randomnumber + '" src="' + $(this).attr("src") + '" />');
             var valuesId = [];
             configurateImgOnTerrain();
             if (actualContent != null) {
                 valuesId = GetIdFromString(actualContent);
                 SetBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
                 SetObjectModel("Cloned" + randomnumber, $(this).attr("src"), null, null, null, null);
-                PostArray("AddCharacterToContent", GetBookModel());
+                PostArray("AddObjectToContent", GetBookModel());
             }
         });
-
+        /*Add img on content in frame*/
+        $('#characterGroup img').bind("click", function () {
+            var randomnumber = Math.floor(Math.random() * 100);
+            $('#' + actualContent + " .contentIntern").append('<img width="35" height="70" style="left: 50%;top: 75%;" class="clonedImg" id="Cloned' + randomnumber + '" src="' + $(this).attr("src") + '" />');
+            var valuesId = [];
+            configurateImgOnTerrain();
+            if (actualContent != null) {
+                valuesId = GetIdFromString(actualContent);
+                SetBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
+                SetObjectModel("Cloned" + randomnumber, $(this).attr("src"), null, null, null, null);
+                PostArray("AddCharacter2DToContent", GetBookModel());
+            }
+        });
         /*Change background image of terrain*/
         $(".backgroundContain").click(function () {
             //  var descriptionArray = [];
@@ -450,11 +465,13 @@
                         $("#" + draggableId).css({ position: "relative", bottom: 0, left: 0 });
                         $("#" + draggableId).show();
                     } else {
-                        // alert($(this).find("img").attr("id"));
-                        var descriptionArray = [];
-
-                        descriptionArray.push(actualContent + "-" + $($(this).find("img").attr("id")).attr("src"));
-                        PostArray("UpdateObjectPosition", descriptionArray);
+                        alert( $("#"+draggableId).parent().parent().attr("id"));
+                        //  var descriptionArray = [];
+                        valuesId = GetIdFromString($("#" + draggableId).parent().parent().attr("id"));
+                        SetBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
+                        SetObjectModel(draggableId, null, null, null, null, null);
+                        //descriptionArray.push(actualContent + "-" + $($(this).find("img").attr("id")).attr("src"));
+                        PostArray("UpdateObjectPosition", GetBookModel());
                     }
                 }
             });

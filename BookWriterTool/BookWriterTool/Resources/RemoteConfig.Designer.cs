@@ -70,7 +70,7 @@ namespace BookWriterTool.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /Content/Resources/Generic/character2d/.
+        ///   Looks up a localized string similar to /Content/Resources/Generic/character2d/anime/.
         /// </summary>
         internal static string Character2DRes {
             get {
