@@ -11,11 +11,12 @@ namespace BookWriterTool.Helpers
     public class FileOperations
     {
 
-        public readonly string TemplateDirectory = "~/Content/Resources/BookTemplate";
+        public readonly string TemplateDirectory = "~/Content/Resources/BookTemplate/";
 
         public string ActualBook;
 
-        public static readonly string UsersDirectory = "~/Content/Resources/Users";
+        public static readonly string UsersDirectory = "~/Content/Resources/Users/";
+ 
 
         public static readonly string Character2DDirectory = "~/Content/Resources/Generic/character2d/anime";
 
@@ -54,9 +55,9 @@ namespace BookWriterTool.Helpers
             return filesPaths;
         }
 
-        public string[] GetListOfUserFiles(string user)
+        public string[] GetListOfUserBooks(string user)
         {
-            string[] filesPaths = Directory.GetFiles(HttpContext.Current.Server.MapPath(UsersDirectory + "/" + user));
+            string[] filesPaths = Directory.GetFiles(HttpContext.Current.Server.MapPath(UsersDirectory+user+"/Books"));
 
             return filesPaths;
         }
@@ -105,9 +106,37 @@ namespace BookWriterTool.Helpers
             return folderName;
         }
 
-        public string AddNewBook(string newFileName)
+        public string AddNewBook(string newFileName,string userName)
         {
             var mssg = "";
+            try
+            {
+                if (!Directory.Exists(HttpContext.Current.Server.MapPath(UsersDirectory + userName + "/Books/")))
+                {
+                    Directory.CreateDirectory(HttpContext.Current.Server.MapPath(UsersDirectory + userName + "/Books/"));
+                }
+                File.Copy(
+                    HttpContext.Current.Server.MapPath(TemplateDirectory + "empty.xml"),
+                    HttpContext.Current.Server.MapPath(UsersDirectory + userName + "/Books/" + newFileName + ".xml"));
+            }
+            catch (IOException e)
+            {
+                mssg = e.Message;
+            }
+            return mssg;
+        }
+
+        public string DeleteBook(string fileToDelete, string activeUser)
+        {
+            var mssg="";
+            try
+            {
+                File.Delete(HttpContext.Current.Server.MapPath(fileToDelete));
+            }
+            catch (IOException e)
+            {
+                mssg = e.Message;
+            }
             return mssg;
         }
     }

@@ -71,15 +71,7 @@ namespace BookWriterTool.Controllers
         public ActionResult AddNewBook(string newFileName)
         {
 
-            systemMssg = this.fileHandler.AddNewBook(newFileName);
-            ViewBag.statusMsg = systemMssg;
-            return RedirectToAction("EditBook");
-        }
 
-
-
-    /*    public PartialViewResult GetAvailableBooks()
-        {
             string[] listOfBooks = null;
             systemMssg = "";
             if (Session["username"] != null)
@@ -87,9 +79,9 @@ namespace BookWriterTool.Controllers
                 activeUser = (string)this.Session["username"];
                 try
                 {
+                    systemMssg = this.fileHandler.AddNewBook(newFileName, activeUser);
+                    listOfBooks = this.fileHandler.GetListOfUserBooks(activeUser);
 
-                    listOfBooks = this.fileHandler.GetListOfUserFiles(activeUser);
-              
 
                 }
                 catch (Exception e)
@@ -101,12 +93,35 @@ namespace BookWriterTool.Controllers
             {
                 systemMssg = "Couldn't find files";
             }
-
-
             ViewBag.statusMsg = systemMssg;
             ViewBag.arrayBooks = listOfBooks;
-            return this.PartialView("ListOfBooks", listOfBooks);
-        }*/
+            return this.PartialView("ListOfBooks");
+        }
+
+        public ActionResult DeleteBook(string fileToDelete)
+        {
+            string[] listOfBooks = null;
+            systemMssg = "";
+            if (Session["username"] != null)
+            {
+                activeUser = (string)this.Session["username"];
+                try
+                {
+                    systemMssg = this.fileHandler.DeleteBook(fileToDelete, activeUser);
+                }
+                catch (Exception e)
+                {
+                    systemMssg = e.Message;
+                }
+            }
+            else
+            {
+                systemMssg = "Couldn't find files";
+            }
+            ViewBag.statusMsg = systemMssg;
+            ViewBag.arrayBooks = listOfBooks;
+            return this.RedirectToAction("EditBook");
+        }
 
         public ActionResult EditBook()
         {
@@ -117,9 +132,9 @@ namespace BookWriterTool.Controllers
 
                 try
                 {
-                    string[] listOfBooks = this.fileHandler.GetListOfUserFiles(activeUser);
+                    string[] listOfBooks = this.fileHandler.GetListOfUserBooks(activeUser);
                     var fileName = (string)Session["ActualFile"];
-                    aBookRepository.SetActualFile(fileName);
+                    systemMssg=aBookRepository.SetActualFile(fileName);
                     if(fileName!=null)
                     aBook = this.aBookRepository.GetAllContent();
                     ViewBag.arrayBooks = listOfBooks;
@@ -131,6 +146,7 @@ namespace BookWriterTool.Controllers
                     systemMssg = e.Message;
                 }
             }
+            ViewBag.statusMsg = systemMssg;
             return this.View();
         }
 
