@@ -1,17 +1,11 @@
-﻿@model string[]
-@{
-    bool newBook=true;
-    if (ViewBag.newBook != null)
-    {
-        newBook = ViewBag.newBook;
-    }
-    string[] listofBook=(string[])ViewBag.listbook;
+﻿@{
+    var frame = (string[])this.ViewData["listOfBooks"];
 }
-@if(@Model!=null)
+@if(frame!=null)
 {
 <div class="fileGroup" id="userContent">
   <ul><li><a>Books</a><ul>
-        @foreach (var word in @Model)
+        @foreach (var word in frame)
         {
             if (word != null)
             {
@@ -19,7 +13,7 @@
                 var pos = @word.LastIndexOf("\\", System.StringComparison.Ordinal) + 1;
                 var fileName = word.Substring(pos, word.Length - pos);
                 var path = "";
-                path = !newBook ? ("~/Content/Resources/Users/" + user + "/" + fileName) : ("~/Content/Resources/BookTemplate/" + fileName);
+                path =  ("~/Content/Resources/Users/" + user + "/" + fileName);
            
 
             <li>@Html.ActionLink(@fileName, "GetChosenBook", "Book", new { fileName = @path }, new { Class = "btn btn-lg btn-primary" })</li>

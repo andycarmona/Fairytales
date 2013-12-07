@@ -1,5 +1,7 @@
 ﻿using System.Web.Mvc;
 
+using System.Net.Sockets;
+
 namespace BookWriterTool.Controllers
 {
     using System;
@@ -11,6 +13,7 @@ namespace BookWriterTool.Controllers
     using BookWriterTool.Models;
     using BookWriterTool.Repositories;
 
+    [HandleError]
     public class BookController : Controller
     {
         private readonly IBookRepository aBookRepository;
@@ -20,6 +23,10 @@ namespace BookWriterTool.Controllers
         private book aBook;
 
         private string activeUser;
+
+        private string systemMssg;
+
+        Boolean isConnected;
 
         public BookController()
             : this(new BookRepository())
@@ -34,15 +41,23 @@ namespace BookWriterTool.Controllers
 
         }
 
+        private void CheckConnection()
+        {
+
+            var tcpClient = new TcpClient();
+            tcpClient.Connect("www.google.com", 80);
+            isConnected = tcpClient.Connected;
+        }
         public ActionResult FakeLogin(string userName)
         {
+            this.CheckConnection();
             var httpSessionStateBase = this.HttpContext.Session;
-            if (httpSessionStateBase != null)
+            if ((httpSessionStateBase != null) || (!isConnected))
             {
                 httpSessionStateBase["username"] = userName;
-
+                return RedirectToAction("EditBook");
             }
-            return RedirectToAction("EditBook");
+            throw new Exception("message");
         }
 
         public ActionResult GetChosenBook(string fileName)
@@ -53,58 +68,70 @@ namespace BookWriterTool.Controllers
 
         }
 
-        public PartialViewResult GetAvailableBooks(string fileOption)
+        public ActionResult AddNewBook(string newFileName)
         {
-            string statusMsg = "Got all books";
+
+            systemMssg = this.fileHandler.AddNewBook(newFileName);
+            ViewBag.statusMsg = systemMssg;
+            return RedirectToAction("EditBook");
+        }
+
+
+
+    /*    public PartialViewResult GetAvailableBooks()
+        {
             string[] listOfBooks = null;
-            bool newBook = true;
+            systemMssg = "";
             if (Session["username"] != null)
             {
                 activeUser = (string)this.Session["username"];
+                try
+                {
+
+                    listOfBooks = this.fileHandler.GetListOfUserFiles(activeUser);
+              
+
+                }
+                catch (Exception e)
+                {
+                    systemMssg = e.Message;
+                }
             }
             else
             {
-                statusMsg = "Couldn't find files";
+                systemMssg = "Couldn't find files";
             }
 
-            try
-            {
-               // if (fileOption.Equals("loadBook"))
-                //{
-                    listOfBooks = this.fileHandler.GetListOfUserFiles(activeUser);
-                    var temp = new string[listOfBooks.Length + 1];
-                    for (int i = 0; i < listOfBooks.Length; i++)
-                    {
-                        temp[i + 1] = listOfBooks[i];
-                    }
-                    listOfBooks = temp;
-                    newBook = false;
-               // }
-                //else if (fileOption.Equals("newBook"))
-               // {
-                 //   listOfBooks = this.fileHandler.GetListOfTemplates();
 
-                //}
-            }
-            catch (Exception e)
-            {
-                statusMsg = e.Message;
-            }
-            ViewBag.statusMsg = statusMsg;
-            ViewBag.newBook = newBook;
-            ViewBag.listBook = listOfBooks;
+            ViewBag.statusMsg = systemMssg;
+            ViewBag.arrayBooks = listOfBooks;
             return this.PartialView("ListOfBooks", listOfBooks);
-        }
+        }*/
 
         public ActionResult EditBook()
         {
-            string[] listOfBooks = this.fileHandler.GetListOfUserFiles(activeUser);
-            var fileName = (string)Session["ActualFile"];
-            aBookRepository.SetActualFile(fileName);
-            aBook = this.aBookRepository.GetAllContent();
-            ViewBag.arrayBooks = listOfBooks;
+            systemMssg = "";
+            if (Session["username"] != null)
+            {
+                activeUser = (string)this.Session["username"];
 
-            return this.View(aBook);
+                try
+                {
+                    string[] listOfBooks = this.fileHandler.GetListOfUserFiles(activeUser);
+                    var fileName = (string)Session["ActualFile"];
+                    aBookRepository.SetActualFile(fileName);
+                    if(fileName!=null)
+                    aBook = this.aBookRepository.GetAllContent();
+                    ViewBag.arrayBooks = listOfBooks;
+
+                    return this.View(aBook);
+                }
+                catch (Exception e)
+                {
+                    systemMssg = e.Message;
+                }
+            }
+            return this.View();
         }
 
         [HttpPost]
@@ -118,7 +145,7 @@ namespace BookWriterTool.Controllers
             string target = splitResult[3];
 
             var listOfObject = new List<bookChapterPageFrameContentObject>();
-            string msg = "okay";
+            string msg = "";
 
             if (Session["ActualFile"] != null)
             {
@@ -153,7 +180,7 @@ namespace BookWriterTool.Controllers
         [HttpPost]
         public ActionResult AddPage(BookModel model)
         {
-            string statusMsg = "Page added";
+            systemMssg = "";
             if (Session["ActualFile"] != null)
             {
 
@@ -165,11 +192,11 @@ namespace BookWriterTool.Controllers
                 }
                 catch (Exception e)
                 {
-                    statusMsg = e.Message;
+                    systemMssg = e.Message;
                 }
 
             }
-            return Json(statusMsg);
+            return Json(systemMssg);
         }
 
         [HttpPost]
@@ -186,7 +213,7 @@ namespace BookWriterTool.Controllers
             return Json(statusMsg);
         }
 
-         [HttpPost]
+        [HttpPost]
         public JsonResult UpdateObjectPosition(BookModel frameDescriptionArray)
         {
             string statusMsg = "";
@@ -199,7 +226,7 @@ namespace BookWriterTool.Controllers
             }
             return Json(statusMsg);
         }
-        
+
         [HttpPost]
         public JsonResult AddFrame(BookModel frameDescriptionArray)
         {
@@ -219,10 +246,10 @@ namespace BookWriterTool.Controllers
             var statusMsg = "";
             if (Session["ActualFile"] != null)
             {
-                
+
                 var fileName = (string)this.Session["ActualFile"];
 
-              statusMsg = aBookRepository.AddObjectToContent(model, fileName);
+                statusMsg = aBookRepository.AddObjectToContent(model, fileName);
 
 
             }

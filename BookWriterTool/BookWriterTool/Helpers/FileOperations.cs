@@ -104,5 +104,11 @@ namespace BookWriterTool.Helpers
                                 Path.GetDirectoryName(HttpContext.Current.Server.MapPath(aFile))));
             return folderName;
         }
+
+        public string AddNewBook(string newFileName)
+        {
+            var mssg = "";
+            return mssg;
+        }
     }
 }
