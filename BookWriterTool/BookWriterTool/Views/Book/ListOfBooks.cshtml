@@ -1,35 +1,33 @@
 ﻿@{
     var frame = (string[])this.ViewData["listOfBooks"];
     var statusMssg = "";
-    if (ViewBag.statusMsg != null)
-    {
-        statusMssg = ViewBag.statusMsg;
-    }
+   if (ViewBag.statusMsg != null)
+   {
+       statusMssg = ViewBag.statusMsg;
+   }
 }
-@if (frame != null)
+@if(frame!=null)
 {
-    <div class="fileGroup" id="userContent">
-        <ul>
-            <li><a>Books</a>
-                @foreach (var word in frame)
-                {
-                    if (word != null)
-                    {
-                        var user = (string)Session["username"];
-                        var pos = @word.LastIndexOf("\\", System.StringComparison.Ordinal) + 1;
-                        var fileName = word.Substring(pos, word.Length - pos);
-                        var path = "";
-                        path = ("~/Content/Resources/Users/" + user + "/Books/" + fileName);
+<div class="fileGroup" id="userContent">
+    <ul><li><a>Books</a><ul>
+                            @foreach (var word in frame)
+                            {
+                                if (word != null)
+                                {
+                                    var user = (string)Session["username"];
+                                    var pos = @word.LastIndexOf("\\", System.StringComparison.Ordinal) + 1;
+                                    var fileName = word.Substring(pos, word.Length - pos);
+                                    var path = "";
+                                    path =  ("~/Content/Resources/Users/" + user + "/Books/" + fileName);
            
-                    <ul>
-                        <li>@Html.ActionLink(@fileName, "GetChosenBook", "Book", new { fileName = @path }, new { Class = "btn btn-lg btn-primary" })
 
-                        </li>
-                    </ul> @Html.ActionLink("Delete Book", "DeleteBook", new { fileToDelete = @path })
-                    }
-                }
-            </li>
-        </ul>
-        <p>@statusMssg</p>
-    </div>
+                                    <li >@Html.ActionLink(@fileName, "GetChosenBook", "Book", new { fileName = @path }, new { Class = "btn btn-lg btn-primary" })
+                                        
+                                    </li>
+                                }
+                            }
+                        </ul></li>
+    </ul>
+    <p>@statusMssg</p>
+</div>
 }

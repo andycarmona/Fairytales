@@ -138,7 +138,7 @@ namespace BookWriterTool.Controllers
                     if(fileName!=null)
                     aBook = this.aBookRepository.GetAllContent();
                     ViewBag.arrayBooks = listOfBooks;
-
+                    ViewBag.statusMsg = systemMssg;
                     return this.View(aBook);
                 }
                 catch (Exception e)

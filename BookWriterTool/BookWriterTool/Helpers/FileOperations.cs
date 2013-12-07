@@ -131,7 +131,7 @@ namespace BookWriterTool.Helpers
             var mssg="";
             try
             {
-                File.Delete(HttpContext.Current.Server.MapPath(fileToDelete));
+                File.Delete(HttpContext.Current.Server.MapPath(UsersDirectory + activeUser + "/Books/"+fileToDelete));
             }
             catch (IOException e)
             {

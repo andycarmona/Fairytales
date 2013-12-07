@@ -389,6 +389,7 @@
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\border.png" />
+    <Content Include="Images\delete.png" />
     <Content Include="Images\rectangle.png" />
     <Content Include="Images\square.png" />
     <Content Include="Images\squarepart.png" />
