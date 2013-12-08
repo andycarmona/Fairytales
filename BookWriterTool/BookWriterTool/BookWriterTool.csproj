@@ -257,13 +257,22 @@
     <Content Include="Content\Resources\BookTemplate\empty.xml" />
     <Content Include="Content\Resources\Generic\background\anime_joker-1024x576.jpg" />
     <Content Include="Content\Resources\Generic\background\purple-boardwalk-pier-jetty-pink-sunset-1920x1080-1024x576.jpg" />
+    <Content Include="Content\Resources\Generic\background\rectangle.png" />
     <Content Include="Content\Resources\Generic\character2d\anime\female\girlInGreen.png" />
     <Content Include="Content\Resources\Generic\character2d\anime\male\redFighter.png" />
     <Content Include="Content\Resources\Generic\character\animals\croc.jpg" />
     <Content Include="Content\Resources\Generic\character\animals\duck.jpg" />
     <Content Include="Content\Resources\Generic\expressions\expdrop.png" />
     <Content Include="Content\Resources\Generic\expressions\interrogationexp.png" />
-    <Content Include="Content\Resources\Users\andresc\BlackDay.xml" />
+    <Content Include="Content\Resources\Images\border.png" />
+    <Content Include="Content\Resources\Images\delete.png" />
+    <Content Include="Content\Resources\Images\file.png" />
+    <Content Include="Content\Resources\Images\home-ajax-loader.gif" />
+    <Content Include="Content\Resources\Images\newpage.png" />
+    <Content Include="Content\Resources\Images\rectangle.png" />
+    <Content Include="Content\Resources\Images\square.png" />
+    <Content Include="Content\Resources\Images\squarepart.png" />
+    <Content Include="Content\Resources\Images\triangle.png" />
     <Content Include="Content\Resources\Users\kallec\bookNoMetadata2.xml" />
     <Content Include="Content\Resources\Users\kallec\Come back.xml" />
     <Content Include="Content\Resources\WebPlayer\webviewer2.html" />
@@ -388,12 +397,6 @@
     <Content Include="Content\assets\css\font\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
-    <Content Include="Images\border.png" />
-    <Content Include="Images\delete.png" />
-    <Content Include="Images\rectangle.png" />
-    <Content Include="Images\square.png" />
-    <Content Include="Images\squarepart.png" />
-    <Content Include="Images\triangle.png" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -412,6 +415,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
+    <Content Include="Scripts\MainScript.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\themes\apple\bg.jpg" />
     <Content Include="Scripts\themes\apple\d.png" />
@@ -457,7 +461,9 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Book\EditBook.cshtml" />
     <Content Include="Views\Shared\Editor_Layout.cshtml" />
     <Content Include="Views\Shared\_BootstrapLayout.cshtml">
@@ -475,10 +481,12 @@
     <Content Include="Views\Book\FrameContentFull.cshtml" />
     <Content Include="Views\Book\FrameContentSplit.cshtml" />
     <Content Include="Views\Book\ExpressionList.cshtml" />
+    <Content Include="Views\Book\TxtComponentsList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Resources\Generic\model\" />
+    <Folder Include="Content\Resources\Users\andresc\" />
     <Folder Include="Views\Shared\Resources\" />
   </ItemGroup>
   <ItemGroup>
@@ -488,10 +496,12 @@
     <EmbeddedResource Include="Resources\LocalConfig.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>LocalConfig.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\RemoteConfig.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>RemoteConfig.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resource_en-GB.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -12,6 +12,7 @@ namespace BookWriterTool.Models
         string SetActualFile(string actualBook);
         book AddPage(string chapterNumber,string fileName);
 
+       
         string AddObjectToContent(BookModel content, string fileName);
         string DeleteObjectFromContent(BookModel content, string fileName);
         string AddCharacter2DToContent(BookModel content, string fileName);
@@ -21,5 +22,7 @@ namespace BookWriterTool.Models
         string AddFrame(BookModel content, string fileName);
         book GetAllContent();
         void EditChapter(string chapterId);
+
+        string AddTextToContent(string model, string componentId, string fileName);
     }
 }

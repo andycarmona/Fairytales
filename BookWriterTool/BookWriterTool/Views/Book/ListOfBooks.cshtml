@@ -21,7 +21,7 @@
                                     path =  ("~/Content/Resources/Users/" + user + "/Books/" + fileName);
            
 
-                                    <li >@Html.ActionLink(@fileName, "GetChosenBook", "Book", new { fileName = @path }, new { Class = "btn btn-lg btn-primary" })
+                                    <li rel="file" >@Html.ActionLink(@fileName, "GetChosenBook", "Book", new { fileName = @path }, new { Class = "btn btn-lg btn-primary" })
                                         
                                     </li>
                                 }

@@ -79,7 +79,7 @@ namespace BookWriterTool.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Välj ut ett alternativ:.
+        ///   Looks up a localized string similar to Välj ut en bok:.
         /// </summary>
         internal static string ChooseOption {
             get {
@@ -201,6 +201,15 @@ namespace BookWriterTool.Resources {
         internal static string Swedish {
             get {
                 return ResourceManager.GetString("Swedish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text komponent.
+        /// </summary>
+        internal static string textComponent {
+            get {
+                return ResourceManager.GetString("textComponent", resourceCulture);
             }
         }
     }

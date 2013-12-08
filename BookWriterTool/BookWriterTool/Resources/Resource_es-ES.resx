@@ -124,7 +124,7 @@
     <value>capítulo</value>
   </data>
   <data name="ChooseOption" xml:space="preserve">
-    <value>Elije una opción:</value>
+    <value>Elije un libro:</value>
   </data>
   <data name="EmailAddress" xml:space="preserve">
     <value>Correo electrónico</value>
@@ -164,5 +164,8 @@
   </data>
   <data name="Swedish" xml:space="preserve">
     <value>Sueco</value>
+  </data>
+  <data name="textComponent" xml:space="preserve">
+    <value>Componente de texto</value>
   </data>
 </root>

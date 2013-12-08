@@ -129,4 +129,10 @@
   <data name="ExpressionRes" xml:space="preserve">
     <value>/Content/Resources/Generic/expressions/</value>
   </data>
+  <data name="TemplateDirectory" xml:space="preserve">
+    <value>/Content/Resources/BookTemplate/</value>
+  </data>
+  <data name="UsersDirectory" xml:space="preserve">
+    <value>/Content/Resources/Users/</value>
+  </data>
 </root>

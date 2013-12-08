@@ -111,13 +111,24 @@ namespace BookWriterTool.Helpers
             var mssg = "";
             try
             {
-                if (!Directory.Exists(HttpContext.Current.Server.MapPath(UsersDirectory + userName + "/Books/")))
+                if((newFileName!=null)||(userName!=string.Empty))
                 {
-                    Directory.CreateDirectory(HttpContext.Current.Server.MapPath(UsersDirectory + userName + "/Books/"));
+                    if (!Directory.Exists(HttpContext.Current.Server.MapPath(UsersDirectory + userName + "/Books/")))
+                    {
+                        Directory.CreateDirectory(
+                            HttpContext.Current.Server.MapPath(UsersDirectory + userName + "/Books/"));
+                    }
+                    if (!File.Exists(UsersDirectory + userName + "/Books/" + newFileName + ".xml"))
+                    {
+                        File.Copy(
+                            HttpContext.Current.Server.MapPath(TemplateDirectory + "empty.xml"),
+                            HttpContext.Current.Server.MapPath(
+                                UsersDirectory + userName + "/Books/" + newFileName + ".xml"));
+                    }
+                }else
+                {
+                    throw new IOException("ERROR:File name cannot be empty ");
                 }
-                File.Copy(
-                    HttpContext.Current.Server.MapPath(TemplateDirectory + "empty.xml"),
-                    HttpContext.Current.Server.MapPath(UsersDirectory + userName + "/Books/" + newFileName + ".xml"));
             }
             catch (IOException e)
             {
@@ -131,7 +142,9 @@ namespace BookWriterTool.Helpers
             var mssg="";
             try
             {
-                File.Delete(HttpContext.Current.Server.MapPath(UsersDirectory + activeUser + "/Books/"+fileToDelete));
+                File.Delete(
+                    HttpContext.Current.Server.MapPath(
+                        string.Format("{0}{1}/Books/{2}", UsersDirectory, activeUser, fileToDelete)));
             }
             catch (IOException e)
             {

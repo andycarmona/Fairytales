@@ -95,5 +95,23 @@ namespace BookWriterTool.Resources {
                 return ResourceManager.GetString("ExpressionRes", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /Content/Resources/BookTemplate/.
+        /// </summary>
+        internal static string TemplateDirectory {
+            get {
+                return ResourceManager.GetString("TemplateDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /Content/Resources/Users/.
+        /// </summary>
+        internal static string UsersDirectory {
+            get {
+                return ResourceManager.GetString("UsersDirectory", resourceCulture);
+            }
+        }
     }
 }

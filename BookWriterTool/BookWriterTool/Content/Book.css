@@ -111,9 +111,9 @@ right: 39%;
 {
     float: left;
     background-repeat: no-repeat;
-    border-image: url(../Images/border.png) 25 25 round;
-    -webkit-border-image: url(../Images/border.png) 25 25 round; /* Safari 5 and older */
-    -o-border-image: url(../Images/border.png) 25 25 round; /* Opera */
+    border-image: url(Resources/Images/border.png) 25 25 round;
+    -webkit-border-image: url(Resources/Images/border.png) 25 25 round; /* Safari 5 and older */
+    -o-border-image: url(Resources/Images/border.png) 25 25 round; /* Opera */
     background-position: center center;
     -webkit-background-size: 100% auto;
     -moz-background-size: 100% auto;
@@ -127,9 +127,9 @@ right: 39%;
 {
     background-position: center center;
     background-repeat: no-repeat;
-    border-image: url(../Images/border.png) 25 25 round;
-    -webkit-border-image: url(../Images/border.png) 25 25 round;
-    -o-border-image: url(../Images/border.png) 25 25 round;
+    border-image: url(Resources/Images/border.png) 25 25 round;
+    -webkit-border-image: url(Resources/Images/border.png) 25 25 round;
+    -o-border-image: url(Resources/Images/border.png) 25 25 round;
     -webkit-background-size: 100% auto;
     -moz-background-size: 100% auto;
     background-size: 100% auto;
@@ -143,16 +143,19 @@ right: 39%;
     float: left;
     background-position: center center;
     background-repeat: no-repeat;
-    border-image: url(../Images/border.png) 30 30 round;
-    -webkit-border-image: url(../Images/border.png) 30 30 round; /* Safari 5 and older */
-    -o-border-image: url(../Images/border.png) 30 30 round; /* Opera */
+    border-image: url(/Content/Resources/Images/border.png) 30 30 round;
+    -webkit-border-image: url(/Content/Resources/Images/border.png) 30 30 round; /* Safari 5 and older */
+    -o-border-image: url(/Content/Resources/Images/border.png) 30 30 round; /* Opera */
     -webkit-background-size: 50% auto;
     -moz-background-size: 50% auto;
     background-size: 50% auto;
     height: 83%;
     width: 98%;
 }
-
+.bigText {
+width: 96%;
+height: 80%;
+}
 .containerSquare
 {
     position: relative;

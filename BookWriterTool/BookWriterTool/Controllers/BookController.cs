@@ -8,7 +8,6 @@ namespace BookWriterTool.Controllers
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-
     using BookWriterTool.Helpers;
     using BookWriterTool.Models;
     using BookWriterTool.Repositories;
@@ -81,7 +80,9 @@ namespace BookWriterTool.Controllers
                 {
                     systemMssg = this.fileHandler.AddNewBook(newFileName, activeUser);
                     listOfBooks = this.fileHandler.GetListOfUserBooks(activeUser);
-
+                    systemMssg = aBookRepository.SetActualFile(String.Format("{0}{1}/Books/{2}.xml",GlobalVariables.ConfigResource("UsersDirectory"),activeUser, newFileName));
+                    if (newFileName != null)
+                        aBook = this.aBookRepository.GetAllContent();
 
                 }
                 catch (Exception e)
@@ -91,11 +92,11 @@ namespace BookWriterTool.Controllers
             }
             else
             {
-                systemMssg = "Couldn't find files";
+                systemMssg = "Couldn't add new book.";
             }
             ViewBag.statusMsg = systemMssg;
             ViewBag.arrayBooks = listOfBooks;
-            return this.PartialView("ListOfBooks");
+            return Json(new{systemMssg});
         }
 
         public ActionResult DeleteBook(string fileToDelete)
@@ -296,6 +297,21 @@ namespace BookWriterTool.Controllers
                 var fileName = (string)this.Session["ActualFile"];
 
                 statusMsg = aBookRepository.AddGenericObjectToContent(model, fileName);
+
+
+            }
+            return Json(statusMsg);
+        }
+        [HttpPost]
+        public ActionResult AddTextToContent(string model,string componentId)
+        {
+            var statusMsg = "";
+            if (Session["ActualFile"] != null)
+            {
+
+                var fileName = (string)this.Session["ActualFile"];
+
+         statusMsg = aBookRepository.AddTextToContent(model,componentId, fileName);
 
 
             }

@@ -20,6 +20,8 @@ namespace BookWriterTool.Repositories
 
         private XmlDocument xmlDoc;
 
+        private string actualFile;
+
         public BookRepository()
         {
 
@@ -28,15 +30,18 @@ namespace BookWriterTool.Repositories
 
         public string SetActualFile(string aFileBook)
         {
-
-            string status = "Executed with no errors";
-            try
+            this.actualFile = aFileBook;
+            string status = "";
+            if (aFileBook != null)
             {
-                aBook = handleFiles.SerializeXmlToObject(aFileBook);
-            }
-            catch (IOException ex)
-            {
-                status = ex.Message;
+                try
+                {
+                    aBook = handleFiles.SerializeXmlToObject(aFileBook);
+                }
+                catch (IOException ex)
+                {
+                    status = ex.Message;
+                }
             }
             return status;
         }
@@ -61,14 +66,6 @@ namespace BookWriterTool.Repositories
             return aChapter;
         }
 
-        /* public book AddContentsInFrame()
-         {
-             XmlDocument xmlDoc = new XmlDocument();
-             xmlDoc.Load(HttpContext.Current.Server.MapPath(actualBook));
-             XmlNode aPageNode;
-             XmlNodeList chaptersNodes = xmlDoc.SelectNodes("//book/chapters/chapter");
-             return this.GetAllContent();
-         }*/
 
         public book AddPage(string chapterId, string fileName)
         {
@@ -127,6 +124,48 @@ namespace BookWriterTool.Repositories
             return this.GetAllContent();
         }
 
+        public string AddTextToContent(string model, string componentId,string fileName)
+        {
+            /*chapter1-page2-frame1-rectangle
+            		 <txtbox>
+                      <text id="mainText"></text>
+                    </txtbox>*/
+            
+            var mssg = "";
+            string[] splitedData = componentId.Split('-');
+            var chapterId = splitedData[0];
+            var pageId = splitedData[1];
+            var frameId = splitedData[2];
+            var target = splitedData[3];
+            var txtBoxId = splitedData[4];
+            xmlDoc = new XmlDocument();
+            XmlElement aTextBox = xmlDoc.CreateElement("txtbox");
+            XmlElement textBoxContent = xmlDoc.CreateElement("text");
+            xmlDoc.Load(HttpContext.Current.Server.MapPath(fileName));
+            var objectsNodes = (XmlElement)this.xmlDoc.SelectSingleNode(String.Format("//book/chapters/chapter[@id='{0}']/" +
+                "pages/page[@id='{1}']/frames/frame[@id='{2}']/contents/content[@target='{3}']/objects",
+                chapterId, pageId, frameId, target));
+
+            if (objectsNodes != null)
+            {
+               aTextBox.SetAttribute("id", txtBoxId);
+               XmlText txtBoxValue = xmlDoc.CreateTextNode(model);
+              aTextBox.AppendChild(txtBoxValue);
+                textBoxContent.AppendChild(aTextBox);
+                objectsNodes.AppendChild(textBoxContent);
+
+                try
+                {
+                    xmlDoc.Save(HttpContext.Current.Server.MapPath(fileName));
+                }
+                catch (DirectoryNotFoundException e)
+                {
+                    mssg = e.Message;
+                }
+            }
+            return mssg;
+        }
+
         public string GetIdFromFileName(string splittedValues)
         {
             var splittedImg = splittedValues.Split('/');
@@ -135,17 +174,13 @@ namespace BookWriterTool.Repositories
             return typeImg;
         }
 
-        public string AddDialogBoxToContent(string[] content, string fileName)
-        {
-            return null;
-        }
+ 
 
       
 
         public string DeleteObjectFromContent(BookModel content, string fileName)
         {
             var mssg = "";
-            //  string[] splittedValues = content[0].Split('-');
             xmlDoc = new XmlDocument();
             xmlDoc.Load(HttpContext.Current.Server.MapPath(fileName));
             XmlNode objectsNodes = this.xmlDoc.SelectSingleNode(String.Format("//book/chapters/chapter[@id='{0}']/pages/page[@id='{1}']/frames/frame[@id='{2}']/contents/content[@target='{3}']/objects/object[@id='{4}']", content.ChapterId, content.PageId, content.FrameId, content.Target, content.Objects[0].ObjectId));

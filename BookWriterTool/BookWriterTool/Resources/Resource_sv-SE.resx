@@ -124,7 +124,7 @@
     <value>avsnitt</value>
   </data>
   <data name="ChooseOption" xml:space="preserve">
-    <value>Välj ut ett alternativ:</value>
+    <value>Välj ut en bok:</value>
   </data>
   <data name="EmailAddress" xml:space="preserve">
     <value>mejladress</value>
@@ -164,5 +164,8 @@
   </data>
   <data name="Swedish" xml:space="preserve">
     <value>Svenska</value>
+  </data>
+  <data name="textComponent" xml:space="preserve">
+    <value>Text komponent</value>
   </data>
 </root>

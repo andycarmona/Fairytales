@@ -6,7 +6,7 @@
 { 
     foreach (bookChapterPageFrameContent content in frame.contents)
     {<div class="editPencil"><span class="ui-icon ui-icon-pencil"></span></div>
-         <div class="droppable contentIntern" style="background-image: url(@(!String.IsNullOrEmpty(content.background) ? "/Content/Resources/Generic/"+@content.background:"../Images/rectangle.png"));">
+         <div class="droppable contentIntern" style="background-image: url(@(!String.IsNullOrEmpty(content.background) ? "/Content/Resources/Generic/"+@content.background:"/Content/Resources/Images/rectangle.png"));">
         @if ((@target == "rectangle"))
         {
             foreach (bookChapterPageFrameContentObject obj in content.objects)
