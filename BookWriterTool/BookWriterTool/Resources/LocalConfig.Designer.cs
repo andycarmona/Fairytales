@@ -106,7 +106,7 @@ namespace BookWriterTool.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /Content/Resources/Users/.
+        ///   Looks up a localized string similar to /App_Data/Users/.
         /// </summary>
         internal static string UsersDirectory {
             get {

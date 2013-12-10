@@ -8,6 +8,8 @@ namespace BookWriterTool.Controllers
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Text.RegularExpressions;
+
     using BookWriterTool.Helpers;
     using BookWriterTool.Models;
     using BookWriterTool.Repositories;
@@ -25,7 +27,7 @@ namespace BookWriterTool.Controllers
 
         private string systemMssg;
 
-        Boolean isConnected;
+        //Boolean isConnected;
 
         public BookController()
             : this(new BookRepository())
@@ -40,22 +42,32 @@ namespace BookWriterTool.Controllers
 
         }
 
-        private void CheckConnection()
+        private bool CheckConnection()
         {
 
             var tcpClient = new TcpClient();
-            tcpClient.Connect("www.google.com", 80);
-            isConnected = tcpClient.Connected;
+            var statusConn = true;
+            try
+            {
+                tcpClient.Connect("http://www.google.com", 80);
+            }
+            catch (Exception e)
+            {
+                statusConn = tcpClient.Connected;
+            }
+      
+            return statusConn;
         }
         public ActionResult FakeLogin(string userName)
         {
-            this.CheckConnection();
+            var statusConn=this.CheckConnection();
             var httpSessionStateBase = this.HttpContext.Session;
-            if ((httpSessionStateBase != null) || (!isConnected))
+            if ((httpSessionStateBase != null) && (!statusConn))
             {
                 httpSessionStateBase["username"] = userName;
                 return RedirectToAction("EditBook");
             }
+            else return RedirectToAction("Index", "Error");
             throw new Exception("message");
         }
 
@@ -303,7 +315,7 @@ namespace BookWriterTool.Controllers
             return Json(statusMsg);
         }
         [HttpPost]
-        public ActionResult AddTextToContent(string model,string componentId)
+        public string AddTextToContent(string model,string componentId)
         {
             var statusMsg = "";
             if (Session["ActualFile"] != null)
@@ -315,7 +327,8 @@ namespace BookWriterTool.Controllers
 
 
             }
-            return Json(statusMsg);
+            var replacedModel = Regex.Replace(model, "\n", "<br />");
+            return replacedModel;
         }
 
         public JsonResult DeleteObjectFromContent(BookModel model)

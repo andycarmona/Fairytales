@@ -13,10 +13,10 @@
             {
                 if (obj.type == "character")
                 {
-                    <img id="@obj.id" style="left: 50%; top: 55%;" class="clonedImg" width="35" height="70" alt="" src="@GlobalVariables.ConfigResource("CharacterRes")@(obj.img)" />
+                    <img id="@obj.id" style="left: @obj.origoX; top: @obj.origoY;" class="clonedImg" width="@obj.scaleX" height="@obj.scaleY" alt="" src="@GlobalVariables.ConfigResource("CharacterRes")@(obj.img)" />
                 }else if (obj.type == "character2D")
                 {
-                    <img id="@obj.id" style="left: 50%; top: 55%;" class="clonedImg" width="35" height="70" alt="" src="@GlobalVariables.ConfigResource("Character2DRes")@(obj.img)" />
+                    <img id="@obj.id" style="left: @obj.origoX; top: @obj.origoY;" class="clonedImg" width="@obj.scaleX" height="@obj.scaleY" alt="" src="@GlobalVariables.ConfigResource("Character2DRes")@(obj.img)" />
       
                 }
              

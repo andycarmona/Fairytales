@@ -1,4 +1,5 @@
-﻿@{
+﻿@using BookWriterTool.Helpers
+@{
     var frame = (string[])this.ViewData["listOfBooks"];
     var statusMssg = "";
    if (ViewBag.statusMsg != null)
@@ -18,7 +19,7 @@
                                     var pos = @word.LastIndexOf("\\", System.StringComparison.Ordinal) + 1;
                                     var fileName = word.Substring(pos, word.Length - pos);
                                     var path = "";
-                                    path =  ("~/Content/Resources/Users/" + user + "/Books/" + fileName);
+                                    path = (GlobalVariables.ConfigResource("UsersDirectory") + user + "/Books/" + fileName);
            
 
                                     <li rel="file" >@Html.ActionLink(@fileName, "GetChosenBook", "Book", new { fileName = @path }, new { Class = "btn btn-lg btn-primary" })

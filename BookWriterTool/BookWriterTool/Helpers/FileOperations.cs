@@ -11,14 +11,14 @@ namespace BookWriterTool.Helpers
     public class FileOperations
     {
 
-        public readonly string TemplateDirectory = "~/Content/Resources/BookTemplate/";
+      //  public readonly string TemplateDirectory = "~/Content/Resources/BookTemplate/";
 
         public string ActualBook;
 
-        public static readonly string UsersDirectory = "~/Content/Resources/Users/";
+      //  public static readonly string UsersDirectory = "~/Content/Resources/Users/";
  
 
-        public static readonly string Character2DDirectory = "~/Content/Resources/Generic/character2d/anime";
+        //public static readonly string Character2DDirectory = "~/Content/Resources/Generic/character2d/anime";
 
         public book SerializeXmlToObject(string actualBook)
         {
@@ -50,14 +50,14 @@ namespace BookWriterTool.Helpers
 
         public string[] GetListOfTemplates()
         {
-            string[] filesPaths = Directory.GetFiles(HttpContext.Current.Server.MapPath(TemplateDirectory));
+            string[] filesPaths = Directory.GetFiles(HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("TemplateDirectory")));
 
             return filesPaths;
         }
 
         public string[] GetListOfUserBooks(string user)
         {
-            string[] filesPaths = Directory.GetFiles(HttpContext.Current.Server.MapPath(UsersDirectory+user+"/Books"));
+            string[] filesPaths = Directory.GetFiles(HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("UsersDirectory")+user+"/Books"));
 
             return filesPaths;
         }
@@ -66,27 +66,24 @@ namespace BookWriterTool.Helpers
         {
             var aListObjects = new List<BookModel>();
             string[] directoryPaths = null;
-            string lastFolderName = "empty";
-            directoryPaths = Directory.GetDirectories(HttpContext.Current.Server.MapPath(Character2DDirectory));
+            directoryPaths = Directory.GetDirectories(HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("Character2DRes")));
 
             if (directoryPaths.Length != 0)
             {
                 foreach (string directoryPath in directoryPaths)
                 {
                     var fileInfo =new FileInfo(directoryPath);
-                    var temp = fileInfo.DirectoryName;
                     string[] filesPaths = Directory.GetFiles(HttpContext.Current.Server.MapPath(directoryPath));
                   
-                    lastFolderName = this.GetFolderName(directoryPath);
+                    string lastFolderName = this.GetFolderName(directoryPath);
                     var aBookModel = new BookModel { Target = lastFolderName };
 
                     if (filesPaths.Length != 0)
                     {
                         foreach (var aFile in filesPaths)
                         {     
-                            var aObject = new ObjectModel();
-             
-                            aObject.ImageObj = aFile;
+                            var aObject = new ObjectModel { ImageObj = aFile };
+
                             aBookModel.Objects.Add(aObject);
                             aListObjects.Add(aBookModel);
                         }
@@ -113,17 +110,17 @@ namespace BookWriterTool.Helpers
             {
                 if((newFileName!=null)||(userName!=string.Empty))
                 {
-                    if (!Directory.Exists(HttpContext.Current.Server.MapPath(UsersDirectory + userName + "/Books/")))
+                    if (!Directory.Exists(HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("UsersDirectory") + userName + "/Books/")))
                     {
                         Directory.CreateDirectory(
-                            HttpContext.Current.Server.MapPath(UsersDirectory + userName + "/Books/"));
+                            HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("UsersDirectory") + userName + "/Books/"));
                     }
-                    if (!File.Exists(UsersDirectory + userName + "/Books/" + newFileName + ".xml"))
+                    if (!File.Exists(GlobalVariables.ConfigResource("UsersDirectory") + userName + "/Books/" + newFileName + ".xml"))
                     {
                         File.Copy(
-                            HttpContext.Current.Server.MapPath(TemplateDirectory + "empty.xml"),
+                            HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("TemplateDirectory") + "empty.xml"),
                             HttpContext.Current.Server.MapPath(
-                                UsersDirectory + userName + "/Books/" + newFileName + ".xml"));
+                               GlobalVariables.ConfigResource("UsersDirectory") + userName + "/Books/" + newFileName + ".xml"));
                     }
                 }else
                 {
@@ -144,7 +141,7 @@ namespace BookWriterTool.Helpers
             {
                 File.Delete(
                     HttpContext.Current.Server.MapPath(
-                        string.Format("{0}{1}/Books/{2}", UsersDirectory, activeUser, fileToDelete)));
+                        string.Format("{0}{1}/Books/{2}", GlobalVariables.ConfigResource("UsersDirectory"), activeUser, fileToDelete)));
             }
             catch (IOException e)
             {

@@ -133,6 +133,6 @@
     <value>/Content/Resources/BookTemplate/</value>
   </data>
   <data name="UsersDirectory" xml:space="preserve">
-    <value>/Content/Resources/Users/</value>
+    <value>/App_Data/Users/</value>
   </data>
 </root>

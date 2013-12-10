@@ -269,8 +269,6 @@ namespace BookWriterTool.Repositories
                 aObject.SetAttribute("scaleX", "25%");
                 aObject.SetAttribute("scaleY", "25%");
                 aObject.SetAttribute("origoX", "25%");
-                XmlNode node = objectsNodes.Attributes["origoY"];
-                if(node!=null)
                 aObject.SetAttribute("origoY", "25%");
                 aObject.SetAttribute("type", type);
                 aObject.SetAttribute("id", content.Objects[0].ObjectId);
@@ -287,12 +285,15 @@ namespace BookWriterTool.Repositories
           //  string[] splittedValues = content[0].Split('-');
             xmlDoc = new XmlDocument();
             xmlDoc.Load(HttpContext.Current.Server.MapPath(fileName));
-            var objectsNodes = (XmlElement)this.xmlDoc.SelectSingleNode(String.Format("//book/chapters/chapter[@id='{0}']/" +
+            var aObject = (XmlElement)this.xmlDoc.SelectSingleNode(String.Format("//book/chapters/chapter[@id='{0}']/" +
                 "pages/page[@id='{1}']/frames/frame[@id='{2}']/contents/content[@target='{3}']/objects/object[@id='{4}']",
                content.ChapterId,content.PageId,content.FrameId,content.Target,content.Objects[0].ObjectId));
-            if (objectsNodes != null)
+            if (aObject != null)
             {
-                //objectsNodes.SetAttribute("background", image);
+                aObject.SetAttribute("scaleX", content.Objects[0].ScaleX);
+                aObject.SetAttribute("scaleY", content.Objects[0].ScaleY);
+                aObject.SetAttribute("origoX", content.Objects[0].OrigoX);
+                aObject.SetAttribute("origoY", content.Objects[0].OrigoY);
                 try
                 {
                     xmlDoc.Save(HttpContext.Current.Server.MapPath(fileName));

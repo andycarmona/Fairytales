@@ -18,7 +18,8 @@ var Objects = {
     ImageObj: "",
     ScaleX: "",
     ScaleY: "",
-    Origo: "",
+    OrigoX: "",
+    OrigoY:"",
     Type: ""
 };
 
@@ -232,13 +233,14 @@ function getBookModel() {
     return BookModel;
 }
 
-function setObjectModel(objectId, imageObj, scaleX, scaleY, origo, type) {
+function setObjectModel(objectId, imageObj, scaleX, scaleY, origoX,origoY, type) {
     BookModel.Objects.push({
         ObjectId: objectId,
         ImageObj: imageObj,
         ScaleX: scaleX,
         ScaleY: scaleY,
-        Origo: origo,
+        OrigoX: origoX,
+        OrigoY:origoY,
         Type: type
     });
 }
@@ -260,11 +262,11 @@ $('#objectsGroup img').bind("click", function() {
     var randomnumber = Math.floor(Math.random() * 100);
     $('#' + actualContent + " .contentIntern").append('<img width="35" height="70" style="left: 50%;top: 55%;" class="clonedImg" id="Cloned' + randomnumber + '" src="' + $(this).attr("src") + '" />');
     var valuesId = [];
-    configurateImgOnTerrain(false);
+    configurateImgOnTerrain(true);
     if (actualContent != null) {
         valuesId = GetIdFromString(actualContent);
         setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-        setObjectModel("Object" + randomnumber, $(this).attr("src"), null, null, null, null);
+        setObjectModel("Object" + randomnumber, $(this).attr("src"), null, null, null, null,null);
         PostArray("AddObjectToContent", getBookModel());
     }
 });
@@ -273,11 +275,11 @@ $('#characterGroup img').bind("click", function() {
     var randomnumber = Math.floor(Math.random() * 1000);
     $('#' + actualContent + " .contentIntern").append('<img width="35" height="70" style="left: 50%;top: 55%;" class="clonedImg" id="Character' + randomnumber + '" src="' + $(this).attr("src") + '" />');
     var valuesId = [];
-    configurateImgOnTerrain(false);
+    configurateImgOnTerrain(true);
     if (actualContent != null) {
         valuesId = GetIdFromString(actualContent);
         setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-        setObjectModel("Character" + randomnumber, $(this).attr("src"), null, null, null, null);
+        setObjectModel("Character" + randomnumber, $(this).attr("src"), null, null, null, null,null);
         PostArray("AddCharacter2DToContent", getBookModel());
     }
 });
@@ -291,8 +293,8 @@ $('#expressionGroup img').bind("click", function() {
     if (actualContent != null) {
         valuesId = GetIdFromString(actualContent);
         setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-        setObjectModel("Expression" + randomnumber, $(this).attr("src"), null, null, null, null);
-        PostArray("ExpressionToContent", getBookModel());
+        setObjectModel("Expression" + randomnumber, $(this).attr("src"), null, null, null, null,null);
+        PostArray("AddExpressionToContent", getBookModel());
     }
 });
 
@@ -307,7 +309,7 @@ $("#ctxMenuDelete").click(function() {
                 //alert(actualContent);
                 valuesId = GetIdFromString(actualContent);
                 setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-                setObjectModel(objId, null, null, null, null, null);
+                setObjectModel(objId, null, null, null, null, null,null);
                 PostArray("DeleteObjectFromContent", getBookModel());
             }
             destroyContextMenu();
@@ -335,7 +337,6 @@ function startDragNoLimit(element) {
 
 function startDrag(element) {
     $(element).draggable({
-        axis: "x",
         cursor: 'move',
         containment: "parent",
         drag: function(event, ui) {
@@ -400,7 +401,7 @@ $(".backgroundContain").click(function() {
     if (actualContent != null) {
         valuesId = GetIdFromString(actualContent);
         setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-        setObjectModel(bk, $(this).attr("src"), null, null, null, null);
+        setObjectModel(bk, $(this).attr("src"), null, null, null, null,null);
         $("#" + actualContent + " .contentIntern").css("background-image", "url(" + imgChosen + ")");
         PostArray("AddBackgroundToFrame", getBookModel());
 
@@ -481,36 +482,64 @@ $(".frame .droppable").droppable({
 
             // alert($(this).attr("id"));
             // alert($(this).children('div').children('div').children('div').eq(1).attr("class"));
-            var parentId = $(this).children('div').children('div').eq(0).attr("id");
+            var parentTxtBoxId = $(this).children('div').children('div').eq(0).attr("id");
             $(this).children('div').children('div').children('div').eq(0).html('');
             $(this).children('div').children('div').children('div').eq(1).find('img').each(function() {
                 $(this).remove();
             });
             $(this).children('div').children('div').children('div').eq(1).find('.bigText').remove();
-            $(this).children('div').children('div').children('div').eq(1).prepend(" <div class='bigText' id='" + parentId + "-div_text'>Click here to edit..</div>");
+            $(this).children('div').children('div').children('div').eq(1).prepend(" <p class='bigText' contenteditable='true' id='" + parentTxtBoxId + "-div_text'>Click here to edit..&#10;Hello</p>");
             $('.bigText').editable('/Book/AddTextToContent', {
                 type: 'textarea',
                 cancel: 'Cancel',
                 name: 'model',
                 id: 'componentId',
                 submit: 'OK',
+                data: function (value, settings) {
+                    var retval = value.replace(/<br[\s\/]?>/gi, '\n');
+                    //var retval = value;
+                    return retval;},
                 indicator: '<img src="/Content/Resources/Images/home-ajax-loader.gif">',
-                tooltip: '<<Click to edit...'
+                tooltip: 'Click to edit...'
             });
+            //$(".bigText").val(replace($(".bigText").val(), "<br>", "&#10;"));
             //children('div').eq(2).children('img').attr("id"));
         }
         else {
             // alert( $("#"+draggableId).parent().parent().attr("id"));
             //  var descriptionArray = [];
-            valuesId = GetIdFromString($("#" + draggableId).parent().parent().attr("id"));
+            var parentId = $("#" + draggableId).parent().parent().attr("id");
+            alert(parentId);
+            var parentWidth = $("#" + parentId).width();
+            var objWidth = $("#" + draggableId).width();
+            var objPosition = $("#" + draggableId).position();
+            var parentPosition = $("#" + parentId).offset();
+            var parentHeight = $("#" + parentId).height();
+            var objHeight = $("#" + draggableId).height();
+            valuesId = GetIdFromString(parentId);
             setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-            setObjectModel(draggableId, null, null, null, null, null);
-            //descriptionArray.push(actualContent + "-" + $($(this).find("img").attr("id")).attr("src"));
-            // PostArray("UpdateObjectPosition", GetBookModel());
+            //alert(parentWidth);
+            var scaleX = getPercentage(parentWidth, objWidth);
+            var scaleY = getPercentage(parentHeight, objHeight-10.0);
+            var defTop = objPosition.top + objHeight;
+            var origoY = getPercentage(parentHeight, defTop);
+            var origoX = getPercentage(parentWidth, objPosition.left);
+           // var bottom = $(window).height() - objPosition.top - objHeight;
+     
+            //alert( "objHeight="+objHeight + "origoY=" + origoY);
+          
+            // setObjectModel(draggableId, null, "50%", "50%", "50%", "50%",null);
+            // descriptionArray.push(actualContent + "-" + $($(this).find("img").attr("id")).attr("src"));
+            //  PostArray("UpdateObjectPosition", getBookModel());
         }
     }
 });
-   
+function getPercentage(frameValue,objValue) {
+    var percentageWidth;
+    percentageWidth = Math.floor((objValue / frameValue) * 100);
+   // return percentageWidth;
+    return (percentageWidth).toFixed(1) + "%";
+}
 
 function GetIdFromString(stringToSplit) {
     var arrayId = stringToSplit.split('-');

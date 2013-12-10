@@ -26,7 +26,8 @@ namespace BookWriterTool.Models
         public string ImageObj { get; set; }
         public string ScaleX { get; set; }
         public string ScaleY { get; set; }
-        public string Origo { get; set; }
+        public string OrigoX { get; set; }
+        public string OrigoY { get; set; }
         public string Type { get; set; }
     }
 }
