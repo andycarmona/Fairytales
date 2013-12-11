@@ -1,28 +1,29 @@
 ﻿@using BookWriterTool.Helpers
 @{ var frame = (bookChapterPageFrame)this.ViewData["actualFrame"];
-    var target = (string)this.ViewData["target"];
+   var target = (string)this.ViewData["target"];
 }
 @if (frame.contents != null)
-{ 
+{
     foreach (bookChapterPageFrameContent content in frame.contents)
     {<div class="editPencil"><span class="ui-icon ui-icon-pencil"></span></div>
-         <div class="droppable contentIntern" style="background-image: url(@(!String.IsNullOrEmpty(content.background) ? "/Content/Resources/Generic/"+@content.background:"/Content/Resources/Images/rectangle.png"));">
+    <div class="droppable contentIntern" style="background-image: url(@(!String.IsNullOrEmpty(content.background) ? "/Content/Resources/Generic/" + @content.background : "/Content/Resources/Images/rectangle.png"));">
         @if ((@target == "rectangle"))
         {
-            foreach (bookChapterPageFrameContentObject obj in content.objects)
+            if (content.objects != null)
             {
-                if (obj.type == "character")
+                foreach (bookChapterPageFrameContentObject obj in content.objects)
                 {
-                    <img id="@obj.id" style="left: @obj.origoX; top: @obj.origoY;" class="clonedImg" width="@obj.scaleX" height="@obj.scaleY" alt="" src="@GlobalVariables.ConfigResource("CharacterRes")@(obj.img)" />
-                }else if (obj.type == "character2D")
-                {
-                    <img id="@obj.id" style="left: @obj.origoX; top: @obj.origoY;" class="clonedImg" width="@obj.scaleX" height="@obj.scaleY" alt="" src="@GlobalVariables.ConfigResource("Character2DRes")@(obj.img)" />
-      
+                    if (@obj.type == "textBox")
+                    {
+            <p class='bigText' contenteditable='true' >@obj.text</p>
+                    }
+                    else
+                    {
+            <img id="@obj.id" style="left: @obj.origoX; top: @obj.origoY;" class="clonedImg" width="@obj.scaleX" height="@obj.scaleY" alt="" src="@GlobalVariables.ConfigResource(@obj.type)@(obj.img)" />
+                    }
                 }
-             
             }
-            
         }
-       </div>
+    </div>
     }
 }

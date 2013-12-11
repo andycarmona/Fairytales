@@ -258,45 +258,37 @@ function CheckIsEmpty(element) {
 }
 
 /*Add img on content in frame*/
-$('#objectsGroup img').bind("click", function() {
+$('#objectsGroup img').bind("click", function () {
+    AddObject("CharacterRes", $(this));
+});
+/*Add img on content in frame*/
+$('#characterGroup img').bind("click", function () {
+    AddObject("Character2DRes", $(this));
+
+});
+/*Add img on content in frame*/
+$('#expressionGroup img').bind("click", function () {
+    AddObject("ExpressionRes", $(this));
+});
+function AddObject(type, element) {
+    var parentId = $("#" + draggableId).parent().parent().attr("id");
+  // alert(parentId);
+    var origoX = "0%";
+    var origoY = "0%";
+    var scaleX = "10%";
+    var scaleY = "25%";
     var randomnumber = Math.floor(Math.random() * 100);
-    $('#' + actualContent + " .contentIntern").append('<img width="35" height="70" style="left: 50%;top: 55%;" class="clonedImg" id="Cloned' + randomnumber + '" src="' + $(this).attr("src") + '" />');
+    $('#' + actualContent + " .contentIntern").append('<img width="'+scaleX+'" height="'+scaleY+'" style="left: "' + origoX + '";top: "' + origoY + '";" class="clonedImg" id="Cloned' + randomnumber + '" src="' + element.attr("src") + '" />');
     var valuesId = [];
     configurateImgOnTerrain(true);
     if (actualContent != null) {
         valuesId = GetIdFromString(actualContent);
         setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-        setObjectModel("Object" + randomnumber, $(this).attr("src"), null, null, null, null,null);
+        setObjectModel("Object" + randomnumber, element.attr("src"),scaleX, scaleY, origoX, origoY, type);
         PostArray("AddObjectToContent", getBookModel());
     }
-});
-/*Add img on content in frame*/
-$('#characterGroup img').bind("click", function() {
-    var randomnumber = Math.floor(Math.random() * 1000);
-    $('#' + actualContent + " .contentIntern").append('<img width="35" height="70" style="left: 50%;top: 55%;" class="clonedImg" id="Character' + randomnumber + '" src="' + $(this).attr("src") + '" />');
-    var valuesId = [];
-    configurateImgOnTerrain(true);
-    if (actualContent != null) {
-        valuesId = GetIdFromString(actualContent);
-        setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-        setObjectModel("Character" + randomnumber, $(this).attr("src"), null, null, null, null,null);
-        PostArray("AddCharacter2DToContent", getBookModel());
-    }
-});
-/*Add img on content in frame*/
-$('#expressionGroup img').bind("click", function() {
-    var randomnumber = Math.floor(Math.random() * 1000);
-    $('#' + actualContent + " .contentIntern").append('<img width="25" height="50" style="left: 50%;top: 55%;" class="clonedImg" id="Expression' + randomnumber + '" src="' + $(this).attr("src") + '" />');
-    // alert($(this).attr("src"));
-    var valuesId = [];
-    configurateImgOnTerrain(true);
-    if (actualContent != null) {
-        valuesId = GetIdFromString(actualContent);
-        setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-        setObjectModel("Expression" + randomnumber, $(this).attr("src"), null, null, null, null,null);
-        PostArray("AddExpressionToContent", getBookModel());
-    }
-});
+}
+
 
 /*Delete object in content*/
 $("#ctxMenuDelete").click(function() {
@@ -341,6 +333,7 @@ function startDrag(element) {
         containment: "parent",
         drag: function(event, ui) {
             draggableId = $(this).attr("id");
+           // alert(draggableId);
             //  alert("StartDrag");
             var offset = $(this).offset();
             var imgHeight = parseInt($("#" + draggableId).css("height"), 10);
@@ -448,7 +441,8 @@ $("#txtCompGroup .draggable").draggable({
 /*Function handle droppable frames objects. 
                   Object where you put your draggable*/
 $(".frame .droppable").droppable({
-    drop: function(event, ui) {
+    drop: function (event, ui) {
+       // alert("löd,");
         var htmlContent = "<div class='editPencil'><span class='ui-icon ui-icon-pencil'></span></div>"
             +
             "<div class='droppable contentIntern ui-droppable' style='background-image: url(/Content/Resources/Images/rectangle.png)'></div>";
@@ -458,7 +452,6 @@ $(".frame .droppable").droppable({
             //Add frames in page
             var valuesId = [];
             var originalId = $(this).find(".GeomForm :first-child").attr("id");
-            //alert(originalId);
             valuesId = GetIdFromString(originalId);
             setBookModel(valuesId[0], valuesId[1], valuesId[2], draggableId);
 
@@ -480,15 +473,14 @@ $(".frame .droppable").droppable({
             $("#" + draggableId).show();
         } else if (draggableId == "txtBox") {
 
-            // alert($(this).attr("id"));
-            // alert($(this).children('div').children('div').children('div').eq(1).attr("class"));
             var parentTxtBoxId = $(this).children('div').children('div').eq(0).attr("id");
             $(this).children('div').children('div').children('div').eq(0).html('');
             $(this).children('div').children('div').children('div').eq(1).find('img').each(function() {
                 $(this).remove();
             });
             $(this).children('div').children('div').children('div').eq(1).find('.bigText').remove();
-            $(this).children('div').children('div').children('div').eq(1).prepend(" <p class='bigText' contenteditable='true' id='" + parentTxtBoxId + "-div_text'>Click here to edit..&#10;Hello</p>");
+            $(this).children('div').children('div').children('div').eq(1).prepend(" <p class='bigText' contenteditable='true' id='" + parentTxtBoxId + "-div_text'>Click here to edit..</p>");
+         
             $('.bigText').editable('/Book/AddTextToContent', {
                 type: 'textarea',
                 cancel: 'Cancel',
@@ -502,37 +494,56 @@ $(".frame .droppable").droppable({
                 indicator: '<img src="/Content/Resources/Images/home-ajax-loader.gif">',
                 tooltip: 'Click to edit...'
             });
-            //$(".bigText").val(replace($(".bigText").val(), "<br>", "&#10;"));
-            //children('div').eq(2).children('img').attr("id"));
+
+   
         }
         else {
             // alert( $("#"+draggableId).parent().parent().attr("id"));
             //  var descriptionArray = [];
             var parentId = $("#" + draggableId).parent().parent().attr("id");
-            alert(parentId);
+           // alert(parentId);
             var parentWidth = $("#" + parentId).width();
+           
+           
             var objWidth = $("#" + draggableId).width();
             var objPosition = $("#" + draggableId).position();
-            var parentPosition = $("#" + parentId).offset();
             var parentHeight = $("#" + parentId).height();
             var objHeight = $("#" + draggableId).height();
             valuesId = GetIdFromString(parentId);
             setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
             //alert(parentWidth);
             var scaleX = getPercentage(parentWidth, objWidth);
-            var scaleY = getPercentage(parentHeight, objHeight-10.0);
+            //alert($("#" + draggableId).parent().width());
+            var scaleY = getPercentage(parentHeight, objHeight);
             var defTop = objPosition.top + objHeight;
-            var origoY = getPercentage(parentHeight, defTop);
-            var origoX = getPercentage(parentWidth, objPosition.left);
-           // var bottom = $(window).height() - objPosition.top - objHeight;
-     
-            //alert( "objHeight="+objHeight + "origoY=" + origoY);
-          
-            // setObjectModel(draggableId, null, "50%", "50%", "50%", "50%",null);
-            // descriptionArray.push(actualContent + "-" + $($(this).find("img").attr("id")).attr("src"));
-            //  PostArray("UpdateObjectPosition", getBookModel());
+            var defLeft = objPosition.left - 30.0;
+            var origoY = getPercentage(parentHeight, (defTop - 40.0));
+            if (defLeft > $("#" + draggableId).parent().width() - objWidth) {
+                defLeft = $("#" + draggableId).parent().width()-10.0;
+            }
+            var origoX = getPercentage(parentWidth, defLeft);
+           // alert("scaleX="+scaleX +"scaleY="+ scaleY +"origoY=" +origoY + "origoX="+origoX);
+            setObjectModel(draggableId, null, scaleX, scaleY, origoX, origoY,null);
+              PostArray("UpdateObjectPosition", getBookModel());
         }
     }
+});
+
+$(document).ready(function () {
+    $('.bigText').editable('/Book/AddTextToContent', {
+        type: 'textarea',
+        cancel: 'Cancel',
+        name: 'model',
+        id: 'componentId',
+        submit: 'OK',
+        data: function (value, settings) {
+            var retval = value.replace(/<br[\s\/]?>/gi, '\n');
+            //var retval = value;
+            return retval;
+        },
+        indicator: '<img src="/Content/Resources/Images/home-ajax-loader.gif">',
+        tooltip: 'Click to edit...'
+    });
 });
 function getPercentage(frameValue,objValue) {
     var percentageWidth;

@@ -127,7 +127,7 @@
     <value>/Content/Resources/Generic/character/</value>
   </data>
   <data name="ExpressionRes" xml:space="preserve">
-    <value>/Content/Resources/Generic/expressions/</value>
+    <value>/Content/Resources/Generic/character/Expression/</value>
   </data>
   <data name="TemplateDirectory" xml:space="preserve">
     <value>/Content/Resources/BookTemplate/</value>

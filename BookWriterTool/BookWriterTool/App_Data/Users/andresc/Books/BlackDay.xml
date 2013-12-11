@@ -14,33 +14,28 @@
           <frames>
             <frame bordertype="rectangle" id="frame1">
               <contents>
-                <content target="rectangle" type="" background="background/purple-boardwalk-pier-jetty-pink-sunset-1920x1080-1024x576.jpg">
+                <content target="rectangle" type="">
                   <objects>
-                    <object img="expressions/interrogationexp.png" scaleX="25%" scaleY="25%" origoX="25%" type="Expression" id="Expression161" />
-                    <object img="animals/duck.jpg" scaleX="50%" scaleY="50%" origoX="50%" type="character" id="Object4" origoY="50%" />
-                    <object img="animals/duck.jpg" scaleX="25%" scaleY="25%" origoX="25%" type="character" id="Object42" />
-                    <object img="female/girlInGreen.png" scaleX="25%" scaleY="25%" origoX="25%" type="character2D" id="Character58" />
-                    <object img="female/girlInGreen.png" scaleX="25%" scaleY="25%" origoX="25%" origoY="25%" type="character2D" id="Character944" />
+                    <object type="textBox">Click here to edit..</object>
                   </objects>
                 </content>
               </contents>
             </frame>
             <frame bordertype="rectangle" id="frame2">
               <contents>
-                <content target="rectangle" type="" background="background/purple-boardwalk-pier-jetty-pink-sunset-1920x1080-1024x576.jpg">
+                <content target="rectangle" type="">
                   <objects>
-                    <object img="female/girlInGreen.png" scaleX="25%" scaleY="25%" origoX="25%" type="character2D" id="Character812" />
-                    <object img="female/girlInGreen.png" scaleX="25%" scaleY="25%" origoX="25%" origoY="25%" type="character2D" id="Character298" />
+                    <object type="textBox">eergre
+reger
+reg
+erClick here to edit..</object>
                   </objects>
                 </content>
               </contents>
             </frame>
-            <frame bordertype="square" id="frame3">
+            <frame bordertype="rectangle" id="frame3">
               <contents>
-                <content target="left" type="none">
-                  <objects />
-                </content>
-                <content target="right" type="none">
+                <content target="rectangle" type="" background="background/rectangle.png">
                   <objects />
                 </content>
               </contents>
@@ -53,368 +48,18 @@
               <contents>
                 <content target="rectangle" type="">
                   <objects>
-                    <text>
-                      <txtbox id="div_text">Click here to edit..</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">eeee
-eeee
-Click here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">sssss
-sssss
-Click here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">s
-s
-s
-s
-ssssss
-sssss
-Click here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">www
-www
-wwwClick here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">Click here to edit..
-ddd
-dd
-ddHello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">
-w
-ee
-qeClick here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-w
-ee
-qeClick here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">eeeeeeeeeeeeeeeeeeee
-eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-w
-ee
-qeClick here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">eeeeeeeeeeeeeeeeeeee
-eeeeeeeeeeeeeeeeeeeeeeeee
-eeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-w
-ee
-qeClick here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">e
-eeeeeeeeeeeeeeeeeeee
-eeeeeeeeeeeeeeeeeeeeeeeee
-eeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-w
-ee
-qeClick here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">
-dss
-s
-Click here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">d
-d
-ddClick here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">ddd
-ddddClick here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">sad
-asdsaClick here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">sad
-asdsaClick here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">asd
-das
-ads
-asdsad
-asdsaClick here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">wwwwww
-wwClick here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">www
-wwwwwwww
-wwClick here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">ss
-ss
-Click here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">aadsaD
-DADASD
-DSA
-ASwww
-wwwwwwww
-wwClick here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">WWEWE
-WEWEWE
-WEWE
-EClick here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">
-WDDW
-WDWDW
-DWDWWWEWE
-WEWEWE
-WEWE
-EClick here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">WD
-WDDW
-WDWDW
-DWDWWWEWE
-WEWEWE
-WEWE
-EClick here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">Click here to edit..
-Hello where are you</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">Click here to edit..
-Hello where are you
-destino</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">dasdasd
-Click here to edit..
-Hello where are you
-destino</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">www
-ww
-wwClick here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">ewewe
-weqe
-qwe
-Click here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">eee
-ewewe
-weqe
-qwe
-Click here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">eee
-ee
-aaaeee
-ewewe
-weqe
-qwe
-Click here to edit..
-Hello</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">eee sldskdmskldadmsalködkjsmklödmklsamdklm
-ee
-aaaeee
-ewewe
-weqe
-qwe
-Click here to edit..
-Hello</txtbox>
-                    </text>
+                    <object type="textBox">Click here to edit..</object>
                   </objects>
                 </content>
               </contents>
             </frame>
-            <frame bordertype="square" id="frame2">
+            <frame bordertype="rectangle" id="frame2">
               <contents>
-                <content target="left" type="none">
+                <content target="rectangle" type="">
                   <objects>
-                    <text>
-                      <txtbox id="div_text">Click here to edit..</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">Click here to edit..</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">"Click here to edit.."
-dsds
-sadsdas
-adasdas
-
-asdasd</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">Click here to edit..
-sdadwq
-wdqwqd</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">Click here to edit..
-wefwe
-wfw</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">Click here to edit..
-effwefewfwef
-wfwefwfewfwef
-fewfwefewf</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">sac
-sac
-asClick here to edit..</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">eClick here to w
-wfw
-wedit..</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">dfs
-sd
-sd
-sd
-Click here to edit..</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">ddd
-d
-d
-dClick here to edit..</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">d
-d
-d
-d
-dd
-"ddd\nd\nd\ndClick here to edit.."</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">
-w
-q
-q
-qClick here to edit..</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">
-f
-f
-f
-f"\nw\nq\nq\nqClick here to edit.."</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">dsdd
-dwClick here to edit..</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">Click here to edit..
-ds
-sa
-as
-as</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">
-f
-we
-we
-weClick here to edit..</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">
-csdas
-asaa
-aaClick here to edit..</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">Click here to edit.
-ddddd
-dddd</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">
-dsds
-ss
-ss
-sClick here to edit..</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">twe4t
-ewwe
-wewwre"\ndsds\nss\nss\nsClick here to edit.."</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">Click here to edit..
-fef
-feef</txtbox>
-                    </text>
-                    <text>
-                      <txtbox id="div_text">AsASA
-As
-aClick here to edit..
-Hello</txtbox>
-                    </text>
+                    <object type="textBox">
+eeeeeClick here to edit..</object>
                   </objects>
-                </content>
-                <content target="right" type="none">
-                  <objects />
                 </content>
               </contents>
             </frame>
@@ -423,7 +68,7 @@ Hello</txtbox>
                 <content target="left" type="none">
                   <objects />
                 </content>
-                <content target="right" type="none" background="background/anime_joker-1024x576.jpg">
+                <content target="right" type="none">
                   <objects />
                 </content>
               </contents>
@@ -470,12 +115,9 @@ Hello</txtbox>
                 </content>
               </contents>
             </frame>
-            <frame bordertype="square" id="frame2">
+            <frame bordertype="rectangle" id="frame2">
               <contents>
-                <content target="left" type="none">
-                  <objects />
-                </content>
-                <content target="right" type="none">
+                <content target="rectangle" type="">
                   <objects />
                 </content>
               </contents>

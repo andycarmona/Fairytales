@@ -5,6 +5,7 @@ namespace BookWriterTool.Repositories
     using System;
     using System.IO;
     using System.Xml;
+    using System.Xml.Linq;
     using System.Xml.Serialization;
 
     using BookWriterTool.Helpers;
@@ -65,7 +66,6 @@ namespace BookWriterTool.Repositories
             }
             return aChapter;
         }
-
 
         public book AddPage(string chapterId, string fileName)
         {
@@ -138,22 +138,31 @@ namespace BookWriterTool.Repositories
             var frameId = splitedData[2];
             var target = splitedData[3];
             var txtBoxId = splitedData[4];
-            xmlDoc = new XmlDocument();
+
+         xmlDoc = new XmlDocument();
             XmlElement aTextBox = xmlDoc.CreateElement("txtbox");
-            XmlElement textBoxContent = xmlDoc.CreateElement("text");
+            XmlElement textBoxContent = xmlDoc.CreateElement("object");
+          
             xmlDoc.Load(HttpContext.Current.Server.MapPath(fileName));
             var objectsNodes = (XmlElement)this.xmlDoc.SelectSingleNode(String.Format("//book/chapters/chapter[@id='{0}']/" +
                 "pages/page[@id='{1}']/frames/frame[@id='{2}']/contents/content[@target='{3}']/objects",
                 chapterId, pageId, frameId, target));
-
+          
             if (objectsNodes != null)
             {
-               aTextBox.SetAttribute("id", txtBoxId);
+                  if (objectsNodes.ChildNodes.Count > 0)
+                  {
+                      foreach (XmlNode aObject in objectsNodes.ChildNodes)
+                      {
+                          objectsNodes.RemoveChild(aObject);
+                      }
+                  }
+              
                XmlText txtBoxValue = xmlDoc.CreateTextNode(model);
-              aTextBox.AppendChild(txtBoxValue);
-                textBoxContent.AppendChild(aTextBox);
+                textBoxContent.SetAttribute("type", "textBox");
+                textBoxContent.AppendChild(txtBoxValue);
                 objectsNodes.AppendChild(textBoxContent);
-
+              
                 try
                 {
                     xmlDoc.Save(HttpContext.Current.Server.MapPath(fileName));
@@ -173,10 +182,6 @@ namespace BookWriterTool.Repositories
             
             return typeImg;
         }
-
- 
-
-      
 
         public string DeleteObjectFromContent(BookModel content, string fileName)
         {
@@ -210,7 +215,7 @@ namespace BookWriterTool.Repositories
             var mssg = "";
             try
             {
-                AddGenericObject(fileName, content, content.Objects[0].ImageObj, "character");
+                AddGenericObject(fileName, content, content.Objects[0].ImageObj);
             }
             catch (Exception e)
             {
@@ -220,39 +225,7 @@ namespace BookWriterTool.Repositories
             return mssg;
         }
 
-        public string AddCharacter2DToContent(BookModel content, string fileName)
-        {
-
-
-            var mssg = "";
-            try
-            {
-                AddGenericObject(fileName, content, content.Objects[0].ImageObj, "character2D");
-            }
-            catch (Exception e)
-            {
-                mssg = e.Message;
-            }
-
-            return mssg;
-        }
-
-        public string AddGenericObjectToContent(BookModel content, string fileName)
-        {
-            var mssg = "";
-            try
-            {
-                AddGenericObject(fileName, content, content.Objects[0].ImageObj, "Expression");
-            }
-            catch (Exception e)
-            {
-                mssg = e.Message;
-            }
-
-            return mssg;
-        }
-
-        public void AddGenericObject(string fileName, BookModel content, string imgVal, string type)
+        public void AddGenericObject(string fileName, BookModel content, string imgVal)
         {
             
             var image = this.GetIdFromFileName(imgVal);
@@ -266,11 +239,11 @@ namespace BookWriterTool.Repositories
             if (objectsNodes != null)
             {
                 aObject.SetAttribute("img", image);
-                aObject.SetAttribute("scaleX", "25%");
-                aObject.SetAttribute("scaleY", "25%");
-                aObject.SetAttribute("origoX", "25%");
-                aObject.SetAttribute("origoY", "25%");
-                aObject.SetAttribute("type", type);
+                aObject.SetAttribute("scaleX", content.Objects[0].ScaleX);
+                aObject.SetAttribute("scaleY", content.Objects[0].ScaleY);
+                aObject.SetAttribute("origoX", content.Objects[0].OrigoX);
+                aObject.SetAttribute("origoY", content.Objects[0].OrigoY);
+                aObject.SetAttribute("type",content.Objects[0].Type);
                 aObject.SetAttribute("id", content.Objects[0].ObjectId);
                 objectsNodes.AppendChild(aObject);
 
@@ -331,8 +304,6 @@ namespace BookWriterTool.Repositories
             return mssg;
         }
 
-        
-
         public string AddFrame(BookModel contentToSearch, string fileName)
         {
             var mssg = "";
@@ -391,7 +362,6 @@ namespace BookWriterTool.Repositories
             }
             return mssg;
         }
-
 
         public book GetAllContent()
         {

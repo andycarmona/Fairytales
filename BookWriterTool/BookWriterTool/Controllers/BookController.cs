@@ -285,35 +285,7 @@ namespace BookWriterTool.Controllers
             return Json(statusMsg);
         }
 
-        public JsonResult AddCharacter2DToContent(BookModel model)
-        {
-            var statusMsg = "";
-            if (Session["ActualFile"] != null)
-            {
-
-                var fileName = (string)this.Session["ActualFile"];
-
-                statusMsg = aBookRepository.AddCharacter2DToContent(model, fileName);
-
-
-            }
-            return Json(statusMsg);
-        }
-
-        public JsonResult AddExpressionToContent(BookModel model)
-        {
-            var statusMsg = "";
-            if (Session["ActualFile"] != null)
-            {
-
-                var fileName = (string)this.Session["ActualFile"];
-
-                statusMsg = aBookRepository.AddGenericObjectToContent(model, fileName);
-
-
-            }
-            return Json(statusMsg);
-        }
+   
         [HttpPost]
         public string AddTextToContent(string model,string componentId)
         {

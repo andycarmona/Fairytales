@@ -265,6 +265,22 @@ public partial class bookChapterPageFrameContentObject {
 
     private string origoYField;
 
+    private string textField;
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlText()]
+    public string text
+    {
+        get
+        {
+            return this.textField;
+        }
+        set
+        {
+            this.textField = value;
+        }
+    }
+
     /// <remarks/>
     [System.Xml.Serialization.XmlAttributeAttribute()]
     public string origoX 
