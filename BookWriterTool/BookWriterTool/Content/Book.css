@@ -153,6 +153,7 @@ right: 39%;
     width: 98%;
 }
 .bigText {
+    float: left;
 width: 96%;
 height: 80%;
 }

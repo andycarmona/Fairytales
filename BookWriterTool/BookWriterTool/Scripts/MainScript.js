@@ -93,7 +93,7 @@ jQuery(function() {
 });
 
 
-$(function() {
+$(document).ready(function () {
     $('.bb-bookblock').booklet({
         width: '65%',
         manual: 'false',
@@ -112,7 +112,7 @@ $(function() {
     $(".Container3D").addClass("disableControl");
     if ($("#mssgString").html() != '')
         showStatusMssg();
-
+    $('.bigText').bind("click", "tom", editableBox);
     activateEditorOperations();
 
 });
@@ -480,22 +480,10 @@ $(".frame .droppable").droppable({
             });
             $(this).children('div').children('div').children('div').eq(1).find('.bigText').remove();
             $(this).children('div').children('div').children('div').eq(1).prepend(" <p class='bigText' contenteditable='true' id='" + parentTxtBoxId + "-div_text'>Click here to edit..</p>");
-         
-            $('.bigText').editable('/Book/AddTextToContent', {
-                type: 'textarea',
-                cancel: 'Cancel',
-                name: 'model',
-                id: 'componentId',
-                submit: 'OK',
-                data: function (value, settings) {
-                    var retval = value.replace(/<br[\s\/]?>/gi, '\n');
-                    //var retval = value;
-                    return retval;},
-                indicator: '<img src="/Content/Resources/Images/home-ajax-loader.gif">',
-                tooltip: 'Click to edit...'
+            $('.bigText').bind("click", {componentId:parentTxtBoxId},function(evento) {
+                var data = evento.data;
+                editableBox(data.componentId);
             });
-
-   
         }
         else {
             // alert( $("#"+draggableId).parent().parent().attr("id"));
@@ -529,13 +517,17 @@ $(".frame .droppable").droppable({
     }
 });
 
-$(document).ready(function () {
+
+    function editableBox(componentId){
     $('.bigText').editable('/Book/AddTextToContent', {
         type: 'textarea',
         cancel: 'Cancel',
         name: 'model',
         id: 'componentId',
         submit: 'OK',
+        loaddata:function(value, settings) {
+            return { foo: "bar" };
+        },
         data: function (value, settings) {
             var retval = value.replace(/<br[\s\/]?>/gi, '\n');
             //var retval = value;
@@ -544,7 +536,7 @@ $(document).ready(function () {
         indicator: '<img src="/Content/Resources/Images/home-ajax-loader.gif">',
         tooltip: 'Click to edit...'
     });
-});
+    }
 function getPercentage(frameValue,objValue) {
     var percentageWidth;
     percentageWidth = Math.floor((objValue / frameValue) * 100);

@@ -14,9 +14,12 @@
           <frames>
             <frame bordertype="rectangle" id="frame1">
               <contents>
-                <content target="rectangle" type="">
+                <content target="rectangle" type="" background="background/purple-boardwalk-pier-jetty-pink-sunset-1920x1080-1024x576.jpg">
                   <objects>
-                    <object type="textBox">Click here to edit..</object>
+                    <object id="chapter1-page1-frame1-rectangle-div_text" type="textBox"><![CDATA[Click here to edit..
+aaaaa
+aaaa
+aaa]]></object>
                   </objects>
                 </content>
               </contents>
@@ -24,18 +27,13 @@
             <frame bordertype="rectangle" id="frame2">
               <contents>
                 <content target="rectangle" type="">
-                  <objects>
-                    <object type="textBox">eergre
-reger
-reg
-erClick here to edit..</object>
-                  </objects>
+                  <objects />
                 </content>
               </contents>
             </frame>
             <frame bordertype="rectangle" id="frame3">
               <contents>
-                <content target="rectangle" type="" background="background/rectangle.png">
+                <content target="rectangle" type="">
                   <objects />
                 </content>
               </contents>
@@ -46,20 +44,21 @@ erClick here to edit..</object>
           <frames>
             <frame bordertype="rectangle" id="frame1">
               <contents>
-                <content target="rectangle" type="">
+                <content target="rectangle" type="" background="background/anime_joker-1024x576.jpg">
                   <objects>
-                    <object type="textBox">Click here to edit..</object>
+                    <object id="chapter1-page2-frame1-rectangle-div_text" type="textBox"><![CDATA[Click here to edit.. What are you doing?
+Yes,tell me]]></object>
                   </objects>
                 </content>
               </contents>
             </frame>
-            <frame bordertype="rectangle" id="frame2">
+            <frame bordertype="square" id="frame2">
               <contents>
-                <content target="rectangle" type="">
-                  <objects>
-                    <object type="textBox">
-eeeeeClick here to edit..</object>
-                  </objects>
+                <content target="left" type="none">
+                  <objects />
+                </content>
+                <content target="right" type="none">
+                  <objects />
                 </content>
               </contents>
             </frame>
@@ -115,9 +114,12 @@ eeeeeClick here to edit..</object>
                 </content>
               </contents>
             </frame>
-            <frame bordertype="rectangle" id="frame2">
+            <frame bordertype="square" id="frame2">
               <contents>
-                <content target="rectangle" type="">
+                <content target="left" type="none">
+                  <objects />
+                </content>
+                <content target="right" type="none">
                   <objects />
                 </content>
               </contents>

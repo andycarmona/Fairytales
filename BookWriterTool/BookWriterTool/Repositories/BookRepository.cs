@@ -158,7 +158,8 @@ namespace BookWriterTool.Repositories
                       }
                   }
               
-               XmlText txtBoxValue = xmlDoc.CreateTextNode(model);
+               XmlCDataSection txtBoxValue = xmlDoc.CreateCDataSection(model);
+                textBoxContent.SetAttribute("id", componentId);
                 textBoxContent.SetAttribute("type", "textBox");
                 textBoxContent.AppendChild(txtBoxValue);
                 objectsNodes.AppendChild(textBoxContent);
