@@ -88,7 +88,7 @@ namespace BookWriterTool.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /Content/Resources/Generic/character/Expression/.
+        ///   Looks up a localized string similar to /Content/Resources/Generic/character/.
         /// </summary>
         internal static string ExpressionRes {
             get {

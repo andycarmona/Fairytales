@@ -103,6 +103,8 @@ namespace BookWriterTool.Helpers
             return folderName;
         }
 
+       
+
         public string AddNewBook(string newFileName,string userName)
         {
             var mssg = "";
@@ -115,12 +117,21 @@ namespace BookWriterTool.Helpers
                         Directory.CreateDirectory(
                             HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("UsersDirectory") + userName + "/Books/"));
                     }
-                    if (!File.Exists(GlobalVariables.ConfigResource("UsersDirectory") + userName + "/Books/" + newFileName + ".xml"))
+                    if (
+                        !File.Exists(
+                            GlobalVariables.ConfigResource("UsersDirectory") + userName + "/Books/" + newFileName
+                            + ".xml"))
                     {
                         File.Copy(
-                            HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("TemplateDirectory") + "empty.xml"),
                             HttpContext.Current.Server.MapPath(
-                               GlobalVariables.ConfigResource("UsersDirectory") + userName + "/Books/" + newFileName + ".xml"));
+                                GlobalVariables.ConfigResource("TemplateDirectory") + "empty.xml"),
+                            HttpContext.Current.Server.MapPath(
+                                GlobalVariables.ConfigResource("UsersDirectory") + userName + "/Books/" + newFileName
+                                + ".xml"));
+                    }
+                    else
+                    {
+                        throw new IOException("ERROR:This file exist already.Please!! Choose another name. ");
                     }
                 }else
                 {
@@ -137,11 +148,12 @@ namespace BookWriterTool.Helpers
         public string DeleteBook(string fileToDelete, string activeUser)
         {
             var mssg="";
+            var pathToFile = string.Format(
+                "{0}{1}/Books/{2}", GlobalVariables.ConfigResource("UsersDirectory"), activeUser, fileToDelete.Trim());
             try
             {
                 File.Delete(
-                    HttpContext.Current.Server.MapPath(
-                        string.Format("{0}{1}/Books/{2}", GlobalVariables.ConfigResource("UsersDirectory"), activeUser, fileToDelete)));
+                    HttpContext.Current.Server.MapPath(pathToFile));
             }
             catch (IOException e)
             {

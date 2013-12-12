@@ -14,13 +14,8 @@
           <frames>
             <frame bordertype="rectangle" id="frame1">
               <contents>
-                <content target="rectangle" type="" background="background/purple-boardwalk-pier-jetty-pink-sunset-1920x1080-1024x576.jpg">
-                  <objects>
-                    <object id="chapter1-page1-frame1-rectangle-div_text" type="textBox"><![CDATA[Click here to edit..
-aaaaa
-aaaa
-aaa]]></object>
-                  </objects>
+                <content target="rectangle" type="">
+                  <objects />
                 </content>
               </contents>
             </frame>
@@ -44,11 +39,8 @@ aaa]]></object>
           <frames>
             <frame bordertype="rectangle" id="frame1">
               <contents>
-                <content target="rectangle" type="" background="background/anime_joker-1024x576.jpg">
-                  <objects>
-                    <object id="chapter1-page2-frame1-rectangle-div_text" type="textBox"><![CDATA[Click here to edit.. What are you doing?
-Yes,tell me]]></object>
-                  </objects>
+                <content target="rectangle" type="">
+                  <objects />
                 </content>
               </contents>
             </frame>
@@ -78,7 +70,7 @@ Yes,tell me]]></object>
           <frames>
             <frame bordertype="rectangle" id="frame1">
               <contents>
-                <content target="rectangle" type="">
+                <content target="rectangle" type="" background="background/rectangle.png">
                   <objects />
                 </content>
               </contents>

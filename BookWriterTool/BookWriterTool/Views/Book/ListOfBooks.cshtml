@@ -23,7 +23,8 @@
            
 
                                     <li rel="file" >@Html.ActionLink(@fileName, "GetChosenBook", "Book", new { fileName = @path }, new { Class = "btn btn-lg btn-primary" })
-                                        
+              
+                                        <input id="@fileName" class="ui-widget  ui-corner-all deleteFile" type="button" value="delete" />
                                     </li>
                                 }
                             }

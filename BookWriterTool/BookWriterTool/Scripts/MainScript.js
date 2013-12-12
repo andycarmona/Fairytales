@@ -129,24 +129,6 @@ function showStatusMssg() {
     });
 }
 
-/*Edit on place*/
-
-$('.addBook').editable('/Book/AddNewBook', {
-    type: 'textarea',
-    name: 'newFileName',
-    submit: 'OK',
-    callback: function(value, settings) {
-        if (value.systemMssg == "") {
-            $("#partialFileResult").html(result.ObjectInquiryView);
-            $("#mssgString").html("SUCCES:You create a new book");
-        } else {
-            $("#mssgString").html("ERROR: create a new book");
-        }
-        showStatusMssg();
-
-        // alert("value " + value );
-    }
-});
 
 /*Tree structure for fils and directories*/
 $(function() {
@@ -172,47 +154,7 @@ $(function() {
     $("#expressionGroup").jstree({
         "plugins": ["themes", "html_data"]
     });
-    $("#userContent").jstree({
-        "plugins": ["themes", "html_data", "contextmenu", "types"],
-        'types': {
-            'types': {
-                'file': {
-                    'icon': {
-                        'image': '/Images/file.png'
-                    }
-                },
-                'default': {
-                    'valid_children': 'default'
-                }
-            }
-        },
-        "contextmenu": {
-            "items": {
-                remove: {
-                    label: "Delete location",
-                    action: function(obj) {
-                        $.ajax({
-                            url: "/Book/DeleteBook",
-                            type: 'POST',
-                        data: {
-                            "fileToDelete": obj.text()
-                        },
-                        success: function(result) {
 
-                        },
-                        error: function(result) {
-                            $("#mssgString").html("Error:Couldn't remove element");
-                            showStatusMssg();
-                        }
-                    });
-}
-},
-                        "ccp": false,
-                        "create": false,
-                        "rename": false
-}
-}
-});
 });
 
 
@@ -254,20 +196,29 @@ function SetFrameModel(bordertype) {
 /*Check html element is empty*/
 
 function CheckIsEmpty(element) {
-    return $.trim($("#" + element).html()).length
+    return $.trim($("#" + element).html()).length;
 }
 
 /*Add img on content in frame*/
 $('#objectsGroup img').bind("click", function () {
+    if (actualContent == null) {
+        showInfoMessage("Click on <div border='1'><span class='ui-icon ui-icon-pencil'></span></div>  to edit a content!!");
+    } else
     AddObject("CharacterRes", $(this));
 });
 /*Add img on content in frame*/
 $('#characterGroup img').bind("click", function () {
+    if (actualContent == null) {
+        showInfoMessage("Click on <div border='1'><span class='ui-icon ui-icon-pencil'></span></div>  to edit a content!!");
+    }else
     AddObject("Character2DRes", $(this));
 
 });
 /*Add img on content in frame*/
 $('#expressionGroup img').bind("click", function () {
+    if (actualContent == null) {
+        showInfoMessage("Click on <div border='1'><span class='ui-icon ui-icon-pencil'></span></div>  to edit a content!!");
+    } else
     AddObject("ExpressionRes", $(this));
 });
 function AddObject(type, element) {
@@ -288,6 +239,36 @@ function AddObject(type, element) {
         PostArray("AddObjectToContent", getBookModel());
     }
 }
+/*Delete book*/
+$('.deleteFile').on('click',function () {
+    var aFile = this.id;
+
+    $.post("/Book/DeleteBook", { fileToDelete: aFile}, function (data) {
+        $("#partialFileResult").html(data);
+
+        //$("#userContent").jstree("refresh");
+        showInfoMessage("SUCCES:You delete this book");
+    }).fail(function () {
+        showInfoMessage("ERROR: Couldn't delete this book.");
+    });   
+});
+
+/*Add new Book*/
+
+$('#AddNewBook_btn').bind('click', function () {
+    var fileName = $("#newFileName").val();
+    if (fileName == "") {
+        showInfoMessage("Please! Insert a name for the file.");
+    
+    } else {
+         $.post("/Book/AddNewBook", { newFileName: fileName }, function(data) {
+              $("#partialFileResult").html(data);
+              showInfoMessage("SUCCES:You create a new book");
+        }).fail(function() {
+            showInfoMessage("ERROR: Couldn't create a book.");
+        });
+ }
+}); 
 
 
 /*Delete object in content*/
@@ -307,8 +288,8 @@ $("#ctxMenuDelete").click(function() {
             destroyContextMenu();
         });
     } else {
-        $("#mssgString").html("ERROR.Can't find element");
-        showStatusMssg();
+        showInfoMessage("ERROR.Can't find element");
+
 
     }
 });
@@ -385,7 +366,8 @@ function configurateImgOnTerrain(status) {
 }
 
 /*Change background image of terrain*/
-$(".backgroundContain").click(function() {
+$(".backgroundContain").click(function () {
+    
     //  var descriptionArray = [];
     var valuesId = [];
     var bk = $(this).attr("id");
@@ -398,7 +380,7 @@ $(".backgroundContain").click(function() {
         $("#" + actualContent + " .contentIntern").css("background-image", "url(" + imgChosen + ")");
         PostArray("AddBackgroundToFrame", getBookModel());
 
-    }
+    } else { showInfoMessage("Click on <div border='1'><span class='ui-icon ui-icon-pencil'></span></div>  to edit a content!!"); }
 });
 
 /*Add new page*/
@@ -472,18 +454,22 @@ $(".frame .droppable").droppable({
             $("#" + draggableId).css({ position: "relative", bottom: 0, left: 0 });
             $("#" + draggableId).show();
         } else if (draggableId == "txtBox") {
-
-            var parentTxtBoxId = $(this).children('div').children('div').eq(0).attr("id");
-            $(this).children('div').children('div').children('div').eq(0).html('');
-            $(this).children('div').children('div').children('div').eq(1).find('img').each(function() {
-                $(this).remove();
-            });
-            $(this).children('div').children('div').children('div').eq(1).find('.bigText').remove();
-            $(this).children('div').children('div').children('div').eq(1).prepend(" <p class='bigText' contenteditable='true' id='" + parentTxtBoxId + "-div_text'>Click here to edit..</p>");
-            $('.bigText').bind("click", {componentId:parentTxtBoxId},function(evento) {
-                var data = evento.data;
-                editableBox(data.componentId);
-            });
+            
+            
+            if (actualContent != null) {
+                // alert(actualContent);)
+                $("#" + actualContent).children('div').eq(1).find('.bigText').remove();
+                $("#" + actualContent).children('div').eq(1).find('img').each(function() {
+                    $(this).remove();
+                });
+                $("#" + actualContent).children('div').eq(1).prepend(" <p class='bigText' contenteditable='true' id='" + actualContent + "-div_text'>Click here to edit..</p>");
+                $('.bigText').bind("click", { componentId: actualContent }, function (evento) {
+                    var data = evento.data;
+                    editableBox(data.componentId);
+                });
+            } else {
+                showInfoMessage("Click on <div border='1'><span class='ui-icon ui-icon-pencil'></span></div>  to edit a content!!");
+            }
         }
         else {
             // alert( $("#"+draggableId).parent().parent().attr("id"));
@@ -510,15 +496,18 @@ $(".frame .droppable").droppable({
                 defLeft = $("#" + draggableId).parent().width()-10.0;
             }
             var origoX = getPercentage(parentWidth, defLeft);
-           // alert("scaleX="+scaleX +"scaleY="+ scaleY +"origoY=" +origoY + "origoX="+origoX);
             setObjectModel(draggableId, null, scaleX, scaleY, origoX, origoY,null);
               PostArray("UpdateObjectPosition", getBookModel());
         }
     }
 });
+function showInfoMessage(mssg) {
+    $("#mssgString").html(mssg);
+    showStatusMssg();
+}
 
-
-    function editableBox(componentId){
+function editableBox(componentId) {
+   // alert(componentId);
     $('.bigText').editable('/Book/AddTextToContent', {
         type: 'textarea',
         cancel: 'Cancel',
@@ -624,9 +613,10 @@ function PostArray(url, descriptionArray) {
         success: function(statusMsg) {
             descriptionArray.length = 0;
         },
-        error: function(statusMsg) {
-            $("#mssgString").html("ERROR.Couldn't send message.Wrong parameters");
-            showStatusMssg();
+        error: function (statusMsg) {
+         
+            showInfoMessage("ERROR.Couldn't send message.Wrong parameters");
+           
         }
     });
 }

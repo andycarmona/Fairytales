@@ -1,26 +1,32 @@
 ﻿@using BookWriterTool.Helpers
 @{ var frame = (bookChapterPageFrame)this.ViewData["actualFrame"];
-    var target = (string)this.ViewData["target"];
-   }
+   var target = (string)this.ViewData["target"];
+}
 @if (frame.contents != null)
 {
-    foreach (bookChapterPageFrameContent content in frame.contents.Where(content=>content.target==target))
+    foreach (bookChapterPageFrameContent content in frame.contents.Where(content => content.target == target))
     { <div class="editPencil"><span class="ui-icon ui-icon-pencil"></span></div>
-        <div class="droppable contentIntern" style="background-image: url(@(!String.IsNullOrEmpty(content.background) ? "/Content/Resources/Generic/"+@content.background:"/Content/Resources/Images/rectangle.png"))">
-          
-            @foreach (bookChapterPageFrameContentObject obj in content.objects)
+    <div class="droppable contentIntern" style="background-image: url(@(!String.IsNullOrEmpty(content.background) ? "/Content/Resources/Generic/" + @content.background : "/Content/Resources/Images/rectangle.png"))">
+        @if (content.objects != null)
             {
-                if (obj.type == "character")
+            foreach (bookChapterPageFrameContentObject obj in content.objects)
+            {
+                if (@obj.type == "textBox")
                 {
-                    <img id="@obj.id" style="left: 50%; top: 55%;" class="clonedImg" width="35" height="70" alt="" src="@GlobalVariables.ConfigResource("CharacterRes")@(obj.img)" />
-                }else if (obj.type == "character2D")
-                {
-                     <img id="@obj.id" style="left: 50%; top: 55%;" class="clonedImg" width="35" height="70" alt="" src="@GlobalVariables.ConfigResource("Character2DRes")@(obj.img)" />
+                <p class='bigText' contenteditable='true'>@Html.Raw(@obj.text.Replace("\n", "<br/>"))</p>
                 }
-      
-            }
-        
+                else if (obj.type == "character")
+                {
+                <img id="@obj.id" style="left: 50%; top: 55%;" class="clonedImg" width="35" height="70" alt="" src="@GlobalVariables.ConfigResource("CharacterRes")@(obj.img)" />
+                }
+                else if (obj.type == "character2D")
+                {
+                <img id="@obj.id" style="left: 50%; top: 55%;" class="clonedImg" width="35" height="70" alt="" src="@GlobalVariables.ConfigResource("Character2DRes")@(obj.img)" />
+                }
 
-        </div>
+            }
+        }
+
+    </div>
     }
 }

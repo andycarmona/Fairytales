@@ -107,8 +107,8 @@ namespace BookWriterTool.Controllers
                 systemMssg = "Couldn't add new book.";
             }
             ViewBag.statusMsg = systemMssg;
-            ViewBag.arrayBooks = listOfBooks;
-            return Json(new{systemMssg});
+           ViewData["listOfBooks"] = listOfBooks;
+            return this.PartialView("ListOfBooks");
         }
 
         public ActionResult DeleteBook(string fileToDelete)
@@ -120,7 +120,9 @@ namespace BookWriterTool.Controllers
                 activeUser = (string)this.Session["username"];
                 try
                 {
-                    systemMssg = this.fileHandler.DeleteBook(fileToDelete, activeUser);
+                   
+                    systemMssg = this.fileHandler.DeleteBook(fileToDelete, activeUser); 
+                    listOfBooks = this.fileHandler.GetListOfUserBooks(activeUser);
                 }
                 catch (Exception e)
                 {
@@ -132,8 +134,8 @@ namespace BookWriterTool.Controllers
                 systemMssg = "Couldn't find files";
             }
             ViewBag.statusMsg = systemMssg;
-            ViewBag.arrayBooks = listOfBooks;
-            return this.RedirectToAction("EditBook");
+            ViewData["listOfBooks"] = listOfBooks;
+            return this.PartialView("ListOfBooks");
         }
 
         public ActionResult EditBook()

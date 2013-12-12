@@ -67,10 +67,15 @@ img
 {
     width: 100%;
 }
-
+.addBook input{
+    position: relative;
+    width: 100%;
+}
 .editPencil
 {
     float: left;
+    position: relative;
+    left: 50%;
     background-color: black;
 }
 
@@ -86,14 +91,7 @@ img
     top: 50px;
     width: 200px;
 }
-/*Editor delen*/
-#ViewChanger
-{
- width: 245px;
-position: absolute;
-bottom: 3%;
-right: 39%;
-}
+
 
 .higlightFrame
 {
@@ -154,8 +152,8 @@ right: 39%;
 }
 .bigText {
     float: left;
-width: 96%;
-height: 80%;
+width: 90%;
+height: 75%;
 }
 .containerSquare
 {
