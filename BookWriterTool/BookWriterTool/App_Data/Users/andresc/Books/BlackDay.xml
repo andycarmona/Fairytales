@@ -19,10 +19,16 @@
                 </content>
               </contents>
             </frame>
-            <frame bordertype="rectangle" id="frame2">
+            <frame bordertype="square" id="frame2">
               <contents>
-                <content target="rectangle" type="">
-                  <objects />
+                <content target="left" type="none">
+                  <objects>
+                  </objects>
+                </content>
+                <content target="right" type="none">
+                  <objects>
+                    <object img="expressions/interrogationexp.png" scaleX="10.0%" scaleY="24.0%" origoX="81.0%" origoY="77.0%" type="ExpressionRes" id="Object90" />
+                  </objects>
                 </content>
               </contents>
             </frame>
@@ -44,22 +50,17 @@
                 </content>
               </contents>
             </frame>
-            <frame bordertype="square" id="frame2">
+            <frame bordertype="rectangle" id="frame2">
               <contents>
-                <content target="left" type="none">
-                  <objects />
-                </content>
-                <content target="right" type="none">
-                  <objects />
+                <content target="rectangle" type="">
+                  <objects>
+                  </objects>
                 </content>
               </contents>
             </frame>
-            <frame bordertype="square" id="frame3">
+            <frame bordertype="rectangle" id="frame3">
               <contents>
-                <content target="left" type="none">
-                  <objects />
-                </content>
-                <content target="right" type="none">
+                <content target="rectangle" type="">
                   <objects />
                 </content>
               </contents>
@@ -68,9 +69,12 @@
         </page>
         <page id="page3">
           <frames>
-            <frame bordertype="rectangle" id="frame1">
+            <frame bordertype="square" id="frame1">
               <contents>
-                <content target="rectangle" type="" background="background/rectangle.png">
+                <content target="left" type="none">
+                  <objects />
+                </content>
+                <content target="right" type="none">
                   <objects />
                 </content>
               </contents>
@@ -85,12 +89,9 @@
                 </content>
               </contents>
             </frame>
-            <frame id="frame3" bordertype="square">
+            <frame bordertype="rectangle" id="frame3">
               <contents>
-                <content target="left" background="">
-                  <objects />
-                </content>
-                <content target="right" background="">
+                <content target="rectangle" type="">
                   <objects />
                 </content>
               </contents>
@@ -98,6 +99,31 @@
           </frames>
         </page>
         <page id="page4">
+          <frames>
+            <frame bordertype="rectangle" id="frame1">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="rectangle" id="frame2">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="rectangle" id="frame3">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+          </frames>
+        </page>
+        <page id="page5">
           <frames>
             <frame bordertype="rectangle" id="frame1">
               <contents>
@@ -116,12 +142,9 @@
                 </content>
               </contents>
             </frame>
-            <frame bordertype="square" id="frame3">
+            <frame bordertype="rectangle" id="frame3">
               <contents>
-                <content target="left" type="none">
-                  <objects />
-                </content>
-                <content target="right" type="none">
+                <content target="rectangle" type="">
                   <objects />
                 </content>
               </contents>

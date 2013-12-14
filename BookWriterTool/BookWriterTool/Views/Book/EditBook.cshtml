@@ -112,8 +112,6 @@
     <div id="accordionConfig" class="toolbox">
         <h3>@Localization.Localize("files")</h3>
         <div class="leftContent">
-            <label>@Localization.Localize("ChooseOption")</label>
-
             <div id="partialFileResult">
                 @{
                     @Html.Partial("ListOfBooks", (string[])ViewBag.Table, new ViewDataDictionary { { "listOfBooks", ViewBag.arrayBooks } })
@@ -128,17 +126,37 @@
         </div>
         <h3>Status</h3>
         <div class="leftContent">
-            <span class="ui-icon ui-icon-help"></span>
-            <label>Position X</label>
+     
+               <label>ParentPosition left:</label>
+            <input id="parentX_txtbox" type="text" />
+
+            <label>Parent Position top:</label>
+            <input id="parentY_txtbox" type="text" />
+
+            <label>Object Position left:</label>
             <input id="posX_txtbox" type="text" />
-            <label>Position Y</label>
+
+            <label>Object Position top:</label>
             <input id="posY_txtbox" type="text" />
-            <label>Page Name</label>
+
+            <label>origoX:</label>
             <input id="pageName_txtbox" />
-            <label>Frame name</label>
+
+            <label>origoY:</label>
             <input id="frameName_txtbox" />
-            <label>Target</label>
-            <input id="target_txtbox" />
+
+            <label>Parent widht</label>
+            <input id="parentWidth_txtbox" type="text" />
+
+            <label>Parent height</label>
+            <input id="parentHeight_txtbox" type="text" />
+
+            <label>Obj width</label>
+            <input id="objWidth_txtbox" />
+
+            <label>Obj height</label>
+            <input id="objHeight_txtbox" />
+
         </div>
         <h3>@Localization.Localize("Languages")</h3>
         <div class="leftContent">
@@ -181,13 +199,15 @@
     </div>
 </div>
 <div id="contentWindow"></div>
-<div class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" id='context-menu'>
+<div class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" id='context-menu'>   
+     <span  id="valCtxMenu"></span>
     <ul>
         <li>Edit</li>
         <li id="ctxMenuDelete">Delete</li>
-        <li>Export</li>
+        <li id="ctxMenuIncreaseSize">Increase size</li>
+         <li id="ctxMenuDecreaseSize">Decrease size</li>
     </ul>
-    <span hidden="hidden" id="valCtxMenu"></span>
+
 </div>
 <div id="statusDialog">
     <label>Status</label>

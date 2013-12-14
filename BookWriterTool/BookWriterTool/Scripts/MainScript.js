@@ -51,6 +51,7 @@ var actualPage;
 var actualTarget;
 var actualContent;
 var actualImg;
+var zIndexCounter = 1000;
 
 var u = new UnityObject2(config);
 
@@ -97,6 +98,7 @@ $(document).ready(function () {
     $('.bb-bookblock').booklet({
         width: '65%',
         manual: 'false',
+        hoverWidth:0,
         overlays: true,
         pagePadding: 0,
         height: 600,
@@ -223,13 +225,14 @@ $('#expressionGroup img').bind("click", function () {
 });
 function AddObject(type, element) {
     var parentId = $("#" + draggableId).parent().parent().attr("id");
-  // alert(parentId);
+    zIndexCounter++;
+   //alert(zIndexCounter);
     var origoX = "0%";
     var origoY = "0%";
     var scaleX = "10%";
     var scaleY = "25%";
     var randomnumber = Math.floor(Math.random() * 100);
-    $('#' + actualContent + " .contentIntern").append('<img width="'+scaleX+'" height="'+scaleY+'" style="left: "' + origoX + '";top: "' + origoY + '";" class="clonedImg" id="Cloned' + randomnumber + '" src="' + element.attr("src") + '" />');
+    $('#' + actualContent + " .contentIntern").append('<img width="'+scaleX+'" height="'+scaleY+'"  style="left: "' + origoX + '";top: "' + origoY + '";" class="clonedImg" id="Object' + randomnumber + '" src="' + element.attr("src") + '" />');
     var valuesId = [];
     configurateImgOnTerrain(true);
     if (actualContent != null) {
@@ -274,6 +277,7 @@ $('#AddNewBook_btn').bind('click', function () {
 /*Delete object in content*/
 $("#ctxMenuDelete").click(function() {
     var objId = $("#valCtxMenu").html();
+   // alert(objId);
     var valuesId = [];
     if (actualContent != null) {
         $("#" + actualContent + " .contentIntern").find('img').each(function() {
@@ -292,6 +296,47 @@ $("#ctxMenuDelete").click(function() {
 
 
     }
+});
+
+/*Increase size object*/
+$("#ctxMenuIncreaseSize").click(function() {
+    var objId = $("#valCtxMenu").html();
+    // alert(objId);
+    var valuesId = [];
+    if (actualContent != null) {
+        $("#" + actualContent + " .contentIntern").find('img').each(function () {
+            if (objId == $(this).attr("id")) {
+                $(this).height("+=10");
+                $(this).width("+=10");
+            }
+            destroyContextMenu();
+        });
+    } else {
+        showInfoMessage("ERROR.Can't find element");
+
+
+    }
+    
+});
+/*Increase size object*/
+$("#ctxMenuDecreaseSize").click(function () {
+    var objId = $("#valCtxMenu").html();
+    // alert(objId);
+    var valuesId = [];
+    if (actualContent != null) {
+        $("#" + actualContent + " .contentIntern").find('img').each(function () {
+            if (objId == $(this).attr("id")) {
+                $(this).height("-=10");
+                $(this).width("-=10");
+            }
+            destroyContextMenu();
+        });
+    } else {
+        showInfoMessage("ERROR.Can't find element");
+
+
+    }
+
 });
 /*Start drag effect on element*/
 
@@ -316,12 +361,11 @@ function startDrag(element) {
             draggableId = $(this).attr("id");
            // alert(draggableId);
             //  alert("StartDrag");
-            var offset = $(this).offset();
-            var imgHeight = parseInt($("#" + draggableId).css("height"), 10);
-            var xPos = offset.left;
-            var yPos = offset.top - imgHeight;
-            $('#posX_txtbox').val('xw: ' + xPos);
-            $('#posY_txtbox').val('yw: ' + yPos);
+            //var offset = $(this).offset();
+            //var imgHeight = parseInt($("#" + draggableId).css("height"), 10);
+          //  var xPos = offset.left;
+           // var yPos = offset.top - imgHeight;
+           
         }
     });
 }
@@ -338,6 +382,7 @@ function activateEditorOperations() {
             $("#" + actualContent + " .droppable img").draggable("destroy");
         }
         actualContent = $(this).parent().attr("id");
+        
         configurateImgOnTerrain();
     });
 }
@@ -457,7 +502,7 @@ $(".frame .droppable").droppable({
             
             
             if (actualContent != null) {
-                // alert(actualContent);)
+              //   alert(actualContent);
                 $("#" + actualContent).children('div').eq(1).find('.bigText').remove();
                 $("#" + actualContent).children('div').eq(1).find('img').each(function() {
                     $(this).remove();
@@ -472,35 +517,44 @@ $(".frame .droppable").droppable({
             }
         }
         else {
-            // alert( $("#"+draggableId).parent().parent().attr("id"));
-            //  var descriptionArray = [];
+   
+            startDragNoLimit($("#".draggableId));
             var parentId = $("#" + draggableId).parent().parent().attr("id");
-           // alert(parentId);
+            //alert(parentId);
             var parentWidth = $("#" + parentId).width();
-           
-           
             var objWidth = $("#" + draggableId).width();
+            var parentPosition = $("#" + parentId).position();
             var objPosition = $("#" + draggableId).position();
             var parentHeight = $("#" + parentId).height();
             var objHeight = $("#" + draggableId).height();
+            var parentPosTop = parentPosition.top;
+            var objPosTop = objPosition.top;
+            var scaleX = getPercentage(parentWidth, objWidth);
+            var scaleY = getPercentage(parentHeight, objHeight);
+            var origoX = getPercentage(parentWidth, (objPosition.left-objWidth)-parentPosition.left);
+            var origoY = getPercentage(parentHeight, objPosition.top - parentPosition.top);
+            
+            /*For debugging purpose. Shows data on Status in acccordion menu*/
+            $('#parentX_txtbox').val(parentPosition.left);
+            $('#parentY_txtbox').val(parentPosition.top);
+            $('#posX_txtbox').val(objPosition.left);
+            $('#posY_txtbox').val(objPosition.top-parentPosition.top );
+            $('#pageName_txtbox').val(origoX);
+            $('#frameName_txtbox').val(origoY);
+            $('#parentWidth_txtbox').val(parentWidth);
+            $('#parentHeight_txtbox').val(parentHeight);
+            $('#objWidth_txtbox').val(objWidth);
+            $('#objHeight_txtbox').val(objHeight);
+            /*End of debug part*/
+            
             valuesId = GetIdFromString(parentId);
             setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-            //alert(parentWidth);
-            var scaleX = getPercentage(parentWidth, objWidth);
-            //alert($("#" + draggableId).parent().width());
-            var scaleY = getPercentage(parentHeight, objHeight);
-            var defTop = objPosition.top + objHeight;
-            var defLeft = objPosition.left - 30.0;
-            var origoY = getPercentage(parentHeight, (defTop - 40.0));
-            if (defLeft > $("#" + draggableId).parent().width() - objWidth) {
-                defLeft = $("#" + draggableId).parent().width()-10.0;
-            }
-            var origoX = getPercentage(parentWidth, defLeft);
             setObjectModel(draggableId, null, scaleX, scaleY, origoX, origoY,null);
               PostArray("UpdateObjectPosition", getBookModel());
         }
     }
 });
+
 function showInfoMessage(mssg) {
     $("#mssgString").html(mssg);
     showStatusMssg();
@@ -527,10 +581,13 @@ function editableBox(componentId) {
     });
     }
 function getPercentage(frameValue,objValue) {
-    var percentageWidth;
-    percentageWidth = Math.floor((objValue / frameValue) * 100);
-   // return percentageWidth;
-    return (percentageWidth).toFixed(1) + "%";
+    var percentage;
+    percentage= Math.floor((objValue / frameValue) * 100);
+    if (percentage > 88.0)
+        percentage = 96.0;
+    if (percentage < 0.0)
+        percentage = 0.0;
+    return (percentage).toFixed(1) + "%";
 }
 
 function GetIdFromString(stringToSplit) {

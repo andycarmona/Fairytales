@@ -271,9 +271,7 @@
     <Content Include="Content\Resources\Images\home-ajax-loader.gif" />
     <Content Include="Content\Resources\Images\newpage.png" />
     <Content Include="Content\Resources\Images\rectangle.png" />
-    <Content Include="Content\Resources\Images\square.png" />
     <Content Include="Content\Resources\Images\squarepart.png" />
-    <Content Include="Content\Resources\Images\triangle.png" />
     <Content Include="App_Data\Users\kallec\bookNoMetadata2.xml" />
     <Content Include="App_Data\Users\kallec\Come back.xml" />
     <Content Include="Content\Resources\WebPlayer\webviewer2.html" />
