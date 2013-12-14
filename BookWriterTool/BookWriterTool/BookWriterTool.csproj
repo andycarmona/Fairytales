@@ -265,6 +265,8 @@
     <Content Include="Content\Resources\Generic\character\animals\duck.jpg" />
     <Content Include="Content\Resources\Generic\character\expressions\expdrop.png" />
     <Content Include="Content\Resources\Generic\character\expressions\interrogationexp.png" />
+    <Content Include="Content\Resources\Images\speechTalk.png" />
+    <Content Include="Content\Resources\Images\speechThink.png" />
     <Content Include="Content\Resources\Images\border.png" />
     <Content Include="Content\Resources\Images\delete.png" />
     <Content Include="Content\Resources\Images\file.png" />

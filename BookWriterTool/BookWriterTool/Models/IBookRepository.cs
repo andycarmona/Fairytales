@@ -14,13 +14,15 @@ namespace BookWriterTool.Models
 
        
         string AddObjectToContent(BookModel content, string fileName);
+        string AddSpeechBubbleObject(BookModel content, string fileName);
         string DeleteObjectFromContent(BookModel content, string fileName);
         string UpdateObjectPosition(BookModel content, string fileName);
         string AddBackgroundToContent(BookModel content, string fileName);
         string AddFrame(BookModel content, string fileName);
         book GetAllContent();
         void EditChapter(string chapterId);
-
-        string AddTextToContent(string model, string componentId, string fileName);
+        string AddTextToBubble(string model, string componentId, string fileName, string type, string form);
+        string AddTextToContent(string model, string componentId, string fileName,string type,string form);
+        
     }
 }

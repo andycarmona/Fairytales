@@ -286,10 +286,9 @@ namespace BookWriterTool.Controllers
             }
             return Json(statusMsg);
         }
+       
 
-   
-        [HttpPost]
-        public string AddTextToContent(string model,string componentId)
+        public JsonResult AddSpeechBubbleObject(BookModel model)
         {
             var statusMsg = "";
             if (Session["ActualFile"] != null)
@@ -297,7 +296,39 @@ namespace BookWriterTool.Controllers
 
                 var fileName = (string)this.Session["ActualFile"];
 
-         statusMsg = aBookRepository.AddTextToContent(model,componentId, fileName);
+                statusMsg = aBookRepository.AddSpeechBubbleObject(model, fileName);
+
+
+            }
+            return Json(statusMsg);
+        }
+        [HttpPost]
+        public string AddTextToBubble(string model, string componentId, string type, string form)
+        {
+            var statusMsg = "";
+            if (Session["ActualFile"] != null)
+            {
+
+                var fileName = (string)this.Session["ActualFile"];
+
+                statusMsg = aBookRepository.AddTextToBubble(model, componentId, fileName, type, form);
+
+
+            }
+            var replacedModel = Regex.Replace(model, "\n", "<br />");
+            return replacedModel;
+        }
+    
+        [HttpPost]
+        public string AddTextToContent(string model,string componentId,string type,string form)
+        {
+            var statusMsg = "";
+            if (Session["ActualFile"] != null)
+            {
+
+                var fileName = (string)this.Session["ActualFile"];
+
+         statusMsg = aBookRepository.AddTextToContent(model,componentId, fileName,type,form);
 
 
             }

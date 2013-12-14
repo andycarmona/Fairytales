@@ -201,13 +201,47 @@ function CheckIsEmpty(element) {
     return $.trim($("#" + element).html()).length;
 }
 
+
+/*Add img on content in frame*/
+$('#txtCompGroup #txtBox').bind("click", function () {
+    if (actualContent == null) {
+        showInfoMessage("Click on <div border='1'><span class='ui-icon ui-icon-pencil'></span></div>  to edit a content!!");
+    } else
+
+        if (actualContent != null) {
+            //   alert(actualContent);
+            $("#" + actualContent).children('div').eq(1).find('.bigText').remove();
+            $("#" + actualContent).children('div').eq(1).find('img').each(function () {
+                $(this).remove();
+            });
+            $("#" + actualContent).children('div').eq(1).prepend(" <p class='bigText' contenteditable='true' id='" + actualContent + "-div_text'>Click here to edit..</p>");
+            $('.bigText').bind("click", { componentId: actualContent }, function (evento) {
+                var data = evento.data;
+                editableBox(data.componentId,"textBox");
+            });
+        } else {
+            showInfoMessage("Click on <div border='1'><span class='ui-icon ui-icon-pencil'></span></div>  to edit a content!!");
+        }
+});
+/*Add img on content in frame*/
+$('#txtCompGroup .bubbleText').bind("click", function () {
+    var objId=$(this).attr("id");
+    if (actualContent == null) {
+        showInfoMessage("Click on <div border='1'><span class='ui-icon ui-icon-pencil'></span></div>  to edit a content!!");
+    } else {
+        AddSpeechBubble("speechBubble", $(this));
+    }
+});
+
 /*Add img on content in frame*/
 $('#objectsGroup img').bind("click", function () {
+    
     if (actualContent == null) {
         showInfoMessage("Click on <div border='1'><span class='ui-icon ui-icon-pencil'></span></div>  to edit a content!!");
     } else
     AddObject("CharacterRes", $(this));
 });
+
 /*Add img on content in frame*/
 $('#characterGroup img').bind("click", function () {
     if (actualContent == null) {
@@ -223,7 +257,31 @@ $('#expressionGroup img').bind("click", function () {
     } else
     AddObject("ExpressionRes", $(this));
 });
+
+function editableBox(componentId,boxType,form) {
+    // alert(componentId);
+    $('.bigText').editable('/Book/AddTextToContent', {
+        type: 'textarea',
+        cancel: 'Cancel',
+        name: 'model',
+        id: 'componentId',
+        submit: 'OK',
+        submitdata:function (value,settings) {
+            return {type:boxType,form:form};
+        },
+        data: function (value, settings) {
+            var retval = value.replace(/<br[\s\/]?>/gi, '\n');
+            //var retval = value;
+            return retval;
+        },
+        indicator: '<img src="/Content/Resources/Images/home-ajax-loader.gif">',
+        tooltip: 'Click to edit...'
+    });
+}
+
+
 function AddObject(type, element) {
+    //alert(draggableId);
     var parentId = $("#" + draggableId).parent().parent().attr("id");
     zIndexCounter++;
    //alert(zIndexCounter);
@@ -231,16 +289,105 @@ function AddObject(type, element) {
     var origoY = "0%";
     var scaleX = "10%";
     var scaleY = "25%";
-    var randomnumber = Math.floor(Math.random() * 100);
-    $('#' + actualContent + " .contentIntern").append('<img width="'+scaleX+'" height="'+scaleY+'"  style="left: "' + origoX + '";top: "' + origoY + '";" class="clonedImg" id="Object' + randomnumber + '" src="' + element.attr("src") + '" />');
     var valuesId = [];
-    configurateImgOnTerrain(true);
+    var randomnumber = Math.floor(Math.random() * 100);
     if (actualContent != null) {
         valuesId = GetIdFromString(actualContent);
         setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
+  
+        $('#' + actualContent + " .contentIntern").append('<img width="' + scaleX + '" height="' + scaleY + '"  style="left: "' + origoX + '";top: "' + origoY + '";" class="clonedImg" id="Object' + randomnumber + '" src="' + element.attr("src") + '" />');
+    configurateImgOnTerrain(true);}
+    
         setObjectModel("Object" + randomnumber, element.attr("src"),scaleX, scaleY, origoX, origoY, type);
         PostArray("AddObjectToContent", getBookModel());
+    
+}
+function AddSpeechBubble(type, element) {
+
+    var parentId = $("#" + draggableId).parent().parent().attr("id");
+    var origoX = "0%";
+    var origoY = "0%";
+    var scaleX = "10%";
+    var scaleY = "25%";
+    var valuesId = [];
+    var randomnumber = Math.floor(Math.random() * 100);
+    if (actualContent != null) {
+        valuesId = GetIdFromString(actualContent);
+        setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
+    
+        $('#' + actualContent + " .contentIntern").append('<div class="speechContainer"><p class="smallText" contenteditable="true" id="' + actualContent + '-speech' + randomnumber + '">Click here to edit..</p></div>');
+           /* $("#"+actualContent+"-speech" + randomnumber).parent().css({
+                // "background": "url('../Content/Resources/Images/speechTalk.png')",
+                "background": "url(" + element.attr("src") + ")",
+                "background-size": "100%",
+                "background-repeat": "no-repeat"
+            });*/
+            $('.smallText').bind("click", { componentId: actualContent, boxType: "speechBubbla", boxForm: draggableId }, function (evento) {
+                var data = evento.data;
+                speechTxtBox(data.componentId, data.boxType, data.boxForm);
+            });
+            configurateObjOnTerrain(true);
+
+        setObjectModel(actualContent+"-speech" + randomnumber, element.attr("src"), scaleX, scaleY, origoX, origoY, type);
+        PostArray("AddSpeechBubbleObject", getBookModel());
     }
+}
+
+function speechTxtBox(componentId, boxType, form) {
+    // alert(componentId);
+    $('.smallText').editable('/Book/AddTextToBubble', {
+        type: 'textarea',
+        cancel: 'Cancel',
+        name: 'model',
+        id: 'componentId',
+        submit: 'OK',
+        submitdata: function (value, settings) {
+            return { type: boxType, form: form };
+        },
+        data: function (value, settings) {
+            var retval = value.replace(/<br[\s\/]?>/gi, '\n');
+            //var retval = value;
+            return retval;
+        },
+        indicator: '<img src="/Content/Resources/Images/home-ajax-loader.gif">',
+        tooltip: 'Click to edit...'
+    });
+}
+
+/*Add some more functions to added image on content frame*/
+
+function configurateObjOnTerrain(status) {
+    $('#' + actualContent + ' .droppable div').each(function () {
+
+        if (status) {
+            startDragNoLimit($(this));
+        } else {
+            startDrag($(this));
+        }
+    });
+}
+
+/*Add some more functions to added image on content frame*/
+
+function configurateImgOnTerrain(status) {
+    $('#' + actualContent + ' .droppable img').each(function () {
+
+        if (status) {
+            startDragNoLimit($(this));
+        } else {
+            startDrag($(this));
+        }
+
+        $(this).bind('contextmenu', function (e) {
+            $('#context-menu').css('left', e.pageX + 'px');
+            $('#context-menu').css('top', e.pageY + 'px');
+            $('#context-menu').css('z-index', 10);
+            $("#valCtxMenu").html($(this).attr("id"));
+            $('#context-menu').show();
+            e.preventDefault();
+            return false;
+        });
+    });
 }
 /*Delete book*/
 $('.deleteFile').on('click',function () {
@@ -272,7 +419,29 @@ $('#AddNewBook_btn').bind('click', function () {
         });
  }
 }); 
+/*Delete object in content*/
+$("#ctxMenuFlip").click(function () {
+    var objId = $("#valCtxMenu").html();
+    // alert(objId);
+    var valuesId = [];
+    if (actualContent != null) {
+        $("#" + actualContent + " .contentIntern").find('img').each(function () {
+            if (objId == $(this).attr("id")) {
+                $(this).addClass('flipped');
+                //alert(actualContent);
+               // valuesId = GetIdFromString(actualContent);
+                //setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
+                //setObjectModel(objId, null, null, null, null, null, null);
+                //PostArray("DeleteObjectFromContent", getBookModel());
+            }
+            destroyContextMenu();
+        });
+    } else {
+        showInfoMessage("ERROR.Can't find element");
 
+
+    }
+});
 
 /*Delete object in content*/
 $("#ctxMenuDelete").click(function() {
@@ -387,28 +556,6 @@ function activateEditorOperations() {
     });
 }
 
-/*Add some more functions to added image on content frame*/
-
-function configurateImgOnTerrain(status) {
-    $('#' + actualContent + ' .droppable img').each(function() {
-
-        if (status) {
-            startDragNoLimit($(this));
-        } else {
-            startDrag($(this));
-        }
-
-        $(this).bind('contextmenu', function(e) {
-            $('#context-menu').css('left', e.pageX + 'px');
-            $('#context-menu').css('top', e.pageY + 'px');
-            $('#context-menu').css('z-index', 10);
-            $("#valCtxMenu").html($(this).attr("id"));
-            $('#context-menu').show();
-            e.preventDefault();
-            return false;
-        });
-    });
-}
 
 /*Change background image of terrain*/
 $(".backgroundContain").click(function () {
@@ -443,26 +590,14 @@ $("#btnAddPage").click(function() {
 $("#framesGroup .draggable").draggable({
     cursor: 'move',
     helper: 'clone',
+    stack:'div',
     drag: function(event, ui) {
         draggableId = $(this).attr("id");
         //alert("group");
     }
 }).addClass("ui-state-highlight");
      
-/*Function handle draggable objects. 
-                 Objects you pickup and drag*/
-         
-$("#txtCompGroup .draggable").draggable({
-    cursor: 'move',
-    helper: 'clone',
-    drag: function(event, ui) {
-        draggableId = $(this).attr("id");
-        // alert(draggableId);
-    }
-}).addClass("ui-state-highlight");
-         
-
-       
+    
 
 
 /*Function handle droppable frames objects. 
@@ -491,32 +626,11 @@ $(".frame .droppable").droppable({
                 var squareLeftId = SplitAndConcanate(originalId, "left");
                 var squareRightId = SplitAndConcanate(originalId, "right");
                 $(this).find("div").prepend("<div  id=" + squareLeftId + " class='squareLeft'>" + htmlContent + "</div><div  id=" + squareRightId + " class='squareRight'>" + htmlContent + "</div>");
-            } else if (draggableId == "txtBox") {
-                alert("droppable contenIntern");
             }
             activateEditorOperations();
-
             $("#" + draggableId).css({ position: "relative", bottom: 0, left: 0 });
             $("#" + draggableId).show();
-        } else if (draggableId == "txtBox") {
-            
-            
-            if (actualContent != null) {
-              //   alert(actualContent);
-                $("#" + actualContent).children('div').eq(1).find('.bigText').remove();
-                $("#" + actualContent).children('div').eq(1).find('img').each(function() {
-                    $(this).remove();
-                });
-                $("#" + actualContent).children('div').eq(1).prepend(" <p class='bigText' contenteditable='true' id='" + actualContent + "-div_text'>Click here to edit..</p>");
-                $('.bigText').bind("click", { componentId: actualContent }, function (evento) {
-                    var data = evento.data;
-                    editableBox(data.componentId);
-                });
-            } else {
-                showInfoMessage("Click on <div border='1'><span class='ui-icon ui-icon-pencil'></span></div>  to edit a content!!");
-            }
-        }
-        else {
+        } else {
    
             startDragNoLimit($("#".draggableId));
             var parentId = $("#" + draggableId).parent().parent().attr("id");
@@ -560,26 +674,7 @@ function showInfoMessage(mssg) {
     showStatusMssg();
 }
 
-function editableBox(componentId) {
-   // alert(componentId);
-    $('.bigText').editable('/Book/AddTextToContent', {
-        type: 'textarea',
-        cancel: 'Cancel',
-        name: 'model',
-        id: 'componentId',
-        submit: 'OK',
-        loaddata:function(value, settings) {
-            return { foo: "bar" };
-        },
-        data: function (value, settings) {
-            var retval = value.replace(/<br[\s\/]?>/gi, '\n');
-            //var retval = value;
-            return retval;
-        },
-        indicator: '<img src="/Content/Resources/Images/home-ajax-loader.gif">',
-        tooltip: 'Click to edit...'
-    });
-    }
+
 function getPercentage(frameValue,objValue) {
     var percentage;
     percentage= Math.floor((objValue / frameValue) * 100);

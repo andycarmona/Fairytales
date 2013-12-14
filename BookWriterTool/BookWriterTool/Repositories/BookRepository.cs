@@ -124,7 +124,7 @@ namespace BookWriterTool.Repositories
             return this.GetAllContent();
         }
 
-        public string AddTextToContent(string model, string componentId,string fileName)
+        public string AddTextToContent(string model, string componentId,string fileName,string type,string form)
         {
             /*chapter1-page2-frame1-rectangle
             		 <txtbox>
@@ -160,7 +160,11 @@ namespace BookWriterTool.Repositories
               
                XmlCDataSection txtBoxValue = xmlDoc.CreateCDataSection(model);
                 textBoxContent.SetAttribute("id", componentId);
-                textBoxContent.SetAttribute("type", "textBox");
+                textBoxContent.SetAttribute("type",type);
+                if (type == "speechBubbla")
+                {
+                    textBoxContent.SetAttribute("form",form);
+                }
                 textBoxContent.AppendChild(txtBoxValue);
                 objectsNodes.AppendChild(textBoxContent);
               
@@ -182,6 +186,76 @@ namespace BookWriterTool.Repositories
             var typeImg = splittedImg[splittedImg.Length - 2]+"/"+splittedImg[splittedImg.Length - 1];
             
             return typeImg;
+        }
+
+        public string AddTextToBubble(string model, string componentId, string fileName, string type, string form)
+        {
+            var mssg = "";
+            string[] splitedData = componentId.Split('-');
+            var chapterId = splitedData[0];
+            var pageId = splitedData[1];
+            var frameId = splitedData[2];
+            var target = splitedData[3];
+            var txtBoxId = splitedData[4];
+
+            xmlDoc = new XmlDocument();
+            xmlDoc.Load(HttpContext.Current.Server.MapPath(fileName));
+            var objectsNodes = (XmlElement)this.xmlDoc.SelectSingleNode(String.Format("//book/chapters/chapter[@id='{0}']/" +
+                "pages/page[@id='{1}']/frames/frame[@id='{2}']/contents/content[@target='{3}']/objects/object[@id='{4}']",
+                chapterId, pageId, frameId, target,componentId));
+
+            if (objectsNodes != null)
+            {
+              
+
+                XmlCDataSection txtBoxValue = xmlDoc.CreateCDataSection(model);
+            
+                objectsNodes.AppendChild(txtBoxValue);
+
+                try
+                {
+                    xmlDoc.Save(HttpContext.Current.Server.MapPath(fileName));
+                }
+                catch (DirectoryNotFoundException e)
+                {
+                    mssg = e.Message;
+                }
+            }
+            return mssg;
+        }
+
+        public string AddSpeechBubbleObject(BookModel content, string fileName)
+        {
+          //  var image = this.GetIdFromFileName(imgVal);
+            var mssg = "";
+            try{
+            xmlDoc = new XmlDocument();
+            XmlElement aObject = xmlDoc.CreateElement("object");
+            xmlDoc.Load(HttpContext.Current.Server.MapPath(fileName));
+            var objectsNodes = (XmlElement)this.xmlDoc.SelectSingleNode(String.Format("//book/chapters/chapter[@id='{0}']/" +
+                "pages/page[@id='{1}']/frames/frame[@id='{2}']/contents/content[@target='{3}']/objects",
+                content.ChapterId, content.PageId, content.FrameId, content.Target));
+
+            if (objectsNodes != null)
+            {
+                //aObject.SetAttribute("img", image);
+                aObject.SetAttribute("scaleX", content.Objects[0].ScaleX);
+                aObject.SetAttribute("scaleY", content.Objects[0].ScaleY);
+                aObject.SetAttribute("origoX", content.Objects[0].OrigoX);
+                aObject.SetAttribute("origoY", content.Objects[0].OrigoY);
+                aObject.SetAttribute("type", content.Objects[0].Type);
+                aObject.SetAttribute("id", content.Objects[0].ObjectId);
+                objectsNodes.AppendChild(aObject);
+
+                xmlDoc.Save(HttpContext.Current.Server.MapPath(fileName));
+            }
+               }
+            catch (Exception e)
+            {
+                mssg = e.Message;
+            }
+
+            return mssg;
         }
 
         public string DeleteObjectFromContent(BookModel content, string fileName)

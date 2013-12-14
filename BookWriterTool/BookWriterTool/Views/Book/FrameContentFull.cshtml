@@ -13,13 +13,21 @@
             {
                 foreach (bookChapterPageFrameContentObject obj in content.objects)
                 {
-                    if (@obj.type == "textBox")
+                    switch (@obj.type)
                     {
-            <p class='bigText' contenteditable='true'>@Html.Raw(@obj.text.Replace("\n", "<br/>"))</p>
-                    }
-                    else
-                    {
-            <img id="@obj.id" style="left: @obj.origoX; top: @obj.origoY;" class="clonedImg" width="@obj.scaleX" height="@obj.scaleY" alt="" src="@GlobalVariables.ConfigResource(@obj.type)@(obj.img)" />
+                        case "textBox":
+                            <p class='bigText' contenteditable='true'>@this.Html.Raw(@obj.text.Replace("\n", "<br/>"))</p>
+                            break;
+                        case "speechBubble":
+                              
+                            <div class="speechContainer">
+                                <p class='smallText' contenteditable='true'> @this.Html.Raw(@obj.text != null ? @obj.text.Replace("\n", "<br/>"):" ")</p>
+                                    <br />
+                            </div>
+                            break;
+                        default:
+                       <img id="@obj.id" style="left: @obj.origoX; top: @obj.origoY;" class="clonedImg" width="@obj.scaleX" height="@obj.scaleY" alt="" src="@GlobalVariables.ConfigResource(@obj.type)@obj.img" />
+                            break;
                     }
                 }
             }
