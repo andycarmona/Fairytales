@@ -9,6 +9,7 @@ namespace BookWriterTool.Controllers
     using System.IO;
     using System.Linq;
     using System.Text.RegularExpressions;
+    using System.Web;
 
     using BookWriterTool.Helpers;
     using BookWriterTool.Models;
@@ -156,6 +157,7 @@ namespace BookWriterTool.Controllers
                     ViewBag.arrayBooks = listOfBooks;
                     ViewBag.statusMsg = systemMssg;
                     ViewBag.ObjectList = this.GetObjectsInFolder();
+                    ViewBag.BackgroundList = this.GetBackgroundInFolder();
                     return this.View(aBook);
                 }
                 catch (Exception e)
@@ -295,6 +297,26 @@ namespace BookWriterTool.Controllers
            Dictionary<string, string[]> character2DObj = fileHandler.GetListOfObjects(HttpContext.Server.MapPath(GlobalVariables.ConfigResource("Character2DRes")));
            var resultObjects = characterObj.Union(character2DObj).ToDictionary(k => k.Key, v => v.Value);
            return resultObjects;
+       }
+
+        public List<string> GetBackgroundInFolder()
+        {
+            List<string> backgroundFiles = this.fileHandler.GetListOfBackgrounds(HttpContext.Server.MapPath(GlobalVariables.ConfigResource("BackgroundRes")));
+            return backgroundFiles;
+        }
+
+        [HttpPost]
+       public ActionResult UploadObject(string selectedFolder,HttpPostedFileBase file)
+       {
+          
+           if (file.ContentLength > 0)
+           {
+               var fileName = Path.GetFileName(file.FileName);
+               var path = Path.Combine(Server.MapPath(selectedFolder), fileName);
+               file.SaveAs(path);
+           }
+
+           return RedirectToAction("EditBook");
        }
 
         public JsonResult AddSpeechBubbleObject(BookModel model)

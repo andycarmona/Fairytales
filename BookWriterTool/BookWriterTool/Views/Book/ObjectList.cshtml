@@ -11,21 +11,19 @@
             <li><a>Objects</a>
                 <ul>
                     <li><a>Animals</a>
-                        <ul>@foreach (var aObject in listOfObjects)
+                        <ul>
+                            @foreach (var aObject in listOfObjects.Where(aObject => aObject.Key == "animals"))
                             {
-                                if (aObject.Key == "animals")
-                                {
-                                    <li>
-                                        @{
-                                            var imgs = aObject.Value;
-                                            foreach (var image in imgs)
-                                            {
-                                                <img  src="@GlobalVariables.ConfigResource("CharacterRes")@aObject.Key/@image" border="1" width="25" height="50" alt="Click on this to place on page" />
-                                            }
-                                        } 
-                                    
-                                    </li>
-                                }
+                                <li>
+                                    @{
+                                        var imgs = aObject.Value;
+                                        foreach (var image in imgs)
+                                        {
+                                            <img  src="@GlobalVariables.ConfigResource("CharacterRes")@aObject.Key/@image" border="1" width="25" height="50" alt="Click on this to place on page" />
+                                        }
+                                    } 
+
+                                </li>
                             }
                         </ul>
                     </li>
@@ -36,31 +34,44 @@
     <div id="characterGroup">
         <ul>
             <li><a>Character2D</a>
-            <ul>
-                <li><a>Female</a>
-                    <ul>
-                         
-                        <li>
+                <ul>
+                    <li><a>Female</a>
+                        <ul>
+                            @foreach (var aObject in listOfObjects.Where(aObject => aObject.Key == "female"))
+                            {
+                                <li>
+                                    @{
+                                        var imgs = aObject.Value;
+                                        foreach (var image in imgs)
+                                        {
+                                            <img  src="@GlobalVariables.ConfigResource("Character2DRes")@aObject.Key/@image" border="1" width="25" height="50" alt="Click on this to place on page" />
+                                        }
+                                    } 
+                                </li>
+                            }
 
-                            <img    src="" border="1" width="25" height="50" alt="Click on this to place on page" />
-                        </li>
-                
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li><a>Male</a>
+                        <ul>
+                            @foreach (var aObject in listOfObjects.Where(aObject => aObject.Key == "male"))
+                            {
+                                <li>
+                                    @{
+                                        var imgs = aObject.Value;
+                                        foreach (var image in imgs)
+                                        {
+                                            <img  src="@GlobalVariables.ConfigResource("Character2DRes")@aObject.Key/@image" border="1" width="25" height="50" alt="Click on this to place on page" />
+                                        }
+                                    } 
+                                </li>
+                            }
 
-                    </ul>
-                </li>
-            </ul>
-            <ul>
-                <li><a>Male</a>
-                    <ul>
-                         
-                        <li>
-                            <img  alt=""  src="" border="1" width="25" height="50" alt="Click on this to place on page" />
-
-                        </li>
-                            
-                    </ul>
-                </li>
-            </ul>
+                        </ul>
+                    </li>
+                </ul>
         </ul>
     </div>
     <div id="expressionGroup">
@@ -69,15 +80,48 @@
                 <ul>
                     <li><a>emoticons</a>
                         <ul>
-                               
-                            <li>
-                                <img src="" border="1" width="25" height="50" alt="" />
-                            </li>
-                                
+                            @foreach (var aObject in listOfObjects.Where(aObject => aObject.Key == "expressions"))
+                            {
+                                <li>
+                                    @{
+                                        var imgs = aObject.Value;
+                                        foreach (var image in imgs)
+                                        {
+                                            <img  src="@GlobalVariables.ConfigResource("CharacterRes")@aObject.Key/@image" border="1" width="25" height="50" alt="Click on this to place on page" />
+                                        }
+                                    } 
+                                </li>
+                            }
+
                         </ul>
                     </li>
                 </ul>
             </li>
         </ul>
     </div>
-}  
+}
+<div class="formObjectGroup">
+@using (Html.BeginForm("UploadObject","Book",FormMethod.Post,new {enctype="multipart/form-data"}))
+{
+    <br/>
+        
+    <label for="file"></label>
+    <label>Choose folder to upload an object:</label>
+         <select class="ui-widget  ui-corner-all" id="selectedFolder" name="selectedFolder">
+
+	<option value="@GlobalVariables.ConfigResource("CharacterRes")animals">Animals</option>
+
+	<option value="@GlobalVariables.ConfigResource("CharacterRes")expressions">Expressions</option>
+
+	<option selected="selected" value="@GlobalVariables.ConfigResource("Character2DRes")male">Anime Male</option>
+
+	<option value="@GlobalVariables.ConfigResource("Character2DRes")female">Anime female</option>
+
+	</select>
+
+
+        <input class="ui-widget  ui-corner-all" type="file" name="file" id="file" value="Browse" />
+
+        <input class="ui-widget  ui-corner-all" type="submit" />
+
+}</div>

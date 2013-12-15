@@ -14,10 +14,8 @@
           <frames>
             <frame bordertype="rectangle" id="frame1">
               <contents>
-                <content target="rectangle" type="">
-                  <objects>
-                    <object img="animals/croc.jpg" scaleX="9.0%" scaleY="24.0%" origoX="44.0%" origoY="55.0%" type="CharacterRes" id="Object22" />
-                  </objects>
+                <content target="rectangle" type="" background="background/purple-boardwalk-pier-jetty-pink-sunset-1920x1080-1024x576.jpg">
+                  <objects />
                 </content>
               </contents>
             </frame>
@@ -41,14 +39,17 @@
           <frames>
             <frame bordertype="rectangle" id="frame1">
               <contents>
-                <content target="rectangle" type="">
-                  <objects />
+                <content target="rectangle" type="" background="background/background.jpg.jpg">
+                  <objects>
+                    <object id="chapter1-page2-frame1-rectangle-div_text" type="textBox"><![CDATA[Click here to edit..
+where to go]]></object>
+                  </objects>
                 </content>
               </contents>
             </frame>
             <frame bordertype="rectangle" id="frame2">
               <contents>
-                <content target="rectangle" type="">
+                <content target="rectangle" type="" background="background/background.jpg.jpg">
                   <objects />
                 </content>
               </contents>

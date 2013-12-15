@@ -145,6 +145,22 @@ namespace BookWriterTool.Helpers
             }
             return mssg;
         }
+
+        public List<string> GetListOfBackgrounds(string directoryPath)
+        {
+            var backgroundFiles=new List<string>();
+            var filesInDirectory =Directory.GetFiles( directoryPath);
+            if (filesInDirectory.Length > 0)
+            {
+                foreach (var fileName in filesInDirectory)
+                {
+                    var fileinfo = new FileInfo(fileName);
+                    backgroundFiles.Add(fileinfo.Name);
+                }
+            }
+            return backgroundFiles;
+        }
+
         public Dictionary<string, string[]> GetListOfObjects(string directoryPath)
         {
             var objectCatalog = new Dictionary<string, string[]>();

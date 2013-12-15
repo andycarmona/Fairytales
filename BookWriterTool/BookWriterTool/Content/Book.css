@@ -71,6 +71,7 @@ img
 .addBook input
 {
     position: relative;
+    background-color: transparent;
     width: 100%;
 }
 
@@ -252,6 +253,18 @@ min-width: 154px;
     outline: 0;
    padding: 1px 1px 9px 32px;
 
+}
+.formObjectGroup input{
+    background-color: transparent;
+}
+.formObjectGroup select {
+   background-color: transparent; 
+}
+.formBackgroundGroup input{
+     background-color: transparent;
+}
+.formBackgroundGroup select{
+     background-color: transparent;
 }
 .smallText
 {

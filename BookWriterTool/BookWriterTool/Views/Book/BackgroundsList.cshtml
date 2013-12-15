@@ -1,11 +1,29 @@
-﻿@{
-    Layout = null;
+﻿@using BookWriterTool.Helpers
+@{
+    var listOfBackgrounds = (List<string>)this.ViewData["listOfBackgrounds"];
+    var index = 0;
 }
 
 <div id="BackgroundCollection">
-    <img class="backgroundContain" id="background" alt="" src="/Content/Resources/Generic/background/purple-boardwalk-pier-jetty-pink-sunset-1920x1080-1024x576.jpg" border="1" width="150" height="137" title="MainContent" />
-
-    <img class="backgroundContain" id="bg2large" alt="" class="draggable" src="/Content/Resources/Generic/background/anime_joker-1024x576.jpg" border="1" width="150" height="137" title="MainContent" />
-    
-    <img class="backgroundContain" id="rectangleGeo" alt="" class="draggable" src="/Content/Resources/Generic/background/rectangle.png" border="1" width="150" height="137" title="MainContent" />
+    @if(listOfBackgrounds.Count>0){
+    foreach (var aBackground in listOfBackgrounds)
+    {
+        <img class="backgroundContain" id="background@(index)" alt="" src="@GlobalVariables.ConfigResource("BackgroundRes")@aBackground" border="1" width="40" height="40" title="MainContent" />
+        index++;
+    }}
 </div>
+<div class="formBackgroundGroup">
+@using (Html.BeginForm("UploadObject","Book",FormMethod.Post,new {enctype="multipart/form-data"}))
+{
+    <br/>
+        
+    <label for="file"></label>
+    <label>Upload a background image:</label>
+    <input type="hidden" id="selectedFolder" name="selectedFolder" value="@GlobalVariables.ConfigResource("BackgroundRes")"/>
+    
+
+        <input class="ui-widget  ui-corner-all" type="file" name="file" id="file" value="Browse" />
+
+        <input class="ui-widget  ui-corner-all" type="submit" />
+
+}</div>

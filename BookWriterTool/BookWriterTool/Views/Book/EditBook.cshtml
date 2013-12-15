@@ -29,7 +29,7 @@
         <span class="ui-icon ui-icon-help"></span>
         <input class="ui-widget ui-widget-content ui-corner-all" id="View2D" type="button" value="2D View" />
         <input class="ui-widget  ui-corner-all" id="View3D" type="button" value="3D View" />
-        <input class="ui-widget  ui-corner-all" id="btnAddPage" type="button" value="+" />
+        <input class="ui-widget  ui-corner-all" id="btnAddPage" type="button" value="Add new page" />
 
     </div>
 </div>
@@ -119,8 +119,8 @@
             </div>
             <br/>
            <label>Add new book</label>
-            <div class="addBook" id="div_1">
-                <input id="newFileName" type="text" />
+            <div class="ui-widget  ui-corner-all addBook" id="div_1">
+                <input class="ui-widget  ui-corner-all" id="newFileName" type="text" />
                 <input class="ui-widget  ui-corner-all" id="AddNewBook_btn" type="button" value="Add" />
             </div>
         </div>
@@ -185,9 +185,7 @@
         </div>
         <h3>@Localization.Localize("backgrounds")</h3>
         <div class="leftContent">
-
-            @Html.Partial("~/Views/Book/BackgroundsList.cshtml")
-
+             @Html.Partial("~/Views/Book/BackgroundsList.cshtml", (List<string>)ViewBag.Table, new ViewDataDictionary { { "listOfBackgrounds", ViewBag.BackgroundList } })
         </div>
           <h3>@Localization.Localize("textComponent")</h3>
         <div class="leftContent">
