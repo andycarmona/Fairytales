@@ -1,31 +1,50 @@
 ﻿@using BookWriterTool.Helpers
 @{
-    Layout = null;
+    var listOfObjects = (Dictionary<string, string[]>)this.ViewData["listOfObjects"];
+  
 }
+@if (listOfObjects != null)
+{
 
-<div id="objectsGroup">
-    <ul>
-        <li><a>Objects</a>
-            <ul>
-                <li><a>Animals</a>
-                    <ul>
-                        <li>
-                            <img    src="@GlobalVariables.ConfigResource("CharacterRes")animals/duck.jpg" border="1" width="25" height="50" alt="Click on this to place on page" />
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-    </ul>
-</div>
-<div id="characterGroup">
-    <ul>
-        <li><a>Character2D</a>
+    <div id="objectsGroup">
+        <ul>
+            <li><a>Objects</a>
+                <ul>
+                    <li><a>Animals</a>
+                        <ul>@foreach (var aObject in listOfObjects)
+                            {
+                                if (aObject.Key == "animals")
+                                {
+                                    <li>
+                                        @{
+                                            var imgs = aObject.Value;
+                                            foreach (var image in imgs)
+                                            {
+                                                <img  src="@GlobalVariables.ConfigResource("CharacterRes")@aObject.Key/@image" border="1" width="25" height="50" alt="Click on this to place on page" />
+                                            }
+                                        } 
+                                    
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div id="characterGroup">
+        <ul>
+            <li><a>Character2D</a>
             <ul>
                 <li><a>Female</a>
                     <ul>
+                         
                         <li>
-                            <img    src="@GlobalVariables.ConfigResource("Character2DRes")female/girlInGreen.png" border="1" width="25" height="50" alt="Click on this to place on page" /></li>
+
+                            <img    src="" border="1" width="25" height="50" alt="Click on this to place on page" />
+                        </li>
+                
 
                     </ul>
                 </li>
@@ -33,27 +52,32 @@
             <ul>
                 <li><a>Male</a>
                     <ul>
+                         
                         <li>
-                            <img  alt=""  src="@GlobalVariables.ConfigResource("Character2DRes")male/redFighter.png" border="1" width="25" height="50" alt="Click on this to place on page" /></li>
-                    </ul>
-                </li>
-            </ul>
-    </ul>
-</div>
-<div id="expressionGroup">
-    <ul>
-        <li><a>Expressions</a>
-            <ul>
-                <li><a>emoticons</a>
-                    <ul>
-                        <li>
-                            <img src="@GlobalVariables.ConfigResource("ExpressionRes")expressions/expdrop.png" border="1" width="25" height="50" alt="" />
-                            <img src="@GlobalVariables.ConfigResource("ExpressionRes")expressions/interrogationexp.png" border="1" width="25" height="50"/>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-    </ul>
-</div>
+                            <img  alt=""  src="" border="1" width="25" height="50" alt="Click on this to place on page" />
 
+                        </li>
+                            
+                    </ul>
+                </li>
+            </ul>
+        </ul>
+    </div>
+    <div id="expressionGroup">
+        <ul>
+            <li><a>Expressions</a>
+                <ul>
+                    <li><a>emoticons</a>
+                        <ul>
+                               
+                            <li>
+                                <img src="" border="1" width="25" height="50" alt="" />
+                            </li>
+                                
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+}  

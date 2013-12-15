@@ -2,6 +2,7 @@
 
 namespace BookWriterTool.Helpers
 {
+    using System.Collections;
     using System.Collections.Generic;
     using System.IO;
     using System.Xml.Serialization;
@@ -14,7 +15,7 @@ namespace BookWriterTool.Helpers
       //  public readonly string TemplateDirectory = "~/Content/Resources/BookTemplate/";
 
         public string ActualBook;
-
+   
       //  public static readonly string UsersDirectory = "~/Content/Resources/Users/";
  
 
@@ -72,7 +73,7 @@ namespace BookWriterTool.Helpers
             {
                 foreach (string directoryPath in directoryPaths)
                 {
-                    var fileInfo =new FileInfo(directoryPath);
+                   
                     string[] filesPaths = Directory.GetFiles(HttpContext.Current.Server.MapPath(directoryPath));
                   
                     string lastFolderName = this.GetFolderName(directoryPath);
@@ -144,7 +145,31 @@ namespace BookWriterTool.Helpers
             }
             return mssg;
         }
+        public Dictionary<string, string[]> GetListOfObjects(string directoryPath)
+        {
+            var objectCatalog = new Dictionary<string, string[]>();
+            var directoriesInRoot =Directory.GetDirectories( directoryPath);
+            foreach (var aDirectory in directoriesInRoot)
+            {
+                var fileInfo = new FileInfo(aDirectory);
+              
+                var filesInDirectory = Directory.GetFiles(aDirectory);
+                if (filesInDirectory.Length>0)
+                {
+                    var tmpFiles=new string[filesInDirectory.Length];
+                   for(int i=0;i<filesInDirectory.Length;i++)
+                   {
+                       var tmpInfo = new FileInfo(filesInDirectory[i]);
+                       tmpFiles[i] = tmpInfo.Name;
 
+                   } 
+                    objectCatalog.Add(fileInfo.Name, tmpFiles);
+                }
+            
+            }
+            return objectCatalog;
+        }
+      
         public string DeleteBook(string fileToDelete, string activeUser)
         {
             var mssg="";

@@ -106,6 +106,15 @@ namespace BookWriterTool.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to /Content/Resources/Generic/.
+        /// </summary>
+        internal static string rootResourceDirectory {
+            get {
+                return ResourceManager.GetString("rootResourceDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to /Content/Resources/BookTemplate/.
         /// </summary>
         internal static string TemplateDirectory {

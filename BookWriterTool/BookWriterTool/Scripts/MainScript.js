@@ -115,6 +115,34 @@ $(document).ready(function () {
     if ($("#mssgString").html() != '')
         showStatusMssg();
     $('.bigText').bind("click", "tom", editableBox);
+   // $('#genericObjGroup').load('/Book/GetObjectsInFolder');
+    /*Tree structure for fils and directories*/
+
+    $("#objectsGroup").jstree({
+        "plugins": ["themes", "html_data", "contextmenu"],
+        "contextmenu": {
+            "items": {
+                remove: {
+                    label: "Delete location",
+                    action: function(obj) {
+                        alert("Delete Object");
+                    }
+                },
+                "ccp": false,
+                "create": false,
+                "rename": false
+            }
+        }
+    }).bind("loaded.jstree", function(event, data) {
+      
+    });
+        $("#characterGroup").jstree({
+            "plugins": ["themes", "html_data"]
+        });
+        $("#expressionGroup").jstree({
+            "plugins": ["themes", "html_data"]
+        });
+
     activateEditorOperations();
 
 });
@@ -132,32 +160,7 @@ function showStatusMssg() {
 }
 
 
-/*Tree structure for fils and directories*/
-$(function() {
-    $("#objectsGroup").jstree({
-        "plugins": ["themes", "html_data", "contextmenu"],
-        "contextmenu": {
-            "items": {
-                remove: {
-                    label: "Delete location",
-                    action: function(obj) {
-                        alert("Delete Object");
-                    }
-                },
-                "ccp": false,
-                "create": false,
-                "rename": false
-            }
-        }
-    });
-    $("#characterGroup").jstree({
-        "plugins": ["themes", "html_data"]
-    });
-    $("#expressionGroup").jstree({
-        "plugins": ["themes", "html_data"]
-    });
 
-});
 
 
 /*Get selectec item of dropdownbox*/

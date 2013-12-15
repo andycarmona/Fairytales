@@ -15,7 +15,9 @@
             <frame bordertype="rectangle" id="frame1">
               <contents>
                 <content target="rectangle" type="">
-                  <objects />
+                  <objects>
+                    <object img="animals/croc.jpg" scaleX="9.0%" scaleY="24.0%" origoX="44.0%" origoY="55.0%" type="CharacterRes" id="Object22" />
+                  </objects>
                 </content>
               </contents>
             </frame>

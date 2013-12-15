@@ -58,6 +58,7 @@ namespace BookWriterTool.Controllers
       
             return statusConn;
         }
+
         public ActionResult FakeLogin(string userName)
         {
             var statusConn=this.CheckConnection();
@@ -154,6 +155,7 @@ namespace BookWriterTool.Controllers
                     aBook = this.aBookRepository.GetAllContent();
                     ViewBag.arrayBooks = listOfBooks;
                     ViewBag.statusMsg = systemMssg;
+                    ViewBag.ObjectList = this.GetObjectsInFolder();
                     return this.View(aBook);
                 }
                 catch (Exception e)
@@ -286,7 +288,14 @@ namespace BookWriterTool.Controllers
             }
             return Json(statusMsg);
         }
-       
+
+       public Dictionary<string, string[]> GetObjectsInFolder()
+       {
+           Dictionary<string, string[]> characterObj = this.fileHandler.GetListOfObjects(this.HttpContext.Server.MapPath(GlobalVariables.ConfigResource("CharacterRes")));
+           Dictionary<string, string[]> character2DObj = fileHandler.GetListOfObjects(HttpContext.Server.MapPath(GlobalVariables.ConfigResource("Character2DRes")));
+           var resultObjects = characterObj.Union(character2DObj).ToDictionary(k => k.Key, v => v.Value);
+           return resultObjects;
+       }
 
         public JsonResult AddSpeechBubbleObject(BookModel model)
         {
