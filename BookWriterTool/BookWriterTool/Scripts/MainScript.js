@@ -318,13 +318,8 @@ function AddSpeechBubble(type, element) {
         valuesId = GetIdFromString(actualContent);
         setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
     
-        $('#' + actualContent + " .contentIntern").append('<div class="speechContainer"><p class="smallText" contenteditable="true" id="' + actualContent + '-speech' + randomnumber + '">Click here to edit..</p></div>');
-           /* $("#"+actualContent+"-speech" + randomnumber).parent().css({
-                // "background": "url('../Content/Resources/Images/speechTalk.png')",
-                "background": "url(" + element.attr("src") + ")",
-                "background-size": "100%",
-                "background-repeat": "no-repeat"
-            });*/
+        $('#' + actualContent + " .contentIntern").append('<div class="speechContainer" id=speech'+randomnumber+'><p class="smallText" contenteditable="true" id="' + actualContent + '-speech' + randomnumber + '">Click here to edit..</p></div>');
+       
             $('.smallText').bind("click", { componentId: actualContent, boxType: "speechBubbla", boxForm: draggableId }, function (evento) {
                 var data = evento.data;
                 speechTxtBox(data.componentId, data.boxType, data.boxForm);
@@ -360,13 +355,24 @@ function speechTxtBox(componentId, boxType, form) {
 /*Add some more functions to added image on content frame*/
 
 function configurateObjOnTerrain(status) {
-    $('#' + actualContent + ' .droppable div').each(function () {
+    $('#' + actualContent + ' .droppable .speechContainer').each(function () {
 
         if (status) {
             startDragNoLimit($(this));
         } else {
             startDrag($(this));
         }
+     //  alert($(this).attr("id"));
+        $(this).bind('contextmenu', function (e) {
+         
+            $('#context-menu-extra').css('left', e.pageX + 'px');
+            $('#context-menu-extra').css('top', e.pageY + 'px');
+            $('#context-menu-extra').css('z-index', 10);
+            $("#valCtxMenuExtra").html($(this).attr("id"));
+            $('#context-menu-extra').show();
+            e.preventDefault();
+            return false;
+        });
     });
 }
 
@@ -380,7 +386,7 @@ function configurateImgOnTerrain(status) {
         } else {
             startDrag($(this));
         }
-
+        //alert($(this).attr("id"));
         $(this).bind('contextmenu', function (e) {
             $('#context-menu').css('left', e.pageX + 'px');
             $('#context-menu').css('top', e.pageY + 'px');
@@ -421,7 +427,38 @@ $('#AddNewBook_btn').bind('click', function () {
             showInfoMessage("ERROR: Couldn't create a book.");
         });
  }
-}); 
+});
+/*Start Context menu events*/
+$('html').click(function (e) {
+    $('#context-menu').hide();
+    $("#valCtxMenu").text('');
+    $('#context-menu-extra').hide();
+    $("#valCtxMenuExtra").text('');
+    e.stopPropagation();
+});
+$('#context-menu').click(function (e) {
+    $("#valCtxMenu").text('');
+    e.stopPropagation();
+});
+$('#context-menu-extra').click(function (e) {
+    $("#valCtxMenuExtra").text('');
+    e.stopPropagation();
+});
+$(window).resize(function () {
+    $('#context-menu').hide();
+    $('#context-menu-extra').hide();
+    $("#valCtxMenu").text('');
+    $("#valCtxMenuExtra").text('');
+});
+
+function destroyContextMenu() {
+    $('#context-menu').hide();
+    $("#valCtxMenu").text('');
+    $('#context-menu-extra').hide();
+    $("#valCtxMenuExtra").text('');
+}
+
+/*End of contextmenu events*/
 /*Delete object in content*/
 $("#ctxMenuFlip").click(function () {
     var objId = $("#valCtxMenu").html();
@@ -445,15 +482,41 @@ $("#ctxMenuFlip").click(function () {
 
     }
 });
+/*Delete speech in content*/
+$("#ctxMenuDeleteExtra").click(function () {
+    var objId = $("#valCtxMenuExtra").html();
+    // alert(objId);
+    var valuesId = [];
+    if (actualContent != null) {
 
+        $("#" + actualContent + " .contentIntern").children().each(function () {
+            if ((objId == $(this).attr("id")) || (objId == $(this).parent('div').attr("id"))) {
+                // alert("source" + objId + "second" + $(this).attr("id"));
+                $(this).remove();
+                //alert(actualContent);
+                valuesId = GetIdFromString(actualContent);
+               setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
+               setObjectModel(actualContent+"-"+objId, null, null, null, null, null, null);
+                PostArray("DeleteObjectFromContent", getBookModel());
+            }
+            destroyContextMenu();
+        });
+    } else {
+        showInfoMessage("ERROR.Can't find element");
+
+
+    }
+});
 /*Delete object in content*/
 $("#ctxMenuDelete").click(function() {
     var objId = $("#valCtxMenu").html();
    // alert(objId);
     var valuesId = [];
     if (actualContent != null) {
-        $("#" + actualContent + " .contentIntern").find('img').each(function() {
-            if (objId == $(this).attr("id")) {
+   
+        $("#" + actualContent + " .contentIntern").children().each(function() {
+            if ((objId == $(this).attr("id")) || (objId == $(this).parent('div').attr("id"))) {
+               // alert("source" + objId + "second" + $(this).attr("id"));
                 $(this).remove();
                 //alert(actualContent);
                 valuesId = GetIdFromString(actualContent);
@@ -693,27 +756,7 @@ function GetIdFromString(stringToSplit) {
     return arrayId;
 }
 
-/*Start Context menu events*/
-$('html').click(function(e) {
-    $('#context-menu').hide();
-    $("#valCtxMenu").text('');
-    e.stopPropagation();
-});
-$('#context-menu').click(function(e) {
-    $("#valCtxMenu").text('');
-    e.stopPropagation();
-});
-$(window).resize(function() {
-    $('#context-menu').hide();
-    $("#valCtxMenu").text('');
-});
 
-function destroyContextMenu() {
-    $('#context-menu').hide();
-    $("#valCtxMenu").text('');
-}
-
-/*End of contextmenu events*/
 
 
 /*Change Id name of element and replace*/

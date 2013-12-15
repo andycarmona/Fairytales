@@ -358,6 +358,16 @@ div#context-menu
     color: #fff;
     font-size: 12px;
 }
+div#context-menu-extra
+{
+    position: fixed;
+    display: none;
+    /*sample style attributes follow*/
+    width: 100px;
+    background: #fece2f;
+    color: #fff;
+    font-size: 12px;
+}
 /*Menu raden*/
 /* Clearfix for the menu */
 .ui-menu
@@ -384,7 +394,12 @@ div#context-menu
         padding: 0;
         width: auto;
     }
-
+    div#context-menu-extra li
+{
+    margin: 3px;
+    padding: 3px;
+    background: #000;
+}
 div#context-menu li
 {
     margin: 3px;
