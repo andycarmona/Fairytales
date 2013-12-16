@@ -15,14 +15,18 @@
             <frame bordertype="rectangle" id="frame1">
               <contents>
                 <content target="rectangle" type="">
-                  <objects />
+                  <objects>
+                    <object scaleX="10%" scaleY="25%" origoX="0%" origoY="0%" type="speechBubble" id="chapter1-page1-frame1-rectangle-speech99" />
+                  </objects>
                 </content>
               </contents>
             </frame>
             <frame bordertype="rectangle" id="frame2">
               <contents>
                 <content target="rectangle" type="">
-                  <objects />
+                  <objects>
+                    <object scaleX="10%" scaleY="25%" origoX="0%" origoY="0%" type="speechBubble" id="chapter1-page1-frame2-rectangle-speech29"><![CDATA[Click here to edit..]]><![CDATA[Click here to edit..hghg]]></object>
+                  </objects>
                 </content>
               </contents>
             </frame>
@@ -47,17 +51,14 @@
             <frame bordertype="rectangle" id="frame2">
               <contents>
                 <content target="rectangle" type="">
-                  <objects>
-                  </objects>
+                  <objects />
                 </content>
               </contents>
             </frame>
             <frame bordertype="rectangle" id="frame3">
               <contents>
                 <content target="rectangle" type="">
-                  <objects>
-                    <object scaleX="10%" scaleY="25%" origoX="0%" origoY="0%" type="speechBubble" id="chapter1-page2-frame3-rectangle-speech19" />
-                  </objects>
+                  <objects />
                 </content>
               </contents>
             </frame>
@@ -65,12 +66,9 @@
         </page>
         <page id="page3">
           <frames>
-            <frame bordertype="square" id="frame1">
+            <frame bordertype="rectangle" id="frame1">
               <contents>
-                <content target="left" type="none">
-                  <objects />
-                </content>
-                <content target="right" type="none">
+                <content target="rectangle" type="">
                   <objects />
                 </content>
               </contents>

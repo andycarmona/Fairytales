@@ -317,13 +317,7 @@ function AddSpeechBubble(type, element) {
     if (actualContent != null) {
         valuesId = GetIdFromString(actualContent);
         setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-    
-        $('#' + actualContent + " .contentIntern").append('<div class="speechContainer" id=speech'+randomnumber+'><p class="smallText" contenteditable="true" id="' + actualContent + '-speech' + randomnumber + '">Click here to edit..</p></div>');
-       
-            $('.smallText').bind("click", { componentId: actualContent, boxType: "speechBubbla", boxForm: draggableId }, function (evento) {
-                var data = evento.data;
-                speechTxtBox(data.componentId, data.boxType, data.boxForm);
-            });
+        $('#' + actualContent + " .contentIntern").append('<div class="speechContainer" id=speech' + randomnumber + '>aaa</div>');
             configurateObjOnTerrain(true);
 
         setObjectModel(actualContent+"-speech" + randomnumber, element.attr("src"), scaleX, scaleY, origoX, origoY, type);
@@ -331,16 +325,24 @@ function AddSpeechBubble(type, element) {
     }
 }
 
-function speechTxtBox(componentId, boxType, form) {
+$("#ctxMenuEditExtra").click(function () {
+    var objId = $("#valCtxMenuExtra").html();
+    $('#contentWindow').append('<div class="speechContainer"><p class="smallText" contenteditable="true">Click here to edit..</p></div>');
+    $('.smallText').bind("click", { componentId: actualContent+"-"+objId, boxType: "speechBubbla", boxForm: "left" }, function (evento) {
+        var data = evento.data;
+        speechTxtBox(data.componentId,data.boxType, data.boxForm);
+    });
+    $("#contentWindow").dialog();
+});
+function speechTxtBox(componentId,boxType, form) {
     // alert(componentId);
     $('.smallText').editable('/Book/AddTextToBubble', {
         type: 'textarea',
         cancel: 'Cancel',
         name: 'model',
-        id: 'componentId',
         submit: 'OK',
         submitdata: function (value, settings) {
-            return { type: boxType, form: form };
+            return { componentId:componentId,type: boxType, form: form };
         },
         data: function (value, settings) {
             var retval = value.replace(/<br[\s\/]?>/gi, '\n');
@@ -458,8 +460,9 @@ function destroyContextMenu() {
     $("#valCtxMenuExtra").text('');
 }
 
+
 /*End of contextmenu events*/
-/*Delete object in content*/
+/*Flip object in content*/
 $("#ctxMenuFlip").click(function () {
     var objId = $("#valCtxMenu").html();
     // alert(objId);
@@ -470,6 +473,43 @@ $("#ctxMenuFlip").click(function () {
                 $(this).addClass('flipped');
                 //alert(actualContent);
                // valuesId = GetIdFromString(actualContent);
+                //setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
+                //setObjectModel(objId, null, null, null, null, null, null);
+                //PostArray("DeleteObjectFromContent", getBookModel());
+            }
+            destroyContextMenu();
+        });
+    } else {
+        showInfoMessage("ERROR.Can't find element");
+
+
+    }
+});
+$("#ctxMenuFlipExtra").click(function () {
+    var objId = $("#valCtxMenuExtra").html();
+    var valuesId = [];
+    if (actualContent != null) {
+        $("#" + actualContent + " .contentIntern").find('div').each(function () {
+            if ((objId == $(this).attr("id")) || (objId == $(this).parent('div').attr("id"))) {
+                var result = "";
+                var actualBackground = $(this).css("background-image");
+                //alert(actualBackground);
+                var splitSrc = actualBackground.split('/');
+                var fileName = splitSrc[splitSrc.length - 1];
+              
+                if (fileName != "Talk") {
+                    result = "speechTalkRight.png";
+                } else {
+                    result = "speechTalk.png";
+                }
+                $("#" + objId).css("background-image","/Resources/Images/"+result);
+                alert("objeto " + objId + "bild " + result);
+                //alert(result);
+                //if(splitFileName[0].substr(0,splitFileName[0]-4)==)
+
+                //alert(fileName);
+                //alert(actualContent);
+                // valuesId = GetIdFromString(actualContent);
                 //setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
                 //setObjectModel(objId, null, null, null, null, null, null);
                 //PostArray("DeleteObjectFromContent", getBookModel());

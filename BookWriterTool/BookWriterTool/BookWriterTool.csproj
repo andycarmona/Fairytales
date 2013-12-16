@@ -266,6 +266,7 @@
     <Content Include="Content\Resources\Generic\character\expressions\expdrop.png" />
     <Content Include="Content\Resources\Generic\character\expressions\interrogationexp.png" />
     <Content Include="Content\Resources\Images\speechTalk.png" />
+    <Content Include="Content\Resources\Images\speechTalkRight.png" />
     <Content Include="Content\Resources\Images\speechThink.png" />
     <Content Include="Content\Resources\Images\border.png" />
     <Content Include="Content\Resources\Images\delete.png" />
@@ -273,6 +274,8 @@
     <Content Include="Content\Resources\Images\home-ajax-loader.gif" />
     <Content Include="Content\Resources\Images\newpage.png" />
     <Content Include="Content\Resources\Images\rectangle.png" />
+    <Content Include="Content\Resources\Images\speechThinkRight.png" />
+    <Content Include="Content\Resources\Images\square.png" />
     <Content Include="Content\Resources\Images\squarepart.png" />
     <Content Include="App_Data\Users\kallec\bookNoMetadata2.xml" />
     <Content Include="App_Data\Users\kallec\Come back.xml" />
