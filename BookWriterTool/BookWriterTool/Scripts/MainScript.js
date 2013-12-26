@@ -690,9 +690,8 @@ $(".frame .droppable").droppable({
     drop: function (event, ui) {
         activateEditorOperations();
         var htmlContent = "<div class='editPencil'><span class='ui-icon ui-icon-pencil'></span></div>"
-            +
-            "<div class='droppable contentIntern ui-droppable' style='background-image: url(/Content/Resources/Images/rectangle.png)'></div>";
-                    
+            +"<div class='droppable contentIntern ui-droppable' style='background-image: url(/Content/Resources/Images/rectangle.png)'></div>";
+        activateEditorOperations();
         if ((draggableId == "rectangle") || (draggableId == "square")) {
             //Add frames in page
             var valuesId = [];
@@ -715,7 +714,7 @@ $(".frame .droppable").droppable({
         } else {
    
             startDrag($("#".draggableId));
-            
+            activateEditorOperations();
             var parentId = $("#" + draggableId).parent().parent().attr("id");
            // alert(parentId);
             var parentWidth = $("#" + parentId).width();

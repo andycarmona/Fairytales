@@ -9,27 +9,29 @@
 }
 @if(frame!=null)
 {
-<div class="fileGroup" id="userContent">
-    <ul><li> <label>@Localization.Localize("ChooseOption")</label><ul>
-                            @foreach (var word in frame)
-                            {
-                                if (word != null)
-                                {
-                                    var user = (string)Session["username"];
-                                    var pos = @word.LastIndexOf("\\", System.StringComparison.Ordinal) + 1;
-                                    var aFileName = word.Substring(pos, word.Length - pos);
-                                    var aPath = "";
-                                    aPath = (GlobalVariables.ConfigResource("UsersDirectory") + user + "/Books/" + aFileName);
-           
+    <div style="float:left;"class="fileGroup" id="userContent">
 
-                                    <li rel="file" >@Html.ActionLink(@aFileName, "GetChosenBook", "Book", new { path = @aPath,fileName=@aFileName }, new { Class = "btn btn-lg btn-primary" })
-              
-                                        <input id="@aFileName" class="ui-widget  ui-corner-all deleteFile" type="button" value="delete" />
-                                    </li>
-                                }
-                            }
-                        </ul></li>
-    </ul>
-    <p>@statusMssg</p>
-</div>
+        <label>@Localization.Localize("ChooseOption")</label>
+                                                                 @foreach (var word in frame)
+                                                                 {
+                                                                     if (word != null)
+                                                                     {
+                                                                         var user = (string)Session["username"];
+                                                                         var pos = @word.LastIndexOf("\\", StringComparison.Ordinal) + 1;
+                                                                         var aFileName = word.Substring(pos, word.Length - pos);
+                                                                         var aPath = "";
+                                                                         aPath = (GlobalVariables.ConfigResource("UsersDirectory") + user + "/Books/" + aFileName);
+                                                                         var aImage = GlobalVariables.ConfigResource("UsersDirectory") + user + "/Books/" + aFileName+"/"+aFileName+".jpg"; 
+                                                                         <span id="@aFileName" class="deleteFile ui-icon ui-icon-closethick"></span>
+                                                                         <img width="50%" height="50%" alt="book logo" src="@aImage"/><br/>
+                                                                        @Html.ActionLink(@aFileName, "GetChosenBook", "Book", new { path = @aPath,fileName=@aFileName }, new { Class = "btn btn-lg btn-primary" })
+                                                                        
+                                                                          
+                                                                     }
+                                                                 }
+                                                    
+  
+
+        <p>@statusMssg</p>
+    </div>
 }

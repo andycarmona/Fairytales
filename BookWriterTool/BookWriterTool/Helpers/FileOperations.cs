@@ -121,9 +121,14 @@ namespace BookWriterTool.Helpers
                     if (
                         !File.Exists(actualDirectory+newFileName+"/"+newFileName+".xml"))
                     {
+                        //Create new xml file from template
                         File.Copy(
                             HttpContext.Current.Server.MapPath(
                                 GlobalVariables.ConfigResource("TemplateDirectory") + "empty.xml"),actualDirectory + newFileName + "/" + newFileName + ".xml");
+                        //Create new image
+                        File.Copy(
+                            HttpContext.Current.Server.MapPath(
+                                GlobalVariables.ConfigResource("Images") + "noimage.jpg"), actualDirectory + newFileName + "/" + newFileName + ".jpg");
                         //Create background folder
                         Directory.CreateDirectory(
                                actualDirectory + newFileName + "/Generic/background/");

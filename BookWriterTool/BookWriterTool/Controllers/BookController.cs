@@ -97,7 +97,7 @@ namespace BookWriterTool.Controllers
                 {
                     systemMssg = this.fileHandler.AddNewBook(newFileName, activeUser);
                     listOfBooks = this.fileHandler.GetListOfUserBooks(activeUser);
-                    systemMssg = aBookRepository.SetActualFile(String.Format("{0}{1}/Books/{2}.xml", GlobalVariables.ConfigResource("UsersDirectory"), activeUser, newFileName));
+                    systemMssg = aBookRepository.SetActualFile(String.Format("{0}{1}/Books/{2}/{3}.xml", GlobalVariables.ConfigResource("UsersDirectory"), activeUser,newFileName, newFileName));
                     if (newFileName != null)
                         aBook = this.aBookRepository.GetAllContent();
 
@@ -169,6 +169,7 @@ namespace BookWriterTool.Controllers
                     systemMssg = aBookRepository.SetActualFile(actualDirectory + "/" + fileName);
                     if (fileName != null)
                         aBook = this.aBookRepository.GetAllContent();
+                    ViewBag.fileName = fileName;
                     ViewBag.arrayBooks = listOfBooks;
                     ViewBag.statusMsg = systemMssg;
                     ViewBag.ObjectList = this.GetObjectsInFolder(actualDirectory);
@@ -355,12 +356,12 @@ namespace BookWriterTool.Controllers
         public JsonResult AddSpeechBubbleObject(BookModel model)
         {
             var statusMsg = "";
-            if (Session["ActualFile"] != null)
+            if (Session["ActualDirectory"] != null)
             {
-
+                var actualDirectory = (string)Session["ActualDirectory"];
                 var fileName = (string)this.Session["ActualFile"];
 
-                statusMsg = aBookRepository.AddSpeechBubbleObject(model, fileName);
+                statusMsg = aBookRepository.AddSpeechBubbleObject(model, actualDirectory + "/" + fileName);
 
 
             }
@@ -369,13 +370,13 @@ namespace BookWriterTool.Controllers
         [HttpPost]
         public string AddTextToBubble(string model, string componentId, string type, string form)
         {
-            var statusMsg = "";
-            if (Session["ActualFile"] != null)
-            {
 
+            if (Session["ActualDirectory"] != null)
+            {
+                var actualDirectory = (string)Session["ActualDirectory"];
                 var fileName = (string)this.Session["ActualFile"];
 
-                statusMsg = aBookRepository.AddTextToBubble(model, componentId, fileName, type, form);
+                aBookRepository.AddTextToBubble(model, componentId, actualDirectory + "/" + fileName, type, form);
 
 
             }
@@ -386,13 +387,14 @@ namespace BookWriterTool.Controllers
         [HttpPost]
         public string AddTextToContent(string model, string componentId, string type, string form)
         {
-            var statusMsg = "";
-            if (Session["ActualFile"] != null)
+          
+            if (Session["ActualDirectory"] != null)
             {
-
+                var actualDirectory = (string)Session["ActualDirectory"];
+           
                 var fileName = (string)this.Session["ActualFile"];
 
-                statusMsg = aBookRepository.AddTextToContent(model, componentId, fileName, type, form);
+             aBookRepository.AddTextToContent(model, componentId, actualDirectory+"/"+fileName, type, form);
 
 
             }
