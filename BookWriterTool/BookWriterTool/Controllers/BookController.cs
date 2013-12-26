@@ -56,13 +56,13 @@ namespace BookWriterTool.Controllers
             {
                 statusConn = tcpClient.Connected;
             }
-      
+
             return statusConn;
         }
 
         public ActionResult FakeLogin(string userName)
         {
-            var statusConn=this.CheckConnection();
+            var statusConn = this.CheckConnection();
             var httpSessionStateBase = this.HttpContext.Session;
             if ((httpSessionStateBase != null) && (!statusConn))
             {
@@ -73,10 +73,13 @@ namespace BookWriterTool.Controllers
             throw new Exception("message");
         }
 
-        public ActionResult GetChosenBook(string fileName)
+        public ActionResult GetChosenBook(string path, string fileName)
         {
+            var actualDirectory = path;
             ViewBag.statusMsg = "No message";
-            Session["ActualFile"] = fileName;
+            Session["ActualFile"] = fileName + ".xml";
+            Session["ActualDirectory"] = actualDirectory;
+
             return this.RedirectToAction("EditBook");
 
         }
@@ -94,7 +97,7 @@ namespace BookWriterTool.Controllers
                 {
                     systemMssg = this.fileHandler.AddNewBook(newFileName, activeUser);
                     listOfBooks = this.fileHandler.GetListOfUserBooks(activeUser);
-                    systemMssg = aBookRepository.SetActualFile(String.Format("{0}{1}/Books/{2}.xml",GlobalVariables.ConfigResource("UsersDirectory"),activeUser, newFileName));
+                    systemMssg = aBookRepository.SetActualFile(String.Format("{0}{1}/Books/{2}.xml", GlobalVariables.ConfigResource("UsersDirectory"), activeUser, newFileName));
                     if (newFileName != null)
                         aBook = this.aBookRepository.GetAllContent();
 
@@ -109,7 +112,7 @@ namespace BookWriterTool.Controllers
                 systemMssg = "Couldn't add new book.";
             }
             ViewBag.statusMsg = systemMssg;
-           ViewData["listOfBooks"] = listOfBooks;
+            ViewData["listOfBooks"] = listOfBooks;
             return this.PartialView("ListOfBooks");
         }
 
@@ -122,8 +125,8 @@ namespace BookWriterTool.Controllers
                 activeUser = (string)this.Session["username"];
                 try
                 {
-                   
-                    systemMssg = this.fileHandler.DeleteBook(fileToDelete, activeUser); 
+
+                    systemMssg = this.fileHandler.DeleteBook(fileToDelete, activeUser);
                     listOfBooks = this.fileHandler.GetListOfUserBooks(activeUser);
                 }
                 catch (Exception e)
@@ -142,6 +145,17 @@ namespace BookWriterTool.Controllers
 
         public ActionResult EditBook()
         {
+            var fileName = "";
+            var actualDirectory = "";
+
+            if (Session["ActualFile"] != null)
+            {
+                fileName = (string)Session["ActualFile"];
+            }
+            if (Session["ActualDirectory"] != null)
+            {
+                actualDirectory = (string)Session["ActualDirectory"];
+            }
             systemMssg = "";
             if (Session["username"] != null)
             {
@@ -150,14 +164,15 @@ namespace BookWriterTool.Controllers
                 try
                 {
                     string[] listOfBooks = this.fileHandler.GetListOfUserBooks(activeUser);
-                    var fileName = (string)Session["ActualFile"];
-                    systemMssg=aBookRepository.SetActualFile(fileName);
-                    if(fileName!=null)
-                    aBook = this.aBookRepository.GetAllContent();
+
+
+                    systemMssg = aBookRepository.SetActualFile(actualDirectory + "/" + fileName);
+                    if (fileName != null)
+                        aBook = this.aBookRepository.GetAllContent();
                     ViewBag.arrayBooks = listOfBooks;
                     ViewBag.statusMsg = systemMssg;
-                    ViewBag.ObjectList = this.GetObjectsInFolder();
-                    ViewBag.BackgroundList = this.GetBackgroundInFolder();
+                    ViewBag.ObjectList = this.GetObjectsInFolder(actualDirectory);
+                    ViewBag.BackgroundList = this.GetBackgroundInFolder(actualDirectory);
                     return this.View(aBook);
                 }
                 catch (Exception e)
@@ -169,7 +184,7 @@ namespace BookWriterTool.Controllers
             return this.View();
         }
 
-        [HttpPost]
+     /*   [HttpPost]
         public JsonResult GetListObjectsInframe(string resultFrame)
         {
             string[] splitResult = resultFrame.Split('-');
@@ -210,7 +225,7 @@ namespace BookWriterTool.Controllers
                 ObjectInquiryView = this.RenderPartialView("ObjectListConfig", listOfObject),
 
             });
-        }
+        }*/
 
         [HttpPost]
         public ActionResult AddPage(BookModel model)
@@ -238,13 +253,9 @@ namespace BookWriterTool.Controllers
         public JsonResult AddBackgroundToFrame(BookModel frameDescriptionArray)
         {
             string statusMsg = "";
-            if (Session["ActualFile"] != null)
-            {
-                var fileName = (string)this.Session["ActualFile"];
-
-                statusMsg = aBookRepository.AddBackgroundToContent(frameDescriptionArray, fileName);
-
-            }
+                     var targetFile = this.GetTargetFile();
+            if (!String.IsNullOrEmpty(targetFile))
+                statusMsg = aBookRepository.AddBackgroundToContent(frameDescriptionArray, targetFile);
             return Json(statusMsg);
         }
 
@@ -252,13 +263,9 @@ namespace BookWriterTool.Controllers
         public JsonResult UpdateObjectPosition(BookModel frameDescriptionArray)
         {
             string statusMsg = "";
-            if (Session["ActualFile"] != null)
-            {
-                var fileName = (string)this.Session["ActualFile"];
-
-                statusMsg = aBookRepository.UpdateObjectPosition(frameDescriptionArray, fileName);
-
-            }
+            var targetFile = this.GetTargetFile();
+            if (!String.IsNullOrEmpty(targetFile))
+                statusMsg = aBookRepository.UpdateObjectPosition(frameDescriptionArray, targetFile);
             return Json(statusMsg);
         }
 
@@ -266,58 +273,84 @@ namespace BookWriterTool.Controllers
         public JsonResult AddFrame(BookModel frameDescriptionArray)
         {
             string statusMsg = "";
-            if (Session["ActualFile"] != null)
+            var targetFile = this.GetTargetFile();
+            if (!String.IsNullOrEmpty(targetFile))
+                statusMsg = aBookRepository.AddFrame(frameDescriptionArray, targetFile);
+
+
+            return Json(statusMsg);
+        }
+        public string GetTargetFile()
+        {
+            string targetFile = "";
+            if ((Session["ActualFile"] != null) && (Session["ActualDirectory"] != null))
             {
                 var fileName = (string)this.Session["ActualFile"];
-
-                statusMsg = aBookRepository.AddFrame(frameDescriptionArray, fileName);
-
+                var actualDirectory = (string)this.Session["ActualDirectory"];
+                targetFile = String.Format("{0}/{1}", actualDirectory, fileName);
             }
-            return Json(statusMsg);
+            return targetFile;
         }
 
         public JsonResult AddObjectToContent(BookModel model)
         {
             var statusMsg = "";
-            if (Session["ActualFile"] != null)
-            {
-
-                var fileName = (string)this.Session["ActualFile"];
-
-                statusMsg = aBookRepository.AddObjectToContent(model, fileName);
-
-
-            }
+            var targetFile = this.GetTargetFile();
+            if (!String.IsNullOrEmpty(targetFile))
+                statusMsg = aBookRepository.AddObjectToContent(model, targetFile);
             return Json(statusMsg);
         }
 
-       public Dictionary<string, string[]> GetObjectsInFolder()
-       {
-           Dictionary<string, string[]> characterObj = this.fileHandler.GetListOfObjects(this.HttpContext.Server.MapPath(GlobalVariables.ConfigResource("CharacterRes")));
-           Dictionary<string, string[]> character2DObj = fileHandler.GetListOfObjects(HttpContext.Server.MapPath(GlobalVariables.ConfigResource("Character2DRes")));
-           var resultObjects = characterObj.Union(character2DObj).ToDictionary(k => k.Key, v => v.Value);
-           return resultObjects;
-       }
-
-        public List<string> GetBackgroundInFolder()
+        private string GetPathWithoutFile(string input)
         {
-            List<string> backgroundFiles = this.fileHandler.GetListOfBackgrounds(HttpContext.Server.MapPath(GlobalVariables.ConfigResource("BackgroundRes")));
+            int index = input.LastIndexOf("/", System.StringComparison.Ordinal);
+            if (index > 0)
+                input = input.Substring(0, index);
+            return input;
+        }
+
+        public Dictionary<string, string[]> GetObjectsInFolder(string actualDirectory)
+        {
+            var resultObjects = new Dictionary<string, string[]>();
+            if ((actualDirectory != null) && (!String.IsNullOrEmpty(actualDirectory)))
+            {
+
+                Dictionary<string, string[]> characterObj =
+                    this.fileHandler.GetListOfObjects(actualDirectory + GlobalVariables.ConfigResource("CharacterRes"));
+
+                Dictionary<string, string[]> character2DObj =
+                    fileHandler.GetListOfObjects(actualDirectory + GlobalVariables.ConfigResource("Character2DRes"));
+
+                resultObjects = characterObj.Union(character2DObj).ToDictionary(k => k.Key, v => v.Value);
+
+            } return resultObjects;
+        }
+
+        public List<string> GetBackgroundInFolder(string actualDirectory)
+        {
+            var backgroundFiles = new List<string>();
+            if (!String.IsNullOrEmpty(actualDirectory))
+            {
+
+                backgroundFiles =
+                       this.fileHandler.GetListOfBackgrounds(actualDirectory + GlobalVariables.ConfigResource("BackgroundRes"));
+            }
             return backgroundFiles;
         }
 
         [HttpPost]
-       public ActionResult UploadObject(string selectedFolder,HttpPostedFileBase file)
-       {
-          
-           if (file.ContentLength > 0)
-           {
-               var fileName = Path.GetFileName(file.FileName);
-               var path = Path.Combine(Server.MapPath(selectedFolder), fileName);
-               file.SaveAs(path);
-           }
+        public ActionResult UploadObject(string selectedFolder, HttpPostedFileBase file)
+        {
 
-           return RedirectToAction("EditBook");
-       }
+            if (file.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                var path = Path.Combine(Server.MapPath(selectedFolder), fileName);
+                file.SaveAs(path);
+            }
+
+            return RedirectToAction("EditBook");
+        }
 
         public JsonResult AddSpeechBubbleObject(BookModel model)
         {
@@ -349,9 +382,9 @@ namespace BookWriterTool.Controllers
             var replacedModel = Regex.Replace(model, "\n", "<br />");
             return replacedModel;
         }
-    
+
         [HttpPost]
-        public string AddTextToContent(string model,string componentId,string type,string form)
+        public string AddTextToContent(string model, string componentId, string type, string form)
         {
             var statusMsg = "";
             if (Session["ActualFile"] != null)
@@ -359,7 +392,7 @@ namespace BookWriterTool.Controllers
 
                 var fileName = (string)this.Session["ActualFile"];
 
-         statusMsg = aBookRepository.AddTextToContent(model,componentId, fileName,type,form);
+                statusMsg = aBookRepository.AddTextToContent(model, componentId, fileName, type, form);
 
 
             }

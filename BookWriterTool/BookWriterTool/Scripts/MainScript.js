@@ -1,4 +1,4 @@
-﻿var unityObjectUrl = "http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject2.js";
+﻿//var unityObjectUrl = "http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject2.js";
 var config = {
     width: 660,
     height: 400,
@@ -53,7 +53,7 @@ var actualContent;
 var actualImg;
 var zIndexCounter = 1000;
 
-var u = new UnityObject2(config);
+/*var u = new UnityObject2(config);
 
 jQuery(function() {
 
@@ -93,7 +93,7 @@ jQuery(function() {
 
 });
 
-
+*/
 $(document).ready(function () {
     $('.bb-bookblock').booklet({
         width: '65%',
@@ -327,11 +327,13 @@ function AddSpeechBubble(type, element) {
 
 $("#ctxMenuEditExtra").click(function () {
     var objId = $("#valCtxMenuExtra").html();
+    $('#contentWindow').html('');
     $('#contentWindow').append('<div class="speechContainer"><p class="smallText" contenteditable="true">Click here to edit..</p></div>');
     $('.smallText').bind("click", { componentId: actualContent+"-"+objId, boxType: "speechBubbla", boxForm: "left" }, function (evento) {
         var data = evento.data;
         speechTxtBox(data.componentId,data.boxType, data.boxForm);
     });
+    
     $("#contentWindow").dialog();
 });
 function speechTxtBox(componentId,boxType, form) {
@@ -346,6 +348,7 @@ function speechTxtBox(componentId,boxType, form) {
         },
         data: function (value, settings) {
             var retval = value.replace(/<br[\s\/]?>/gi, '\n');
+            
             //var retval = value;
             return retval;
         },
@@ -359,12 +362,9 @@ function speechTxtBox(componentId,boxType, form) {
 function configurateObjOnTerrain(status) {
     $('#' + actualContent + ' .droppable .speechContainer').each(function () {
 
-        if (status) {
-            startDragNoLimit($(this));
-        } else {
+      
             startDrag($(this));
-        }
-     //  alert($(this).attr("id"));
+
         $(this).bind('contextmenu', function (e) {
          
             $('#context-menu-extra').css('left', e.pageX + 'px');
@@ -382,13 +382,7 @@ function configurateObjOnTerrain(status) {
 
 function configurateImgOnTerrain(status) {
     $('#' + actualContent + ' .droppable img').each(function () {
-
-        if (status) {
-            startDragNoLimit($(this));
-        } else {
             startDrag($(this));
-        }
-        //alert($(this).attr("id"));
         $(this).bind('contextmenu', function (e) {
             $('#context-menu').css('left', e.pageX + 'px');
             $('#context-menu').css('top', e.pageY + 'px');
@@ -424,7 +418,6 @@ $('#AddNewBook_btn').bind('click', function () {
     } else {
          $.post("/Book/AddNewBook", { newFileName: fileName }, function(data) {
               $("#partialFileResult").html(data);
-              showInfoMessage("SUCCES:You create a new book");
         }).fail(function() {
             showInfoMessage("ERROR: Couldn't create a book.");
         });
@@ -613,18 +606,7 @@ $("#ctxMenuDecreaseSize").click(function () {
     }
 
 });
-/*Start drag effect on element*/
 
-function startDragNoLimit(element) {
-    $(element).draggable({
-        cursor: 'move',
-        containment: "parent",
-        drag: function(event, ui) {
-            draggableId = $(this).attr("id");
-
-        }
-    });
-}
 
 /*Strat drag effect on element*/
 
@@ -634,12 +616,7 @@ function startDrag(element) {
         containment: "parent",
         drag: function(event, ui) {
             draggableId = $(this).attr("id");
-           // alert(draggableId);
-            //  alert("StartDrag");
-            //var offset = $(this).offset();
-            //var imgHeight = parseInt($("#" + draggableId).css("height"), 10);
-          //  var xPos = offset.left;
-           // var yPos = offset.top - imgHeight;
+
            
         }
     });
@@ -659,6 +636,7 @@ function activateEditorOperations() {
         actualContent = $(this).parent().attr("id");
         
         configurateImgOnTerrain();
+        configurateObjOnTerrain();
     });
 }
 
@@ -710,19 +688,17 @@ $("#framesGroup .draggable").draggable({
                   Object where you put your draggable*/
 $(".frame .droppable").droppable({
     drop: function (event, ui) {
-       // alert("löd,");
+        activateEditorOperations();
         var htmlContent = "<div class='editPencil'><span class='ui-icon ui-icon-pencil'></span></div>"
             +
             "<div class='droppable contentIntern ui-droppable' style='background-image: url(/Content/Resources/Images/rectangle.png)'></div>";
                     
         if ((draggableId == "rectangle") || (draggableId == "square")) {
-                 
             //Add frames in page
             var valuesId = [];
             var originalId = $(this).find(".GeomForm :first-child").attr("id");
             valuesId = GetIdFromString(originalId);
             setBookModel(valuesId[0], valuesId[1], valuesId[2], draggableId);
-
             PostArray("AddFrame", getBookModel());
             $(this).find("div").html("");
             if (draggableId == "rectangle") {
@@ -733,14 +709,15 @@ $(".frame .droppable").droppable({
                 var squareRightId = SplitAndConcanate(originalId, "right");
                 $(this).find("div").prepend("<div  id=" + squareLeftId + " class='squareLeft'>" + htmlContent + "</div><div  id=" + squareRightId + " class='squareRight'>" + htmlContent + "</div>");
             }
-            activateEditorOperations();
-            $("#" + draggableId).css({ position: "relative", bottom: 0, left: 0 });
-            $("#" + draggableId).show();
+          
+           //$("#" + draggableId).css({ position: "relative", bottom: 0, left: 0 });
+           // $("#" + draggableId).show();
         } else {
    
-            startDragNoLimit($("#".draggableId));
+            startDrag($("#".draggableId));
+            
             var parentId = $("#" + draggableId).parent().parent().attr("id");
-            //alert(parentId);
+           // alert(parentId);
             var parentWidth = $("#" + parentId).width();
             var objWidth = $("#" + draggableId).width();
             var parentPosition = $("#" + parentId).position();

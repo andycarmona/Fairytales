@@ -33,7 +33,7 @@ namespace BookWriterTool.Repositories
         {
             this.actualFile = aFileBook;
             string status = "";
-            if (aFileBook != null)
+            if ((aFileBook != null)&&(aFileBook != "/"))
             {
                 try
                 {

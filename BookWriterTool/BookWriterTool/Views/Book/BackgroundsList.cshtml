@@ -2,28 +2,41 @@
 @{
     var listOfBackgrounds = (List<string>)this.ViewData["listOfBackgrounds"];
     var index = 0;
-}
-
-<div id="BackgroundCollection">
-    @if(listOfBackgrounds.Count>0){
-    foreach (var aBackground in listOfBackgrounds)
+    var activeDirectory="";
+    if (Session["ActualDirectory"] != null)
     {
-        <img class="backgroundContain" id="background@(index)" alt="" src="@GlobalVariables.ConfigResource("BackgroundRes")@aBackground" border="1" width="40" height="40" title="MainContent" />
-        index++;
-    }}
-</div>
-<div class="formBackgroundGroup">
-@using (Html.BeginForm("UploadObject","Book",FormMethod.Post,new {enctype="multipart/form-data"}))
+     activeDirectory = (string)this.Session["ActualDirectory"];
+    }
+}
+@if ((listOfBackgrounds != null))
 {
-    <br/>
-        
-    <label for="file"></label>
-    <label>Upload a background image:</label>
-    <input type="hidden" id="selectedFolder" name="selectedFolder" value="@GlobalVariables.ConfigResource("BackgroundRes")"/>
-    
+    <div id="BackgroundCollection">
+        @if (listOfBackgrounds.Count > 0)
+        {
+            foreach (var aBackground in listOfBackgrounds)
+            {
+                <img class="backgroundContain" id="background@(index)" alt="" src="@aBackground" border="1" width="40" height="40" title="MainContent" />
+                index++;
+            }
+        }
+    </div>
+    <div class="formBackgroundGroup">
+          @if (Session["ActualDirectory"] != null)
+          {
+              using (Html.BeginForm("UploadObject", "Book", FormMethod.Post, new { enctype = "multipart/form-data" }))
+              {
+                  <br/>
 
-        <input class="ui-widget  ui-corner-all" type="file" name="file" id="file" value="Browse" />
+                  <label for="file"></label>
+                  <label>Upload a background image:</label>
+                  <input type="hidden" id="selectedFolder" name="selectedFolder" value="@activeDirectory@GlobalVariables.ConfigResource("BackgroundRes")"/>
 
-        <input class="ui-widget  ui-corner-all" type="submit" />
 
-}</div>
+                  <input class="ui-widget  ui-corner-all" type="file" name="file" id="file" value="Browse" />
+
+                  <input class="ui-widget  ui-corner-all" type="submit" />
+
+              }
+          }
+    </div>
+}

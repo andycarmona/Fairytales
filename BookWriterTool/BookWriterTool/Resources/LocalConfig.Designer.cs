@@ -61,7 +61,7 @@ namespace BookWriterTool.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /Content/Resources/Generic/background/.
+        ///   Looks up a localized string similar to /Generic/background/.
         /// </summary>
         internal static string BackgroundRes {
             get {
@@ -70,7 +70,7 @@ namespace BookWriterTool.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /Content/Resources/Generic/character2d/anime/.
+        ///   Looks up a localized string similar to /Generic/character2d/anime/.
         /// </summary>
         internal static string Character2DRes {
             get {
@@ -79,7 +79,7 @@ namespace BookWriterTool.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /Content/Resources/Generic/character/.
+        ///   Looks up a localized string similar to /Generic/character/.
         /// </summary>
         internal static string CharacterRes {
             get {
@@ -88,7 +88,7 @@ namespace BookWriterTool.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /Content/Resources/Generic/character/.
+        ///   Looks up a localized string similar to /Generic/character/.
         /// </summary>
         internal static string ExpressionRes {
             get {
@@ -124,7 +124,7 @@ namespace BookWriterTool.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /App_Data/Users/.
+        ///   Looks up a localized string similar to /Users/.
         /// </summary>
         internal static string UsersDirectory {
             get {

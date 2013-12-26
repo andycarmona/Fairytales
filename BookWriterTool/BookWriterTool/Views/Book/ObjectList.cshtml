@@ -1,39 +1,45 @@
 ﻿@using BookWriterTool.Helpers
 @{
     var listOfObjects = (Dictionary<string, string[]>)this.ViewData["listOfObjects"];
-  
+    var activeDirectory = "";
+    if (Session["ActualDirectory"] != null)
+    {
+        activeDirectory = (string)this.Session["ActualDirectory"];
+    }
 }
 @if (listOfObjects != null)
 {
+    if (listOfObjects.Count > 0)
+    {
 
-    <div id="objectsGroup">
-        <ul>
-            <li><a>Objects</a>
-                <ul>
-                    <li><a>Animals</a>
-                        <ul>
-                            @foreach (var aObject in listOfObjects.Where(aObject => aObject.Key == "animals"))
-                            {
-                                <li>
-                                    @{
-                                        var imgs = aObject.Value;
-                                        foreach (var image in imgs)
-                                        {
-                                            <img  src="@GlobalVariables.ConfigResource("CharacterRes")@aObject.Key/@image" border="1" width="25" height="50" alt="Click on this to place on page" />
-                                        }
-                                    } 
+        <div id="objectsGroup">
+            <ul>
+                <li><a>Objects</a>
+                    <ul>
+                        <li><a>Animals</a>
+                            <ul>
+                                @foreach (var aObject in listOfObjects.Where(aObject => aObject.Key == "animals"))
+                                {
+                                    <li>
+                                        @{
+                                            var imgs = aObject.Value;
+                                            foreach (var image in imgs)
+                                            {
+                                                <img  src="@image" border="1" width="25" height="50" alt="Click on this to place on page" />
+                                            }
+                                        } 
 
-                                </li>
-                            }
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-    <div id="characterGroup">
-        <ul>
-            <li><a>Character2D</a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div id="characterGroup">
+            <ul>
+                <li><a>Character2D</a>
                 <ul>
                     <li><a>Female</a>
                         <ul>
@@ -44,7 +50,7 @@
                                         var imgs = aObject.Value;
                                         foreach (var image in imgs)
                                         {
-                                            <img  src="@GlobalVariables.ConfigResource("Character2DRes")@aObject.Key/@image" border="1" width="25" height="50" alt="Click on this to place on page" />
+                                            <img  src="@image" border="1" width="25" height="50" alt="Click on this to place on page" />
                                         }
                                     } 
                                 </li>
@@ -63,7 +69,7 @@
                                         var imgs = aObject.Value;
                                         foreach (var image in imgs)
                                         {
-                                            <img  src="@GlobalVariables.ConfigResource("Character2DRes")@aObject.Key/@image" border="1" width="25" height="50" alt="Click on this to place on page" />
+                                            <img  src="@image" border="1" width="25" height="50" alt="Click on this to place on page" />
                                         }
                                     } 
                                 </li>
@@ -72,56 +78,61 @@
                         </ul>
                     </li>
                 </ul>
-        </ul>
-    </div>
-    <div id="expressionGroup">
-        <ul>
-            <li><a>Expressions</a>
-                <ul>
-                    <li><a>emoticons</a>
-                        <ul>
-                            @foreach (var aObject in listOfObjects.Where(aObject => aObject.Key == "expressions"))
-                            {
-                                <li>
-                                    @{
-                                        var imgs = aObject.Value;
-                                        foreach (var image in imgs)
-                                        {
-                                            <img  src="@GlobalVariables.ConfigResource("CharacterRes")@aObject.Key/@image" border="1" width="25" height="50" alt="Click on this to place on page" />
-                                        }
-                                    } 
-                                </li>
-                            }
+            </ul>
+        </div>
+        <div id="expressionGroup">
+            <ul>
+                <li><a>Expressions</a>
+                    <ul>
+                        <li><a>emoticons</a>
+                            <ul>
+                                @foreach (var aObject in listOfObjects.Where(aObject => aObject.Key == "expressions"))
+                                {
+                                    <li>
+                                        @{
+                                            var imgs = aObject.Value;
+                                            foreach (var image in imgs)
+                                            {
+                                                <img  src="@image" border="1" width="25" height="50" alt="Click on this to place on page" />
+                                            }
+                                        } 
+                                    </li>
+                                }
 
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    }
 }
 <div class="formObjectGroup">
-@using (Html.BeginForm("UploadObject","Book",FormMethod.Post,new {enctype="multipart/form-data"}))
-{
-    <br/>
-        
-    <label for="file"></label>
-    <label>Choose folder to upload an object:</label>
-         <select class="ui-widget  ui-corner-all" id="selectedFolder" name="selectedFolder">
+       @if (Session["ActualDirectory"] != null)
+       {
+           using (Html.BeginForm("UploadObject", "Book", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <br/>
 
-	<option value="@GlobalVariables.ConfigResource("CharacterRes")animals">Animals</option>
+                <label for="file"></label>
+                <label>Choose folder to upload an object:</label>
+                <select class="ui-widget  ui-corner-all" id="selectedFolder" name="selectedFolder">
 
-	<option value="@GlobalVariables.ConfigResource("CharacterRes")expressions">Expressions</option>
+                    <option value="@activeDirectory@GlobalVariables.ConfigResource("CharacterRes")animals">Animals</option>
 
-	<option selected="selected" value="@GlobalVariables.ConfigResource("Character2DRes")male">Anime Male</option>
+                    <option value="@activeDirectory@GlobalVariables.ConfigResource("CharacterRes")expressions">Expressions</option>
 
-	<option value="@GlobalVariables.ConfigResource("Character2DRes")female">Anime female</option>
+                    <option selected="selected" value="@activeDirectory@GlobalVariables.ConfigResource("Character2DRes")male">Anime Male</option>
 
-	</select>
+                    <option value="@activeDirectory@GlobalVariables.ConfigResource("Character2DRes")female">Anime female</option>
+
+                </select>
 
 
-        <input class="ui-widget  ui-corner-all" type="file" name="file" id="file" value="Browse" />
+                <input class="ui-widget  ui-corner-all" type="file" name="file" id="file" value="Browse" />
 
-        <input class="ui-widget  ui-corner-all" type="submit" />
+                <input class="ui-widget  ui-corner-all" type="submit" />
 
-}</div>
+            }
+       }
+</div>

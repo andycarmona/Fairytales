@@ -17,14 +17,14 @@
                                 {
                                     var user = (string)Session["username"];
                                     var pos = @word.LastIndexOf("\\", System.StringComparison.Ordinal) + 1;
-                                    var fileName = word.Substring(pos, word.Length - pos);
-                                    var path = "";
-                                    path = (GlobalVariables.ConfigResource("UsersDirectory") + user + "/Books/" + fileName);
+                                    var aFileName = word.Substring(pos, word.Length - pos);
+                                    var aPath = "";
+                                    aPath = (GlobalVariables.ConfigResource("UsersDirectory") + user + "/Books/" + aFileName);
            
 
-                                    <li rel="file" >@Html.ActionLink(@fileName, "GetChosenBook", "Book", new { fileName = @path }, new { Class = "btn btn-lg btn-primary" })
+                                    <li rel="file" >@Html.ActionLink(@aFileName, "GetChosenBook", "Book", new { path = @aPath,fileName=@aFileName }, new { Class = "btn btn-lg btn-primary" })
               
-                                        <input id="@fileName" class="ui-widget  ui-corner-all deleteFile" type="button" value="delete" />
+                                        <input id="@aFileName" class="ui-widget  ui-corner-all deleteFile" type="button" value="delete" />
                                     </li>
                                 }
                             }
