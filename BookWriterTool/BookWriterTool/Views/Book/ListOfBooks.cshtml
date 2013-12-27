@@ -19,8 +19,7 @@
                                                                          var user = (string)Session["username"];
                                                                          var pos = @word.LastIndexOf("\\", StringComparison.Ordinal) + 1;
                                                                          var aFileName = word.Substring(pos, word.Length - pos);
-                                                                         var aPath = "";
-                                                                         aPath = (GlobalVariables.ConfigResource("UsersDirectory") + user + "/Books/" + aFileName);
+                                                                         var aPath =  GlobalVariables.ConfigResource("UsersDirectory") + user + "/Books/" + aFileName;
                                                                          var aImage = GlobalVariables.ConfigResource("UsersDirectory") + user + "/Books/" + aFileName+"/"+aFileName+".jpg"; 
                                                                          <span id="@aFileName" class="deleteFile ui-icon ui-icon-closethick"></span>
                                                                          <img width="50%" height="50%" alt="book logo" src="@aImage"/><br/>

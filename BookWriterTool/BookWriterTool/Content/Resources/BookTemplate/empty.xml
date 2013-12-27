@@ -14,7 +14,7 @@
           <frames>
             <frame bordertype="rectangle" id="frame1">
               <contents>
-                <content target="rectangle" type="">
+                <content target="rectangle" type="" background="background/anime_joker-1024x576.jpg">
                   <objects />
                 </content>
               </contents>
@@ -36,6 +36,96 @@
           </frames>
         </page>
         <page id="page2">
+          <frames>
+            <frame bordertype="rectangle" id="frame1">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="square" id="frame2">
+              <contents>
+                <content target="left" type="none">
+                  <objects />
+                </content>
+                <content target="right" type="none" background="background/bg2large.jpg">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="square" id="frame3">
+              <contents>
+                <content target="left" type="none">
+                  <objects />
+                </content>
+                <content target="right" type="none">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+          </frames>
+        </page>
+        <page id="page3">
+          <frames>
+            <frame bordertype="rectangle" id="frame1">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="square" id="frame2">
+              <contents>
+                <content target="left" type="none">
+                  <objects />
+                </content>
+                <content target="right" type="none">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="rectangle" id="frame3">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+          </frames>
+        </page>
+        <page id="page4">
+          <frames>
+            <frame bordertype="rectangle" id="frame1">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="square" id="frame2">
+              <contents>
+                <content target="left" type="none">
+                  <objects />
+                </content>
+                <content target="right" type="none">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="square" id="frame3">
+              <contents>
+                <content target="left" type="none">
+                  <objects />
+                </content>
+                <content target="right" type="none">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+          </frames>
+        </page>
+        <page id="page5">
           <frames>
             <frame bordertype="rectangle" id="frame1">
               <contents>

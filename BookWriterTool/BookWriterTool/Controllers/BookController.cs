@@ -1,19 +1,19 @@
 ﻿using System.Web.Mvc;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Web;
 
+using BookWriterTool.Helpers;
+using BookWriterTool.Models;
+using BookWriterTool.Repositories;
 using System.Net.Sockets;
 
 namespace BookWriterTool.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Text.RegularExpressions;
-    using System.Web;
 
-    using BookWriterTool.Helpers;
-    using BookWriterTool.Models;
-    using BookWriterTool.Repositories;
 
     [HandleError]
     public class BookController : Controller
@@ -97,7 +97,7 @@ namespace BookWriterTool.Controllers
                 {
                     systemMssg = this.fileHandler.AddNewBook(newFileName, activeUser);
                     listOfBooks = this.fileHandler.GetListOfUserBooks(activeUser);
-                    systemMssg = aBookRepository.SetActualFile(String.Format("{0}{1}/Books/{2}/{3}.xml", GlobalVariables.ConfigResource("UsersDirectory"), activeUser,newFileName, newFileName));
+                    systemMssg = aBookRepository.SetActualFile(String.Format("{0}{1}/Books/{2}/{3}.xml", GlobalVariables.ConfigResource("UsersDirectory"), activeUser, newFileName, newFileName));
                     if (newFileName != null)
                         aBook = this.aBookRepository.GetAllContent();
 
@@ -141,6 +141,7 @@ namespace BookWriterTool.Controllers
             ViewBag.statusMsg = systemMssg;
             ViewData["listOfBooks"] = listOfBooks;
             return this.PartialView("ListOfBooks");
+
         }
 
         public ActionResult EditBook()
@@ -185,48 +186,48 @@ namespace BookWriterTool.Controllers
             return this.View();
         }
 
-     /*   [HttpPost]
-        public JsonResult GetListObjectsInframe(string resultFrame)
-        {
-            string[] splitResult = resultFrame.Split('-');
+        /*   [HttpPost]
+           public JsonResult GetListObjectsInframe(string resultFrame)
+           {
+               string[] splitResult = resultFrame.Split('-');
 
-            string chapterId = splitResult[0];
-            string pageId = splitResult[1];
-            string frameId = splitResult[2];
-            string target = splitResult[3];
+               string chapterId = splitResult[0];
+               string pageId = splitResult[1];
+               string frameId = splitResult[2];
+               string target = splitResult[3];
 
-            var listOfObject = new List<bookChapterPageFrameContentObject>();
-            string msg = "";
+               var listOfObject = new List<bookChapterPageFrameContentObject>();
+               string msg = "";
 
-            if (Session["ActualFile"] != null)
-            {
-                var fileName = (string)this.Session["ActualFile"];
+               if (Session["ActualFile"] != null)
+               {
+                   var fileName = (string)this.Session["ActualFile"];
 
-                msg = aBookRepository.SetActualFile(fileName);
+                   msg = aBookRepository.SetActualFile(fileName);
 
-                book actualBook = this.aBookRepository.GetAllContent();
-                listOfObject.AddRange(from aChapter in actualBook.chapters
-                                      where aChapter.id == chapterId
-                                      from page in aChapter.pages
-                                      where page.id == pageId
-                                      from frame in page.frames
-                                      where frame.id == frameId
-                                      where frame.contents != null
-                                      from content in frame.contents
-                                      where content.target == target
-                                      from Object in content.objects
-                                      select Object);
+                   book actualBook = this.aBookRepository.GetAllContent();
+                   listOfObject.AddRange(from aChapter in actualBook.chapters
+                                         where aChapter.id == chapterId
+                                         from page in aChapter.pages
+                                         where page.id == pageId
+                                         from frame in page.frames
+                                         where frame.id == frameId
+                                         where frame.contents != null
+                                         from content in frame.contents
+                                         where content.target == target
+                                         from Object in content.objects
+                                         select Object);
 
 
-            }
+               }
 
-            return Json(new
-            {
-                msg,
-                ObjectInquiryView = this.RenderPartialView("ObjectListConfig", listOfObject),
+               return Json(new
+               {
+                   msg,
+                   ObjectInquiryView = this.RenderPartialView("ObjectListConfig", listOfObject),
 
-            });
-        }*/
+               });
+           }*/
 
         [HttpPost]
         public ActionResult AddPage(BookModel model)
@@ -254,7 +255,7 @@ namespace BookWriterTool.Controllers
         public JsonResult AddBackgroundToFrame(BookModel frameDescriptionArray)
         {
             string statusMsg = "";
-                     var targetFile = this.GetTargetFile();
+            var targetFile = this.GetTargetFile();
             if (!String.IsNullOrEmpty(targetFile))
                 statusMsg = aBookRepository.AddBackgroundToContent(frameDescriptionArray, targetFile);
             return Json(statusMsg);
@@ -387,14 +388,14 @@ namespace BookWriterTool.Controllers
         [HttpPost]
         public string AddTextToContent(string model, string componentId, string type, string form)
         {
-          
+
             if (Session["ActualDirectory"] != null)
             {
                 var actualDirectory = (string)Session["ActualDirectory"];
-           
+
                 var fileName = (string)this.Session["ActualFile"];
 
-             aBookRepository.AddTextToContent(model, componentId, actualDirectory+"/"+fileName, type, form);
+                aBookRepository.AddTextToContent(model, componentId, actualDirectory + "/" + fileName, type, form);
 
 
             }
