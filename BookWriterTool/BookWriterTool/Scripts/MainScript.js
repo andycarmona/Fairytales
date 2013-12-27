@@ -53,6 +53,7 @@ var actualContent;
 var actualImg;
 var zIndexCounter = 1000;
 
+
 /*var u = new UnityObject2(config);
 
 jQuery(function() {
@@ -96,7 +97,7 @@ jQuery(function() {
 */
 $(document).ready(function () {
     $('.bb-bookblock').booklet({
-        width: '65%',
+        width: '60%',
         manual: 'false',
         hoverWidth:0,
         overlays: true,
@@ -115,9 +116,14 @@ $(document).ready(function () {
     if ($("#mssgString").html() != '')
         showStatusMssg();
     $('.bigText').bind("click", "tom", editableBox);
-   // $('#genericObjGroup').load('/Book/GetObjectsInFolder');
-    /*Tree structure for fils and directories*/
-
+    if (window.location.pathname != "/Book/EditBook") {
+        $("#btnAddPage").hide();
+    }
+    var fileName = $("#bookTitle").html();
+    if (fileName == '') {
+       
+        $("#navBtn").hide();
+    }
     $("#objectsGroup").jstree({
         "plugins": ["themes", "html_data", "contextmenu"],
         "contextmenu": {
@@ -784,6 +790,22 @@ function SplitAndConcanate(stringToSplit, valueToInsert) {
     result = splitString.join('-');
     return result;
 }
+/*Preview mode*/
+
+$("#Preview").bind("click", function () {
+   // $(".configStatus").toggle( "fold", 1000 );
+   // $(".configDialog").toggle("fold", 1000);
+    var fileName = $("#bookTitle").html();
+    if (window.location.pathname == "/Book/EditBook") {
+    
+        window.location.replace("/Book/ViewBook?fileName=" + fileName);
+ 
+        } else {
+    
+        window.location.replace("/Book/EditBook");
+      //  $("#btnAddPage").show();
+        };
+    });
 
 /*Toggle between 2D and 3D View*/
 /*----------------------------------------------*/

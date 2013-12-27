@@ -526,6 +526,7 @@
     <Content Include="Views\Book\ExpressionList.cshtml" />
     <Content Include="Views\Book\TxtComponentsList.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Book\ViewBook.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
