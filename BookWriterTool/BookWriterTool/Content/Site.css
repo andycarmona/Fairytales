@@ -231,10 +231,12 @@ ul#menu {
 /* page titles */
 hgroup.title {
     margin-bottom: 10px;
+
 }
 
 hgroup.title h1, hgroup.title h2 {
     display: inline;
+        color: #ffffff;
 }
 
 hgroup.title h2 {
@@ -328,8 +330,9 @@ aside {
 
 /* login page */
 #loginForm {
-    border-right: solid 2px #c8c8c8;
-    float: left;
+    background-color: #000000;
+    border-right: solid 2px #000000;
+       margin: 0px auto;
     width: 55%;
 }
 
@@ -416,6 +419,7 @@ label {
     display: block;
     font-size: 1em;
     font-weight: 600;
+    color: #ffffff;
 }
 
 label.checkbox {

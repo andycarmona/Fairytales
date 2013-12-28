@@ -12,12 +12,11 @@
         <div class="content-wrapper">
             <p>
                 @Html.ActionLink("Help Page Home", "Index")
-            </p>
+            </p>  
+              @Html.DisplayFor(m => Model)
         </div>
     </section>
-    <section class="content-wrapper main-content clear-fix">
-        @Html.DisplayFor(m => Model)
-    </section>
+   
 </div>
 
 @section Scripts {

@@ -10,6 +10,7 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using BookWriterTool.Filters;
 using BookWriterTool.Models;
+using BookWriterTool.Helpers;
 
 namespace BookWriterTool.Controllers
 {
@@ -17,6 +18,8 @@ namespace BookWriterTool.Controllers
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
+        private FileOperations fileHandler;
+
         //
         // GET: /Account/Login
 
@@ -37,7 +40,7 @@ namespace BookWriterTool.Controllers
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
-                return RedirectToLocal(returnUrl);
+                return RedirectToLocal(returnUrl,model.UserName);
             }
 
             // If we got this far, something failed, redisplay form
@@ -53,7 +56,6 @@ namespace BookWriterTool.Controllers
         public ActionResult LogOff()
         {
             WebSecurity.Logout();
-
             return RedirectToAction("Index", "Home");
         }
 
@@ -225,14 +227,14 @@ namespace BookWriterTool.Controllers
 
             if (OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: false))
             {
-                return RedirectToLocal(returnUrl);
+                return RedirectToLocal(returnUrl,result.UserName);
             }
-
+            
             if (User.Identity.IsAuthenticated)
             {
                 // If the current user is logged in add the new account
                 OAuthWebSecurity.CreateOrUpdateAccount(result.Provider, result.ProviderUserId, User.Identity.Name);
-                return RedirectToLocal(returnUrl);
+                return RedirectToLocal(returnUrl,result.UserName);
             }
             else
             {
@@ -264,7 +266,8 @@ namespace BookWriterTool.Controllers
             {
                 // Insert a new user into the database
                 using (UsersContext db = new UsersContext())
-                {
+                { 
+               
                     UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
                     // Check if user already exists
                     if (user == null)
@@ -276,7 +279,7 @@ namespace BookWriterTool.Controllers
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
                         OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
 
-                        return RedirectToLocal(returnUrl);
+                        return RedirectToLocal(returnUrl,model.UserName);
                     }
                     else
                     {
@@ -329,15 +332,18 @@ namespace BookWriterTool.Controllers
         }
 
         #region Helpers
-        private ActionResult RedirectToLocal(string returnUrl)
+        private ActionResult RedirectToLocal(string returnUrl,string userName)
         {
+            fileHandler = new FileOperations();
+            fileHandler.AddUserFolder(userName);  
+            return RedirectToAction("Index", "Home",new {user=userName});
             if (Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+              
             }
         }
 

@@ -34,13 +34,13 @@ namespace BookWriterTool.Controllers
            
 
         }
-
-        public ActionResult Index()
+        [Authorize]
+        public ActionResult Index(string user)
         {
           //  this.ViewBag.message = this.localizationHandler.Localize("ChooseOption");
 
             //return this.View();
-            return RedirectToAction("FakeLogin", "Book",new{userName="andresc"});
+            return RedirectToAction("FakeLogin", "Book",new{userName=user});
         }
     }
 }

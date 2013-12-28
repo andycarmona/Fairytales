@@ -144,6 +144,7 @@ namespace BookWriterTool.Controllers
 
         }
 
+        [Authorize]
         public ActionResult EditBook()
         {
             var fileName = "";

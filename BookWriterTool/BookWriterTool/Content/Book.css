@@ -314,14 +314,14 @@ min-width: 154px;
 .configDialog
 {
     position: fixed;
-    top: 80px;
+    top: 100px;
     width: 15%;
 }
 
 .configStatus
 {
     position: fixed;
-    top: 80px;
+    top: 100px;
     width: 15%;
     right: 0px;
 }

@@ -65,6 +65,13 @@ namespace BookWriterTool.Helpers
 
             return directoriesPaths;
         }
+        public void AddUserFolder(string folderName)
+        {
+            var actualDirectory = HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("UsersDirectory") + folderName);
+            if(!Directory.Exists(actualDirectory))
+            Directory.CreateDirectory(actualDirectory);
+        }
+
         public List<string> GetListOfUserBooksRelativePath(string user)
         {
             var physicalPaths = Directory.GetDirectories(HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("UsersDirectory") + user + "/Books"));
