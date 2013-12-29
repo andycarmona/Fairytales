@@ -330,10 +330,17 @@ aside {
 
 /* login page */
 #loginForm {
-    background-color: #000000;
-    border-right: solid 2px #000000;
-       margin: 0px auto;
-    width: 55%;
+    background-color: #FFC83A;
+border-right: solid 2px #000000;
+margin: 0px auto;
+width: 35%;
+   border: 8px solid #000;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+    -webkit-box-shadow: 2px 2px 4px #888;
+    -moz-box-shadow: 2px 2px 4px #888;
+    box-shadow: 2px 2px 4px #888;
 }
 
     #loginForm .validation-error {
@@ -419,7 +426,7 @@ label {
     display: block;
     font-size: 1em;
     font-weight: 600;
-    color: #ffffff;
+    color: #5A5353;
 }
 
 label.checkbox {

@@ -22,10 +22,14 @@ namespace BookWriterTool
             //    consumerKey: "",
             //    consumerSecret: "");
 
+            /*Local konfiguration*/
+            //OAuthWebSecurity.RegisterFacebookClient(
+            //    appId: "242345135934107",
+            //    appSecret: "8d27dac9193ae9b81e7140e839137fe9");
+            /*Release*/
             OAuthWebSecurity.RegisterFacebookClient(
-                appId: "242345135934107",
-                appSecret: "8d27dac9193ae9b81e7140e839137fe9");
-
+             appId: "1435067763389188",
+             appSecret: "625f5ac112a4146a6a503d3ad70d9af6");
             //OAuthWebSecurity.RegisterGoogleClient();
         }
     }

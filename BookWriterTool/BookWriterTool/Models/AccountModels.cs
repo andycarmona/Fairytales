@@ -17,6 +17,7 @@ namespace BookWriterTool.Models
         }
 
         public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<ExternalUser> ExtraUsers { get; set; }
     }
 
     [Table("UserProfile")]
@@ -35,8 +36,22 @@ namespace BookWriterTool.Models
         public string UserName { get; set; }
 
         public string ExternalLoginData { get; set; }
-    }
 
+        [Display(Name = "Your Name")]
+        public string Name { get; set; }
+
+        [Display(Name = "Your Page Link")]
+        public string PageLink { get; set; }
+    }
+    [Table("ExternalUserDetails")]
+    public class ExternalUser
+    {
+        public int ID { get; set; }
+        public int UserID { get; set; }
+        public string Name { get; set; }
+        public string PageLink { get; set; }
+        public bool? Status { get; set; }
+    }
     public class LocalPasswordModel
     {
         [Required]

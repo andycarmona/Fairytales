@@ -31,6 +31,7 @@
         <input class="ui-widget  ui-corner-all" id="btnAddPage" type="button" value="Add new page" />
     </div>
     <div style="float: left;"><label>Actual book :<span id="bookTitle">@ViewBag.fileName</span></label>
+        @Html.Partial("_LoginPartial")
         </div>
 </div>
 
@@ -117,10 +118,10 @@
                     @Html.Partial("ListOfBooks", (string[])ViewBag.Table, new ViewDataDictionary { { "listOfBooks", ViewBag.arrayBooks } })
                 }
             </div>
-            <br/>
-           <label>Add new book</label>
+    
+          
             <div class="ui-widget  ui-corner-all addBook" id="div_1">
-                <input class="ui-widget  ui-corner-all" id="newFileName" type="text" />
+                <input class="ui-widget  ui-corner-all" id="newFileName" type="text" placeholder="Add a new book..."/>
                 <input class="ui-widget  ui-corner-all" id="AddNewBook_btn" type="button" value="Add" />
             </div>
         </div>

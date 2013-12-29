@@ -15,7 +15,7 @@ using BookWriterTool.Helpers;
 namespace BookWriterTool.Controllers
 {
     [Authorize]
-    [InitializeSimpleMembership]
+    //[InitializeSimpleMembership]
     public class AccountController : Controller
     {
         private FileOperations fileHandler;
@@ -56,6 +56,7 @@ namespace BookWriterTool.Controllers
         public ActionResult LogOff()
         {
             WebSecurity.Logout();
+            Session.Remove("FbToken");
             return RedirectToAction("Index", "Home");
         }
 
@@ -224,7 +225,10 @@ namespace BookWriterTool.Controllers
             {
                 return RedirectToAction("ExternalLoginFailure");
             }
-
+            if (result.ExtraData.Keys.Contains("accesstoken"))
+            {
+                Session["FbToken"] = result.ExtraData["accesstoken"];
+            }
             if (OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: false))
             {
                 return RedirectToLocal(returnUrl,result.UserName);
@@ -242,7 +246,14 @@ namespace BookWriterTool.Controllers
                 string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
                 ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
                 ViewBag.ReturnUrl = returnUrl;
-                return View("ExternalLoginConfirmation", new RegisterExternalLoginModel { UserName = result.UserName, ExternalLoginData = loginData });
+                return View("ExternalLoginConfirmation", new RegisterExternalLoginModel
+                                                             {
+                                                                 UserName = result.UserName, 
+                                                                 ExternalLoginData = loginData,
+                                                                  Name = result.ExtraData["name"],
+                    PageLink = result.ExtraData["link"]
+                                                             });
+            
             }
         }
 
@@ -273,9 +284,17 @@ namespace BookWriterTool.Controllers
                     if (user == null)
                     {
                         // Insert name into the profile table
-                        db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
+                        UserProfile NewRegistration = db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
                         db.SaveChanges();
 
+                        db.ExtraUsers.Add(new ExternalUser
+                        {
+                            UserID = NewRegistration.UserId,
+                            Name = model.Name,
+                            PageLink = model.PageLink
+                        });
+
+                        db.SaveChanges();
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
                         OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
 

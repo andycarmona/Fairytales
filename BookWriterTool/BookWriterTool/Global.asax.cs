@@ -13,6 +13,8 @@ namespace BookWriterTool
 
     using BookWriterTool.App_Start;
 
+    using WebMatrix.WebData;
+
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
 
@@ -28,7 +30,12 @@ namespace BookWriterTool
 
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
-
+            WebSecurity.InitializeDatabaseConnection(
+                connectionStringName: "DefaultConnection",
+                userTableName: "UserProfile",
+                userIdColumn: "UserID",
+                userNameColumn: "UserName",
+                autoCreateTables: true);
         }
         protected void Session_Start()
         {
