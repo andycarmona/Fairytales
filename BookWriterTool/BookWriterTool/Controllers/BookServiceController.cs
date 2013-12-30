@@ -11,7 +11,8 @@ namespace BookWriterTool.Controllers
     public class BookServiceController : ApiController
     {
        private FileOperations fileHandler;
-
+      
+        [Authorize]
         [HttpGet]
         public List<string> GetAllBooks(string userName)
         {
@@ -19,6 +20,7 @@ namespace BookWriterTool.Controllers
             var listOfBooks = fileHandler.GetListOfUserBooksRelativePath(userName);
             return listOfBooks;
         }
+        [Authorize]
         [AcceptVerbs("GET","POST")]
         public book GetBookModel(string userName,string fileName)
         {

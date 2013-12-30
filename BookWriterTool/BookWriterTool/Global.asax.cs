@@ -10,6 +10,7 @@ using System.Web.Routing;
 namespace BookWriterTool
 {
     using System.Diagnostics;
+    using System.Web.Helpers;
 
     using BookWriterTool.App_Start;
 
@@ -39,7 +40,7 @@ namespace BookWriterTool
         }
         protected void Session_Start()
         {
-
+            AntiForgeryConfig.SuppressIdentityHeuristicChecks = true;
             HttpContext.Current.Session["culture"] = "en-GB";
 
         }

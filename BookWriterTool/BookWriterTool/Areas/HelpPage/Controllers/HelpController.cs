@@ -22,11 +22,12 @@ namespace BookService.Areas.HelpPage.Controllers
 
         public HttpConfiguration Configuration { get; private set; }
 
+        [System.Web.Http.Authorize]
         public ActionResult Index()
         {
             return View(Configuration.Services.GetApiExplorer().ApiDescriptions);
         }
-
+          [System.Web.Http.Authorize]
         public ActionResult Api(string apiId)
         {
             if (!String.IsNullOrEmpty(apiId))

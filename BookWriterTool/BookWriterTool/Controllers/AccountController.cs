@@ -56,6 +56,8 @@ namespace BookWriterTool.Controllers
         public ActionResult LogOff()
         {
             WebSecurity.Logout();
+           Session["ActualFile"] = "";
+            Session["ActualDirectory"] = "";
             Session.Remove("FbToken");
             return RedirectToAction("Index", "Home");
         }
@@ -82,9 +84,11 @@ namespace BookWriterTool.Controllers
                 // Attempt to register the user
                 try
                 {
+                    fileHandler = new FileOperations();
+                    fileHandler.AddUserFolder(model.UserName);
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                     WebSecurity.Login(model.UserName, model.Password);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home", new { user = model.UserName });
                 }
                 catch (MembershipCreateUserException e)
                 {
@@ -246,14 +250,32 @@ namespace BookWriterTool.Controllers
                 string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
                 ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
                 ViewBag.ReturnUrl = returnUrl;
-                return View("ExternalLoginConfirmation", new RegisterExternalLoginModel
-                                                             {
-                                                                 UserName = result.UserName, 
-                                                                 ExternalLoginData = loginData,
-                                                                  Name = result.ExtraData["name"],
-                    PageLink = result.ExtraData["link"]
-                                                             });
-            
+
+                if (result.Provider != "google")
+                {
+                    var FBLoginModel = new RegisterExternalLoginModel()
+                                                 {
+                                                     UserName = result.UserName,
+                                                     ExternalLoginData = loginData,
+                                                     Name = result.ExtraData["name"],
+                                                     PageLink = result.ExtraData["link"]
+                                                 };
+                    return View("ExternalLoginConfirmation", FBLoginModel);
+                }
+                
+                    var GoogleLoginModel = new RegisterExternalLoginModel()
+                                               {
+                                                   UserName = result.UserName,
+                                                   ExternalLoginData = loginData,
+                                                   Name = String.Format("{0} {1}", result.ExtraData["firstName"], result.ExtraData["lastName"]),
+                                                   PageLink = ""
+                                               };
+
+              
+                 
+                    return View("ExternalLoginConfirmation", GoogleLoginModel);
+                
+
             }
         }
 

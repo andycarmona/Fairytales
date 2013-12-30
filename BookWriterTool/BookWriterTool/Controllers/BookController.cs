@@ -14,7 +14,7 @@ using System.Net.Sockets;
 namespace BookWriterTool.Controllers
 {
 
-
+    [Authorize]
     [HandleError]
     public class BookController : Controller
     {
@@ -73,6 +73,7 @@ namespace BookWriterTool.Controllers
             throw new Exception("message");
         }
 
+        
         public ActionResult GetChosenBook(string path, string fileName)
         {
             var actualDirectory = path;
@@ -84,7 +85,8 @@ namespace BookWriterTool.Controllers
 
         }
 
-        public ActionResult AddNewBook(string newFileName)
+   
+       public ActionResult AddNewBook(string newFileName)
         {
 
 
@@ -116,6 +118,7 @@ namespace BookWriterTool.Controllers
             return this.PartialView("ListOfBooks");
         }
 
+      
         public ActionResult DeleteBook(string fileToDelete)
         {
             string[] listOfBooks = null;
@@ -144,7 +147,7 @@ namespace BookWriterTool.Controllers
 
         }
 
-        [Authorize]
+    
         public ActionResult EditBook()
         {
             var fileName = "";
@@ -188,6 +191,7 @@ namespace BookWriterTool.Controllers
             return this.View();
         }
 
+     
         public ActionResult ViewBook(string fileName)
         {
          
@@ -266,6 +270,7 @@ namespace BookWriterTool.Controllers
                });
            }*/
 
+     
         [HttpPost]
         public ActionResult AddPage(BookModel model)
         {
@@ -288,6 +293,7 @@ namespace BookWriterTool.Controllers
             return Json(systemMssg);
         }
 
+      
         [HttpPost]
         public JsonResult AddBackgroundToFrame(BookModel frameDescriptionArray)
         {
@@ -308,6 +314,7 @@ namespace BookWriterTool.Controllers
             return Json(statusMsg);
         }
 
+    
         [HttpPost]
         public JsonResult AddFrame(BookModel frameDescriptionArray)
         {
@@ -319,7 +326,8 @@ namespace BookWriterTool.Controllers
 
             return Json(statusMsg);
         }
-        public string GetTargetFile()
+
+        private string GetTargetFile()
         {
             string targetFile = "";
             if ((Session["ActualFile"] != null) && (Session["ActualDirectory"] != null))
@@ -331,6 +339,7 @@ namespace BookWriterTool.Controllers
             return targetFile;
         }
 
+  
         public JsonResult AddObjectToContent(BookModel model)
         {
             var statusMsg = "";
@@ -348,6 +357,7 @@ namespace BookWriterTool.Controllers
             return input;
         }
 
+      
         public Dictionary<string, string[]> GetObjectsInFolder(string actualDirectory)
         {
             var resultObjects = new Dictionary<string, string[]>();
@@ -365,6 +375,7 @@ namespace BookWriterTool.Controllers
             } return resultObjects;
         }
 
+      
         public List<string> GetBackgroundInFolder(string actualDirectory)
         {
             var backgroundFiles = new List<string>();
@@ -377,6 +388,7 @@ namespace BookWriterTool.Controllers
             return backgroundFiles;
         }
 
+       
         [HttpPost]
         public ActionResult UploadObject(string selectedFolder, HttpPostedFileBase file)
         {
@@ -391,7 +403,8 @@ namespace BookWriterTool.Controllers
             return RedirectToAction("EditBook");
         }
 
-        public JsonResult AddSpeechBubbleObject(BookModel model)
+     
+       public JsonResult AddSpeechBubbleObject(BookModel model)
         {
             var statusMsg = "";
             if (Session["ActualDirectory"] != null)
@@ -405,6 +418,7 @@ namespace BookWriterTool.Controllers
             }
             return Json(statusMsg);
         }
+
         [HttpPost]
         public string AddTextToBubble(string model, string componentId, string type, string form)
         {

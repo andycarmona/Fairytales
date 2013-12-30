@@ -30,7 +30,8 @@ namespace BookWriterTool
             OAuthWebSecurity.RegisterFacebookClient(
              appId: "1435067763389188",
              appSecret: "625f5ac112a4146a6a503d3ad70d9af6");
-            //OAuthWebSecurity.RegisterGoogleClient();
+
+            OAuthWebSecurity.RegisterClient(new BookWriterTool.Helpers.GoogleCustomClient(), "Google Id", null);
         }
     }
 }

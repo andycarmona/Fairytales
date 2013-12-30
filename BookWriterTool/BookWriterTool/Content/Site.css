@@ -329,7 +329,9 @@ aside {
 }
 
 /* login page */
-#loginForm {
+#loginForm {    	zoom: 1;
+	filter: alpha(opacity=95);
+	opacity: 0.95;
     background-color: #FFC83A;
 border-right: solid 2px #000000;
 margin: 0px auto;
@@ -341,6 +343,7 @@ width: 35%;
     -webkit-box-shadow: 2px 2px 4px #888;
     -moz-box-shadow: 2px 2px 4px #888;
     box-shadow: 2px 2px 4px #888;
+
 }
 
     #loginForm .validation-error {
