@@ -394,7 +394,8 @@ $("#ctxMenuEditExtra").click(function () {
     var objId = $("#valCtxMenuExtra").html();
     var texto = "";
     $('#contentWindow').html('');
-    $('#contentWindow').append('<div><span id="ElementId">' + objId + '</span></div><div class="speechContainer"><p class="smallText" >Click here to edit..</p></div>   ');
+    $('#contentWindow').append('<div><span id="ElementId">' + objId + '</span></div><div class="speechContainer"><p class="smallText" contenteditable="true">' +
+         $('#' + actualContent + " .contentIntern #" + objId).text() + '</p></div>   ');
 
     $('.smallText').bind("click", { componentId: actualContent + "-" + objId, boxType: "speechBubbla", boxForm: "left" }, function (evento) {
         var data = evento.data;
@@ -405,7 +406,7 @@ $("#ctxMenuEditExtra").click(function () {
     $("#contentWindow").dialog(
         {
             close: function (event, ui) {
-               // alert($("#contentWindow .speechContainer .smallText").html());
+       
                 $('#' + actualContent + " .contentIntern #" + objId).html($("#contentWindow .speechContainer .smallText").html());
         }
         });
@@ -491,7 +492,7 @@ function AddObject(type, element) {
 function AddSpeechBubble(type, element) {
 
     var parentId = $("#" + draggableId).parent().parent().attr("id");
-    var origoX = "0%";
+    var origoX = "50%";
     var origoY = "0%";
     var scaleX = "5%";
     var scaleY = "15%";
@@ -503,7 +504,7 @@ function AddSpeechBubble(type, element) {
         $('#' + actualContent + " .contentIntern").append('<div class="speechContainer" id=speech' + randomnumber + '></div>');
             configurateObjOnTerrain(true);
 
-        setObjectModel(actualContent+"-speech" + randomnumber, element.attr("src"), scaleX, scaleY, origoX, origoY, type);
+        setObjectModel("speech" + randomnumber, element.attr("src"), scaleX, scaleY, origoX, origoY, type);
         PostArray("AddSpeechBubbleObject", getBookModel());
         
     }

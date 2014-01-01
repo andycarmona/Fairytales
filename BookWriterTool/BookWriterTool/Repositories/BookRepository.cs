@@ -202,11 +202,17 @@ namespace BookWriterTool.Repositories
             xmlDoc.Load(HttpContext.Current.Server.MapPath(fileName));
             var objectsNodes = (XmlElement)this.xmlDoc.SelectSingleNode(String.Format("//book/chapters/chapter[@id='{0}']/" +
                 "pages/page[@id='{1}']/frames/frame[@id='{2}']/contents/content[@target='{3}']/objects/object[@id='{4}']",
-                chapterId, pageId, frameId, target,componentId));
+                chapterId, pageId, frameId, target,txtBoxId));
 
             if (objectsNodes != null)
             {
-              
+                if (objectsNodes.ChildNodes.Count > 0)
+                {
+                    foreach (XmlNode aObject in objectsNodes.ChildNodes)
+                    {
+                        objectsNodes.RemoveChild(aObject);
+                    }
+                }
 
                 XmlCDataSection txtBoxValue = xmlDoc.CreateCDataSection(model);
             

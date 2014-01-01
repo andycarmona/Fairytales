@@ -244,6 +244,7 @@ p.thought:after
     height: 75%;
 }
 .speechContainer {
+    position: relative;
       display: inline-block;
     background-image: url(Resources/Images/speechTalk.png);
     background-size: 100% 100%;
