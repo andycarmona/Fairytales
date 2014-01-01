@@ -120,7 +120,7 @@ p.speech:before
 {
     left: 30px;
     top: 100px;
-    border: 25px solid;
+    border: 15px solid;
     border-color: #666 transparent transparent #666;
 }
 
@@ -294,11 +294,7 @@ min-width: 154px;
     top: 83px;
 }
 
-.pages
-{
-    width: 800px;
-    height: 500px;
-}
+
 
 .frames div
 {
@@ -335,6 +331,7 @@ min-width: 154px;
 
 .contentIntern
 {
+    cursor: pointer;
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 100%;
@@ -445,6 +442,7 @@ div#context-menu li
 /*Draggable elements*/
 #framesGroup .draggable
 {
+    cursor: pointer;
     z-index: 10;
     width: 75%;
     height: 84px;
@@ -487,7 +485,7 @@ div#context-menu li
     /* visibility: hidden;*/
 }
 
-#chapter1
+.pagesEdit
 {
     position: fixed;
     margin: 0 auto;
@@ -499,6 +497,16 @@ div#context-menu li
     font-weight: bold;
 }
 
+.pagesView
+{
+position: absolute;
+top: 12%;
+margin: 0 auto;
+border-bottom-left-radius: 8px;
+border-bottom-right-radius: 8px;
+border: 2px solid #d19405;
+font-weight: bold;
+}
 .ui-accordion .ui-accordion-content
 {
     height: 390px;

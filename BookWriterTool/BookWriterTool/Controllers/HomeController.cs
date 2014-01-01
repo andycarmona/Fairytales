@@ -18,8 +18,7 @@ namespace BookWriterTool.Controllers
 
     public class HomeController : Controller
     {
-        private ResourceManager aManager;
-        private readonly IBookRepository _bookRepository;
+
         //private Localization localizationHandler;
 
         public HomeController()
@@ -29,8 +28,7 @@ namespace BookWriterTool.Controllers
         }
         public HomeController(IBookRepository bookRepository)
         {
-        //    this.localizationHandler = new Localization();
-            this._bookRepository = bookRepository;
+    
            
 
         }
@@ -40,7 +38,7 @@ namespace BookWriterTool.Controllers
           //  this.ViewBag.message = this.localizationHandler.Localize("ChooseOption");
 
             //return this.View();
-            return RedirectToAction("FakeLogin", "Book",new{userName=user});
+            return RedirectToAction("EditBook", "Book");
         }
     }
 }

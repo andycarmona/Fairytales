@@ -23,7 +23,7 @@
 }
 <div class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" style="position: fixed; width: 100%; background-color: gainsboro;">
     <div style="text-align: center; width: 100%;">
-        <input class="ui-widget ui-widget-content ui-corner-all" id="Preview" type="button" value="Preview" />
+        <input class="ui-widget ui-widget-content ui-corner-all" id="Preview" type="button" value="Edit" />
         <input class="ui-widget  ui-corner-all" id="View2D" type="button" value="2D View" />
         <input class="ui-widget ui-widget-content  ui-corner-all" id="View3D" type="button" value="3D View" />
         <input class="ui-widget  ui-corner-all" id="btnAddPage" type="button" value="Add new page" />
@@ -42,7 +42,7 @@
             @foreach (bookChapter chapter in this.Model.chapters)
             {
                 <!--Pages section-->
-                <div class="pages bb-bookblock" id="@chapter.id">
+                <div class="pagesView bb-bookblock" id="@chapter.id">
                     <!--End Pages section-->
 
                     <!--Frames section-->

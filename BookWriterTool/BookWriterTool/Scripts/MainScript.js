@@ -26,7 +26,14 @@ var Objects = {
 var Frames = {
     Bordertype: ""
 };
-
+var objectList = {
+    ActualContent: "",
+    objects: []
+};
+var objects = {
+    ObjectId: "",
+    Html: ""
+};
 var dialogOpts = {
     position: [300, 5],
     minWidth: 600,
@@ -52,7 +59,7 @@ var actualTarget;
 var actualContent;
 var actualImg;
 var zIndexCounter = 1000;
-
+var mssgMissingActiveContent = "Click on frame to edit content!!";
 
 /*var u = new UnityObject2(config);
 
@@ -108,10 +115,9 @@ $(document).ready(function () {
         tabWidth: 180,
         tabHeight: 20
     });
-    //   $(".rectangle").jqte();
+    
     $("#accordionConfig").accordion();
     $("#accordionStatus").accordion();
-    //$('#userContent').load('/Book/GetAvailableBooks', { fileOption: "newBook" });
     $(".Container3D").addClass("disableControl");
     if ($("#mssgString").html() != '')
         showStatusMssg();
@@ -165,10 +171,6 @@ function showStatusMssg() {
     });
 }
 
-
-
-
-
 /*Get selectec item of dropdownbox*/
 $(".selectpicker").change(function() {
     $('#userContent').load('/Book/GetAvailableBooks', { fileOption: "loadBook" });
@@ -214,29 +216,24 @@ function CheckIsEmpty(element) {
 /*Add img on content in frame*/
 $('#txtCompGroup #txtBox').bind("click", function () {
     if (actualContent == null) {
-        showInfoMessage("Click on <div border='1'><span class='ui-icon ui-icon-pencil'></span></div>  to edit a content!!");
-    } else
-
-        if (actualContent != null) {
-            //   alert(actualContent);
-            $("#" + actualContent).children('div').eq(1).find('.bigText').remove();
-            $("#" + actualContent).children('div').eq(1).find('img').each(function () {
+        showInfoMessage(mssgMissingActiveContent);
+    } else if (actualContent != null) {
+            $("#" + actualContent).children('div').eq(0).find('.bigText').remove();
+            $("#" + actualContent).children('div').eq(0).find('img').each(function () {
                 $(this).remove();
             });
-            $("#" + actualContent).children('div').eq(1).prepend(" <p class='bigText' contenteditable='true' id='" + actualContent + "-div_text'>Click here to edit..</p>");
+            $("#" + actualContent).children('div').eq(0).prepend(" <p class='bigText' contenteditable='true' id='" + actualContent + "-div_text'>Click here to edit..</p>");
             $('.bigText').bind("click", { componentId: actualContent }, function (evento) {
                 var data = evento.data;
                 editableBox(data.componentId,"textBox");
             });
-        } else {
-            showInfoMessage("Click on <div border='1'><span class='ui-icon ui-icon-pencil'></span></div>  to edit a content!!");
-        }
+        } 
 });
 /*Add img on content in frame*/
 $('#txtCompGroup .bubbleText').bind("click", function () {
     var objId=$(this).attr("id");
     if (actualContent == null) {
-        showInfoMessage("Click on <div border='1'><span class='ui-icon ui-icon-pencil'></span></div>  to edit a content!!");
+        showInfoMessage(mssgMissingActiveContent);
     } else {
         AddSpeechBubble("speechBubble", $(this));
     }
@@ -246,7 +243,7 @@ $('#txtCompGroup .bubbleText').bind("click", function () {
 $('#objectsGroup img').bind("click", function () {
     
     if (actualContent == null) {
-        showInfoMessage("Click on <div border='1'><span class='ui-icon ui-icon-pencil'></span></div>  to edit a content!!");
+        showInfoMessage(mssgMissingActiveContent);
     } else
     AddObject("CharacterRes", $(this));
 });
@@ -254,7 +251,7 @@ $('#objectsGroup img').bind("click", function () {
 /*Add img on content in frame*/
 $('#characterGroup img').bind("click", function () {
     if (actualContent == null) {
-        showInfoMessage("Click on <div border='1'><span class='ui-icon ui-icon-pencil'></span></div>  to edit a content!!");
+        showInfoMessage(mssgMissingActiveContent);
     }else
     AddObject("Character2DRes", $(this));
 
@@ -262,13 +259,13 @@ $('#characterGroup img').bind("click", function () {
 /*Add img on content in frame*/
 $('#expressionGroup img').bind("click", function () {
     if (actualContent == null) {
-        showInfoMessage("Click on <div border='1'><span class='ui-icon ui-icon-pencil'></span></div>  to edit a content!!");
+        showInfoMessage(mssgMissingActiveContent);
     } else
     AddObject("ExpressionRes", $(this));
 });
 
 function editableBox(componentId,boxType,form) {
-    // alert(componentId);
+     
     $('.bigText').editable('/Book/AddTextToContent', {
         type: 'textarea',
         cancel: 'Cancel',
@@ -280,69 +277,140 @@ function editableBox(componentId,boxType,form) {
         },
         data: function (value, settings) {
             var retval = value.replace(/<br[\s\/]?>/gi, '\n');
-            //var retval = value;
             return retval;
         },
         indicator: '<img src="/Content/Resources/Images/home-ajax-loader.gif">',
         tooltip: 'Click to edit...'
     });
 }
-
-
-function AddObject(type, element) {
-    //alert(draggableId);
-    var parentId = $("#" + draggableId).parent().parent().attr("id");
-    zIndexCounter++;
-   //alert(zIndexCounter);
-    var origoX = "0%";
-    var origoY = "0%";
-    var scaleX = "10%";
-    var scaleY = "25%";
+/*End of contextmenu events*/
+/*Flip object in content*/
+$("#ctxMenuFlip").click(function () {
+    var objId = $("#valCtxMenu").html();
     var valuesId = [];
-    var randomnumber = Math.floor(Math.random() * 100);
     if (actualContent != null) {
-        valuesId = GetIdFromString(actualContent);
-        setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-  
-        $('#' + actualContent + " .contentIntern").append('<img width="' + scaleX + '" height="' + scaleY + '"  style="left: "' + origoX + '";top: "' + origoY + '";" class="clonedImg" id="Object' + randomnumber + '" src="' + element.attr("src") + '" />');
-    configurateImgOnTerrain(true);}
-    
-        setObjectModel("Object" + randomnumber, element.attr("src"),scaleX, scaleY, origoX, origoY, type);
-        PostArray("AddObjectToContent", getBookModel());
-    
-}
-function AddSpeechBubble(type, element) {
+        $("#" + actualContent + " .contentIntern").find('img').each(function () {
+            if (objId == $(this).attr("id")) {
+                $(this).addClass('flipped');
+                //alert(actualContent);
+                // valuesId = GetIdFromString(actualContent);
+                //setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
+                //setObjectModel(objId, null, null, null, null, null, null);
+                //PostArray("DeleteObjectFromContent", getBookModel());
+            }
+            destroyContextMenu();
+        });
+    } else {
+        showInfoMessage("ERROR.Can't find element");
 
-    var parentId = $("#" + draggableId).parent().parent().attr("id");
-    var origoX = "0%";
-    var origoY = "0%";
-    var scaleX = "10%";
-    var scaleY = "25%";
-    var valuesId = [];
-    var randomnumber = Math.floor(Math.random() * 100);
-    if (actualContent != null) {
-        valuesId = GetIdFromString(actualContent);
-        setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-        $('#' + actualContent + " .contentIntern").append('<div class="speechContainer" id=speech' + randomnumber + '>aaa</div>');
-            configurateObjOnTerrain(true);
 
-        setObjectModel(actualContent+"-speech" + randomnumber, element.attr("src"), scaleX, scaleY, origoX, origoY, type);
-        PostArray("AddSpeechBubbleObject", getBookModel());
     }
-}
+});
+$("#ctxMenuFlipExtra").click(function () {
+    var objId = $("#valCtxMenuExtra").html();
+    var valuesId = [];
+    if (actualContent != null) {
+        $("#" + actualContent + " .contentIntern").find('div').each(function () {
+            if ((objId == $(this).attr("id")) || (objId == $(this).parent('div').attr("id"))) {
+                var result = "";
+                var actualBackground = $(this).css("background-image");
+                var splitSrc = actualBackground.split('/');
+                var fileName = splitSrc[splitSrc.length - 1];
+
+                if (fileName != "Talk") {
+                    result = "speechTalkRight.png";
+                } else {
+                    result = "speechTalk.png";
+                }
+                $("#" + objId).css("background-image", "/Resources/Images/" + result);
+            }
+            destroyContextMenu();
+        });
+    } else {
+        showInfoMessage("ERROR.Can't find element");
+
+
+    }
+});
+/*Delete speech in content*/
+$("#ctxMenuDeleteExtra").click(function () {
+    var objId = $("#valCtxMenuExtra").html();
+    var valuesId = [];
+    if (actualContent != null) {
+
+        $("#" + actualContent + " .contentIntern").children().each(function () {
+            if ((objId == $(this).attr("id")) || (objId == $(this).parent('div').attr("id"))) {
+                $(this).remove();
+                valuesId = GetIdFromString(actualContent);
+                setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
+                setObjectModel(actualContent + "-" + objId, null, null, null, null, null, null);
+                PostArray("DeleteObjectFromContent", getBookModel());
+            }
+            destroyContextMenu();
+        });
+    } else {
+        showInfoMessage("ERROR.Can't find element");
+
+
+    }
+});
+
+/*Increase size object*/
+$("#ctxMenuIncreaseSize").click(function () {
+    var objId = $("#valCtxMenu").html();
+    var valuesId = [];
+    if (actualContent != null) {
+        $("#" + actualContent + " .contentIntern").find('img').each(function () {
+            if (objId == $(this).attr("id")) {
+                $(this).height("+=10");
+                $(this).width("+=10");
+            }
+            destroyContextMenu();
+        });
+    } else {
+        showInfoMessage("ERROR.Can't find element");
+    }
+});
+
+/*Increase size object*/
+$("#ctxMenuDecreaseSize").click(function () {
+    var objId = $("#valCtxMenu").html();
+    var valuesId = [];
+    if (actualContent != null) {
+        $("#" + actualContent + " .contentIntern").find('img').each(function () {
+            if (objId == $(this).attr("id")) {
+                $(this).height("-=10");
+                $(this).width("-=10");
+            }
+            destroyContextMenu();
+        });
+    } else {
+        showInfoMessage("ERROR.Can't find element");
+    }
+
+});
 
 $("#ctxMenuEditExtra").click(function () {
     var objId = $("#valCtxMenuExtra").html();
+    var texto = "";
     $('#contentWindow').html('');
-    $('#contentWindow').append('<div class="speechContainer"><p class="smallText" contenteditable="true">Click here to edit..</p></div>');
-    $('.smallText').bind("click", { componentId: actualContent+"-"+objId, boxType: "speechBubbla", boxForm: "left" }, function (evento) {
+    $('#contentWindow').append('<div><span id="ElementId">' + objId + '</span></div><div class="speechContainer"><p class="smallText" >Click here to edit..</p></div>   ');
+
+    $('.smallText').bind("click", { componentId: actualContent + "-" + objId, boxType: "speechBubbla", boxForm: "left" }, function (evento) {
         var data = evento.data;
-        speechTxtBox(data.componentId,data.boxType, data.boxForm);
+      
+       speechTxtBox(data.componentId, data.boxType, data.boxForm);
     });
-    
-    $("#contentWindow").dialog();
+   
+    $("#contentWindow").dialog(
+        {
+            close: function (event, ui) {
+               // alert($("#contentWindow .speechContainer .smallText").html());
+                $('#' + actualContent + " .contentIntern #" + objId).html($("#contentWindow .speechContainer .smallText").html());
+        }
+        });
 });
-function speechTxtBox(componentId,boxType, form) {
+function speechTxtBox(componentId, boxType, form) {
     // alert(componentId);
     $('.smallText').editable('/Book/AddTextToBubble', {
         type: 'textarea',
@@ -350,11 +418,11 @@ function speechTxtBox(componentId,boxType, form) {
         name: 'model',
         submit: 'OK',
         submitdata: function (value, settings) {
-            return { componentId:componentId,type: boxType, form: form };
+            return { componentId: componentId, type: boxType, form: form };
         },
         data: function (value, settings) {
             var retval = value.replace(/<br[\s\/]?>/gi, '\n');
-            
+
             //var retval = value;
             return retval;
         },
@@ -362,6 +430,109 @@ function speechTxtBox(componentId,boxType, form) {
         tooltip: 'Click to edit...'
     });
 }
+/*Delete object in content*/
+$("#ctxMenuDelete").click(function () {
+    var objId = $("#valCtxMenu").html();
+    var valuesId = [];
+    
+    if (actualContent != null) {
+        $("#" + actualContent + " .contentIntern").children().each(function () {
+            if ((objId == $(this).attr("id")) || (objId == $(this).parent('div').attr("id"))) {
+                //$(this).remove();
+                valuesId = GetIdFromString(actualContent);
+                setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
+                setObjectModel(objId, null, null, null, null, null, null);
+                PostArray("DeleteObjectFromContent", getBookModel());
+
+            } else {
+
+                CreateListOfObjectsInFrame($(this));
+            }
+        });
+        AddObjectsInArrayTOFrame("#" + actualContent + " .contentIntern");
+        destroyContextMenu();
+        objectList.objects = [];
+    } else {
+        showInfoMessage("ERROR.Can't find element");
+    }
+});
+
+/*Add new objects to content*/
+function AddObject(type, element) {
+    var parentId = $("#" + draggableId).parent().parent().attr("id");
+    zIndexCounter++;
+    var origoX = "0%";
+    var origoY = "0%";
+    var scaleX = "10%";
+    var scaleY = "25%";
+    var valuesId = [];
+    var randomnumber = Math.floor(Math.random() * 100);
+    if (actualContent != null) {
+        valuesId = GetIdFromString(actualContent);
+        setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
+        $("#" + actualContent + " .contentIntern").children().each(function () {
+            CreateListOfObjectsInFrame($(this));
+        });
+        
+        objectList.objects.push({
+            ObjectId: "Object" + randomnumber,
+            Html: '<img width="' + scaleX + '" height="' + scaleY + '"  style="left: "' + origoX + '";top: "' + origoY + '";" class="clonedImg" id="Object' + randomnumber + '" src="' + element.attr("src") + '" />'
+        });
+     
+        AddObjectsInArrayTOFrame("#" + actualContent + " .contentIntern");
+        
+    configurateImgOnTerrain(true);}
+    
+        setObjectModel("Object" + randomnumber, element.attr("src"),scaleX, scaleY, origoX, origoY, type);
+        PostArray("AddObjectToContent", getBookModel());
+        objectList.objects = [];
+}
+
+function AddSpeechBubble(type, element) {
+
+    var parentId = $("#" + draggableId).parent().parent().attr("id");
+    var origoX = "0%";
+    var origoY = "0%";
+    var scaleX = "5%";
+    var scaleY = "15%";
+    var valuesId = [];
+    var randomnumber = Math.floor(Math.random() * 100);
+    if (actualContent != null) {
+        valuesId = GetIdFromString(actualContent);
+        setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
+        $('#' + actualContent + " .contentIntern").append('<div class="speechContainer" id=speech' + randomnumber + '></div>');
+            configurateObjOnTerrain(true);
+
+        setObjectModel(actualContent+"-speech" + randomnumber, element.attr("src"), scaleX, scaleY, origoX, origoY, type);
+        PostArray("AddSpeechBubbleObject", getBookModel());
+        
+    }
+}
+
+function AddObjectsInArrayTOFrame(elementParent) {
+    $(elementParent).html('');
+
+    for (var i = 0; i < objectList.objects.length; i++) {
+
+        $(elementParent).append(objectList.objects[i].Html);
+    }
+}
+
+function CreateListOfObjectsInFrame(elementParent) {
+    var html = $("<div />").append(elementParent.clone()).html();
+    objectList.objects.push({
+        ObjectId: elementParent.attr('id'),
+        Html: html
+    });
+}
+
+jQuery.removeFromArray = function (value, arr) {
+    return jQuery.grep(arr, function (elem, index) {
+        return elem !== value;
+    });
+};
+
+
 
 /*Add some more functions to added image on content frame*/
 
@@ -406,8 +577,6 @@ $('.deleteFile').on('click',function () {
 
     $.post("/Book/DeleteBook", { fileToDelete: aFile}, function (data) {
         $("#partialFileResult").html(data);
-
-        //$("#userContent").jstree("refresh");
         showInfoMessage("SUCCES:You delete this book");
     }).fail(function () {
         showInfoMessage("ERROR: Couldn't delete this book.");
@@ -415,7 +584,6 @@ $('.deleteFile').on('click',function () {
 });
 
 /*Add new Book*/
-
 $('#AddNewBook_btn').bind('click', function () {
     var fileName = $("#newFileName").val();
     if (fileName == "") {
@@ -459,171 +627,13 @@ function destroyContextMenu() {
     $("#valCtxMenuExtra").text('');
 }
 
-
-/*End of contextmenu events*/
-/*Flip object in content*/
-$("#ctxMenuFlip").click(function () {
-    var objId = $("#valCtxMenu").html();
-    // alert(objId);
-    var valuesId = [];
-    if (actualContent != null) {
-        $("#" + actualContent + " .contentIntern").find('img').each(function () {
-            if (objId == $(this).attr("id")) {
-                $(this).addClass('flipped');
-                //alert(actualContent);
-               // valuesId = GetIdFromString(actualContent);
-                //setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-                //setObjectModel(objId, null, null, null, null, null, null);
-                //PostArray("DeleteObjectFromContent", getBookModel());
-            }
-            destroyContextMenu();
-        });
-    } else {
-        showInfoMessage("ERROR.Can't find element");
-
-
-    }
-});
-$("#ctxMenuFlipExtra").click(function () {
-    var objId = $("#valCtxMenuExtra").html();
-    var valuesId = [];
-    if (actualContent != null) {
-        $("#" + actualContent + " .contentIntern").find('div').each(function () {
-            if ((objId == $(this).attr("id")) || (objId == $(this).parent('div').attr("id"))) {
-                var result = "";
-                var actualBackground = $(this).css("background-image");
-                //alert(actualBackground);
-                var splitSrc = actualBackground.split('/');
-                var fileName = splitSrc[splitSrc.length - 1];
-              
-                if (fileName != "Talk") {
-                    result = "speechTalkRight.png";
-                } else {
-                    result = "speechTalk.png";
-                }
-                $("#" + objId).css("background-image","/Resources/Images/"+result);
-                alert("objeto " + objId + "bild " + result);
-                //alert(result);
-                //if(splitFileName[0].substr(0,splitFileName[0]-4)==)
-
-                //alert(fileName);
-                //alert(actualContent);
-                // valuesId = GetIdFromString(actualContent);
-                //setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-                //setObjectModel(objId, null, null, null, null, null, null);
-                //PostArray("DeleteObjectFromContent", getBookModel());
-            }
-            destroyContextMenu();
-        });
-    } else {
-        showInfoMessage("ERROR.Can't find element");
-
-
-    }
-});
-/*Delete speech in content*/
-$("#ctxMenuDeleteExtra").click(function () {
-    var objId = $("#valCtxMenuExtra").html();
-    // alert(objId);
-    var valuesId = [];
-    if (actualContent != null) {
-
-        $("#" + actualContent + " .contentIntern").children().each(function () {
-            if ((objId == $(this).attr("id")) || (objId == $(this).parent('div').attr("id"))) {
-                // alert("source" + objId + "second" + $(this).attr("id"));
-                $(this).remove();
-                //alert(actualContent);
-                valuesId = GetIdFromString(actualContent);
-               setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-               setObjectModel(actualContent+"-"+objId, null, null, null, null, null, null);
-                PostArray("DeleteObjectFromContent", getBookModel());
-            }
-            destroyContextMenu();
-        });
-    } else {
-        showInfoMessage("ERROR.Can't find element");
-
-
-    }
-});
-/*Delete object in content*/
-$("#ctxMenuDelete").click(function() {
-    var objId = $("#valCtxMenu").html();
-   // alert(objId);
-    var valuesId = [];
-    if (actualContent != null) {
-   
-        $("#" + actualContent + " .contentIntern").children().each(function() {
-            if ((objId == $(this).attr("id")) || (objId == $(this).parent('div').attr("id"))) {
-               // alert("source" + objId + "second" + $(this).attr("id"));
-                $(this).remove();
-                //alert(actualContent);
-                valuesId = GetIdFromString(actualContent);
-                setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-                setObjectModel(objId, null, null, null, null, null,null);
-                PostArray("DeleteObjectFromContent", getBookModel());
-            }
-            destroyContextMenu();
-        });
-    } else {
-        showInfoMessage("ERROR.Can't find element");
-
-
-    }
-});
-
-/*Increase size object*/
-$("#ctxMenuIncreaseSize").click(function() {
-    var objId = $("#valCtxMenu").html();
-    // alert(objId);
-    var valuesId = [];
-    if (actualContent != null) {
-        $("#" + actualContent + " .contentIntern").find('img').each(function () {
-            if (objId == $(this).attr("id")) {
-                $(this).height("+=10");
-                $(this).width("+=10");
-            }
-            destroyContextMenu();
-        });
-    } else {
-        showInfoMessage("ERROR.Can't find element");
-
-
-    }
-    
-});
-/*Increase size object*/
-$("#ctxMenuDecreaseSize").click(function () {
-    var objId = $("#valCtxMenu").html();
-    // alert(objId);
-    var valuesId = [];
-    if (actualContent != null) {
-        $("#" + actualContent + " .contentIntern").find('img').each(function () {
-            if (objId == $(this).attr("id")) {
-                $(this).height("-=10");
-                $(this).width("-=10");
-            }
-            destroyContextMenu();
-        });
-    } else {
-        showInfoMessage("ERROR.Can't find element");
-
-
-    }
-
-});
-
-
-/*Strat drag effect on element*/
-
+/*Start drag effect on element*/
 function startDrag(element) {
     $(element).draggable({
         cursor: 'move',
         containment: "parent",
         drag: function(event, ui) {
             draggableId = $(this).attr("id");
-
-           
         }
     });
 }
@@ -631,7 +641,7 @@ function startDrag(element) {
 /*Activate editor for frame*/
 
 function activateEditorOperations() {
-    $(".editPencil").click(function(e) {
+    $(".contentIntern").click(function(e) {
         $(".squareLeft").css({ "-webkit-border-image": "url(/Content/Resources/Images/border.png) 25 25 round" });
         $(".squareRight").css({ "-webkit-border-image": "url(/Content/Resources/Images/border.png) 25 25 round" });
         $(".rectangle").css({ "-webkit-border-image": "url(/Content/Resources/Images/border.png) 25 25 round" });
@@ -649,8 +659,7 @@ function activateEditorOperations() {
 
 /*Change background image of terrain*/
 $(".backgroundContain").click(function () {
-    
-    //  var descriptionArray = [];
+   
     var valuesId = [];
     var bk = $(this).attr("id");
     var imgChosen = $("#" + bk).attr("src");
@@ -662,12 +671,12 @@ $(".backgroundContain").click(function () {
         $("#" + actualContent + " .contentIntern").css("background-image", "url(" + imgChosen + ")");
         PostArray("AddBackgroundToFrame", getBookModel());
 
-    } else { showInfoMessage("Click on <div border='1'><span class='ui-icon ui-icon-pencil'></span></div>  to edit a content!!"); }
+    } else { showInfoMessage(mssgMissingActiveContent); }
 });
 
 /*Add new page*/
 $("#btnAddPage").click(function() {
-    //var descriptionArray = [];
+    
     setBookModel("chapter1", null, null, null);
     PostArray("AddPage", getBookModel());
     reloadPage();
@@ -676,28 +685,23 @@ $("#btnAddPage").click(function() {
 
 /*Function handle draggable objects. 
              Objects you pickup and drag*/
- 
 $("#framesGroup .draggable").draggable({
     cursor: 'move',
     helper: 'clone',
     stack:'div',
     drag: function(event, ui) {
         draggableId = $(this).attr("id");
-        //alert("group");
     }
 }).addClass("ui-state-highlight");
      
     
-
-
 /*Function handle droppable frames objects. 
                   Object where you put your draggable*/
 $(".frame .droppable").droppable({
     drop: function (event, ui) {
         activateEditorOperations();
-        var htmlContent = "<div class='editPencil'><span class='ui-icon ui-icon-pencil'></span></div>"
-            +"<div class='droppable contentIntern ui-droppable' style='background-image: url(/Content/Resources/Images/rectangle.png)'></div>";
-        activateEditorOperations();
+        var htmlContent = "<div class='droppable contentIntern ui-droppable' style='background-image: url(/Content/Resources/Images/rectangle.png)'></div>";
+     
         if ((draggableId == "rectangle") || (draggableId == "square")) {
             //Add frames in page
             var valuesId = [];
@@ -714,15 +718,11 @@ $(".frame .droppable").droppable({
                 var squareRightId = SplitAndConcanate(originalId, "right");
                 $(this).find("div").prepend("<div  id=" + squareLeftId + " class='squareLeft'>" + htmlContent + "</div><div  id=" + squareRightId + " class='squareRight'>" + htmlContent + "</div>");
             }
-          
-           //$("#" + draggableId).css({ position: "relative", bottom: 0, left: 0 });
-           // $("#" + draggableId).show();
-        } else {
+          } else {
    
             startDrag($("#".draggableId));
             activateEditorOperations();
             var parentId = $("#" + draggableId).parent().parent().attr("id");
-           // alert(parentId);
             var parentWidth = $("#" + parentId).width();
             var objWidth = $("#" + draggableId).width();
             var parentPosition = $("#" + parentId).position();
@@ -762,7 +762,6 @@ function showInfoMessage(mssg) {
     showStatusMssg();
 }
 
-
 function getPercentage(frameValue,objValue) {
     var percentage;
     percentage= Math.floor((objValue / frameValue) * 100);
@@ -782,7 +781,6 @@ function GetIdFromString(stringToSplit) {
 
 
 /*Change Id name of element and replace*/
-
 function SplitAndConcanate(stringToSplit, valueToInsert) {
     var splitString = stringToSplit.split('-');
     var result;
@@ -790,11 +788,9 @@ function SplitAndConcanate(stringToSplit, valueToInsert) {
     result = splitString.join('-');
     return result;
 }
-/*Preview mode*/
 
+/*Preview mode*/
 $("#Preview").bind("click", function () {
-   // $(".configStatus").toggle( "fold", 1000 );
-   // $(".configDialog").toggle("fold", 1000);
     var fileName = $("#bookTitle").html();
     if (window.location.pathname == "/Book/EditBook") {
     
@@ -803,7 +799,6 @@ $("#Preview").bind("click", function () {
         } else {
     
         window.location.replace("/Book/EditBook");
-      //  $("#btnAddPage").show();
         };
     });
 
@@ -850,9 +845,9 @@ function PostArray(url, descriptionArray) {
             descriptionArray.length = 0;
         },
         error: function (statusMsg) {
-         
-            showInfoMessage("ERROR.Couldn't send message.Wrong parameters");
-           
+            if (statusMsg != "") {
+                //showInfoMessage("ERROR.Couldn't send message.Wrong parameters");
+            }
         }
     });
 }

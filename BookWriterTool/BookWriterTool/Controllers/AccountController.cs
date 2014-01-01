@@ -378,14 +378,7 @@ namespace BookWriterTool.Controllers
             fileHandler = new FileOperations();
             fileHandler.AddUserFolder(userName);  
             return RedirectToAction("Index", "Home",new {user=userName});
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            else
-            {
-              
-            }
+        
         }
 
         public enum ManageMessageId

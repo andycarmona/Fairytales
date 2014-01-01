@@ -16,10 +16,7 @@ namespace BookWriterTool.Helpers
             {
                 return Resources.LocalConfig.ResourceManager.GetString(value);
             }
-            else
-            {
-                return Resources.RemoteConfig.ResourceManager.GetString(value);
-            }
+           
         }
 
         public static Dictionary<string, List<string[]>> GenericCharacter2Directory()
