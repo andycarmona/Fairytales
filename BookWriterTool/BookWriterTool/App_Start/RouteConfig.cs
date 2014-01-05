@@ -30,6 +30,11 @@ namespace BookWriterTool
               url: "{controller}/{action}/{id}",
               defaults: new { controller = "Book", action = "AddPage", id = UrlParameter.Optional }
           );
+            routes.MapRoute(
+              name: "Preview",
+              url: "{controller}/{action}/{id}",
+              defaults: new { controller = "Book", action = "ViewBookFlip", id = UrlParameter.Optional }
+          );
             routes.MapHttpRoute(
     name: "ActionApi",
     routeTemplate: "api/{controller}/{action}/{userName}",

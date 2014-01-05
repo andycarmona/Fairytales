@@ -177,6 +177,37 @@ namespace BookWriterTool.Controllers
             return this.View();
         }
 
+        public ActionResult ViewBookFlip(string fileName)
+        {
+            systemMssg = "";
+            activeUser = User.Identity.Name;
+            if (activeUser != null)
+            {
+                if (Session["ActualDirectory"] == null)
+                {
+                    Session["ActualDirectory"] = String.Format("/Users/{0}/Books/{1}", activeUser, fileName);
+                }
+                try
+                {
+                    //  string[] listOfBooks = this.fileHandler.GetListOfUserBooks(activeUser);
+
+                    string actualPath = String.Format("/Users/{0}/Books/{1}/{1}.xml", activeUser, fileName);
+                    systemMssg = aBookRepository.SetActualFile(actualPath);
+                    if (fileName != null)
+                        aBook = this.aBookRepository.GetAllContent();
+                    ViewBag.fileName = fileName;
+                    //  ViewBag.arrayBooks = listOfBooks;
+                    ViewBag.statusMsg = systemMssg;
+                    return this.View(aBook);
+                }
+                catch (Exception e)
+                {
+                    systemMssg = e.Message;
+                }
+            }
+            ViewBag.statusMsg = systemMssg;
+            return this.View(aBook);
+        }
 
         public ActionResult ViewBook(string fileName)
         {

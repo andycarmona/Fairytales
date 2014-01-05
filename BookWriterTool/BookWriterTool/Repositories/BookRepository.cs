@@ -267,9 +267,11 @@ namespace BookWriterTool.Repositories
         public string DeleteObjectFromContent(BookModel content, string fileName)
         {
             var mssg = "";
+            var splitId = content.Objects[0].ObjectId.Split('-');
+            var objId = splitId[splitId.Length-1];
             xmlDoc = new XmlDocument();
             xmlDoc.Load(HttpContext.Current.Server.MapPath(fileName));
-            XmlNode objectsNodes = this.xmlDoc.SelectSingleNode(String.Format("//book/chapters/chapter[@id='{0}']/pages/page[@id='{1}']/frames/frame[@id='{2}']/contents/content[@target='{3}']/objects/object[@id='{4}']", content.ChapterId, content.PageId, content.FrameId, content.Target, content.Objects[0].ObjectId));
+            XmlNode objectsNodes = this.xmlDoc.SelectSingleNode(String.Format("//book/chapters/chapter[@id='{0}']/pages/page[@id='{1}']/frames/frame[@id='{2}']/contents/content[@target='{3}']/objects/object[@id='{4}']", content.ChapterId, content.PageId, content.FrameId, content.Target,objId));
             if (objectsNodes != null)
             {
                 XmlNode parentNode = objectsNodes.ParentNode;

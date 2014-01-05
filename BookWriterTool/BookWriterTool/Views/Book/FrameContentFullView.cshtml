@@ -12,7 +12,7 @@
 {
     foreach (bookChapterPageFrameContent content in frame.contents)
     {
-    <div class="droppable contentIntern" style="background-image: url(@(!String.IsNullOrEmpty(content.background) ? @activeDirectory+"/Generic/"+ @content.background : @GlobalVariables.ConfigResource("Images")+"rectangle.png"));">
+    <div class="droppable contentIntern  h-100" style="background-image: url(@(!String.IsNullOrEmpty(content.background) ? @activeDirectory+"/Generic/"+ @content.background : @GlobalVariables.ConfigResource("Images")+"rectangle.png"));">
         @if ((@target == "rectangle"))
         {
             if (content.objects != null)
@@ -22,20 +22,20 @@
                     switch (@obj.type)
                     {
                         case "textBox":
-                            <p id="@obj.id" class='bigText' contenteditable='true'>@this.Html.Raw(@obj.text.Replace("\n", "<br/>"))</p>
+                            <p id="@obj.id">@this.Html.Raw(@obj.text.Replace("\n", "<br/>"))</p>
                             break;
                         case "speechBubble":
                               
-                            <div style="left: @obj.origoX; top: @obj.origoY;" width="@obj.scaleX" height="@obj.scaleY" id="@obj.id"  class="speechContainer">
+                            <div style="position:relative;left: @obj.origoX; top: @obj.origoY;" width="@obj.scaleX" height="@obj.scaleY" id="@obj.id"  class="speechContainer">
                                 <p> @this.Html.Raw(@obj.text != null ? @obj.text.Replace("\n", "<br/>"):" ")</p>
                                     <br />
                             </div>
                             break;
                         default:
-                       <img id="@obj.id" style="left: @obj.origoX; top: @obj.origoY;" class="clonedImg" width="@obj.scaleX" height="@obj.scaleY" alt="" src="@activeDirectory@GlobalVariables.ConfigResource(@obj.type)@obj.img" />
+                       <img id="@obj.id" style="position:relative;left: @obj.origoX; top: @obj.origoY;" class="clonedImg" width="@obj.scaleX" height="@obj.scaleY" alt="" src="@activeDirectory@GlobalVariables.ConfigResource(@obj.type)@obj.img" />
                             break;
                     }
-                    zindex++;
+                    zindex++;              
                 }
             }
         }

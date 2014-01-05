@@ -60,7 +60,7 @@ var actualContent;
 var actualImg;
 var zIndexCounter = 1000;
 var mssgMissingActiveContent = "Click on frame to edit content!!";
-
+var numberOfBubble = 0;
 /*var u = new UnityObject2(config);
 
 jQuery(function() {
@@ -492,21 +492,36 @@ function AddObject(type, element) {
 function AddSpeechBubble(type, element) {
 
     var parentId = $("#" + draggableId).parent().parent().attr("id");
-    var origoX = "50%";
+    //alert(parentId);
+    var origoX = "0%";
     var origoY = "0%";
     var scaleX = "5%";
     var scaleY = "15%";
     var valuesId = [];
+ 
     var randomnumber = Math.floor(Math.random() * 100);
     if (actualContent != null) {
-        valuesId = GetIdFromString(actualContent);
-        setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-        $('#' + actualContent + " .contentIntern").append('<div class="speechContainer" id=speech' + randomnumber + '></div>');
+        //alert(actualContent);
+        $('#' + actualContent + " .contentIntern").children().each(function () {
+            if($(this).is('.speechContainer')) {
+                numberOfBubble++;
+            }
+        });
+     
+        if (numberOfBubble < 2) {
+            valuesId = GetIdFromString(actualContent);
+            setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
+            $('#' + actualContent + " .contentIntern").append('<div class="speechContainer" id=speech' + randomnumber + '></div>');
             configurateObjOnTerrain(true);
 
-        setObjectModel("speech" + randomnumber, element.attr("src"), scaleX, scaleY, origoX, origoY, type);
-        PostArray("AddSpeechBubbleObject", getBookModel());
-        
+            setObjectModel("speech" + randomnumber, element.attr("src"), scaleX, scaleY, origoX, origoY, type);
+            PostArray("AddSpeechBubbleObject", getBookModel());
+            numberOfBubble = 0;
+        } else {
+            showInfoMessage("Too many bubbles");
+            numberOfBubble = 0;
+        }
+       
     }
 }
 
@@ -538,10 +553,10 @@ jQuery.removeFromArray = function (value, arr) {
 /*Add some more functions to added image on content frame*/
 
 function configurateObjOnTerrain(status) {
-    $('#' + actualContent + ' .droppable .speechContainer').each(function () {
+    $('#' + actualContent + '  .speechContainer').each(function () {
 
       
-            startDrag($(this));
+          startDragSpeech($(this));
 
         $(this).bind('contextmenu', function (e) {
          
@@ -638,7 +653,17 @@ function startDrag(element) {
         }
     });
 }
-
+/*Start drag effect on element*/
+function startDragSpeech(element) {
+    $(element).draggable({
+        axis:"x",
+        cursor: 'move',
+        containment: "parent",
+        drag: function (event, ui) {
+            draggableId = $(this).attr("id");
+        }
+    });
+}
 /*Activate editor for frame*/
 
 function activateEditorOperations() {
@@ -719,7 +744,7 @@ $(".frame .droppable").droppable({
                 var squareRightId = SplitAndConcanate(originalId, "right");
                 $(this).find("div").prepend("<div  id=" + squareLeftId + " class='squareLeft'>" + htmlContent + "</div><div  id=" + squareRightId + " class='squareRight'>" + htmlContent + "</div>");
             }
-          } else {
+        }else{
    
             startDrag($("#".draggableId));
             activateEditorOperations();
@@ -734,7 +759,14 @@ $(".frame .droppable").droppable({
             var objPosTop = objPosition.top;
             var scaleX = getPercentage(parentWidth, objWidth);
             var scaleY = getPercentage(parentHeight, objHeight);
-            var origoX = getPercentage(parentWidth, (objPosition.left-objWidth)-parentPosition.left);
+            var origoX;
+            //alert($("#" + draggableId).attr("class"));
+            if ($("#" + draggableId).is(".speechContainer")) {
+                origoX = getPercentage(parentWidth, objPosition.left -objWidth);
+            } else {
+                origoX = getPercentage(parentWidth, (objPosition.left - objWidth) - parentPosition.left);
+            }
+          
             var origoY = getPercentage(parentHeight, objPosition.top - parentPosition.top);
             
             /*For debugging purpose. Shows data on Status in acccordion menu*/
@@ -792,10 +824,11 @@ function SplitAndConcanate(stringToSplit, valueToInsert) {
 
 /*Preview mode*/
 $("#Preview").bind("click", function () {
+
     var fileName = $("#bookTitle").html();
     if (window.location.pathname == "/Book/EditBook") {
     
-        window.location.replace("/Book/ViewBook?fileName=" + fileName);
+        window.location.replace("/Book/ViewBookFlip?fileName=" + fileName);
  
         } else {
     

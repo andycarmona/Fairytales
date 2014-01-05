@@ -1,0 +1,96 @@
+﻿@model book
+
+@{
+    
+    Layout = "~/Views/Shared/_LayoutView.cshtml";
+    ViewBag.Title = "Editor";
+    var pageFullWidth = "box w-100 h-35";
+    var pageHalfWidth = "box w-50 h-35";
+    var classType = pageFullWidth;
+}
+
+	        <div id="flip" class="container">
+			@if (Model != null)
+   {
+
+	    <!--Chapters section-->
+       foreach (bookChapter chapter in this.Model.chapters)
+       {
+	            <div class="f-page f-cover">
+	                <div class="cover-elements">
+	                    <div class="logo">
+	                        Pageflip
+	                        <a class="f-ref" href="http://www.flickr.com/photos/nasahqphoto/">Images by NASA HQ Photo</a>
+	                    </div>
+	                    <h1>Spacy Flipping Pages with CSS3 &amp; jQuery <span>Inspired by <a href="http://flipboard.com/">Flipboard</a></span></h1>
+	                    <div class="f-cover-story"><span>Cover Story</span>Shuttle Enterprise Flight to New York</div>
+	                </div>
+	                <div class="f-cover-flip">&lt; Flip</div>
+	            </div>
+           foreach (bookChapterPage page in chapter.pages)
+           {
+			        <div class="f-page">
+			            <div class="f-title">
+			                <a href="http://tympanus.net/Tutorials/CSS3FluidParallaxSlideshow/">Previous Demo</a>
+			                <h2>Incredible Spacenews</h2>
+			                <a href="http://tympanus.net/codrops/2012/05/07/experimental-page-layout-inspired-by-flipboard/">Back to the Codrops Article</a>
+			            </div>
+                             @foreach (bookChapterPageFrame frame in page.frames)
+                             {
+                                 switch (@frame.bordertype)
+                                 {
+                                     case "rectangle":
+                                         classType = pageFullWidth;
+                                         <div  id="@chapter.id-@page.id-@frame.id-rectangle" class="@classType rectangle">
+                                             @this.Html.Partial("FrameContentFullView", (bookChapterPageFrame)this.ViewBag.Table, new ViewDataDictionary { { "actualFrame", frame }, { "target", "rectangle" } })
+                                         </div>
+                                         break;
+                                     case "square":
+                                         classType = pageHalfWidth;
+                                         <div id="@chapter.id-@page.id-@frame.id-left" class="@classType squareLeft">
+                                             @this.Html.Partial("FrameContentSplit", (bookChapterPageFrame)this.ViewBag.Table, new ViewDataDictionary { { "actualFrame", frame }, { "target", "left" } })
+                                         </div>
+                                         <div id="@chapter.id-@page.id-@frame.id-right" class="@classType squareRight">
+                                             @this.Html.Partial("FrameContentSplit", (bookChapterPageFrame)this.ViewBag.Table, new ViewDataDictionary { { "actualFrame", frame }, { "target", "right" } })
+                                         </div>
+                                         break;
+                                 }
+                             }
+			        </div>
+           }
+			
+	            
+			
+	            <div class="f-page f-cover-back">
+	                <div id="codrops-ad-wrapper">
+					
+	                </div>
+	            </div>
+	  
+       }
+   }      </div>
+    @section scripts
+{
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        var $container = $('#flip'),
+            $pages = $container.children().hide();
+
+        Modernizr.load({
+            test: Modernizr.csstransforms3d && Modernizr.csstransitions,
+            yep: ['/Scripts/jquery.tmpl.min.js', '/Scripts/jquery.history.js', '/Scripts/core.string.js', '/Scripts/jquery.touchSwipe-1.2.5.js', '/Scripts/jquery.flips.js'],
+            nope: '/Content/fallback.css',
+            callback: function(url, result, key) {
+
+                if (url === '/Content/fallback.css') {
+                    $pages.show();
+                } else if (url === '/Scripts/jquery.flips.js') {
+                    $container.flips();
+                }
+
+            }
+        });
+
+    </script>
+}

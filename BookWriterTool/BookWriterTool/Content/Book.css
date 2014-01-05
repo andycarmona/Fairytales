@@ -42,7 +42,8 @@
 
 .FrameEdit .terrain
 {
-    position: relative;
+    /*position: relative;*/
+    
 }
 
 
@@ -78,7 +79,7 @@ img
 .editPencil
 {
     float: left;
-    position: relative;
+    /*position: relative;*/
     left: 50%;
     background-color: black;
 }
@@ -245,12 +246,13 @@ p.thought:after
 }
 .speechContainer {
     position: relative;
-      display: inline-block;
+    float: left;
+     
     background-image: url(Resources/Images/speechTalk.png);
     background-size: 100% 100%;
     background-repeat:no-repeat;
-   min-height: 59px;
-min-width: 154px;
+   min-height: 30%;
+min-width: 20%;
     outline: 0;
    padding: 1px 1px 9px 32px;
 
@@ -269,7 +271,6 @@ min-width: 154px;
 }
 .smallText
 {
-    position: relative;
     float: left;
     width: 90%;
     height: 75%;
@@ -332,6 +333,7 @@ min-width: 154px;
 
 .contentIntern
 {
+    background-size: contain;
     cursor: pointer;
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -465,19 +467,18 @@ div#context-menu li
 }
 
 .editContent
-{
-    position: relative;
+{/*position: relative;*/
 }
 
 .editContentLeft
 {
-    position: relative;
+    /*position: relative;*/
     float: left;
 }
 
 .editContentRight
 {
-    position: relative;
+    /*position: relative;*/
     float: right;
 }
 

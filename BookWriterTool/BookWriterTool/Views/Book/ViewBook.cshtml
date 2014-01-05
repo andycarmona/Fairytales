@@ -3,58 +3,34 @@
 
 @{
     
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutView.cshtml";
     ViewBag.Title = "Editor";
-    string statusMsg;
-    if (ViewBag.statusMsg != null)
-    {
-        statusMsg = ViewBag.statusMsg;
-    }
-    else
-    {
-        statusMsg = "";
-    }
-
-    bookChapterPageFrameContentObject aObject = null;
-
-    int index = 1;
+  
 
 
 }
-<div class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" style="position: fixed; width: 100%; background-color: gainsboro;">
-    <div style="text-align: center; width: 100%;">
-        <input class="ui-widget ui-widget-content ui-corner-all" id="Preview" type="button" value="Edit" />
-        <input class="ui-widget  ui-corner-all" id="View2D" type="button" value="2D View" />
-        <input class="ui-widget ui-widget-content  ui-corner-all" id="View3D" type="button" value="3D View" />
-        <input class="ui-widget  ui-corner-all" id="btnAddPage" type="button" value="Add new page" />
 
-    </div>
-        <div style="float: left;"><label>Actual book :<span id="bookTitle">@ViewBag.fileName</span></label>
-        @Html.Partial("_LoginPartial")
-        </div>
-</div>
 
 @if (Model != null)
 {
-    <div class="chapters" id="chapters">
-        <div id="panel2D">
+ 
             <!--Chapters section-->
-            @foreach (bookChapter chapter in this.Model.chapters)
+            foreach (bookChapter chapter in this.Model.chapters)
             {
                 <!--Pages section-->
-                <div class="pagesView bb-bookblock" id="@chapter.id">
+                <div class="container" id="flip">
                     <!--End Pages section-->
 
                     <!--Frames section-->
                     @foreach (bookChapterPage page in chapter.pages)
                     {
-                        <div class="page" id="@page.id">
+                        <div  class="f-page" id="@page.id">
 
-                            <div class="frame" id="frames">
+                            <div  id="frames">
                                 @{
                         foreach (bookChapterPageFrame frame in page.frames)
                         {
-                                    <div id="@frame.id" class="droppable">
+                                    <div id="@frame.id" class="box w-50 h-30">
                                         <div class="GeomForm">
 
                                             @if (@frame.bordertype == "rectangle")
@@ -76,49 +52,43 @@
 
                                         </div>
                                     </div> 
-                        } index++;
+                        }
                                 }
                             </div>
                         </div>
                     }
-                    <div class="Container3D" id="Container3D">
-                        <p class="header"><span>Unity Web Player | </span>fles</p>
-                        <div class="content">
-                            <div id="unityPlayer">
-                                <div class="missing">
-                                    <a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now!">
-                                        <img alt="Unity Web Player. Install now!" src="http://webplayer.unity3d.com/installation/getunity.png" width="193" height="63" />
-                                    </a>
-                                </div>
-                                <div class="broken">
-                                    <a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now! Restart your browser after install.">
-                                        <img alt="Unity Web Player. Install now! Restart your browser after install." src="http://webplayer.unity3d.com/installation/getunityrestart.png" width="193" height="63" />
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="footer">&laquo; created with <a href="http://unity3d.com/unity/" title="Go to unity3d.com">Unity</a> &raquo;</p>
-                    </div>
+                
                     <!--End frames section-->
 
                 </div>
             }
-        </div>
-
-    </div>
 }
-
-
-
-
-<div id="contentWindow"></div>
-
-
 
 @section scripts
 {
+    	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script type="text/javascript">
 
-        <script type="text/javascript" src="/Scripts/MainScript.js"></script>
+		    var $container = $('#flip'),
+				$pages = $container.children().hide();
+
+		    Modernizr.load({
+		        test: Modernizr.csstransforms3d && Modernizr.csstransitions,
+		        yep: ['js/jquery.tmpl.min.js', 'js/jquery.history.js', 'js/core.string.js', 'js/jquery.touchSwipe-1.2.5.js', 'js/jquery.flips.js'],
+		        nope: 'css/fallback.css',
+		        callback: function (url, result, key) {
+
+		            if (url === 'css/fallback.css') {
+		                $pages.show();
+		            }
+		            else if (url === 'js/jquery.flips.js') {
+		                $container.flips();
+		            }
+
+		        }
+		    });
+
+		</script>
 
 
 }
