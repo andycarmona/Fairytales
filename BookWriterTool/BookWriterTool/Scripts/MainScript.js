@@ -60,6 +60,7 @@ var actualContent;
 var actualImg;
 var zIndexCounter = 1000;
 var mssgMissingActiveContent = "Click on frame to edit content!!";
+var clickHere = "Click here to edit..";
 var numberOfBubble = 0;
 /*var u = new UnityObject2(config);
 
@@ -222,7 +223,7 @@ $('#txtCompGroup #txtBox').bind("click", function () {
             $("#" + actualContent).children('div').eq(0).find('img').each(function () {
                 $(this).remove();
             });
-            $("#" + actualContent).children('div').eq(0).prepend(" <p class='bigText' contenteditable='true' id='" + actualContent + "-div_text'>Click here to edit..</p>");
+            $("#" + actualContent).children('div').eq(0).prepend(" <p class='bigText' contenteditable='true' id='" + actualContent + "-div_text'>"+clickHere+"</p>");
             $('.bigText').bind("click", { componentId: actualContent }, function (evento) {
                 var data = evento.data;
                 editableBox(data.componentId,"textBox");
@@ -392,10 +393,12 @@ $("#ctxMenuDecreaseSize").click(function () {
 
 $("#ctxMenuEditExtra").click(function () {
     var objId = $("#valCtxMenuExtra").html();
-    var texto = "";
+    var texto = $('#' + actualContent + " .contentIntern #" + objId).text();
+    if (texto == "")
+        texto = clickHere;
     $('#contentWindow').html('');
-    $('#contentWindow').append('<div><span id="ElementId">' + objId + '</span></div><div class="speechContainer"><p class="smallText" contenteditable="true">' +
-         $('#' + actualContent + " .contentIntern #" + objId).text() + '</p></div>   ');
+    $('#contentWindow').append('<div><span id="ElementId">' + objId + '</span></div><div><p class="smallText" contenteditable="true">' +
+       texto + '</p></div>   ');
 
     $('.smallText').bind("click", { componentId: actualContent + "-" + objId, boxType: "speechBubbla", boxForm: "left" }, function (evento) {
         var data = evento.data;
@@ -406,8 +409,11 @@ $("#ctxMenuEditExtra").click(function () {
     $("#contentWindow").dialog(
         {
             close: function (event, ui) {
-       
-                $('#' + actualContent + " .contentIntern #" + objId).html($("#contentWindow .speechContainer .smallText").html());
+                var result = $("#contentWindow .smallText").html().replace(/(<([^>]+)>)/ig, "");
+                alert(result);
+                if (result == "OKCancel")
+                    result = "";
+                $('#' + actualContent + " .contentIntern #" + objId).html(result);
         }
         });
 });
@@ -463,7 +469,7 @@ function AddObject(type, element) {
     var parentId = $("#" + draggableId).parent().parent().attr("id");
     zIndexCounter++;
     var origoX = "0%";
-    var origoY = "0%";
+    var origoY = "20%";
     var scaleX = "10%";
     var scaleY = "25%";
     var valuesId = [];
@@ -477,7 +483,7 @@ function AddObject(type, element) {
         
         objectList.objects.push({
             ObjectId: "Object" + randomnumber,
-            Html: '<img width="' + scaleX + '" height="' + scaleY + '"  style="left: "' + origoX + '";top: "' + origoY + '";" class="clonedImg" id="Object' + randomnumber + '" src="' + element.attr("src") + '" />'
+            Html: '<img width="' + scaleX + '" height="' + scaleY + '"  style="position:absolute;z-index: "' + zIndexCounter + '";left:20%;top:20%;" id="Object' + randomnumber + '" src="' + element.attr("src") + '" />'
         });
      
         AddObjectsInArrayTOFrame("#" + actualContent + " .contentIntern");
@@ -496,13 +502,15 @@ function AddSpeechBubble(type, element) {
     var origoX = "0%";
     var origoY = "0%";
     var scaleX = "5%";
-    var scaleY = "15%";
+    var scaleY = "5%";
     var valuesId = [];
  
     var randomnumber = Math.floor(Math.random() * 100);
+  
     if (actualContent != null) {
         //alert(actualContent);
         $('#' + actualContent + " .contentIntern").children().each(function () {
+       CreateListOfObjectsInFrame($(this));
             if($(this).is('.speechContainer')) {
                 numberOfBubble++;
             }
@@ -511,7 +519,22 @@ function AddSpeechBubble(type, element) {
         if (numberOfBubble < 2) {
             valuesId = GetIdFromString(actualContent);
             setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-            $('#' + actualContent + " .contentIntern").append('<div class="speechContainer" id=speech' + randomnumber + '></div>');
+            var p = $('#' + actualContent + " .contentIntern:last-child");
+            var position = p.position();
+            var left = position.left;
+            var top = position.top;
+            var defLeft = Math.floor(left);
+            var defTop = Math.floor(top);
+            //alert(position.left);
+           // $('#' + actualContent + " .contentIntern").append('<div left: "' + position.left + '"px;top: "' + position.top + '"px;"  class="speechContainer" id=speech' + randomnumber + '></div>');
+
+            objectList.objects.push({
+                ObjectId: "Object" + randomnumber,
+                Html: '<div class="speechContainer" style="background-image: url(/Content/Resources/Images/speechTalk.png); z-index: ' + zIndexCounter + ';left:0%;top:0%;"  id="speech' + randomnumber + '">Righ-click here...</div>'
+         
+            });
+            AddObjectsInArrayTOFrame("#" + actualContent + " .contentIntern");
+            
             configurateObjOnTerrain(true);
 
             setObjectModel("speech" + randomnumber, element.attr("src"), scaleX, scaleY, origoX, origoY, type);
@@ -521,21 +544,29 @@ function AddSpeechBubble(type, element) {
             showInfoMessage("Too many bubbles");
             numberOfBubble = 0;
         }
-       
+        objectList.objects = [];
     }
 }
-
-function AddObjectsInArrayTOFrame(elementParent) {
+function AddSpeechInArrayTOFrame(elementParent) {
     $(elementParent).html('');
 
     for (var i = 0; i < objectList.objects.length; i++) {
 
+        $(elementParent).prepend(objectList.objects[i].Html);
+    }
+}
+function AddObjectsInArrayTOFrame(elementParent) {
+    $(elementParent).html('');
+
+    for (var i = 0; i < objectList.objects.length; i++) {
+   
         $(elementParent).append(objectList.objects[i].Html);
     }
 }
 
 function CreateListOfObjectsInFrame(elementParent) {
     var html = $("<div />").append(elementParent.clone()).html();
+    //alert(html);
     objectList.objects.push({
         ObjectId: elementParent.attr('id'),
         Html: html
@@ -645,7 +676,11 @@ function destroyContextMenu() {
 
 /*Start drag effect on element*/
 function startDrag(element) {
+    
     $(element).draggable({
+        start:function() {
+            $(".clonedImg").css("z-index", zIndexCounter++);
+        },
         cursor: 'move',
         containment: "parent",
         drag: function(event, ui) {
@@ -656,7 +691,6 @@ function startDrag(element) {
 /*Start drag effect on element*/
 function startDragSpeech(element) {
     $(element).draggable({
-        axis:"x",
         cursor: 'move',
         containment: "parent",
         drag: function (event, ui) {
@@ -748,26 +782,29 @@ $(".frame .droppable").droppable({
    
             startDrag($("#".draggableId));
             activateEditorOperations();
+         
             var parentId = $("#" + draggableId).parent().parent().attr("id");
+            alert(parentId);
+            var splitParentId = parentId.split('-');
+            var contentType = splitParentId[3];
             var parentWidth = $("#" + parentId).width();
             var objWidth = $("#" + draggableId).width();
             var parentPosition = $("#" + parentId).position();
             var objPosition = $("#" + draggableId).position();
             var parentHeight = $("#" + parentId).height();
             var objHeight = $("#" + draggableId).height();
-            var parentPosTop = parentPosition.top;
-            var objPosTop = objPosition.top;
+            var objPosLeft = objPosition.left;
             var scaleX = getPercentage(parentWidth, objWidth);
             var scaleY = getPercentage(parentHeight, objHeight);
             var origoX;
-            //alert($("#" + draggableId).attr("class"));
-            if ($("#" + draggableId).is(".speechContainer")) {
-                origoX = getPercentage(parentWidth, objPosition.left -objWidth);
-            } else {
-                origoX = getPercentage(parentWidth, (objPosition.left - objWidth) - parentPosition.left);
-            }
-          
-            var origoY = getPercentage(parentHeight, objPosition.top - parentPosition.top);
+            alert(contentType);
+            if (contentType == "right") {
+                objPosLeft = objPosLeft + parentWidth;
+            } 
+                
+               
+            origoX = getPercentage(parentWidth, (objPosLeft - objWidth) - parentPosition.left);
+            var origoY = getPercentage(parentHeight, objPosition.top);
             
             /*For debugging purpose. Shows data on Status in acccordion menu*/
             $('#parentX_txtbox').val(parentPosition.left);

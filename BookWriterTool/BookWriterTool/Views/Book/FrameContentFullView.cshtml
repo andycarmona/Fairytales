@@ -26,13 +26,13 @@
                             break;
                         case "speechBubble":
                               
-                            <div style="position:relative;left: @obj.origoX; top: @obj.origoY;" width="@obj.scaleX" height="@obj.scaleY" id="@obj.id"  class="speechContainer">
+                            <div style="position:absolute;left: @obj.origoX; top: @obj.origoY;" width="@obj.scaleX" height="@obj.scaleY" id="@obj.id"  class="speechContainer">
                                 <p> @this.Html.Raw(@obj.text != null ? @obj.text.Replace("\n", "<br/>"):" ")</p>
                                     <br />
                             </div>
                             break;
                         default:
-                       <img id="@obj.id" style="position:relative;left: @obj.origoX; top: @obj.origoY;" class="clonedImg" width="@obj.scaleX" height="@obj.scaleY" alt="" src="@activeDirectory@GlobalVariables.ConfigResource(@obj.type)@obj.img" />
+                       <img id="@obj.id" style="position:absolute;left: @obj.origoX; top: @obj.origoY;" class="clonedImg" width="@obj.scaleX" height="@obj.scaleY" alt="" src="@activeDirectory@GlobalVariables.ConfigResource(@obj.type)@obj.img" />
                             break;
                     }
                     zindex++;              

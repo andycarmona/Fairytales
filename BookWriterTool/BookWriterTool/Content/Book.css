@@ -159,7 +159,9 @@ p.thought:after
 
 .clonedImg
 {
-    position: relative;
+    position: absolute;
+
+ 
 }
 
 .rightContent
@@ -202,9 +204,9 @@ p.thought:after
     background-position: center center;
     -webkit-background-size: 100% auto;
     -moz-background-size: 100% auto;
-    background-size: 100% auto;
-    height: 83%;
-    width: 47%;
+    background-size: 98% auto;
+    height: 95%;
+    width: 48%;
     /*margin-right: 350px;*/
 }
 
@@ -217,9 +219,9 @@ p.thought:after
     -o-border-image: url(Resources/Images/border.png) 25 25 round;
     -webkit-background-size: 100% auto;
     -moz-background-size: 100% auto;
-    background-size: 100% auto;
-    height: 83%;
-    width: 47%;
+    background-size: 98% auto;
+    height: 95%;
+    width: 48%;
     float: right;
 }
 
@@ -234,7 +236,7 @@ p.thought:after
     -webkit-background-size: 50% auto;
     -moz-background-size: 50% auto;
     background-size: 50% auto;
-    height: 83%;
+    height: 95%;
     width: 98%;
 }
 
@@ -245,16 +247,19 @@ p.thought:after
     height: 75%;
 }
 .speechContainer {
-    position: relative;
-    float: left;
-     
-    background-image: url(Resources/Images/speechTalk.png);
-    background-size: 100% 100%;
-    background-repeat:no-repeat;
-   min-height: 30%;
+    position: absolute;
+    overflow: hidden;
+background-image: url(Resources/Images/speechTalk.png);
+background-size: 100% 100%;
+ 
+background-repeat: no-repeat;
+min-height:30%;
 min-width: 20%;
-    outline: 0;
-   padding: 1px 1px 9px 32px;
+
+outline: 0;
+margin: 0px auto;
+   padding: 1px 13px 0px 9px;
+
 
 }
 .formObjectGroup input{
@@ -333,12 +338,15 @@ min-width: 20%;
 
 .contentIntern
 {
+    position: relative;
+        overflow:hidden;
     background-size: contain;
     cursor: pointer;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+ 
+  background-size: 100% 100%;
     width: 100%;
     height: 100%;
+    /*   b  background-repeat: no-repeat;*/
 }
 
 .objects
