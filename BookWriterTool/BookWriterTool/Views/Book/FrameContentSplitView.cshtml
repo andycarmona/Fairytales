@@ -21,9 +21,10 @@
                         case "textBox":
                             <p id="@obj.id" class='bigText' contenteditable='true'>@this.Html.Raw(@obj.text.Replace("\n", "<br/>"))</p>
                             break;
-                        case "speechBubble":
+                        case "speechThink":
+                        case "speechTalk":
                               
-                            <div style="position:absolute;left: @obj.origoX; top: @obj.origoY;" width="@obj.scaleX" height="@obj.scaleY" id="@obj.id"  class="speechContainer">
+                            <div style="position:absolute;left: @obj.origoX; top: @obj.origoY;" width="@obj.scaleX" height="@obj.scaleY" id="@obj.id"  class="speechContainer @obj.type">
                                 <p> @this.Html.Raw(@obj.text != null ? @obj.text.Replace("\n", "<br/>"):" ")</p>
                                     <br />
                             </div>
