@@ -19,7 +19,7 @@ var Objects = {
     ScaleX: "",
     ScaleY: "",
     OrigoX: "",
-    OrigoY:"",
+    OrigoY: "",
     Type: ""
 };
 
@@ -42,14 +42,18 @@ var dialogOpts = {
     minHeight: 700,
     width: 600,
     height: 700,
-    close: function() {
+    close: function () {
 
     },
-    open: function() {
+    open: function () {
         configurateImgOnTerrain();
     }
 };
-
+var txtAreaOpts = {
+    context: $('p')
+      , animate: false
+      , cloneClass: 'faketextarea'
+};
 
 var draggableId = "No Draggable";
 var droppableId = "No droppable";
@@ -107,7 +111,7 @@ $(document).ready(function () {
     $('.bb-bookblock').booklet({
         width: '60%',
         manual: 'false',
-        hoverWidth:0,
+        hoverWidth: 0,
         overlays: true,
         pagePadding: 0,
         height: 600,
@@ -116,9 +120,9 @@ $(document).ready(function () {
         tabWidth: 180,
         tabHeight: 20
     });
-    
-    $("#accordionConfig").accordion();
-    $("#accordionStatus").accordion();
+
+    $("#accordionConfig").accordion({ active: false });
+    $("#accordionStatus").accordion({ active: false });
     $(".Container3D").addClass("disableControl");
     if ($("#mssgString").html() != '')
         showStatusMssg();
@@ -128,7 +132,7 @@ $(document).ready(function () {
     }
     var fileName = $("#bookTitle").html();
     if (fileName == '') {
-       
+
         $("#navBtn").hide();
     }
     $("#objectsGroup").jstree({
@@ -137,7 +141,7 @@ $(document).ready(function () {
             "items": {
                 remove: {
                     label: "Delete location",
-                    action: function(obj) {
+                    action: function (obj) {
                         alert("Delete Object");
                     }
                 },
@@ -146,16 +150,16 @@ $(document).ready(function () {
                 "rename": false
             }
         }
-    }).bind("loaded.jstree", function(event, data) {
-      
-    });
-        $("#characterGroup").jstree({
-            "plugins": ["themes", "html_data"]
-        });
-        $("#expressionGroup").jstree({
-            "plugins": ["themes", "html_data"]
-        });
+    }).bind("loaded.jstree", function (event, data) {
 
+    });
+    $("#characterGroup").jstree({
+        "plugins": ["themes", "html_data"]
+    });
+    $("#expressionGroup").jstree({
+        "plugins": ["themes", "html_data"]
+    });
+    $('.smallText').autogrow(txtAreaOpts);
     activateEditorOperations();
 
 });
@@ -165,7 +169,7 @@ function showStatusMssg() {
     $("#statusDialog").dialog({
         modal: true,
         buttons: {
-            Ok: function() {
+            Ok: function () {
                 $(this).dialog("close");
             }
         }
@@ -173,7 +177,7 @@ function showStatusMssg() {
 }
 
 /*Get selectec item of dropdownbox*/
-$(".selectpicker").change(function() {
+$(".selectpicker").change(function () {
     $('#userContent').load('/Book/GetAvailableBooks', { fileOption: "loadBook" });
 });
 
@@ -189,14 +193,14 @@ function getBookModel() {
     return BookModel;
 }
 
-function setObjectModel(objectId, imageObj, scaleX, scaleY, origoX,origoY, type) {
+function setObjectModel(objectId, imageObj, scaleX, scaleY, origoX, origoY, type) {
     BookModel.Objects.push({
         ObjectId: objectId,
         ImageObj: imageObj,
         ScaleX: scaleX,
         ScaleY: scaleY,
         OrigoX: origoX,
-        OrigoY:origoY,
+        OrigoY: origoY,
         Type: type
     });
 }
@@ -219,42 +223,34 @@ $('#txtCompGroup #txtBox').bind("click", function () {
     if (actualContent == null) {
         showInfoMessage(mssgMissingActiveContent);
     } else if (actualContent != null) {
-            $("#" + actualContent).children('div').eq(0).find('.bigText').remove();
-            $("#" + actualContent).children('div').eq(0).find('img').each(function () {
-                $(this).remove();
-            });
-            $("#" + actualContent).children('div').eq(0).prepend(" <p class='bigText' contenteditable='true' id='" + actualContent + "-div_text'>"+clickHere+"</p>");
-            $('.bigText').bind("click", { componentId: actualContent }, function (evento) {
-                var data = evento.data;
-                editableBox(data.componentId,"textBox");
-            });
-        } 
-});
-/*Add img on content in frame*/
-$('#txtCompGroup .bubbleText').bind("click", function () {
-    var objId=$(this).attr("id");
-    if (actualContent == null) {
-        showInfoMessage(mssgMissingActiveContent);
-    } else {
-        AddSpeechBubble("speechBubble", $(this));
+        $("#" + actualContent).children('div').eq(0).find('.bigText').remove();
+        $("#" + actualContent).children('div').eq(0).find('img').each(function () {
+            $(this).remove();
+        });
+        $("#" + actualContent).children('div').eq(0).prepend(" <p class='bigText' contenteditable='true' id='" + actualContent + "-div_text'>" + clickHere + "</p>");
+        $('.bigText').bind("click", { componentId: actualContent }, function (evento) {
+            var data = evento.data;
+            editableBox(data.componentId, "textBox");
+        });
     }
 });
 
+
 /*Add img on content in frame*/
 $('#objectsGroup img').bind("click", function () {
-    
+
     if (actualContent == null) {
         showInfoMessage(mssgMissingActiveContent);
     } else
-    AddObject("CharacterRes", $(this));
+        AddObject("CharacterRes", $(this));
 });
 
 /*Add img on content in frame*/
 $('#characterGroup img').bind("click", function () {
     if (actualContent == null) {
         showInfoMessage(mssgMissingActiveContent);
-    }else
-    AddObject("Character2DRes", $(this));
+    } else
+        AddObject("Character2DRes", $(this));
 
 });
 /*Add img on content in frame*/
@@ -262,19 +258,18 @@ $('#expressionGroup img').bind("click", function () {
     if (actualContent == null) {
         showInfoMessage(mssgMissingActiveContent);
     } else
-    AddObject("ExpressionRes", $(this));
+        AddObject("ExpressionRes", $(this));
 });
 
-function editableBox(componentId,boxType,form) {
-     
+function editableBox(componentId, boxType, form) {
+
     $('.bigText').editable('/Book/AddTextToContent', {
         type: 'textarea',
-        cancel: 'Cancel',
         name: 'model',
         id: 'componentId',
-        submit: 'OK',
-        submitdata:function (value,settings) {
-            return {type:boxType,form:form};
+        onblur: 'submit',
+        submitdata: function (value, settings) {
+            return { type: boxType, form: form };
         },
         data: function (value, settings) {
             var retval = value.replace(/<br[\s\/]?>/gi, '\n');
@@ -397,33 +392,45 @@ $("#ctxMenuEditExtra").click(function () {
     if (texto == "")
         texto = clickHere;
     $('#contentWindow').html('');
-    $('#contentWindow').append('<div><span id="ElementId">' + objId + '</span></div><div><p class="smallText" contenteditable="true">' +
+    $('#contentWindow').append('<div><span id="ElementId">' + objId + '</span></div><div><p class="smallText autogrow" contenteditable="true">' +
        texto + '</p></div>   ');
 
     $('.smallText').bind("click", { componentId: actualContent + "-" + objId, boxType: "speechBubbla", boxForm: "left" }, function (evento) {
         var data = evento.data;
-      
-       speechTxtBox(data.componentId, data.boxType, data.boxForm);
+
+        speechTxtBox(data.componentId, data.boxType, data.boxForm);
     });
-   
+
     $("#contentWindow").dialog(
         {
+
+            width: 369,
             close: function (event, ui) {
                 var result = $("#contentWindow .smallText").html().replace(/(<([^>]+)>)/ig, "");
-                alert(result);
+                //alert(result);
                 if (result == "OKCancel")
                     result = "";
                 $('#' + actualContent + " .contentIntern #" + objId).html(result);
-        }
+            }
         });
 });
 function speechTxtBox(componentId, boxType, form) {
-    // alert(componentId);
+    var splitCompId = componentId.split('-');
+    //alert('#' + actualContent + " .contentIntern #" + splitCompId[4]);
     $('.smallText').editable('/Book/AddTextToBubble', {
         type: 'textarea',
         cancel: 'Cancel',
+        style: 'inherit',
         name: 'model',
+        width: '90%',
         submit: 'OK',
+        callback: function (value, settings) {
+            var result = $("#contentWindow .smallText").html().replace(/(<([^>]+)>)/ig, "");
+            //alert(result);
+            if (result == "OKCancel")
+                result = "";
+            $('#' + actualContent + " .contentIntern #" + splitCompId[4]).html(result);
+        },
         submitdata: function (value, settings) {
             return { componentId: componentId, type: boxType, form: form };
         },
@@ -441,7 +448,7 @@ function speechTxtBox(componentId, boxType, form) {
 $("#ctxMenuDelete").click(function () {
     var objId = $("#valCtxMenu").html();
     var valuesId = [];
-    
+
     if (actualContent != null) {
         $("#" + actualContent + " .contentIntern").children().each(function () {
             if ((objId == $(this).attr("id")) || (objId == $(this).parent('div').attr("id"))) {
@@ -466,78 +473,86 @@ $("#ctxMenuDelete").click(function () {
 
 /*Add new objects to content*/
 function AddObject(type, element) {
-    var parentId = $("#" + draggableId).parent().parent().attr("id");
+    //var parentId = $("#" + draggableId).parent().parent().attr("id");
     zIndexCounter++;
     var origoX = "0%";
     var origoY = "20%";
     var scaleX = "10%";
     var scaleY = "25%";
+    var bigTextStatus = false;
     var valuesId = [];
     var randomnumber = Math.floor(Math.random() * 100);
+
     if (actualContent != null) {
-        valuesId = GetIdFromString(actualContent);
-        setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
+
         $("#" + actualContent + " .contentIntern").children().each(function () {
+            if ($(this).attr("Class") == "bigText") {
+                bigTextStatus = true;
+                showInfoMessage("Sorry! There is a text object on this content already.");
+            }
             CreateListOfObjectsInFrame($(this));
         });
-        
-        objectList.objects.push({
-            ObjectId: "Object" + randomnumber,
-            Html: '<img width="' + scaleX + '" height="' + scaleY + '"  style="position:absolute;z-index: "' + zIndexCounter + '";left:20%;top:20%;" id="Object' + randomnumber + '" src="' + element.attr("src") + '" />'
-        });
-     
-        AddObjectsInArrayTOFrame("#" + actualContent + " .contentIntern");
-        
-    configurateImgOnTerrain(true);}
-    
-        setObjectModel("Object" + randomnumber, element.attr("src"),scaleX, scaleY, origoX, origoY, type);
-        PostArray("AddObjectToContent", getBookModel());
+        if (!bigTextStatus) {
+            valuesId = GetIdFromString(actualContent);
+            setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
+            objectList.objects.push({
+                ObjectId: "Object" + randomnumber,
+                Html: '<img width="' + scaleX + '" height="' + scaleY + '"  style=" top:30%;position:absolute;z-index: "' + zIndexCounter + '";left:20%;top:20%;" id="Object' + randomnumber + '" src="' + element.attr("src") + '" />'
+            });
+            AddObjectsInArrayTOFrame("#" + actualContent + " .contentIntern");
+            configurateImgOnTerrain(true);
+            setObjectModel("Object" + randomnumber, element.attr("src"), scaleX, scaleY, origoX, origoY, type);
+            PostArray("AddObjectToContent", getBookModel());
+           
+        }
         objectList.objects = [];
+    }
 }
-
+/*Add img on content in frame*/
+$('#txtCompGroup .bubbleText').bind("click", function () {
+    var objId = $(this).attr("id");
+    if (actualContent == null) {
+        showInfoMessage(mssgMissingActiveContent);
+    } else {
+        AddSpeechBubble("speechBubble", $(this));
+    }
+});
 function AddSpeechBubble(type, element) {
 
-    var parentId = $("#" + draggableId).parent().parent().attr("id");
-    //alert(parentId);
+    // var parentId = $("#" + draggableId).parent().parent().attr("id");
+
     var origoX = "0%";
     var origoY = "0%";
     var scaleX = "5%";
     var scaleY = "5%";
     var valuesId = [];
- 
+
     var randomnumber = Math.floor(Math.random() * 100);
-  
+    var speechImg = "/Content/Resources/Images/speechTalk.png";
+    if (element.attr("id") == "speechThink") {
+        speechImg = "/Content/Resources/Images/speechThink.png";
+    }
     if (actualContent != null) {
-        //alert(actualContent);
         $('#' + actualContent + " .contentIntern").children().each(function () {
-       CreateListOfObjectsInFrame($(this));
-            if($(this).is('.speechContainer')) {
+            CreateListOfObjectsInFrame($(this));
+            if ($(this).is('.speechContainer')) {
                 numberOfBubble++;
             }
         });
-     
+
         if (numberOfBubble < 2) {
             valuesId = GetIdFromString(actualContent);
             setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-            var p = $('#' + actualContent + " .contentIntern:last-child");
-            var position = p.position();
-            var left = position.left;
-            var top = position.top;
-            var defLeft = Math.floor(left);
-            var defTop = Math.floor(top);
-            //alert(position.left);
-           // $('#' + actualContent + " .contentIntern").append('<div left: "' + position.left + '"px;top: "' + position.top + '"px;"  class="speechContainer" id=speech' + randomnumber + '></div>');
-
             objectList.objects.push({
                 ObjectId: "Object" + randomnumber,
-                Html: '<div class="speechContainer" style="background-image: url(/Content/Resources/Images/speechTalk.png); z-index: ' + zIndexCounter + ';left:0%;top:0%;"  id="speech' + randomnumber + '">Righ-click here...</div>'
-         
+                Html: '<div class="speechContainer" style="background-image: url(' + speechImg + '); z-index: ' + zIndexCounter + ';left:0%;top:0%;"  id="speech' + randomnumber + '"><p>Righ-click here...</p></div>'
+
             });
             AddObjectsInArrayTOFrame("#" + actualContent + " .contentIntern");
-            
+
             configurateObjOnTerrain(true);
 
-            setObjectModel("speech" + randomnumber, element.attr("src"), scaleX, scaleY, origoX, origoY, type);
+            setObjectModel("speech" + randomnumber, element.attr("src"), scaleX, scaleY, origoX, origoY, element.attr("id"));
             PostArray("AddSpeechBubbleObject", getBookModel());
             numberOfBubble = 0;
         } else {
@@ -559,7 +574,7 @@ function AddObjectsInArrayTOFrame(elementParent) {
     $(elementParent).html('');
 
     for (var i = 0; i < objectList.objects.length; i++) {
-   
+
         $(elementParent).append(objectList.objects[i].Html);
     }
 }
@@ -586,11 +601,11 @@ jQuery.removeFromArray = function (value, arr) {
 function configurateObjOnTerrain(status) {
     $('#' + actualContent + '  .speechContainer').each(function () {
 
-      
-          startDragSpeech($(this));
+
+        startDragSpeech($(this));
 
         $(this).bind('contextmenu', function (e) {
-         
+
             $('#context-menu-extra').css('left', e.pageX + 'px');
             $('#context-menu-extra').css('top', e.pageY + 'px');
             $('#context-menu-extra').css('z-index', 10);
@@ -606,7 +621,7 @@ function configurateObjOnTerrain(status) {
 
 function configurateImgOnTerrain(status) {
     $('#' + actualContent + ' .droppable img').each(function () {
-            startDrag($(this));
+        startDrag($(this));
         $(this).bind('contextmenu', function (e) {
             $('#context-menu').css('left', e.pageX + 'px');
             $('#context-menu').css('top', e.pageY + 'px');
@@ -619,15 +634,15 @@ function configurateImgOnTerrain(status) {
     });
 }
 /*Delete book*/
-$('.deleteFile').on('click',function () {
+$('.deleteFile').on('click', function () {
     var aFile = this.id;
 
-    $.post("/Book/DeleteBook", { fileToDelete: aFile}, function (data) {
+    $.post("/Book/DeleteBook", { fileToDelete: aFile }, function (data) {
         $("#partialFileResult").html(data);
         showInfoMessage("SUCCES:You delete this book");
     }).fail(function () {
         showInfoMessage("ERROR: Couldn't delete this book.");
-    });   
+    });
 });
 
 /*Add new Book*/
@@ -635,14 +650,14 @@ $('#AddNewBook_btn').bind('click', function () {
     var fileName = $("#newFileName").val();
     if (fileName == "") {
         showInfoMessage("Please! Insert a name for the file.");
-    
+
     } else {
-         $.post("/Book/AddNewBook", { newFileName: fileName }, function(data) {
-              $("#partialFileResult").html(data);
-        }).fail(function() {
+        $.post("/Book/AddNewBook", { newFileName: fileName }, function (data) {
+            $("#partialFileResult").html(data);
+        }).fail(function () {
             showInfoMessage("ERROR: Couldn't create a book.");
         });
- }
+    }
 });
 /*Start Context menu events*/
 $('html').click(function (e) {
@@ -676,14 +691,14 @@ function destroyContextMenu() {
 
 /*Start drag effect on element*/
 function startDrag(element) {
-    
+
     $(element).draggable({
-        start:function() {
+        start: function () {
             $(".clonedImg").css("z-index", zIndexCounter++);
         },
         cursor: 'move',
         containment: "parent",
-        drag: function(event, ui) {
+        drag: function (event, ui) {
             draggableId = $(this).attr("id");
         }
     });
@@ -701,7 +716,7 @@ function startDragSpeech(element) {
 /*Activate editor for frame*/
 
 function activateEditorOperations() {
-    $(".contentIntern").click(function(e) {
+    $(".contentIntern").click(function (e) {
         $(".squareLeft").css({ "-webkit-border-image": "url(/Content/Resources/Images/border.png) 25 25 round" });
         $(".squareRight").css({ "-webkit-border-image": "url(/Content/Resources/Images/border.png) 25 25 round" });
         $(".rectangle").css({ "-webkit-border-image": "url(/Content/Resources/Images/border.png) 25 25 round" });
@@ -710,7 +725,7 @@ function activateEditorOperations() {
             $("#" + actualContent + " .droppable img").draggable("destroy");
         }
         actualContent = $(this).parent().attr("id");
-        
+
         configurateImgOnTerrain();
         configurateObjOnTerrain();
     });
@@ -719,7 +734,7 @@ function activateEditorOperations() {
 
 /*Change background image of terrain*/
 $(".backgroundContain").click(function () {
-   
+
     var valuesId = [];
     var bk = $(this).attr("id");
     var imgChosen = $("#" + bk).attr("src");
@@ -727,7 +742,7 @@ $(".backgroundContain").click(function () {
     if (actualContent != null) {
         valuesId = GetIdFromString(actualContent);
         setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-        setObjectModel(bk, $(this).attr("src"), null, null, null, null,null);
+        setObjectModel(bk, $(this).attr("src"), null, null, null, null, null);
         $("#" + actualContent + " .contentIntern").css("background-image", "url(" + imgChosen + ")");
         PostArray("AddBackgroundToFrame", getBookModel());
 
@@ -735,8 +750,8 @@ $(".backgroundContain").click(function () {
 });
 
 /*Add new page*/
-$("#btnAddPage").click(function() {
-    
+$("#btnAddPage").click(function () {
+
     setBookModel("chapter1", null, null, null);
     PostArray("AddPage", getBookModel());
     reloadPage();
@@ -748,20 +763,20 @@ $("#btnAddPage").click(function() {
 $("#framesGroup .draggable").draggable({
     cursor: 'move',
     helper: 'clone',
-    stack:'div',
-    drag: function(event, ui) {
+    stack: 'div',
+    drag: function (event, ui) {
         draggableId = $(this).attr("id");
     }
 }).addClass("ui-state-highlight");
-     
-    
+
+
 /*Function handle droppable frames objects. 
                   Object where you put your draggable*/
 $(".frame .droppable").droppable({
     drop: function (event, ui) {
         activateEditorOperations();
         var htmlContent = "<div class='droppable contentIntern ui-droppable' style='background-image: url(/Content/Resources/Images/rectangle.png)'></div>";
-     
+
         if ((draggableId == "rectangle") || (draggableId == "square")) {
             //Add frames in page
             var valuesId = [];
@@ -778,13 +793,13 @@ $(".frame .droppable").droppable({
                 var squareRightId = SplitAndConcanate(originalId, "right");
                 $(this).find("div").prepend("<div  id=" + squareLeftId + " class='squareLeft'>" + htmlContent + "</div><div  id=" + squareRightId + " class='squareRight'>" + htmlContent + "</div>");
             }
-        }else{
-   
+        } else {
+
             startDrag($("#".draggableId));
             activateEditorOperations();
-         
+
             var parentId = $("#" + draggableId).parent().parent().attr("id");
-            alert(parentId);
+            //alert(parentId);
             var splitParentId = parentId.split('-');
             var contentType = splitParentId[3];
             var parentWidth = $("#" + parentId).width();
@@ -797,20 +812,22 @@ $(".frame .droppable").droppable({
             var scaleX = getPercentage(parentWidth, objWidth);
             var scaleY = getPercentage(parentHeight, objHeight);
             var origoX;
-            alert(contentType);
+            //alert(contentType);
             if (contentType == "right") {
-                objPosLeft = objPosLeft + parentWidth;
-            } 
-                
-               
+                objPosLeft = objPosLeft + parentWidth + objWidth;
+            } else {
+                objPosLeft = objPosLeft + objWidth;
+            }
+
+
             origoX = getPercentage(parentWidth, (objPosLeft - objWidth) - parentPosition.left);
             var origoY = getPercentage(parentHeight, objPosition.top);
-            
+
             /*For debugging purpose. Shows data on Status in acccordion menu*/
             $('#parentX_txtbox').val(parentPosition.left);
             $('#parentY_txtbox').val(parentPosition.top);
             $('#posX_txtbox').val(objPosition.left);
-            $('#posY_txtbox').val(objPosition.top-parentPosition.top );
+            $('#posY_txtbox').val(objPosition.top - parentPosition.top);
             $('#pageName_txtbox').val(origoX);
             $('#frameName_txtbox').val(origoY);
             $('#parentWidth_txtbox').val(parentWidth);
@@ -818,11 +835,11 @@ $(".frame .droppable").droppable({
             $('#objWidth_txtbox').val(objWidth);
             $('#objHeight_txtbox').val(objHeight);
             /*End of debug part*/
-            
+
             valuesId = GetIdFromString(parentId);
             setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
-            setObjectModel(draggableId, null, scaleX, scaleY, origoX, origoY,null);
-              PostArray("UpdateObjectPosition", getBookModel());
+            setObjectModel(draggableId, null, scaleX, scaleY, origoX, origoY, null);
+            PostArray("UpdateObjectPosition", getBookModel());
         }
     }
 });
@@ -832,9 +849,9 @@ function showInfoMessage(mssg) {
     showStatusMssg();
 }
 
-function getPercentage(frameValue,objValue) {
+function getPercentage(frameValue, objValue) {
     var percentage;
-    percentage= Math.floor((objValue / frameValue) * 100);
+    percentage = Math.floor((objValue / frameValue) * 100);
     if (percentage > 88.0)
         percentage = 96.0;
     if (percentage < 0.0)
@@ -864,19 +881,19 @@ $("#Preview").bind("click", function () {
 
     var fileName = $("#bookTitle").html();
     if (window.location.pathname == "/Book/EditBook") {
-    
+
         window.location.replace("/Book/ViewBookFlip?fileName=" + fileName);
- 
-        } else {
-    
+
+    } else {
+
         window.location.replace("/Book/EditBook");
-        };
-    });
+    };
+});
 
 /*Toggle between 2D and 3D View*/
 /*----------------------------------------------*/
-$("#View3D").bind("click", function() {
-    $(".pages #frames").each(function(i, elem) {
+$("#View3D").bind("click", function () {
+    $(".pages #frames").each(function (i, elem) {
         $(this).hide(500);
     });
     $("#Container3D").appendTo($("#pages"));
@@ -884,8 +901,8 @@ $("#View3D").bind("click", function() {
     $(".Container3D").addClass("activeControl");
 });
 
-$("#View2D").bind("click", function() {
-    $(".pages #frames").each(function(i, elem) {
+$("#View2D").bind("click", function () {
+    $(".pages #frames").each(function (i, elem) {
         $(this).show(500);
     });
     $(".Container3D").removeClass("activeControl");
@@ -896,9 +913,9 @@ $("#View2D").bind("click", function() {
 
 function reloadPage() {
     $("body").fadeOut(
-        function() {
+        function () {
             location.reload(true);
-            $(document).ready(function() { $(body).fadeIn(); });
+            $(document).ready(function () { $(body).fadeIn(); });
         });
 }
 
@@ -912,7 +929,7 @@ function PostArray(url, descriptionArray) {
         data: JSON.stringify(BookModel),
         async: false,
         dataType: "json",
-        success: function(statusMsg) {
+        success: function (statusMsg) {
             descriptionArray.length = 0;
         },
         error: function (statusMsg) {

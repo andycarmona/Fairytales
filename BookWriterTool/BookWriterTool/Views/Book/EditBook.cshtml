@@ -111,6 +111,28 @@
 
 <div class="configDialog" id="configDialog">
     <div id="accordionConfig" class="toolbox">
+          <h4>Frames</h4>
+        <div class="leftContent">
+
+            @Html.Partial("~/Views/Book/FrameList.cshtml")
+
+        </div>
+        <h3>@Localization.Localize("objects")</h3>
+        <div id="genericObjGroup">
+
+            @Html.Partial("~/Views/Book/ObjectList.cshtml", (Dictionary<string, string[]>)ViewBag.Table, new ViewDataDictionary { { "listOfObjects", ViewBag.ObjectList } })
+
+        </div>
+        <h3>@Localization.Localize("backgrounds")</h3>
+        <div class="leftContent">
+             @Html.Partial("~/Views/Book/BackgroundsList.cshtml", (List<string>)ViewBag.Table, new ViewDataDictionary { { "listOfBackgrounds", ViewBag.BackgroundList } })
+        </div>
+          <h3>@Localization.Localize("textComponent")</h3>
+        <div class="leftContent">
+
+            @Html.Partial("~/Views/Book/TxtComponentsList.cshtml")
+
+        </div>
         <h3>@Localization.Localize("files")</h3>
         <div class="leftContent">
             <div id="partialFileResult">
@@ -128,7 +150,7 @@
         <h3>Status</h3>
         <div class="leftContent">
             @Html.ActionLink("GetObjelist", "GetObjectsInFolder", "Book");
-               <label>ParentPosition left:</label>
+            <label>ParentPosition left:</label>
             <input id="parentX_txtbox" type="text" />
 
             <label>Parent Position top:</label>
@@ -170,33 +192,7 @@
     </div>
 </div>
 
-<div class="configStatus" id="configStatus">
-    <div id="accordionStatus" class="toolbox">
-        <h4>Frames</h4>
-        <div class="leftContent">
 
-            @Html.Partial("~/Views/Book/FrameList.cshtml")
-
-        </div>
-        <h3>@Localization.Localize("objects")</h3>
-        <div id="genericObjGroup">
-
-            @Html.Partial("~/Views/Book/ObjectList.cshtml", (Dictionary<string, string[]>)ViewBag.Table, new ViewDataDictionary { { "listOfObjects", ViewBag.ObjectList } })
-
-        </div>
-        <h3>@Localization.Localize("backgrounds")</h3>
-        <div class="leftContent">
-             @Html.Partial("~/Views/Book/BackgroundsList.cshtml", (List<string>)ViewBag.Table, new ViewDataDictionary { { "listOfBackgrounds", ViewBag.BackgroundList } })
-        </div>
-          <h3>@Localization.Localize("textComponent")</h3>
-        <div class="leftContent">
-
-            @Html.Partial("~/Views/Book/TxtComponentsList.cshtml")
-
-        </div>
-        
-    </div>
-</div>
 <div id="contentWindow">
  
 </div>

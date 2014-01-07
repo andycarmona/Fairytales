@@ -38,9 +38,9 @@
            {
 			        <div class="f-page">
 			            <div class="f-title">
-			                <a href="http://tympanus.net/Tutorials/CSS3FluidParallaxSlideshow/">Previous Demo</a>
+			                <a href="">Previous</a>
 			                <h2>@ViewBag.fileName</h2>
-			                <a href="http://tympanus.net/codrops/2012/05/07/experimental-page-layout-inspired-by-flipboard/">Back to the Codrops Article</a>
+			                <a href="">Forward</a>
 			            </div>
                              @foreach (bookChapterPageFrame frame in page.frames)
                              {
@@ -77,27 +77,36 @@
        }
    }      </div>
     @section scripts
-{
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script type="text/javascript">
+    {
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript">
 
-        var $container = $('#flip'),
-            $pages = $container.children().hide();
+            var $container = $('#flip'),
+                $pages = $container.children().hide();
 
-        Modernizr.load({
-            test: Modernizr.csstransforms3d && Modernizr.csstransitions,
-            yep: ['/Scripts/jquery.tmpl.min.js', '/Scripts/jquery.history.js', '/Scripts/core.string.js', '/Scripts/jquery.touchSwipe-1.2.5.js', '/Scripts/jquery.flips.js'],
-            nope: '/Content/fallback.css',
-            callback: function(url, result, key) {
+            Modernizr.load({
+                test: Modernizr.csstransforms3d && Modernizr.csstransitions,
+                yep: ['/Scripts/jquery.tmpl.min.js', '/Scripts/jquery.history.js', '/Scripts/core.string.js', '/Scripts/jquery.touchSwipe-1.2.5.js', '/Scripts/jquery.flips.js'],
+                nope: '/Content/fallback.css',
+                callback: function(url, result, key) {
 
-                if (url === '/Content/fallback.css') {
-                    $pages.show();
-                } else if (url === '/Scripts/jquery.flips.js') {
-                    $container.flips();
+                    if (url === '/Content/fallback.css') {
+                        $pages.show();
+                    } else if (url === '/Scripts/jquery.flips.js') {
+                        $container.flips();
+                    }
+
                 }
-
+            });
+            $(document).ready(function() {
+                $(checkForChanges);
+            });
+            function checkForChanges() {
+                if ($('.rectangle').hasClass('box-expanded'))
+                    $('.contentIntern').css('height', '50%');
+                else
+                    $('.contentIntern').css('height', '100%');
+                    setTimeout(checkForChanges, 500);
             }
-        });
-
-    </script>
-}
+        </script>
+    }

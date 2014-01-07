@@ -58,7 +58,7 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.Helpers.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
@@ -70,29 +70,28 @@
     <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20715.0\lib\net40\System.Web.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.WebPages">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.WebPages.Razor">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Abstractions" />
-    <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Transactions" />
@@ -180,6 +179,7 @@
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\BundleMobileConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SessionConfig.cs" />
@@ -204,14 +204,21 @@
     <Compile Include="Controllers\CultureController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ViewSwitcherController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\FileOperations.cs" />
     <Compile Include="Helpers\GlobalVariables.cs" />
+    <Compile Include="Helpers\GoogleCustomClient.cs" />
     <Compile Include="Helpers\Localization.cs" />
     <Compile Include="Helpers\MvcHelpers.cs" />
+    <Compile Include="Migrations\201312290942245_AddExternalUserDEtails.cs" />
+    <Compile Include="Migrations\201312290942245_AddExternalUserDEtails.Designer.cs">
+      <DependentUpon>201312290942245_AddExternalUserDEtails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\bookXmlModel.cs" />
     <Compile Include="Models\IBookRepository.cs" />
@@ -267,8 +274,22 @@
     <Content Include="Content\assets\js\jquery-ui-1.10.0.custom.min.js" />
     <Content Include="Content\Book.css" />
     <Content Include="Content\Booklet\jquery.booklet.latest.css" />
+    <Content Include="Content\demo.css" />
+    <Content Include="Content\fallback.css" />
+    <Content Include="Content\images\ajax-loader.gif" />
+    <Content Include="Content\images\ajax-loader.png" />
+    <Content Include="Content\images\icons-18-black.png" />
+    <Content Include="Content\images\icons-18-white.png" />
+    <Content Include="Content\images\icons-36-black.png" />
+    <Content Include="Content\images\icons-36-white.png" />
     <Content Include="Content\JEdito\jquery-te-1.4.0.css" />
     <Content Include="Content\JEdito\jquery-te.png" />
+    <Content Include="Content\jquery.mobile-1.1.2.css" />
+    <Content Include="Content\jquery.mobile-1.1.2.min.css" />
+    <Content Include="Content\jquery.mobile.structure-1.1.2.css" />
+    <Content Include="Content\jquery.mobile.structure-1.1.2.min.css" />
+    <Content Include="Content\jquery.mobile.theme-1.1.2.css" />
+    <Content Include="Content\jquery.mobile.theme-1.1.2.min.css" />
     <Content Include="Content\Resources\BookTemplate\empty.xml" />
     <Content Include="Content\Resources\Generic\background\anime_joker-1024x576.jpg" />
     <Content Include="Content\Resources\Generic\background\purple-boardwalk-pier-jetty-pink-sunset-1920x1080-1024x576.jpg" />
@@ -279,6 +300,16 @@
     <Content Include="Content\Resources\Generic\character\animals\duck.jpg" />
     <Content Include="Content\Resources\Generic\character\expressions\expdrop.png" />
     <Content Include="Content\Resources\Generic\character\expressions\interrogationexp.png" />
+    <Content Include="Content\Resources\Images\1.jpg" />
+    <Content Include="Content\Resources\Images\2.jpg" />
+    <Content Include="Content\Resources\Images\3.jpg" />
+    <Content Include="Content\Resources\Images\4.jpg" />
+    <Content Include="Content\Resources\Images\5.jpg" />
+    <Content Include="Content\Resources\Images\6.jpg" />
+    <Content Include="Content\Resources\Images\7.jpg" />
+    <Content Include="Content\Resources\Images\8.jpg" />
+    <Content Include="Content\Resources\Images\cover.jpg" />
+    <Content Include="Content\Resources\Images\fabric_plaid.png" />
     <Content Include="Content\Resources\Images\speechTalk.png" />
     <Content Include="Content\Resources\Images\speechTalkRight.png" />
     <Content Include="Content\Resources\Images\speechThink.png" />
@@ -292,6 +323,8 @@
     <Content Include="Content\Resources\Images\square.png" />
     <Content Include="Content\Resources\Images\squarepart.png" />
     <Content Include="Content\Resources\WebPlayer\webviewer2.html" />
+    <Content Include="Content\Site.Mobile.css" />
+    <Content Include="Content\style.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -425,6 +458,8 @@
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Scripts\autogrow.js" />
+    <Content Include="Scripts\core.string.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -433,8 +468,14 @@
     <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
     <Content Include="Scripts\jquery.booklet.latest.min.js" />
     <Content Include="Scripts\jquery.easing.1.3.js" />
+    <Content Include="Scripts\jquery.flips.js" />
+    <Content Include="Scripts\jquery.history.js" />
     <Content Include="Scripts\jquery.jeditable.mini.js" />
     <Content Include="Scripts\jquery.jstree.js" />
+    <Content Include="Scripts\jquery.mobile-1.1.2.js" />
+    <Content Include="Scripts\jquery.mobile-1.1.2.min.js" />
+    <Content Include="Scripts\jquery.tmpl.min.js" />
+    <Content Include="Scripts\jquery.touchSwipe-1.2.5.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -445,6 +486,7 @@
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\MainScript.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\modernizr.custom.08464.js" />
     <Content Include="Scripts\themes\apple\bg.jpg" />
     <Content Include="Scripts\themes\apple\d.png" />
     <Content Include="Scripts\themes\apple\dot_for_ie.gif" />
@@ -477,6 +519,21 @@
     <Content Include="Users\andresc\Books\tresliebres\Generic\character\expressions\interrogationexp.png" />
     <Content Include="Users\andresc\Books\tresliebres\tresliebres.jpg" />
     <Content Include="Users\andresc\Books\tresliebres\tresliebres.xml" />
+    <Content Include="Users\andy%40e-vangelis.se\Books\tresliebres\Generic\background\anime_joker-1024x576.jpg" />
+    <Content Include="Users\andy%40e-vangelis.se\Books\tresliebres\Generic\background\background.jpg.jpg" />
+    <Content Include="Users\andy%40e-vangelis.se\Books\tresliebres\Generic\background\bg2large.jpg" />
+    <Content Include="Users\andy%40e-vangelis.se\Books\tresliebres\Generic\background\purple-boardwalk-pier-jetty-pink-sunset-1920x1080-1024x576.jpg" />
+    <Content Include="Users\andy%40e-vangelis.se\Books\tresliebres\Generic\background\rectangle.png" />
+    <Content Include="Users\andy%40e-vangelis.se\Books\tresliebres\Generic\character2d\anime\female\girlInGreen.png" />
+    <Content Include="Users\andy%40e-vangelis.se\Books\tresliebres\Generic\character2d\anime\male\croc.jpg" />
+    <Content Include="Users\andy%40e-vangelis.se\Books\tresliebres\Generic\character2d\anime\male\redFighter.png" />
+    <Content Include="Users\andy%40e-vangelis.se\Books\tresliebres\Generic\character\animals\croc.jpg" />
+    <Content Include="Users\andy%40e-vangelis.se\Books\tresliebres\Generic\character\animals\croc2.png" />
+    <Content Include="Users\andy%40e-vangelis.se\Books\tresliebres\Generic\character\animals\duck.jpg" />
+    <Content Include="Users\andy%40e-vangelis.se\Books\tresliebres\Generic\character\expressions\expdrop.png" />
+    <Content Include="Users\andy%40e-vangelis.se\Books\tresliebres\Generic\character\expressions\interrogationexp.png" />
+    <Content Include="Users\andy%40e-vangelis.se\Books\tresliebres\tresliebres.jpg" />
+    <Content Include="Users\andy%40e-vangelis.se\Books\tresliebres\tresliebres.xml" />
     <Content Include="Users\kallec\bookNoMetadata2.xml" />
     <Content Include="Users\kallec\Come back.xml" />
     <Content Include="Web.config" />
@@ -527,17 +584,26 @@
     <Content Include="Views\Book\TxtComponentsList.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Book\ViewBook.cshtml" />
+    <Content Include="Views\Shared\_LayoutView.cshtml" />
+    <Content Include="Views\Book\ViewBookFlip.cshtml" />
+    <Content Include="Views\Book\FrameContentFullView.cshtml" />
+    <Content Include="Views\Book\FrameContentSplitView.cshtml" />
+    <Content Include="Views\Shared\_ViewSwitcher.cshtml" />
+    <Content Include="Views\Shared\_Layout.Mobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Content\Resources\Generic\model\" />
     <Folder Include="Users\andresc\Books\tresliebres\Generic\model\" />
+    <Folder Include="Users\andy%40e-vangelis.se\Books\tresliebres\Generic\model\" />
     <Folder Include="Views\Shared\Resources\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Migrations\201312290942245_AddExternalUserDEtails.resx">
+      <DependentUpon>201312290942245_AddExternalUserDEtails.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\LocalConfig.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>LocalConfig.Designer.cs</LastGenOutput>
@@ -576,7 +642,7 @@
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
+          <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>56651</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>

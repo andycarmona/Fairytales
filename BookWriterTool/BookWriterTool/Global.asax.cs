@@ -37,6 +37,7 @@ namespace BookWriterTool
                 userIdColumn: "UserID",
                 userNameColumn: "UserName",
                 autoCreateTables: true);
+            BundleMobileConfig.RegisterBundles(BundleTable.Bundles);
         }
         protected void Session_Start()
         {

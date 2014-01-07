@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- start of book -->
+<book>
+  <!-- metadata, to group all the information about this book into one element. -->
+  <!-- define our chapters -->
+  <chapters>
+    <!-- chapter1 - the first chapter to be seen -->
+    <chapter id="chapter1">
+      <!-- grouped chapter information -->
+      <!-- a chapter can have one ore more pages. -->
+      <pages>
+        <!-- our first page! -->
+        <page id="page1">
+          <frames>
+            <frame bordertype="rectangle" id="frame1">
+              <contents>
+                <content target="rectangle" type="" background="background/purple-boardwalk-pier-jetty-pink-sunset-1920x1080-1024x576.jpg">
+                  <objects>
+                    <object scaleX="20.0%" scaleY="16.0%" origoX="74.0%" origoY="0.0%" type="speechTalk" id="speech73" />
+                    <object scaleX="19.0%" scaleY="11.0%" origoX="13.0%" origoY="21.0%" type="speechThink" id="speech80" />
+                  </objects>
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="rectangle" id="frame2">
+              <contents>
+                <content target="rectangle" type="" background="background/beach.png">
+                  <objects>
+                    <object scaleX="20.0%" scaleY="11.0%" origoX="24.0%" origoY="35.0%" type="speechTalk" id="speech53"><![CDATA[Hola bola]]></object>
+                    <object scaleX="20.0%" scaleY="11.0%" origoX="67.0%" origoY="37.0%" type="speechTalk" id="speech41"><![CDATA[Como estas?]]></object>
+                    <object img="male/redFighter.png" scaleX="10.0%" scaleY="24.0%" origoX="25.0%" origoY="70.0%" type="Character2DRes" id="Object32" />
+                    <object img="female/girlInGreen.png" scaleX="10.0%" scaleY="24.0%" origoX="63.0%" origoY="73.0%" type="Character2DRes" id="Object1" />
+                  </objects>
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="rectangle" id="frame3">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+          </frames>
+        </page>
+        <page id="page2">
+          <frames>
+            <frame bordertype="rectangle" id="frame1">
+              <contents>
+                <content target="rectangle" type="" background="background/background.jpg.jpg">
+                  <objects>
+                    <object scaleX="5%" scaleY="5%" origoX="0%" origoY="0%" type="speechTalk" id="speech63" />
+                    <object img="male/redFighter.png" scaleX="10%" scaleY="25%" origoX="0%" origoY="20%" type="Character2DRes" id="Object61" />
+                  </objects>
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="rectangle" id="frame2">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="rectangle" id="frame3">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects>
+                    <object scaleX="20.0%" scaleY="11.0%" origoX="52.0%" origoY="28.0%" type="speechTalk" id="speech25" />
+                    <object scaleX="20.0%" scaleY="16.0%" origoX="0.0%" origoY="0.0%" type="speechThink" id="speech2" />
+                  </objects>
+                </content>
+              </contents>
+            </frame>
+          </frames>
+        </page>
+        <page id="page3">
+          <frames>
+            <frame bordertype="rectangle" id="frame1">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="square" id="frame2">
+              <contents>
+                <content target="left" type="none">
+                  <objects />
+                </content>
+                <content target="right" type="none">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="rectangle" id="frame3">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+          </frames>
+        </page>
+        <page id="page4">
+          <frames>
+            <frame bordertype="rectangle" id="frame1">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="rectangle" id="frame2">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="rectangle" id="frame3">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+          </frames>
+        </page>
+        <page id="page5">
+          <frames>
+            <frame bordertype="rectangle" id="frame1">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="rectangle" id="frame2">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="rectangle" id="frame3">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+          </frames>
+        </page>
+        <page id="page6">
+          <frames>
+            <frame bordertype="rectangle" id="frame1">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="rectangle" id="frame2">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+            <frame bordertype="rectangle" id="frame3">
+              <contents>
+                <content target="rectangle" type="">
+                  <objects />
+                </content>
+              </contents>
+            </frame>
+          </frames>
+        </page>
+      </pages>
+      <!-- End of chapter -->
+    </chapter>
+    <!-- End of chapters -->
+  </chapters>
+  <!-- End of book -->
+</book>

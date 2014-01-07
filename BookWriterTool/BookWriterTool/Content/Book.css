@@ -43,7 +43,6 @@
 .FrameEdit .terrain
 {
     /*position: relative;*/
-    
 }
 
 
@@ -160,8 +159,6 @@ p.thought:after
 .clonedImg
 {
     position: absolute;
-
- 
 }
 
 .rightContent
@@ -243,51 +240,76 @@ p.thought:after
 .bigText
 {
     float: left;
-    width: 90%;
-    height: 75%;
+    width: 100%;
+    height: 100%;
 }
-.speechContainer {
+
+.speechContainer
+{
     position: absolute;
     overflow: hidden;
-background-image: url(Resources/Images/speechTalk.png);
-background-size: 100% 100%;
- 
-background-repeat: no-repeat;
-min-height:30%;
-min-width: 20%;
-
-outline: 0;
-margin: 0px auto;
-   padding: 1px 13px 0px 9px;
-
-
+    background-size: 100% 100%;
+    
+        font-size: 9px;
+    background-repeat: no-repeat;
+    min-height: 10%;
+    min-width: 20%;
+    outline: 0;
+    margin: 0px auto;
+  padding: 2px 13px 12px 12px;
 }
-.formObjectGroup input{
+
+.speechTalk
+{
+    background-image: url(Resources/Images/speechTalk.png);
+}
+
+.speechThink
+{
+    background-image: url(Resources/Images/speechThink.png);
+}
+
+.formObjectGroup input
+{
     background-color: transparent;
 }
-.formObjectGroup select {
-   background-color: transparent; 
+
+.formObjectGroup select
+{
+    background-color: transparent;
 }
-.formBackgroundGroup input{
-     background-color: transparent;
+
+.formBackgroundGroup input
+{
+    background-color: transparent;
 }
-.formBackgroundGroup select{
-     background-color: transparent;
+
+.formBackgroundGroup select
+{
+    background-color: transparent;
 }
+
 .smallText
 {
     float: left;
-    width: 90%;
-    height: 75%;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    border: 3px solid;
+    border-radius: 8px;
+    border-color: gray;
 }
-.smallText p {
-    font-weight: lighter;
 
-}
-.smallText textarea {
-    font-weight: lighter;
+    .smallText p
+    {
+        font-weight: lighter;
+    }
 
-}
+    .smallText textarea
+    {
+        font-weight: lighter;
+    }
+
 .containerSquare
 {
     position: relative;
@@ -301,7 +323,10 @@ margin: 0px auto;
     top: 83px;
 }
 
-
+#contentWindow
+{
+    width: 10%;
+}
 
 .frames div
 {
@@ -339,16 +364,18 @@ margin: 0px auto;
 .contentIntern
 {
     position: relative;
-        overflow:hidden;
+    overflow: hidden;
     background-size: contain;
     cursor: pointer;
- 
-  background-size: 100% 100%;
+    background-size: 100% 100%;
     width: 100%;
     height: 100%;
     /*   b  background-repeat: no-repeat;*/
 }
-
+.speechContainer p
+{
+    font-size: 9px;
+}
 .objects
 {
     position: absolute;
@@ -358,7 +385,7 @@ margin: 0px auto;
 /*Context menu*/
 div#context-menu
 {
-    position: fixed;
+    position: relative;
     display: none;
     /*sample style attributes follow*/
     width: 100px;
@@ -366,13 +393,15 @@ div#context-menu
     color: #fff;
     font-size: 12px;
 }
+
 div#context-menu-extra
 {
-    position: fixed;
+    position: relative;
     display: none;
     /*sample style attributes follow*/
     width: 100px;
-    background: #fece2f;
+ opacity: 0.9;
+ background: #fece2f;
     color: #fff;
     font-size: 12px;
 }
@@ -402,12 +431,14 @@ div#context-menu-extra
         padding: 0;
         width: auto;
     }
-    div#context-menu-extra li
+
+div#context-menu-extra li
 {
     margin: 3px;
     padding: 3px;
     background: #000;
 }
+
 div#context-menu li
 {
     margin: 3px;
@@ -475,7 +506,7 @@ div#context-menu li
 }
 
 .editContent
-{/*position: relative;*/
+{ /*position: relative;*/
 }
 
 .editContentLeft
@@ -509,14 +540,15 @@ div#context-menu li
 
 .pagesView
 {
-position: absolute;
-top: 12%;
-margin: 0 auto;
-border-bottom-left-radius: 8px;
-border-bottom-right-radius: 8px;
-border: 2px solid #d19405;
-font-weight: bold;
+    position: absolute;
+    top: 12%;
+    margin: 0 auto;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border: 2px solid #d19405;
+    font-weight: bold;
 }
+
 .ui-accordion .ui-accordion-content
 {
     height: 390px;
