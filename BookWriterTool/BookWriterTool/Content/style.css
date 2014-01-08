@@ -27,8 +27,7 @@
     min-height: 10%;
     min-width: 15%;
     outline: 0;
-  padding: 2px 13px 12px 12px;
-
+    padding: 2px 13px 12px 12px;
 }
 
 
@@ -644,7 +643,6 @@ a.f-ref
 {
     border: none;
     padding: 50px;
-    
 }
 
     .box-expanded .img-cont
@@ -695,6 +693,47 @@ a.f-ref
     line-height: 30px;
 }
 
+@media screen and (max-width: 1200px)and (orientation:landscape)
+{
+    .box.box-expanded p
+    {
+        font-size: 12px;
+        line-height: 19px;
+    }
+
+    .speechContainer
+    {
+        padding: 2px 0px 1px 15px;
+    }
+
+    .box .speechContainer p
+    {
+        font-size: 11px;
+        line-height: 15px;
+    }
+}
+
+@media screen and (max-width: 1200px)and (orientation:portrait)
+{
+
+    .box.box-expanded p
+    {
+        font-size: 13px;
+        line-height: 20px;
+    }
+
+    .speechContainer
+    {
+        padding: 10px 15px 13px 10px;
+    }
+
+    .box .speechContainer p
+    {
+        font-size: 11px;
+        line-height: 15px;
+    }
+}
+
 @media screen and (max-width: 760px)
 {
     .f-title a
@@ -711,13 +750,18 @@ a.f-ref
         margin-top: 5px;
     }
 
+    .box.box-expanded p
+    {
+        font-size: 12px;
+        line-height: 19px;
+    }
+
     body .box-expanded .img-cont
     {
         width: 100% !important;
         height: 50% !important;
         margin: 0;
     }
-
 }
 
 @media screen and (max-width: 690px)
@@ -738,11 +782,16 @@ a.f-ref
 
             .page .box h3 span,
             .page .box .img-cont,
-            .page .box p,
             .page .box:after
             {
                 display: none;
             }
+
+        .page .box p
+        {
+            font-size: 7px;
+            line-height: 10px;
+        }
 
         .page .box img
         {
@@ -757,10 +806,15 @@ a.f-ref
         clear: both;
     }
 
+    .speechContainer
+    {
+        padding: 2px 12px 0px 10px;
+    }
+
     .box.box-expanded p
     {
-        font-size: 16px;
-        line-height: 22px;
+        font-size: 10px;
+        line-height: 13px;
     }
 
     .box-img-left p,
@@ -789,5 +843,14 @@ a.f-ref
     .cover-elements
     {
         display: none;
+    }
+}
+
+@media screen and (max-width: 690px) and (orientation:landscape)
+{
+    .box.box-expanded p
+    {
+        font-size: 8px;
+        line-height: 11px;
     }
 }
