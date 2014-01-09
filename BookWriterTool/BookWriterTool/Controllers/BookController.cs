@@ -13,6 +13,9 @@ using System.Net.Sockets;
 
 namespace BookWriterTool.Controllers
 {
+    using System.Drawing;
+    using System.Web.Helpers;
+    using System.Web.UI.WebControls;
 
     [Authorize]
     [HandleError]
@@ -21,6 +24,8 @@ namespace BookWriterTool.Controllers
         private readonly IBookRepository aBookRepository;
 
         private readonly FileOperations fileHandler;
+
+        private ImageHandler imageOperation;
 
         private book aBook;
 
@@ -41,7 +46,8 @@ namespace BookWriterTool.Controllers
 
             aBookRepository = bookRepository;
             this.fileHandler = new FileOperations();
-         
+            imageOperation = new ImageHandler();
+
 
         }
 
@@ -83,7 +89,7 @@ namespace BookWriterTool.Controllers
 
             if (activeUser != null)
             {
-              
+
                 try
                 {
                     systemMssg = this.fileHandler.AddNewBook(newFileName, activeUser);
@@ -175,6 +181,38 @@ namespace BookWriterTool.Controllers
             }
             ViewBag.statusMsg = systemMssg;
             return this.View();
+        }
+
+        public ActionResult JumpToPage(string fileName,int pageNumber)
+        {
+            systemMssg = "";
+            activeUser = User.Identity.Name;
+            if (activeUser != null)
+            {
+                if (Session["ActualDirectory"] == null)
+                {
+                    Session["ActualDirectory"] = String.Format("/Users/{0}/Books/{1}", activeUser, fileName);
+                }
+                try
+                {
+                    //  string[] listOfBooks = this.fileHandler.GetListOfUserBooks(activeUser);
+
+                    string actualPath = String.Format("/Users/{0}/Books/{1}/{1}.xml", activeUser, fileName);
+                    systemMssg = aBookRepository.SetActualFile(actualPath);
+                    if (fileName != null)
+                        aBook = this.aBookRepository.GetAllContent();
+                    ViewBag.fileName = fileName;
+                    //  ViewBag.arrayBooks = listOfBooks;
+                    ViewBag.statusMsg = systemMssg;
+                    return this.View(aBook);
+                }
+                catch (Exception e)
+                {
+                    systemMssg = e.Message;
+                }
+            }
+            ViewBag.statusMsg = systemMssg;
+            return this.View(aBook); 
         }
 
         public ActionResult ViewBookFlip(string fileName)
@@ -365,9 +403,29 @@ namespace BookWriterTool.Controllers
 
             if (file.ContentLength > 0)
             {
-                var fileName = Path.GetFileName(file.FileName);
-                var path = Path.Combine(Server.MapPath(selectedFolder), fileName);
-                file.SaveAs(path);
+                var uploadedImg = new Bitmap(file.InputStream);
+                try
+                {
+                    Bitmap resultImg;
+                    //if ((uploadedImg.Width > 750) && (uploadedImg.Height > 750))
+                    //{
+                        resultImg = imageOperation.ResizeImage(uploadedImg,750);
+                    //}
+                    //else
+                    //{
+                    //    resultImg = uploadedImg;
+                    //}
+                    var path = Path.Combine(Server.MapPath(selectedFolder), file.FileName);
+
+                    resultImg.Save(path);
+                    resultImg.Dispose();
+                }
+                catch (Exception e)
+                {
+                    var mssg = e.Message;
+                }
+
+
             }
 
             return RedirectToAction("EditBook");

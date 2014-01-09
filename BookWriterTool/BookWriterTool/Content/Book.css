@@ -256,7 +256,7 @@ p.thought:after
     min-width: 20%;
     outline: 0;
     margin: 0px auto;
-  padding: 2px 13px 12px 12px;
+  padding: 7px 13px 12px 12px;
 }
 
 .speechTalk
@@ -528,14 +528,14 @@ div#context-menu li
 
 .pagesEdit
 {
-    position: fixed;
-    margin: 0 auto;
-    left: 17%;
-    top: 11%;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    border: 2px solid #d19405;
-    font-weight: bold;
+position: fixed;
+margin: 0 auto;
+left: 26%;
+top: 7%;
+border-bottom-left-radius: 8px;
+border-bottom-right-radius: 8px;
+border: 2px solid #d19405;
+font-weight: bold;
 }
 
 .pagesView

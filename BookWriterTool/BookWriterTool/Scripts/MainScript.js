@@ -121,8 +121,16 @@ $(document).ready(function () {
         tabHeight: 20
     });
 
-    $("#accordionConfig").accordion({ active: false });
-    $("#accordionStatus").accordion({ active: false });
+    $("#accordionConfig").accordion({
+        active: false,
+        icons: false,
+        collapsible: true
+    });
+    $("#accordionStatus").accordion({
+        active: false,
+        icons: false,
+        collapsible: true
+    });
     $(".Container3D").addClass("disableControl");
     if ($("#mssgString").html() != '')
         showStatusMssg();
@@ -477,8 +485,8 @@ function AddObject(type, element) {
     zIndexCounter++;
     var origoX = "0%";
     var origoY = "20%";
-    var scaleX = "10%";
-    var scaleY = "25%";
+    var scaleX = "30%";
+    var scaleY = "60%";
     var bigTextStatus = false;
     var valuesId = [];
     var randomnumber = Math.floor(Math.random() * 100);
