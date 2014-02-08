@@ -345,6 +345,20 @@ namespace BookWriterTool.Controllers
                 statusMsg = aBookRepository.AddBackgroundToContent(frameDescriptionArray, targetFile);
             return Json(statusMsg);
         }
+        public JsonResult UpdateBubbleObject(BookModel model)
+        {
+            var statusMsg = "";
+            if (Session["ActualDirectory"] != null)
+            {
+                var actualDirectory = (string)Session["ActualDirectory"];
+                var fileName = (string)this.Session["ActualFile"];
+
+                statusMsg = aBookRepository.UpdateSpeechBubbleObject(model, actualDirectory + "/" + fileName);
+
+
+            }
+            return Json(statusMsg);
+        }
 
         [HttpPost]
         public JsonResult UpdateObjectPosition(BookModel frameDescriptionArray)

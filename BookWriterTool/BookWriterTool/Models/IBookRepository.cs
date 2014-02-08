@@ -23,6 +23,7 @@ namespace BookWriterTool.Models
         void EditChapter(string chapterId);
         string AddTextToBubble(string model, string componentId, string fileName, string type, string form);
         string AddTextToContent(string model, string componentId, string fileName,string type,string form);
-        
+
+        string UpdateSpeechBubbleObject(BookModel model, string s);
     }
 }

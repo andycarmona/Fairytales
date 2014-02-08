@@ -273,20 +273,38 @@ $("#ctxMenuFlip").click(function () {
 $("#ctxMenuFlipExtra").click(function () {
     var objId = $("#valCtxMenuExtra").html();
     var valuesId = [];
+
     if (actualContent != null) {
         $("#" + actualContent + " .contentIntern").find('div').each(function () {
             if ((objId == $(this).attr("id")) || (objId == $(this).parent('div').attr("id"))) {
+
                 var result = "";
                 var actualBackground = $(this).css("background-image");
                 var splitSrc = actualBackground.split('/');
                 var fileName = splitSrc[splitSrc.length - 1];
+                var splitExtension = fileName.split('.');
 
-                if (fileName != "Talk") {
-                    result = "speechTalkRight.png";
-                } else {
-                    result = "speechTalk.png";
+                switch (splitExtension[0]) {
+                    case "speechTalk":
+                        result = "speechTalkRight.png";
+                        break;
+                    case "speechTalkRight":
+                        result = "speechTalk.png";
+                        break;
+                    case "speechThink":
+                        result = "speechThinkRight.png";
+                        break;
+                    case "speechThinkRight":
+                        result = "speechThink.png";
+                        break;
                 }
-                $("#" + objId).css("background-image", "/Resources/Images/" + result);
+
+                $("#" + actualContent + " .contentIntern #" + objId).css("background-image", "url(../Content/Resources/Images/" + result + ")");
+                var splitResult = result.split('.');
+                valuesId = GetIdFromString(actualContent);
+                setBookModel(valuesId[0], valuesId[1], valuesId[2], valuesId[3]);
+                setObjectModel(objId, null, null, null, null, null, splitResult[0]);
+                PostArray("UpdateBubbleObject", getBookModel());
             }
             destroyContextMenu();
         });

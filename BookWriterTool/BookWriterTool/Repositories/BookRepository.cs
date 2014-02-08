@@ -362,6 +362,36 @@ namespace BookWriterTool.Repositories
             return mssg;
         }
 
+        public string UpdateSpeechBubbleObject(BookModel content, string fileName)
+        {
+            //  var image = this.GetIdFromFileName(imgVal);
+            var mssg = "";
+            try
+            {
+
+                //  string[] splittedValues = content[0].Split('-');
+                xmlDoc = new XmlDocument();
+                xmlDoc.Load(HttpContext.Current.Server.MapPath(fileName));
+                var aObject = (XmlElement)this.xmlDoc.SelectSingleNode(String.Format("//book/chapters/chapter[@id='{0}']/" +
+                    "pages/page[@id='{1}']/frames/frame[@id='{2}']/contents/content[@target='{3}']/objects/object[@id='{4}']",
+                   content.ChapterId, content.PageId, content.FrameId, content.Target, content.Objects[0].ObjectId));
+
+                if (aObject != null)
+                {
+
+                    aObject.SetAttribute("type", content.Objects[0].Type);
+
+                    xmlDoc.Save(HttpContext.Current.Server.MapPath(fileName));
+                }
+            }
+            catch (Exception e)
+            {
+                mssg = e.Message;
+            }
+
+            return mssg;
+        }
+
         public string AddBackgroundToContent(BookModel content, string fileName)
         {
             var image = this.GetIdFromFileName(content.Objects[0].ImageObj);

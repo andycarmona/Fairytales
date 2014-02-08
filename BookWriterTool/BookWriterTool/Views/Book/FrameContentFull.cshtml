@@ -12,7 +12,7 @@
 {
     foreach (bookChapterPageFrameContent content in frame.contents)
     {
-    <div class="droppable contentIntern" style="background-image: url(@(!String.IsNullOrEmpty(content.background) ? @activeDirectory+"/Generic/"+ @content.background : @GlobalVariables.ConfigResource("Images")+"rectangle.png"));">
+    <div class="droppable contentIntern" id="contentIntern" style="background-image: url(@(!String.IsNullOrEmpty(content.background) ? @activeDirectory+"/Generic/"+ @content.background : @GlobalVariables.ConfigResource("Images")+"rectangle.png"));">
         @if ((@target == "rectangle"))
         {
             if (content.objects != null)
@@ -26,7 +26,8 @@
                             break;
                             case "speechThink":    
                         case "speechTalk":
-                              
+                        case "speechThinkRight":
+                        case "speechTalkRight":
                             <div style="z-index:@(zindex++); left: @obj.origoX; top: @obj.origoY;" width="@obj.scaleX" height="@obj.scaleY" id="@obj.id"  class="speechContainer @obj.type">
                                 <p class="autogrow"> @this.Html.Raw(@obj.text != null ? @obj.text.Replace("\n", "<br/>"):" ")</p>
                                     <br />
