@@ -54,31 +54,40 @@ namespace BookWriterTool.Helpers
 
         public string[] GetListOfTemplates()
         {
-            string[] filesPaths = Directory.GetFiles(HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("TemplateDirectory")));
+            string[] filesPaths =
+                Directory.GetFiles(
+                    HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("TemplateDirectory")));
 
             return filesPaths;
         }
 
         public string[] GetListOfUserBooks(string user)
         {
-            string[] directoriesPaths = Directory.GetDirectories(HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("UsersDirectory") + user + "/Books"));
+            string[] directoriesPaths =
+                Directory.GetDirectories(
+                    HttpContext.Current.Server.MapPath(
+                        GlobalVariables.ConfigResource("UsersDirectory") + user + "/Books"));
 
             return directoriesPaths;
         }
+
         public void AddUserFolder(string folderName)
         {
-            var actualDirectory = HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("UsersDirectory") + folderName);
-            if(!Directory.Exists(actualDirectory))
-            Directory.CreateDirectory(actualDirectory);
+            var actualDirectory =
+                HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("UsersDirectory") + folderName);
+            if (!Directory.Exists(actualDirectory)) Directory.CreateDirectory(actualDirectory);
         }
 
         public List<string> GetListOfUserBooksRelativePath(string user)
         {
-            var physicalPaths = Directory.GetDirectories(HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("UsersDirectory") + user + "/Books"));
+            var physicalPaths =
+                Directory.GetDirectories(
+                    HttpContext.Current.Server.MapPath(
+                        GlobalVariables.ConfigResource("UsersDirectory") + user + "/Books"));
             var relativePaths = new List<string>();
             foreach (var path in physicalPaths)
             {
-                var fileInfo=new FileInfo(path);
+                var fileInfo = new FileInfo(path);
                 var fileName = fileInfo.Name;
                 relativePaths.Add(fileName);
             }
@@ -89,7 +98,11 @@ namespace BookWriterTool.Helpers
         {
             var aListObjects = new List<BookModel>();
             string[] directoryPaths = null;
-            directoryPaths = Directory.GetDirectories(HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("UsersDirectory") + user + "/Books/" + bookName + GlobalVariables.ConfigResource("Character2DRes")));
+            directoryPaths =
+                Directory.GetDirectories(
+                    HttpContext.Current.Server.MapPath(
+                        GlobalVariables.ConfigResource("UsersDirectory") + user + "/Books/" + bookName
+                        + GlobalVariables.ConfigResource("Character2DRes")));
 
             if (directoryPaths.Length != 0)
             {
@@ -112,20 +125,57 @@ namespace BookWriterTool.Helpers
                     }
                 }
 
-            } return aListObjects;
+            }
+            return aListObjects;
         }
 
         public string GetFolderName(string aFile)
         {
-            string folderName = Path.GetFileName(
-                            HttpContext.Current.Server.MapPath(
-                                Path.GetDirectoryName(HttpContext.Current.Server.MapPath(aFile))));
+            string folderName =
+                Path.GetFileName(
+                    HttpContext.Current.Server.MapPath(Path.GetDirectoryName(HttpContext.Current.Server.MapPath(aFile))));
             return folderName;
         }
 
+        public void CopyBookToPublic(string sourcePath, string destinationPath)
+        {
+            var sourceRelPath = HttpContext.Current.Server.MapPath(sourcePath);
+            var destinationRelPath = HttpContext.Current.Server.MapPath(destinationPath);
+            // Get the subdirectories for the specified directory.
+            DirectoryInfo dir = new DirectoryInfo(sourceRelPath);
+            DirectoryInfo[] dirs = dir.GetDirectories();
+
+            if (!dir.Exists)
+            {
+                throw new DirectoryNotFoundException(
+                    "Source directory does not exist or could not be found: " + sourcePath);
+            }
+
+            // If the destination directory doesn't exist, create it. 
+            if (!Directory.Exists(destinationRelPath))
+            {
+                Directory.CreateDirectory(destinationRelPath);
+            }
+
+            // Get the files in the directory and copy them to the new location.
+            FileInfo[] files = dir.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                string temppath = Path.Combine(destinationRelPath, file.Name);
+                file.CopyTo(temppath, false);
+            }
+
+            // If copying subdirectories, copy them and their contents to new location. 
+
+            foreach (DirectoryInfo subdir in dirs)
+            {
+                string temppath = Path.Combine(destinationRelPath, subdir.Name);
+                this.CopyBookToPublic(destinationPath+"/"+subdir.Name, temppath);
+            }
+        }
 
 
-        public string AddNewBook(string newFileName, string userName)
+public string AddNewBook(string newFileName, string userName)
         {
             var mssg = "";
 
