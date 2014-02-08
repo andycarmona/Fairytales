@@ -212,6 +212,7 @@
     <Compile Include="Helpers\FileOperations.cs" />
     <Compile Include="Helpers\GlobalVariables.cs" />
     <Compile Include="Helpers\GoogleCustomClient.cs" />
+    <Compile Include="Helpers\ImageHandler.cs" />
     <Compile Include="Helpers\Localization.cs" />
     <Compile Include="Helpers\MvcHelpers.cs" />
     <Compile Include="Migrations\201312290942245_AddExternalUserDEtails.cs" />
