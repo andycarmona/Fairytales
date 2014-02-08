@@ -7,13 +7,9 @@
     var pageFullWidth = "box w-100 h-35";
     var pageHalfWidth = "box w-50 h-35";
     var classType = pageFullWidth;
-    var activeDirectory="";
-    
-       if (Session["ActualDirectory"] != null)
-   {
-       activeDirectory = (string)this.Session["ActualDirectory"];
-   }
-   var backgroundImg=activeDirectory+"/"+@ViewBag.fileName+".jpg";
+    var activeDirectory="/PublicBooks/"+@ViewBag.fileName;
+
+  // var backgroundImg=activeDirectory+"/"+@ViewBag.fileName+".jpg";
 }
 
 	        <div id="flip" class="container">
@@ -36,9 +32,9 @@
            {
 			        <div  class="f-page">
 			            <div class="f-title">
-			             
+			            
 			                <h2>@ViewBag.fileName</h2>
-			                
+			           
 			            </div>
                              @foreach (bookChapterPageFrame frame in page.frames)
                              {

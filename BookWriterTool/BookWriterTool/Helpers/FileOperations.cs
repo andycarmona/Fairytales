@@ -162,7 +162,7 @@ namespace BookWriterTool.Helpers
             foreach (FileInfo file in files)
             {
                 string temppath = Path.Combine(destinationRelPath, file.Name);
-                file.CopyTo(temppath, false);
+                file.CopyTo(temppath, true);
             }
 
             // If copying subdirectories, copy them and their contents to new location. 
@@ -170,7 +170,7 @@ namespace BookWriterTool.Helpers
             foreach (DirectoryInfo subdir in dirs)
             {
                 string temppath = Path.Combine(destinationRelPath, subdir.Name);
-                this.CopyBookToPublic(destinationPath+"/"+subdir.Name, temppath);
+                this.CopyBookToPublic(sourcePath+"/"+subdir.Name, destinationPath+"/"+subdir.Name);
             }
         }
 

@@ -66,47 +66,7 @@ var zIndexCounter = 1000;
 var mssgMissingActiveContent = "Click on frame to edit content!!";
 var clickHere = "Click here to edit..";
 var numberOfBubble = 0;
-/*var u = new UnityObject2(config);
 
-jQuery(function() {
-
-    var $missingScreen = jQuery("#unityPlayer").find(".missing");
-    var $brokenScreen = jQuery("#unityPlayer").find(".broken");
-    $missingScreen.hide();
-    $brokenScreen.hide();
-
-    u.observeProgress(function(progress) {
-        switch (progress.pluginStatus) {
-            case "broken":
-                $brokenScreen.find("a").click(function(e) {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    u.installPlugin();
-                    return false;
-                });
-                $brokenScreen.show();
-                break;
-            case "missing":
-                $missingScreen.find("a").click(function(e) {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    u.installPlugin();
-                    return false;
-                });
-                $missingScreen.show();
-                break;
-            case "installed":
-                $missingScreen.remove();
-                break;
-            case "first":
-                break;
-        }
-    });
-    u.initPlugin(jQuery("#unityPlayer")[0], "/Content/Resources/WebPlayer/webviewer.unity3d?book=2");
-
-});
-
-*/
 $(document).ready(function () {
     $('.bb-bookblock').booklet({
         width: '60%',
@@ -511,7 +471,7 @@ function AddObject(type, element) {
             configurateImgOnTerrain(true);
             setObjectModel("Object" + randomnumber, element.attr("src"), scaleX, scaleY, origoX, origoY, type);
             PostArray("AddObjectToContent", getBookModel());
-           
+
         }
         objectList.objects = [];
     }
@@ -757,13 +717,7 @@ $(".backgroundContain").click(function () {
     } else { showInfoMessage(mssgMissingActiveContent); }
 });
 
-/*Add new page*/
-$("#btnAddPage").click(function () {
 
-    setBookModel("chapter1", null, null, null);
-    PostArray("AddPage", getBookModel());
-    reloadPage();
-});
 
 
 /*Function handle draggable objects. 
@@ -883,19 +837,30 @@ function SplitAndConcanate(stringToSplit, valueToInsert) {
     result = splitString.join('-');
     return result;
 }
+/*Add new page*/
+$("#btnAddPage").click(function () {
 
+    setBookModel("chapter1", null, null, null);
+    PostArray("AddPage", getBookModel());
+    reloadPage();
+});
+
+$("#btnPublish").bind("click", function () {
+    $.post("/Book/PublishBook", { fileName:  $("#bookTitle").html() })
+   .done(function (data) {
+       showInfoMessage("This book was publish on this:<a target='_blank' href='/Book/ViewPublicBookFlip?fileName="+ $("#bookTitle").html()+"'>place</a>");
+   }).fail(function () {
+       showInfoMessage("ERROR.Could not publish book "+ $("#bookTitle").html());
+   });
+});
 /*Preview mode*/
 $("#Preview").bind("click", function () {
 
     var fileName = $("#bookTitle").html();
-    if (window.location.pathname == "/Book/EditBook") {
 
-        window.location.replace("/Book/ViewBookFlip?fileName=" + fileName);
+    window.open('/Book/ViewBookFlip?fileName=' + fileName, 'Preview', 'width=400,height=600');
 
-    } else {
 
-        window.location.replace("/Book/EditBook");
-    };
 });
 
 /*Toggle between 2D and 3D View*/

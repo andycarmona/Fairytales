@@ -78,7 +78,7 @@ namespace BookWriterTool.Controllers
             return this.RedirectToAction("EditBook");
 
         }
-
+ 
 
         public ActionResult AddNewBook(string newFileName)
         {
@@ -182,7 +182,14 @@ namespace BookWriterTool.Controllers
             ViewBag.statusMsg = systemMssg;
             return this.View();
         }
+        public void PublishBook(string fileName)
+        {
+            activeUser = User.Identity.Name;
+            string sourcePath = String.Format("/Users/{0}/Books/{1}", activeUser, fileName);
+            string destinationPath = String.Format("/PublicBooks/{0}", fileName); ;
 
+            fileHandler.CopyBookToPublic(sourcePath, destinationPath);
+        }
         public ActionResult JumpToPage(string fileName,int pageNumber)
         {
             systemMssg = "";
@@ -214,7 +221,34 @@ namespace BookWriterTool.Controllers
             ViewBag.statusMsg = systemMssg;
             return this.View(aBook); 
         }
+        public ActionResult ViewPublicBookFlip(string fileName)
+        {
+            systemMssg = "";
+            activeUser = User.Identity.Name;
+            if (activeUser != null)
+            {
+            
+                try
+                {
+                    //  string[] listOfBooks = this.fileHandler.GetListOfUserBooks(activeUser);
 
+                    string actualPath = String.Format("/Users/{0}/Books/{1}/{1}.xml", activeUser, fileName);
+                    systemMssg = aBookRepository.SetActualFile(actualPath);
+                    if (fileName != null)
+                        aBook = this.aBookRepository.GetAllContent();
+                    ViewBag.fileName = fileName;
+                    //  ViewBag.arrayBooks = listOfBooks;
+                    ViewBag.statusMsg = systemMssg;
+                    return this.View(aBook);
+                }
+                catch (Exception e)
+                {
+                    systemMssg = e.Message;
+                }
+            }
+            ViewBag.statusMsg = systemMssg;
+            return this.View(aBook);
+        }
         public ActionResult ViewBookFlip(string fileName)
         {
             systemMssg = "";

@@ -18,7 +18,9 @@ namespace BookWriterTool.Helpers
             var origWidth = originalBmp.Width;
             var origHeight = originalBmp.Height;
             var sngRatio = origWidth / origHeight;
-            var newHeight = newWidth / sngRatio;
+            var newHeight = origHeight;
+            if(sngRatio!=0)
+            newHeight = newWidth / sngRatio;
             var newBmp = new Bitmap(originalBmp, newWidth, newHeight);
 
             return newBmp;
