@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.Title = "ShowVideo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ShowVideo</h2>
+<video  width="320" height="240" controls autoplay="autoplay"> 
+  <source src="@Url.Action("RenderVideo","Book")" type="video/mp4"> 
+</video> 

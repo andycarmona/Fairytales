@@ -182,6 +182,7 @@ namespace BookWriterTool.Controllers
             ViewBag.statusMsg = systemMssg;
             return this.View();
         }
+
         public void PublishBook(string fileName)
         {
             activeUser = User.Identity.Name;
@@ -190,6 +191,7 @@ namespace BookWriterTool.Controllers
 
             fileHandler.CopyBookToPublic(sourcePath, destinationPath);
         }
+
         public ActionResult JumpToPage(string fileName,int pageNumber)
         {
             systemMssg = "";
@@ -221,6 +223,7 @@ namespace BookWriterTool.Controllers
             ViewBag.statusMsg = systemMssg;
             return this.View(aBook); 
         }
+
         public ActionResult ViewPublicBookFlip(string fileName)
         {
             systemMssg = "";
@@ -249,6 +252,7 @@ namespace BookWriterTool.Controllers
             ViewBag.statusMsg = systemMssg;
             return this.View(aBook);
         }
+
         public ActionResult ViewBookFlip(string fileName)
         {
             systemMssg = "";
@@ -345,6 +349,7 @@ namespace BookWriterTool.Controllers
                 statusMsg = aBookRepository.AddBackgroundToContent(frameDescriptionArray, targetFile);
             return Json(statusMsg);
         }
+
         public JsonResult UpdateBubbleObject(BookModel model)
         {
             var statusMsg = "";
@@ -370,6 +375,14 @@ namespace BookWriterTool.Controllers
             return Json(statusMsg);
         }
 
+        public ActionResult ShowVideo()
+        {
+            return this.View();
+        }
+        public ActionResult RenderVideo()
+        {
+            return new VideoHandler();
+        }
 
         [HttpPost]
         public JsonResult AddFrame(BookModel frameDescriptionArray)

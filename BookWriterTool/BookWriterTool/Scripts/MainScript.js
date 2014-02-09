@@ -374,7 +374,7 @@ $("#ctxMenuDecreaseSize").click(function () {
 
 $("#ctxMenuEditExtra").click(function () {
     var objId = $("#valCtxMenuExtra").html();
-    var texto = $('#' + actualContent + " .contentIntern #" + objId).text();
+    var texto = $('#' + actualContent + " .contentIntern #" + objId).html().replace(/(<([^>]+)>)/ig, "");
     if (texto == "")
         texto = clickHere;
     $('#contentWindow').html('');
@@ -392,11 +392,11 @@ $("#ctxMenuEditExtra").click(function () {
 
             width: 369,
             close: function (event, ui) {
-                var result = $("#contentWindow .smallText").html().replace(/(<([^>]+)>)/ig, "");
+                var result = $("#contentWindow .smallText").html();
                 //alert(result);
                 if (result == "OKCancel")
                     result = "";
-                $('#' + actualContent + " .contentIntern #" + objId).html(result);
+                $('#' + actualContent + " .contentIntern #" + objId).html("<p>" + result + "</p>");
             }
         });
 });
@@ -411,11 +411,11 @@ function speechTxtBox(componentId, boxType, form) {
         width: '90%',
         submit: 'OK',
         callback: function (value, settings) {
-            var result = $("#contentWindow .smallText").html().replace(/(<([^>]+)>)/ig, "");
+            var result = $("#contentWindow .smallText").html();
             //alert(result);
             if (result == "OKCancel")
                 result = "";
-            $('#' + actualContent + " .contentIntern #" + splitCompId[4]).html(result);
+            $('#' + actualContent + " .contentIntern #" + splitCompId[4]).html("<p>" + result + "</p>");
         },
         submitdata: function (value, settings) {
             return { componentId: componentId, type: boxType, form: form };
