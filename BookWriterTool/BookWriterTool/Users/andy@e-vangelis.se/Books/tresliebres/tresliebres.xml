@@ -14,10 +14,19 @@
           <frames>
             <frame bordertype="rectangle" id="frame1">
               <contents>
-                <content target="rectangle" type="" background="background/purple-boardwalk-pier-jetty-pink-sunset-1920x1080-1024x576.jpg">
+                <content target="rectangle" type="" background="background/background.jpg.jpg">
                   <objects>
+<<<<<<< Release
                     <object scaleX="20.0%" scaleY="16.0%" origoX="74.0%" origoY="0.0%" type="speechTalk" id="speech73" />
                     <object scaleX="19.0%" scaleY="11.0%" origoX="13.0%" origoY="21.0%" type="speechThink" id="speech80" />
+=======
+                    <object scaleX="15.0%" scaleY="20.0%" origoX="13.0%" origoY="13.0%" type="speechTalk" id="speech91"><![CDATA[elceswd
+wdsssss   
+                                    
+                            ]]></object>
+                    <object scaleX="18.0%" scaleY="16.0%" origoX="66.0%" origoY="18.0%" type="speechTalk" id="speech14"><![CDATA[Testo en
+ vivo r]]></object>
+>>>>>>> local
                   </objects>
                 </content>
               </contents>
@@ -36,7 +45,7 @@
             </frame>
             <frame bordertype="rectangle" id="frame3">
               <contents>
-                <content target="rectangle" type="">
+                <content target="rectangle" type="" background="background/bg2large.jpg">
                   <objects />
                 </content>
               </contents>
@@ -45,30 +54,38 @@
         </page>
         <page id="page2">
           <frames>
-            <frame bordertype="rectangle" id="frame1">
+            <frame bordertype="square" id="frame1">
               <contents>
+<<<<<<< Release
                 <content target="rectangle" type="" background="background/background.jpg.jpg">
                   <objects>
                     <object scaleX="5%" scaleY="5%" origoX="0%" origoY="0%" type="speechTalk" id="speech63" />
                     <object img="male/redFighter.png" scaleX="10%" scaleY="25%" origoX="0%" origoY="20%" type="Character2DRes" id="Object61" />
                   </objects>
+=======
+                <content target="left" type="none" background="background/purple-boardwalk-pier-jetty-pink-sunset-1920x1080-1024x576.jpg">
+                  <objects />
+                </content>
+                <content target="right" type="none" background="background/beach.png">
+                  <objects />
+>>>>>>> local
                 </content>
               </contents>
             </frame>
             <frame bordertype="rectangle" id="frame2">
               <contents>
-                <content target="rectangle" type="">
+                <content target="rectangle" type="" background="background/background.jpg.jpg">
                   <objects />
                 </content>
               </contents>
             </frame>
-            <frame bordertype="rectangle" id="frame3">
+            <frame bordertype="square" id="frame3">
               <contents>
-                <content target="rectangle" type="">
-                  <objects>
-                    <object scaleX="20.0%" scaleY="11.0%" origoX="52.0%" origoY="28.0%" type="speechTalk" id="speech25" />
-                    <object scaleX="20.0%" scaleY="16.0%" origoX="0.0%" origoY="0.0%" type="speechThink" id="speech2" />
-                  </objects>
+                <content target="left" type="none" background="background/anime_joker-1024x576.jpg">
+                  <objects />
+                </content>
+                <content target="right" type="none" background="background/beach.png">
+                  <objects />
                 </content>
               </contents>
             </frame>
@@ -104,9 +121,12 @@
         </page>
         <page id="page4">
           <frames>
-            <frame bordertype="rectangle" id="frame1">
+            <frame bordertype="square" id="frame1">
               <contents>
-                <content target="rectangle" type="">
+                <content target="left" type="none">
+                  <objects />
+                </content>
+                <content target="right" type="none">
                   <objects />
                 </content>
               </contents>
@@ -118,9 +138,12 @@
                 </content>
               </contents>
             </frame>
-            <frame bordertype="rectangle" id="frame3">
+            <frame bordertype="square" id="frame3">
               <contents>
-                <content target="rectangle" type="">
+                <content target="left" type="none">
+                  <objects />
+                </content>
+                <content target="right" type="none">
                   <objects />
                 </content>
               </contents>
