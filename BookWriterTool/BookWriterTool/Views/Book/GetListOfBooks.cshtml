@@ -1,0 +1,6 @@
+﻿
+<div id="partialFileResult">
+    @{
+        @Html.Partial("BookIndex", (List<string>)ViewBag.Table, new ViewDataDictionary { { "listOfBooks", ViewBag.arrayBooks } })
+    }
+</div>

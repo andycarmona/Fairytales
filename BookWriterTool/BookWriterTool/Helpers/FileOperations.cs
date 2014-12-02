@@ -7,6 +7,8 @@ namespace BookWriterTool.Helpers
     using System.Collections;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
+    using System.Web.Mvc.Html;
     using System.Xml.Serialization;
 
     using BookWriterTool.Models;
@@ -59,30 +61,84 @@ namespace BookWriterTool.Helpers
             return filesPaths;
         }
 
+        public string[] GetListOfUsers()
+        {
+            var listOfUser = new string[] { };
+
+            try
+            {
+                listOfUser=Directory.GetDirectories(
+                    HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("UsersDirectory")));
+            }
+            catch (FileNotFoundException e)
+            {
+                listOfUser[0] = "No users founded.";
+            }
+
+            return listOfUser;
+        }
+
+
         public string[] GetListOfUserBooks(string user)
         {
-            string[] directoriesPaths = Directory.GetDirectories(HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("UsersDirectory") + user + "/Books"));
+            var directoriesPaths = new string[] { };
+            try
+            {
+                directoriesPaths = Directory.GetDirectories(HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("UsersDirectory") + user + "/Books/"));
+            }
+            catch (FileNotFoundException e)
+            {
+                directoriesPaths[0] = "No books found for this user";
+            }
+           
 
             return directoriesPaths;
         }
+
+        public List<string> GetAllBooks()
+        {
+            var listOfUsers = this.GetListOfUsers();
+            var pathToBook = new List<string>();
+            var userCatalog = listOfUsers.Select(userPath => userPath + @"\Books\").ToList();
+            foreach (var aPathToCatalog in userCatalog)
+            {
+                var nameBook = new string[] { };
+                try
+                {
+                    nameBook = Directory.GetDirectories(aPathToCatalog);
+                }
+                catch (DirectoryNotFoundException e)
+                {
+                    pathToBook.Add(string.Empty);
+                }
+
+                if (nameBook.Length <= 0)
+                {
+                    continue;
+                }
+           
+                var booksCollection = Directory.GetFiles(nameBook[0], "*.xml");
+
+                pathToBook.AddRange(booksCollection.Select(Path.GetFileNameWithoutExtension));
+            }
+
+            return pathToBook;
+        }
+
         public void AddUserFolder(string folderName)
         {
-            var actualDirectory = HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("UsersDirectory") + folderName);
-            if(!Directory.Exists(actualDirectory))
-            Directory.CreateDirectory(actualDirectory);
+            var actualDirectory =
+                HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("UsersDirectory") + folderName);
+            if (!Directory.Exists(actualDirectory))
+            {
+                Directory.CreateDirectory(actualDirectory);
+            }
         }
 
         public List<string> GetListOfUserBooksRelativePath(string user)
         {
             var physicalPaths = Directory.GetDirectories(HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("UsersDirectory") + user + "/Books"));
-            var relativePaths = new List<string>();
-            foreach (var path in physicalPaths)
-            {
-                var fileInfo=new FileInfo(path);
-                var fileName = fileInfo.Name;
-                relativePaths.Add(fileName);
-            }
-            return relativePaths;
+            return physicalPaths.Select(path => new FileInfo(path)).Select(fileInfo => fileInfo.Name).ToList();
         }
 
         public List<BookModel> GetListOf2DCharacter(string bookName, string user)
@@ -91,33 +147,34 @@ namespace BookWriterTool.Helpers
             string[] directoryPaths = null;
             directoryPaths = Directory.GetDirectories(HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("UsersDirectory") + user + "/Books/" + bookName + GlobalVariables.ConfigResource("Character2DRes")));
 
-            if (directoryPaths.Length != 0)
+            if (directoryPaths.Length == 0)
             {
-                foreach (var directoryPath in directoryPaths)
+                return aListObjects;
+            }
+
+            foreach (var directoryPath in directoryPaths)
+            {
+                var filesPaths = Directory.GetFiles(HttpContext.Current.Server.MapPath(directoryPath));
+                var lastFolderName = this.GetFolderName(directoryPath);
+                var aBookModel = new BookModel { Target = lastFolderName };
+
+                if (filesPaths.Length != 0)
                 {
-
-                    var filesPaths = Directory.GetFiles(HttpContext.Current.Server.MapPath(directoryPath));
-                    var lastFolderName = this.GetFolderName(directoryPath);
-                    var aBookModel = new BookModel { Target = lastFolderName };
-
-                    if (filesPaths.Length != 0)
+                    foreach (var aFile in filesPaths)
                     {
-                        foreach (var aFile in filesPaths)
-                        {
-                            var aObject = new ObjectModel { ImageObj = aFile };
+                        var aObject = new ObjectModel { ImageObj = aFile };
 
-                            aBookModel.Objects.Add(aObject);
-                            aListObjects.Add(aBookModel);
-                        }
+                        aBookModel.Objects.Add(aObject);
+                        aListObjects.Add(aBookModel);
                     }
                 }
-
-            } return aListObjects;
+            }
+            return aListObjects;
         }
 
         public string GetFolderName(string aFile)
         {
-            string folderName = Path.GetFileName(
+            var folderName = Path.GetFileName(
                             HttpContext.Current.Server.MapPath(
                                 Path.GetDirectoryName(HttpContext.Current.Server.MapPath(aFile))));
             return folderName;
@@ -127,7 +184,7 @@ namespace BookWriterTool.Helpers
 
         public string AddNewBook(string newFileName, string userName)
         {
-            var mssg = "";
+            var mssg = string.Empty;
 
             try
             {
@@ -142,27 +199,25 @@ namespace BookWriterTool.Helpers
                     if (
                         !File.Exists(actualDirectory + newFileName + "/" + newFileName + ".xml"))
                     {
-                        //Create new xml file from template
+
                         File.Copy(
                             HttpContext.Current.Server.MapPath(
-                                GlobalVariables.ConfigResource("TemplateDirectory") + "empty.xml"), actualDirectory + newFileName + "/" + newFileName + ".xml");
-                        //Create new image
+                                GlobalVariables.ConfigResource("TemplateDirectory") + "empty.xml"),
+                            actualDirectory + newFileName + "/" + newFileName + ".xml");
+
                         File.Copy(
-                            HttpContext.Current.Server.MapPath(
-                                GlobalVariables.ConfigResource("Images") + "noimage.jpg"), actualDirectory + newFileName + "/" + newFileName + ".jpg");
-                        //Create background folder
+                            HttpContext.Current.Server.MapPath(GlobalVariables.ConfigResource("Images") + "noimage.jpg"),
+                            actualDirectory + newFileName + "/" + newFileName + ".jpg");
+
                         Directory.CreateDirectory(
                                actualDirectory + newFileName + "/Generic/background/");
-                        //Create character folders
-                        foreach (var genericCharDir in GlobalVariables.GenericCharacterDirectory())
+
+                        foreach (var dirName in GlobalVariables.GenericCharacterDirectory().SelectMany(genericCharDir => genericCharDir))
                         {
-                            foreach (var dirName in genericCharDir)
-                            {
-                                Directory.CreateDirectory(
-                                    actualDirectory + newFileName + "/Generic/character/" + dirName);
-                            }
+                            Directory.CreateDirectory(
+                                actualDirectory + newFileName + "/Generic/character/" + dirName);
                         }
-                        //Create Character2D folders
+
                         foreach (KeyValuePair<string, List<string[]>> genericChar2DDir in GlobalVariables.GenericCharacter2Directory())
                         {
                             foreach (var dirName in genericChar2DDir.Value)
@@ -243,7 +298,7 @@ namespace BookWriterTool.Helpers
 
         public string DeleteBook(string fileToDelete, string activeUser)
         {
-            var mssg = "";
+            var mssg = string.Empty;
             var pathToFile = string.Format(
                 "{0}{1}/Books/{2}", GlobalVariables.ConfigResource("UsersDirectory"), activeUser, fileToDelete.Trim());
             try

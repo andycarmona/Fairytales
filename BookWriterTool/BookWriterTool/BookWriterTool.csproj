@@ -42,11 +42,17 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
@@ -97,9 +103,6 @@
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -214,9 +217,9 @@
     <Compile Include="Helpers\GoogleCustomClient.cs" />
     <Compile Include="Helpers\Localization.cs" />
     <Compile Include="Helpers\MvcHelpers.cs" />
-    <Compile Include="Migrations\201312290942245_AddExternalUserDEtails.cs" />
-    <Compile Include="Migrations\201312290942245_AddExternalUserDEtails.Designer.cs">
-      <DependentUpon>201312290942245_AddExternalUserDEtails.cs</DependentUpon>
+    <Compile Include="Migrations\201411302012548_Initialstate.cs" />
+    <Compile Include="Migrations\201411302012548_Initialstate.Designer.cs">
+      <DependentUpon>201411302012548_Initialstate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -454,7 +457,9 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\TextSample.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Index.cshtml" />
     <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Web.config" />
+    <Content Include="Areas\HelpPage\Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
@@ -536,7 +541,9 @@
     <Content Include="Users\andy%40e-vangelis.se\Books\tresliebres\tresliebres.xml" />
     <Content Include="Users\kallec\bookNoMetadata2.xml" />
     <Content Include="Users\kallec\Come back.xml" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -590,6 +597,8 @@
     <Content Include="Views\Book\FrameContentSplitView.cshtml" />
     <Content Include="Views\Shared\_ViewSwitcher.cshtml" />
     <Content Include="Views\Shared\_Layout.Mobile.cshtml" />
+    <Content Include="Views\Book\GetListOfBooks.cshtml" />
+    <Content Include="Views\Book\BookIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Resources\Generic\model\" />
@@ -601,8 +610,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201312290942245_AddExternalUserDEtails.resx">
-      <DependentUpon>201312290942245_AddExternalUserDEtails.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201411302012548_Initialstate.resx">
+      <DependentUpon>201411302012548_Initialstate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\LocalConfig.resx">
       <Generator>ResXFileCodeGenerator</Generator>

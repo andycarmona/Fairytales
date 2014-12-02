@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Web.WebPages.OAuth;
-using BookWriterTool.Models;
-
-namespace BookWriterTool
+﻿namespace BookWriterTool
 {
+    using Microsoft.Web.WebPages.OAuth;
+
     public static class AuthConfig
     {
         public static void RegisterAuth()

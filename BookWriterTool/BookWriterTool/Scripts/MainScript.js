@@ -880,14 +880,11 @@ function SplitAndConcanate(stringToSplit, valueToInsert) {
 $("#Preview").bind("click", function () {
 
     var fileName = $("#bookTitle").html();
-    if (window.location.pathname == "/Book/EditBook") {
+    
 
-        window.location.replace("/Book/ViewBookFlip?fileName=" + fileName);
+        window.location.replace("../Book/ViewBookFlip?fileName=" + fileName);
 
-    } else {
 
-        window.location.replace("/Book/EditBook");
-    };
 });
 
 /*Toggle between 2D and 3D View*/

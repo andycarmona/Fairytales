@@ -16,7 +16,7 @@
                                                                  {
                                                                      if (word != null)
                                                                      {
-                                                                         var user = User.Identity.Name;
+                                                                         var user = "andresc";
                                                                          var pos = @word.LastIndexOf("\\", StringComparison.Ordinal) + 1;
                                                                          var aFileName = word.Substring(pos, word.Length - pos);
                                                                          var aPath =  GlobalVariables.ConfigResource("UsersDirectory") + user + "/Books/" + aFileName;

@@ -1,94 +1,114 @@
-﻿
+﻿@using BookWriterTool.Helpers
 @model book
 
+
+
 @{
-    
-    Layout = "~/Views/Shared/_LayoutView.cshtml";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Editor";
-  
+    string statusMsg;
+    if (ViewBag.statusMsg != null)
+    {
+        statusMsg = ViewBag.statusMsg;
+    }
+    else
+    {
+        statusMsg = "";
+    }
+
+    bookChapterPageFrameContentObject aObject = null;
+
+    int index = 1;
 
 
 }
-
+<div class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" style="position: fixed; width: 100%; background-color: gainsboro;">
+    <div id="navBtn" style="text-align: center; width: 100%;">
+        <input class="ui-widget ui-widget-content ui-corner-all" id="Preview" type="button" value="Preview" />
+        <input class="ui-widget  ui-corner-all" id="View2D" type="button" value="2D View" />
+        <input class="ui-widget ui-widget-content  ui-corner-all" id="View3D" type="button" value="3D View" />
+        <input class="ui-widget  ui-corner-all" id="btnAddPage" type="button" value="Add new page" />
+    </div>
+    <div style="float: left;">
+        <label>Actual book :<span id="bookTitle">@ViewBag.fileName</span></label>
+        @Html.Partial("_LoginPartial")
+    </div>
+</div>
 
 @if (Model != null)
 {
- 
+    <div class="chapters" id="chapters">
+        <div id="panel2D">
             <!--Chapters section-->
-            foreach (bookChapter chapter in this.Model.chapters)
+            @foreach (bookChapter chapter in this.Model.chapters)
             {
                 <!--Pages section-->
-                <div class="container" id="flip">
+                <div class="pagesEdit bb-bookblock" id="@chapter.id">
                     <!--End Pages section-->
-
                     <!--Frames section-->
                     @foreach (bookChapterPage page in chapter.pages)
                     {
-                        <div  class="f-page" id="@page.id">
+                        <div class="page" id="@page.id">
 
-                            <div  id="frames">
+                            <div class="frame" id="frames">
                                 @{
                         foreach (bookChapterPageFrame frame in page.frames)
                         {
-                                    <div id="@frame.id" class="box w-50 h-30">
-                                        <div class="GeomForm">
+                            <div id="@frame.id" class="droppable">
+                                <div class="GeomForm">
 
-                                            @if (@frame.bordertype == "rectangle")
-                                            {
-                                                <div  id="@(chapter.id)-@(page.id)-@(frame.id)-rectangle" class="rectangle">
-                                                    @Html.Partial("FrameContentFull", (bookChapterPageFrame)ViewBag.Table, new ViewDataDictionary { { "actualFrame", frame }, { "target", "rectangle" } })
-                                                </div>
-                                            }
-                                            else if (@frame.bordertype == "square")
-                                            { 
-
-                                                <div id="@(chapter.id)-@(page.id)-@(frame.id)-left" class="squareLeft">
-                                                    @Html.Partial("FrameContentSplit", (bookChapterPageFrame)ViewBag.Table, new ViewDataDictionary { { "actualFrame", frame }, { "target", "left" } })
-                                                </div>
-                                                <div id="@(chapter.id)-@(page.id)-@(frame.id)-right" class="squareRight">
-                                                    @Html.Partial("FrameContentSplit", (bookChapterPageFrame)ViewBag.Table, new ViewDataDictionary { { "actualFrame", frame }, { "target", "right" } })
-                                                </div>  
-                                            }
-
+                                    @if (@frame.bordertype == "rectangle")
+                                    {
+                                        <div id="@(chapter.id)-@(page.id)-@(frame.id)-rectangle" class="rectangle">
+                                            @Html.Partial("FrameContentFull", (bookChapterPageFrame)ViewBag.Table, new ViewDataDictionary { { "actualFrame", frame }, { "target", "rectangle" } })
                                         </div>
-                                    </div> 
-                        }
+                                    }
+                                    else if (@frame.bordertype == "square")
+                                    {
+
+                                        <div id="@(chapter.id)-@(page.id)-@(frame.id)-left" class="squareLeft">
+                                            @Html.Partial("FrameContentSplit", (bookChapterPageFrame)ViewBag.Table, new ViewDataDictionary { { "actualFrame", frame }, { "target", "left" } })
+                                        </div>
+                                        <div id="@(chapter.id)-@(page.id)-@(frame.id)-right" class="squareRight">
+                                            @Html.Partial("FrameContentSplit", (bookChapterPageFrame)ViewBag.Table, new ViewDataDictionary { { "actualFrame", frame }, { "target", "right" } })
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                        } index++;
                                 }
                             </div>
                         </div>
                     }
-                
+                  
                     <!--End frames section-->
 
                 </div>
             }
+        </div>
+
+    </div>
 }
 
+
+
+
+<div id="contentWindow">
+
+</div>
+
+
+<div id="statusDialog">
+    <label>Status</label>
+    <div id="mssgString">@statusMsg</div>
+
+</div>
 @section scripts
 {
-    	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-		<script type="text/javascript">
 
-		    var $container = $('#flip'),
-				$pages = $container.children().hide();
-
-		    Modernizr.load({
-		        test: Modernizr.csstransforms3d && Modernizr.csstransitions,
-		        yep: ['js/jquery.tmpl.min.js', 'js/jquery.history.js', 'js/core.string.js', 'js/jquery.touchSwipe-1.2.5.js', 'js/jquery.flips.js'],
-		        nope: 'css/fallback.css',
-		        callback: function (url, result, key) {
-
-		            if (url === 'css/fallback.css') {
-		                $pages.show();
-		            }
-		            else if (url === 'js/jquery.flips.js') {
-		                $container.flips();
-		            }
-
-		        }
-		    });
-
-		</script>
+    <script type="text/javascript" src="~/Scripts/MainScript.js"></script>
 
 
 }

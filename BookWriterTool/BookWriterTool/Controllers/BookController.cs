@@ -14,7 +14,7 @@ using System.Net.Sockets;
 namespace BookWriterTool.Controllers
 {
 
-    [Authorize]
+
     [HandleError]
     public class BookController : Controller
     {
@@ -62,16 +62,7 @@ namespace BookWriterTool.Controllers
             return statusConn;
         }
 
-        public ActionResult GetChosenBook(string path, string fileName)
-        {
-            var actualDirectory = path;
-            ViewBag.statusMsg = "No message";
-            Session["ActualFile"] = fileName + ".xml";
-            Session["ActualDirectory"] = actualDirectory;
-
-            return this.RedirectToAction("EditBook");
-
-        }
+       
 
 
         public ActionResult AddNewBook(string newFileName)
@@ -79,7 +70,7 @@ namespace BookWriterTool.Controllers
 
             activeUser = User.Identity.Name;
             string[] listOfBooks = null;
-            systemMssg = "";
+            systemMssg = string.Empty;
 
             if (activeUser != null)
             {
@@ -111,7 +102,7 @@ namespace BookWriterTool.Controllers
         public ActionResult DeleteBook(string fileToDelete)
         {
             string[] listOfBooks = null;
-            systemMssg = "";
+            systemMssg = string.Empty;
             activeUser = User.Identity.Name;
             if (activeUser != null)
             {
@@ -139,17 +130,17 @@ namespace BookWriterTool.Controllers
 
         public ActionResult EditBook()
         {
-            var fileName = "";
-            var actualDirectory = "";
+            var fileName = string.Empty;
+            var actualDirectory = string.Empty;
             ViewBag.statusMsg = "No message";
-            activeUser = User.Identity.Name;
+            activeUser = "andresc";
 
             if ((Session["ActualFile"] != null) && (Session["ActualDirectory"] != null))
             {
                 fileName = (string)Session["ActualFile"]; actualDirectory = (string)Session["ActualDirectory"];
             }
 
-            systemMssg = "";
+            systemMssg = string.Empty;
             if (activeUser != null)
             {
                 try
@@ -177,21 +168,26 @@ namespace BookWriterTool.Controllers
             return this.View();
         }
 
+        public ViewResult GetListOfBooks()
+        {
+            var listOfBooks = this.fileHandler.GetAllBooks();
+            ViewBag.arrayBooks = listOfBooks.Where(book => book != "").ToList();
+            return this.View();
+        }
+
         public ActionResult ViewBookFlip(string fileName)
         {
-            systemMssg = "";
-            activeUser = User.Identity.Name;
+            systemMssg = string.Empty;
+            activeUser = "andresc";
             if (activeUser != null)
             {
                 if (Session["ActualDirectory"] == null)
                 {
-                    Session["ActualDirectory"] = String.Format("/Users/{0}/Books/{1}", activeUser, fileName);
+                    Session["ActualDirectory"] = String.Format("../Users/{0}/Books/{1}", activeUser, fileName);
                 }
                 try
                 {
-                    //  string[] listOfBooks = this.fileHandler.GetListOfUserBooks(activeUser);
-
-                    string actualPath = String.Format("/Users/{0}/Books/{1}/{1}.xml", activeUser, fileName);
+                    string actualPath = String.Format("../Users/{0}/Books/{1}/{1}.xml", activeUser, fileName);
                     systemMssg = aBookRepository.SetActualFile(actualPath);
                     if (fileName != null)
                         aBook = this.aBookRepository.GetAllContent();
@@ -211,25 +207,36 @@ namespace BookWriterTool.Controllers
 
         public ActionResult ViewBook(string fileName)
         {
-            systemMssg = "";
-            activeUser = User.Identity.Name;
+        
+            var actualDirectory = string.Empty;
+            ViewBag.statusMsg = "No message";
+            activeUser = "andresc";
+
+            if ((Session["ActualFile"] != null) && (Session["ActualDirectory"] != null))
+            {
+                fileName = (string)Session["ActualFile"]; actualDirectory = (string)Session["ActualDirectory"];
+            }
+
+            systemMssg = string.Empty;
             if (activeUser != null)
             {
-                if (Session["ActualDirectory"] == null)
-                {
-                    Session["ActualDirectory"] = String.Format("/Users/{0}/Books/{1}", activeUser, fileName);
-                }
                 try
                 {
-                    //  string[] listOfBooks = this.fileHandler.GetListOfUserBooks(activeUser);
+                    var listOfBooks = this.fileHandler.GetListOfUserBooks(activeUser);
 
-                    string actualPath = String.Format("/Users/{0}/Books/{1}/{1}.xml", activeUser, fileName);
-                    systemMssg = aBookRepository.SetActualFile(actualPath);
+
+                    systemMssg = aBookRepository.SetActualFile(actualDirectory + "/" + fileName);
                     if (fileName != null)
                         aBook = this.aBookRepository.GetAllContent();
-                    ViewBag.fileName = fileName;
-                    //  ViewBag.arrayBooks = listOfBooks;
+                    var title = fileName.Split('.');
+                    ViewBag.fileName = title[0];
+                    ViewBag.arrayBooks = listOfBooks;
                     ViewBag.statusMsg = systemMssg;
+                    //ViewBag.ObjectList = this.GetObjectsInFolder(actualDirectory);
+                    //ViewBag.BackgroundList = this.GetBackgroundInFolder(actualDirectory);
+                    this.GetChosenBook(
+                        GlobalVariables.ConfigResource("UsersDirectory") + activeUser + "/Books/" + fileName,
+                        fileName);
                     return this.View(aBook);
                 }
                 catch (Exception e)
@@ -238,13 +245,23 @@ namespace BookWriterTool.Controllers
                 }
             }
             ViewBag.statusMsg = systemMssg;
-            return this.View(aBook);
+            return this.View();
         }
 
+        public ActionResult GetChosenBook(string path, string fileName)
+        {
+            var actualDirectory = path;
+            ViewBag.statusMsg = "No message";
+            Session["ActualFile"] = fileName + ".xml";
+            Session["ActualDirectory"] = actualDirectory;
+
+            return this.RedirectToAction("EditBook");
+
+        }
         [HttpPost]
         public ActionResult AddPage(BookModel model)
         {
-            systemMssg = "";
+            systemMssg = string.Empty;
 
 
             var targetFile = this.GetTargetFile();
@@ -267,7 +284,7 @@ namespace BookWriterTool.Controllers
         [HttpPost]
         public JsonResult AddBackgroundToFrame(BookModel frameDescriptionArray)
         {
-            string statusMsg = "";
+            string statusMsg = string.Empty;
             var targetFile = this.GetTargetFile();
             if (!String.IsNullOrEmpty(targetFile))
                 statusMsg = aBookRepository.AddBackgroundToContent(frameDescriptionArray, targetFile);
@@ -277,7 +294,7 @@ namespace BookWriterTool.Controllers
         [HttpPost]
         public JsonResult UpdateObjectPosition(BookModel frameDescriptionArray)
         {
-            string statusMsg = "";
+            string statusMsg = string.Empty;
             var targetFile = this.GetTargetFile();
             if (!String.IsNullOrEmpty(targetFile))
                 statusMsg = aBookRepository.UpdateObjectPosition(frameDescriptionArray, targetFile);
@@ -288,7 +305,7 @@ namespace BookWriterTool.Controllers
         [HttpPost]
         public JsonResult AddFrame(BookModel frameDescriptionArray)
         {
-            string statusMsg = "";
+            string statusMsg = string.Empty;
             var targetFile = this.GetTargetFile();
             if (!String.IsNullOrEmpty(targetFile))
                 statusMsg = aBookRepository.AddFrame(frameDescriptionArray, targetFile);
@@ -299,7 +316,7 @@ namespace BookWriterTool.Controllers
 
         private string GetTargetFile()
         {
-            string targetFile = "";
+            string targetFile = string.Empty;
             if ((Session["ActualFile"] != null) && (Session["ActualDirectory"] != null))
             {
                 var fileName = (string)this.Session["ActualFile"];
@@ -312,7 +329,7 @@ namespace BookWriterTool.Controllers
 
         public JsonResult AddObjectToContent(BookModel model)
         {
-            var statusMsg = "";
+            var statusMsg = string.Empty;
             var targetFile = this.GetTargetFile();
             if (!String.IsNullOrEmpty(targetFile))
                 statusMsg = aBookRepository.AddObjectToContent(model, targetFile);
@@ -373,10 +390,11 @@ namespace BookWriterTool.Controllers
             return RedirectToAction("EditBook");
         }
 
+       
 
         public JsonResult AddSpeechBubbleObject(BookModel model)
         {
-            var statusMsg = "";
+            var statusMsg = string.Empty;
             if (Session["ActualDirectory"] != null)
             {
                 var actualDirectory = (string)Session["ActualDirectory"];
@@ -426,7 +444,7 @@ namespace BookWriterTool.Controllers
 
         public JsonResult DeleteObjectFromContent(BookModel model)
         {
-            var statusMsg = "";
+            var statusMsg = string.Empty;
             if ((Session["ActualFile"] != null) && (Session["ActualDirectory"] != null))
             {
 

@@ -1,19 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Transactions;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Security;
-using DotNetOpenAuth.AspNet;
-using Microsoft.Web.WebPages.OAuth;
-using WebMatrix.WebData;
-using BookWriterTool.Filters;
-using BookWriterTool.Models;
-using BookWriterTool.Helpers;
-
-namespace BookWriterTool.Controllers
+﻿namespace BookWriterTool.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Transactions;
+    using System.Web.Mvc;
+    using System.Web.Security;
+
+    using BookWriterTool.Helpers;
+    using BookWriterTool.Models;
+
+    using DotNetOpenAuth.AspNet;
+
+    using Microsoft.Web.WebPages.OAuth;
+
+    using WebMatrix.WebData;
+
     [Authorize]
     //[InitializeSimpleMembership]
     public class AccountController : Controller

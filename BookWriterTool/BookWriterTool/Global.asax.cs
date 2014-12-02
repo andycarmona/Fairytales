@@ -32,7 +32,7 @@ namespace BookWriterTool
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
             WebSecurity.InitializeDatabaseConnection(
-                connectionStringName: "DefaultConnection",
+                connectionStringName: "FairyTalesDb",
                 userTableName: "UserProfile",
                 userIdColumn: "UserID",
                 userNameColumn: "UserName",

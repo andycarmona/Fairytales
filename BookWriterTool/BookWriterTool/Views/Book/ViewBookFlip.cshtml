@@ -15,7 +15,7 @@
    }
    var backgroundImg=activeDirectory+"/"+@ViewBag.fileName+".jpg";
 }
-
+<div>@Html.ActionLink("Back to book index", "GetListOfBooks")</div>
 	        <div id="flip" class="container">
 			@if (Model != null)
    {
@@ -86,13 +86,13 @@
 
             Modernizr.load({
                 test: Modernizr.csstransforms3d && Modernizr.csstransitions,
-                yep: ['/Scripts/jquery.tmpl.min.js', '/Scripts/jquery.history.js', '/Scripts/core.string.js', '/Scripts/jquery.touchSwipe-1.2.5.js', '/Scripts/jquery.flips.js'],
-                nope: '/Content/fallback.css',
+                yep: ['../Scripts/jquery.tmpl.min.js', '../Scripts/jquery.history.js', '../Scripts/core.string.js', '../Scripts/jquery.touchSwipe-1.2.5.js', '../Scripts/jquery.flips.js'],
+                nope: '../Content/fallback.css',
                 callback: function(url, result, key) {
 
-                    if (url === '/Content/fallback.css') {
+                    if (url === '../Content/fallback.css') {
                         $pages.show();
-                    } else if (url === '/Scripts/jquery.flips.js') {
+                    } else if (url === '../Scripts/jquery.flips.js') {
                         $container.flips();
                     }
 
