@@ -12,19 +12,22 @@
         <!-- our first page! -->
         <page id="page1">
           <frames>
-            <frame bordertype="rectangle" id="frame1">
+            <frame bordertype="square" id="frame1">
               <contents>
-                <content target="rectangle" type="" background="background/anime_joker-1024x576.jpg">
+                <content target="left" type="none" background="background/purple-boardwalk-pier-jetty-pink-sunset-1920x1080-1024x576.jpg">
+                  <objects>
+                    <object id="chapter1-page1-frame1-left-div_text" type="textBox"><![CDATA[Click here to edit..kkk]]></object>
+                  </objects>
+                </content>
+                <content target="right" type="none" background="background/background.jpg.jpg">
                   <objects />
                 </content>
               </contents>
             </frame>
             <frame bordertype="rectangle" id="frame2">
               <contents>
-                <content target="rectangle" type="" background="background/background.jpg.jpg">
-                  <objects>
-                    <object id="chapter1-page1-frame2-rectangle-div_text" type="textBox"><![CDATA[In this fairy tale will i tell you about this hero who manage to conquer a hole kingdom and get married with the beautiful princess.]]></object>
-                  </objects>
+                <content target="rectangle" type="">
+                  <objects />
                 </content>
               </contents>
             </frame>
@@ -41,14 +44,14 @@
           <frames>
             <frame bordertype="rectangle" id="frame1">
               <contents>
-                <content target="rectangle" type="" background="background/background.jpg.jpg">
+                <content target="rectangle" type="">
                   <objects />
                 </content>
               </contents>
             </frame>
             <frame bordertype="square" id="frame2">
               <contents>
-                <content target="left" type="none" background="background/purple-boardwalk-pier-jetty-pink-sunset-1920x1080-1024x576.jpg">
+                <content target="left" type="none">
                   <objects />
                 </content>
                 <content target="right" type="none">
@@ -67,9 +70,12 @@
         </page>
         <page id="page3">
           <frames>
-            <frame bordertype="rectangle" id="frame1">
+            <frame bordertype="square" id="frame1">
               <contents>
-                <content target="rectangle" type="" background="background/anime_joker-1024x576.jpg">
+                <content target="left" type="none">
+                  <objects />
+                </content>
+                <content target="right" type="none">
                   <objects />
                 </content>
               </contents>
@@ -97,10 +103,8 @@
           <frames>
             <frame bordertype="rectangle" id="frame1">
               <contents>
-                <content target="rectangle" type="" background="background/purple-boardwalk-pier-jetty-pink-sunset-1920x1080-1024x576.jpg">
-                  <objects>
-                    <object id="chapter1-page4-frame1-rectangle-div_text" type="textBox"><![CDATA[What are you saying. Ask him without marking the fatal knife fliying to his head.]]></object>
-                  </objects>
+                <content target="rectangle" type="">
+                  <objects />
                 </content>
               </contents>
             </frame>
@@ -125,16 +129,19 @@
         </page>
         <page id="page5">
           <frames>
-            <frame bordertype="rectangle" id="frame1">
+            <frame bordertype="square" id="frame1">
               <contents>
-                <content target="rectangle" type="" background="background/purple-boardwalk-pier-jetty-pink-sunset-1920x1080-1024x576.jpg">
+                <content target="left" type="none">
+                  <objects />
+                </content>
+                <content target="right" type="none">
                   <objects />
                 </content>
               </contents>
             </frame>
             <frame bordertype="rectangle" id="frame2">
               <contents>
-                <content target="rectangle" type="" background="background/anime_joker-1024x576.jpg">
+                <content target="rectangle" type="">
                   <objects />
                 </content>
               </contents>
@@ -150,19 +157,19 @@
         </page>
         <page id="page6">
           <frames>
-            <frame bordertype="rectangle" id="frame1">
+            <frame bordertype="square" id="frame1">
               <contents>
-                <content target="rectangle" type="" background="background/background.jpg.jpg">
+                <content target="left" type="none">
+                  <objects />
+                </content>
+                <content target="right" type="none">
                   <objects />
                 </content>
               </contents>
             </frame>
-            <frame id="frame2" bordertype="square">
+            <frame bordertype="rectangle" id="frame2">
               <contents>
-                <content target="left" background="background/background.jpg.jpg">
-                  <objects />
-                </content>
-                <content target="right" background="background/bg2large.jpg">
+                <content target="rectangle" type="">
                   <objects />
                 </content>
               </contents>

@@ -717,10 +717,10 @@ function startDragSpeech(element) {
 
 function activateEditorOperations() {
     $(".contentIntern").click(function (e) {
-        $(".squareLeft").css({ "-webkit-border-image": "url(/Content/Resources/Images/border.png) 25 25 round" });
-        $(".squareRight").css({ "-webkit-border-image": "url(/Content/Resources/Images/border.png) 25 25 round" });
-        $(".rectangle").css({ "-webkit-border-image": "url(/Content/Resources/Images/border.png) 25 25 round" });
-        $(this).parent().css({ "-webkit-border-image": "url(/Content/Resources/Images/border.png) 8 8 round" });
+        $(".squareLeft").css({ "-webkit-border-image": "url(../Content/Resources/Images/border.png) 25 25 round" });
+        $(".squareRight").css({ "-webkit-border-image": "url(../Content/Resources/Images/border.png) 25 25 round" });
+        $(".rectangle").css({ "-webkit-border-image": "url(../Content/Resources/Images/border.png) 25 25 round" });
+        $(this).parent().css({ "-webkit-border-image": "url(../Content/Resources/Images/border.png) 8 8 round" });
         if ($("#" + actualContent + " .droppable img") != 'undefined') {
             $("#" + actualContent + " .droppable img").draggable("destroy");
         }

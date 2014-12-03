@@ -207,7 +207,7 @@ namespace BookWriterTool.Controllers
 
         public ActionResult ViewBook(string fileName)
         {
-        
+            
             var actualDirectory = string.Empty;
             ViewBag.statusMsg = "No message";
             activeUser = "andresc";
@@ -232,11 +232,8 @@ namespace BookWriterTool.Controllers
                     ViewBag.fileName = title[0];
                     ViewBag.arrayBooks = listOfBooks;
                     ViewBag.statusMsg = systemMssg;
-                    //ViewBag.ObjectList = this.GetObjectsInFolder(actualDirectory);
-                    //ViewBag.BackgroundList = this.GetBackgroundInFolder(actualDirectory);
-                    this.GetChosenBook(
-                        GlobalVariables.ConfigResource("UsersDirectory") + activeUser + "/Books/" + fileName,
-                        fileName);
+                    ViewBag.ObjectList = this.GetObjectsInFolder(actualDirectory);
+                    ViewBag.BackgroundList = this.GetBackgroundInFolder(actualDirectory);
                     return this.View(aBook);
                 }
                 catch (Exception e)

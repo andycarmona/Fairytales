@@ -1,22 +1,22 @@
-﻿.container
-{
+﻿.container {
     max-width: 500px;
     height: 480px;
     margin: 0 auto;
+    background-color: #ffffff;
     background-color: rgba(255,255,255,0.90);
 }
 
-.objConfigurator
-{
+.objConfigurator {
+    -ms-border-bottom-left-radius: 8px;
     border-bottom-left-radius: 8px;
     border: 1px solid #d19405;
-    background: #fece2f url(/Content/themes/sunny/images/ui-bg_gloss-wave_60_fece2f_500x100.png) 50% 50% repeat-x;
+    background: #fece2f url(../Content/themes/sunny/images/ui-bg_gloss-wave_60_fece2f_500x100.png) 50% 50% repeat-x;
     font-weight: bold;
     color: #4c3000;
 }
 
-#FrameEdit
-{
+#FrameEdit {
+    -ms-border-bottom-left-radius: 8px;
     border-bottom-left-radius: 8px;
     border: 1px solid #d19405;
     font-weight: bold;
@@ -40,27 +40,14 @@
     visibility: hidden;
 }
 
-.FrameEdit .terrain
-{
-    /*position: relative;*/
-}
-
-
 #terrain img
 {
-    /* position: absolute;
-    top: 0px;
-    left: 0px;*/
     height: 100px;
 }
 
 .gridster li
 {
     background-color: white;
-}
-
-img
-{
 }
 
 #panel
@@ -83,8 +70,7 @@ img
     background-color: black;
 }
 
-p.bubble
-{
+p.bubble {
     position: absolute;
     text-align: center;
     line-height: 100px;
@@ -93,18 +79,20 @@ p.bubble
     border: 8px solid #666;
     -webkit-border-radius: 30px;
     -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
     border-radius: 30px;
     -webkit-box-shadow: 2px 2px 4px #888;
     -moz-box-shadow: 2px 2px 4px #888;
+    -ms-box-shadow: 2px 2px 4px #888;
     box-shadow: 2px 2px 4px #888;
 }
 
-p.thought
-{
+p.thought {
     width: 130px;
     line-height: 100px;
     -webkit-border-radius: 108px;
     -moz-border-radius: 108px;
+    -ms-border-radius: 108px;
     border-radius: 108px;
 }
 
@@ -132,8 +120,7 @@ p.speech:after
     border-color: #fff transparent transparent #fff;
 }
 
-p.thought:before, p.thought:after
-{
+p.thought:before, p.thought:after {
     left: 10px;
     top: 70px;
     width: 40px;
@@ -142,17 +129,18 @@ p.thought:before, p.thought:after
     border: 8px solid #666;
     -webkit-border-radius: 28px;
     -moz-border-radius: 28px;
+    -ms-border-radius: 28px;
     border-radius: 28px;
 }
 
-p.thought:after
-{
+p.thought:after {
     width: 20px;
     height: 20px;
     left: 5px;
     top: 100px;
     -webkit-border-radius: 18px;
     -moz-border-radius: 18px;
+    -ms-border-radius: 18px;
     border-radius: 18px;
 }
 
@@ -161,22 +149,21 @@ p.thought:after
     position: absolute;
 }
 
-.rightContent
-{
+.rightContent {
+    background-color: #ffffff;
     background-color: rgba(255,255,255,0.90);
     position: absolute;
     top: 50px;
     width: 200px;
 }
 
-.flipped
-{
-    transform: scale(-1, 1);
+.flipped {
     -moz-transform: scale(-1, 1);
     -webkit-transform: scale(-1, 1);
     -o-transform: scale(-1, 1);
     -khtml-transform: scale(-1, 1);
     -ms-transform: scale(-1, 1);
+    transform: scale(-1, 1);
 }
 
 .higlightFrame
@@ -191,47 +178,55 @@ p.thought:after
     height: 190px;
 }
 
-.droppable .squareLeft
-{
+.droppable .squareLeft {
     float: left;
     background-repeat: no-repeat;
-    border-image: url(Resources/Images/border.png) 25 25 round;
-    -webkit-border-image: url(Resources/Images/border.png) 25 25 round; /* Safari 5 and older */
-    -o-border-image: url(Resources/Images/border.png) 25 25 round; /* Opera */
+    -moz-border-image: url(../Content/Resources/Images/border.png) 25 25 round;
+    -ms-border-image: url(../Content/Resources/Images/border.png) 25 25 round;
+    -webkit-border-image: url(../Content/Resources/Images/border.png) 25 25 round; /* Safari 5 and older */
+    -o-border-image: url(../Content/Resources/Images/border.png) 25 25 round;
+    border-image: url(../Content/Resources/Images/border.png) 25 25 round;
+    /* Opera */
     background-position: center center;
     -webkit-background-size: 100% auto;
     -moz-background-size: 100% auto;
+    -ms-background-size: 98% auto;
     background-size: 98% auto;
     height: 95%;
     width: 48%;
     /*margin-right: 350px;*/
 }
 
-.droppable .squareRight
-{
+.droppable .squareRight {
     background-position: center center;
     background-repeat: no-repeat;
-    border-image: url(Resources/Images/border.png) 25 25 round;
-    -webkit-border-image: url(Resources/Images/border.png) 25 25 round;
-    -o-border-image: url(Resources/Images/border.png) 25 25 round;
+    -moz-border-image: url(../Content/Resources/Images/border.png) 25 25 round;
+    -ms-border-image: url(../Content/Resources/Images/border.png) 25 25 round;
+    -webkit-border-image: url(../Content/Resources/Images/border.png) 25 25 round;
+    -o-border-image: url(../Content/Resources/Images/border.png) 25 25 round;
+    border-image: url(../Content/Resources/Images/border.png) 25 25 round;
     -webkit-background-size: 100% auto;
     -moz-background-size: 100% auto;
+    -ms-background-size: 98% auto;
     background-size: 98% auto;
     height: 95%;
     width: 48%;
     float: right;
 }
 
-.droppable .rectangle
-{
+.droppable .rectangle {
     float: left;
     background-position: center center;
     background-repeat: no-repeat;
-    border-image: url(/Content/Resources/Images/border.png) 30 30 round;
-    -webkit-border-image: url(/Content/Resources/Images/border.png) 30 30 round; /* Safari 5 and older */
-    -o-border-image: url(/Content/Resources/Images/border.png) 30 30 round; /* Opera */
+    -moz-border-image: url(../Content/Resources/Images/border.png) 30 30 round;
+    -ms-border-image: url(../Content/Resources/Images/border.png) 30 30 round;
+    -webkit-border-image: url(../Content/Resources/Images/border.png) 30 30 round; /* Safari 5 and older */
+    -o-border-image: url(../Content/Resources/Images/border.png) 30 30 round;
+    border-image: url(../Content/Resources/Images/border.png) 30 30 round;
+    /* Opera */
     -webkit-background-size: 50% auto;
     -moz-background-size: 50% auto;
+    -ms-background-size: 50% auto;
     background-size: 50% auto;
     height: 95%;
     width: 98%;
@@ -244,29 +239,33 @@ p.thought:after
     height: 100%;
 }
 
-.speechContainer
-{
+.speechContainer {
     position: absolute;
     overflow: hidden;
+    -ms-background-size: 100% 100%;
     background-size: 100% 100%;
     
         font-size: 9px;
     background-repeat: no-repeat;
     min-height: 10%;
+    -moz-min-width: 20%;
+    -ms-min-width: 20%;
+    -o-min-width: 20%;
+    -webkit-min-width: 20%;
     min-width: 20%;
     outline: 0;
-    margin: 0px auto;
+    margin: 0 auto;
   padding: 2px 13px 12px 12px;
 }
 
 .speechTalk
 {
-    background-image: url(Resources/Images/speechTalk.png);
+    background-image: url(../Content/Resources/Images/speechTalk.png);
 }
 
 .speechThink
 {
-    background-image: url(Resources/Images/speechThink.png);
+    background-image: url(../Content/Resources/Images/speechThink.png);
 }
 
 .formObjectGroup input
@@ -289,18 +288,18 @@ p.thought:after
     background-color: transparent;
 }
 
-.smallText
-{
+.smallText {
     float: left;
     width: 100%;
     height: 100%;
     background-color: white;
     border: 3px solid;
+    -ms-border-radius: 8px;
     border-radius: 8px;
     border-color: gray;
 }
 
-    .smallText p
+.smallText p
     {
         font-weight: lighter;
     }
@@ -319,7 +318,7 @@ p.thought:after
 
 .chapters
 {
-    margin: 0px auto;
+    margin: 0 auto;
     top: 83px;
 }
 
@@ -328,9 +327,6 @@ p.thought:after
     width: 10%;
 }
 
-.frames div
-{
-}
 
 #components
 {
@@ -341,8 +337,8 @@ p.thought:after
 
 .configDialog
 {
-    position: fixed;
-    top: 100px;
+    /*position: fixed;
+    top: 100px;*/
     width: 15%;
 }
 
@@ -351,7 +347,7 @@ p.thought:after
     position: fixed;
     top: 100px;
     width: 15%;
-    right: 0px;
+    right: 0;
 }
 
 .contents
@@ -361,10 +357,10 @@ p.thought:after
     left: 420px;
 }
 
-.contentIntern
-{
+.contentIntern {
     position: relative;
     overflow: hidden;
+    -ms-background-size: contain;
     background-size: contain;
     cursor: pointer;
     background-size: 100% 100%;
@@ -372,6 +368,7 @@ p.thought:after
     height: 100%;
     /*   b  background-repeat: no-repeat;*/
 }
+
 .speechContainer p
 {
     font-size: 9px;
@@ -394,17 +391,18 @@ div#context-menu
     font-size: 12px;
 }
 
-div#context-menu-extra
-{
+div#context-menu-extra {
     position: relative;
     display: none;
     /*sample style attributes follow*/
     width: 100px;
- opacity: 0.9;
+    -ms-opacity: 0.9;
+    opacity: 0.9;
  background: #fece2f;
     color: #fff;
     font-size: 12px;
 }
+
 /*Menu raden*/
 /* Clearfix for the menu */
 .ui-menu
@@ -446,11 +444,11 @@ div#context-menu li
     background: #000;
 }
 /*View delen*/
-.chaptersView
-{
+.chaptersView {
+    background-color: #ffffff;
     background-color: rgba(255,255,255,0.90);
     position: absolute;
-    margin: 0px auto;
+    margin: 0 auto;
     top: 50px;
     width: 70%;
 }
@@ -505,10 +503,6 @@ div#context-menu li
     padding: 0.5em;
 }
 
-.editContent
-{ /*position: relative;*/
-}
-
 .editContentLeft
 {
     /*position: relative;*/
@@ -521,29 +515,26 @@ div#context-menu li
     float: right;
 }
 
-.ui-dialog-titlebar-close
-{
-    /* visibility: hidden;*/
-}
-
-.pagesEdit
-{
+.pagesEdit {
     position: fixed;
     margin: 0 auto;
     left: 17%;
     top: 11%;
+    -ms-border-bottom-left-radius: 8px;
     border-bottom-left-radius: 8px;
+    -ms-border-bottom-right-radius: 8px;
     border-bottom-right-radius: 8px;
     border: 2px solid #d19405;
     font-weight: bold;
 }
 
-.pagesView
-{
+.pagesView {
     position: absolute;
     top: 12%;
     margin: 0 auto;
+    -ms-border-bottom-left-radius: 8px;
     border-bottom-left-radius: 8px;
+    -ms-border-bottom-right-radius: 8px;
     border-bottom-right-radius: 8px;
     border: 2px solid #d19405;
     font-weight: bold;
@@ -556,7 +547,7 @@ div#context-menu li
 
 .ui-tabs .ui-tabs-panel
 {
-    padding: 0em 0.4em;
+    padding: 0 0.4em;
 }
 
 .ui-widget-content
@@ -564,8 +555,8 @@ div#context-menu li
     color: #ffffff;
 }
 
-.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr
-{
+.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr {
+    -ms-border-top-right-radius: 45px;
     border-top-right-radius: 45px;
 }
 
@@ -575,7 +566,7 @@ div#context-menu li
     height: 500px;
     position: absolute;
     top: 228px;
-    right: 0px;
+    right: 0;
 }
 /*Home page login*/
 .form-signin
@@ -614,16 +605,18 @@ div#context-menu li
             z-index: 2;
         }
 
-    .form-signin input[type="text"]
-    {
+    .form-signin input[type="text"] {
         margin-bottom: -1px;
+        -ms-border-bottom-left-radius: 0;
         border-bottom-left-radius: 0;
+        -ms-border-bottom-right-radius: 0;
         border-bottom-right-radius: 0;
     }
 
-    .form-signin input[type="password"]
-    {
-        margin-bottom: 10px;
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-    }
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    -ms-border-top-left-radius: 0;
+    border-top-left-radius: 0;
+    -ms-border-top-right-radius: 0;
+    border-top-right-radius: 0;
+}
