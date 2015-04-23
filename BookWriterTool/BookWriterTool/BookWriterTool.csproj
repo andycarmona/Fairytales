@@ -465,6 +465,7 @@
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\autogrow.js" />
     <Content Include="Scripts\core.string.js" />
+    <Content Include="Scripts\hash.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -492,6 +493,7 @@
     <Content Include="Scripts\MainScript.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr.custom.08464.js" />
+    <Content Include="Scripts\scissor.min.js" />
     <Content Include="Scripts\themes\apple\bg.jpg" />
     <Content Include="Scripts\themes\apple\d.png" />
     <Content Include="Scripts\themes\apple\dot_for_ie.gif" />
@@ -511,6 +513,8 @@
     <Content Include="Scripts\themes\default\d.png" />
     <Content Include="Scripts\themes\default\style.css" />
     <Content Include="Scripts\themes\default\throbber.gif" />
+    <Content Include="Scripts\turn.min.js" />
+    <Content Include="Scripts\zoom.min.js" />
     <Content Include="Users\andresc\Books\tresliebres\Generic\background\anime_joker-1024x576.jpg" />
     <Content Include="Users\andresc\Books\tresliebres\Generic\background\background.jpg.jpg" />
     <Content Include="Users\andresc\Books\tresliebres\Generic\background\purple-boardwalk-pier-jetty-pink-sunset-1920x1080-1024x576.jpg" />

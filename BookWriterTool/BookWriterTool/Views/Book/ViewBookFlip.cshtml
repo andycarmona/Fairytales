@@ -1,112 +1,75 @@
 ﻿@model book
 
 @{
-    
+
     Layout = "~/Views/Shared/_LayoutView.cshtml";
     ViewBag.Title = "Editor";
-    var pageFullWidth = "box w-100 h-35";
-    var pageHalfWidth = "box w-50 h-35";
-    var classType = pageFullWidth;
-    var activeDirectory="";
-    
-       if (Session["ActualDirectory"] != null)
-   {
-       activeDirectory = (string)this.Session["ActualDirectory"];
-   }
-   var backgroundImg=activeDirectory+"/"+@ViewBag.fileName+".jpg";
+    var activeDirectory = "";
+
+    if (Session["ActualDirectory"] != null)
+    {
+        activeDirectory = (string)this.Session["ActualDirectory"];
+    }
+    var backgroundImg = activeDirectory + "/" + @ViewBag.fileName + ".jpg";
 }
 <div>@Html.ActionLink("Back to book index", "GetListOfBooks")</div>
-	        <div id="flip" class="container">
-			@if (Model != null)
-   {
+<div id="flipbook">
+    @{
+        foreach (bookChapter chapter in Model.chapters)
+        {
+            foreach (var page in chapter.pages)
+            {
+                var frameYPosition = 0;
+                var frameHeight = 200;
+                <div>
+                    @foreach (var frame in page.frames)
+                    {
+                        switch (@frame.bordertype)
+                        {
+                            case "rectangle":
 
-	    <!--Chapters section-->
-       foreach (bookChapter chapter in this.Model.chapters)
-       {
-           <div class="f-page f-cover">
-	                <div class="cover-elements">
-	                    <div class="logo">
-	                        YourTales
-	                        <a class="f-ref" href="http://www.flickr.com/photos/nasahqphoto/">Book by @User.Identity.Name</a>
-	                    </div>
-	                    <h1>Book provided by fairytales</h1>
-	                    <div class="f-cover-story"><span>Story</span>A wonderful tale about frinedship.</div>
-	                </div>
-	                <div class="f-cover-flip">&lt; Flip</div>
-	            </div>
-           foreach (bookChapterPage page in chapter.pages)
-           {
-			        <div class="f-page">
-			            <div class="f-title">
-			                <a href="">Previous</a>
-			                <h2>@ViewBag.fileName</h2>
-			                <a href="">Forward</a>
-			            </div>
-                             @foreach (bookChapterPageFrame frame in page.frames)
-                             {
-                                 switch (@frame.bordertype)
-                                 {
-                                     case "rectangle":
-                                         classType = pageFullWidth;
-                                         <div  id="@chapter.id-@page.id-@frame.id-rectangle" class="@classType rectangle">
-                                             @this.Html.Partial("FrameContentFullView", (bookChapterPageFrame)this.ViewBag.Table, new ViewDataDictionary { { "actualFrame", frame }, { "target", "rectangle" } })
-                                         </div>
-                                         break;
-                                     case "square":
-                                         classType = pageHalfWidth;
-                                         <div id="@chapter.id-@page.id-@frame.id-left" class="@classType squareLeft">
-                                             @this.Html.Partial("FrameContentSplitView", (bookChapterPageFrame)this.ViewBag.Table, new ViewDataDictionary { { "actualFrame", frame }, { "target", "left" } })
-                                         </div>
-                                         <div id="@chapter.id-@page.id-@frame.id-right" class="@classType squareRight">
-                                             @this.Html.Partial("FrameContentSplitView", (bookChapterPageFrame)this.ViewBag.Table, new ViewDataDictionary { { "actualFrame", frame }, { "target", "right" } })
-                                         </div>
-                                         break;
-                                 }
-                             }
-			        </div>
-           }
-			
-	            
-			
-	            <div class="f-page f-cover-back">
-	                <div id="codrops-ad-wrapper">
-					
-	                </div>
-	            </div>
-	  
-       }
-   }      </div>
-    @section scripts
-    {
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-        <script type="text/javascript">
+                                <div style="top: @(frameYPosition)px;" id="@chapter.id-@page.id-@frame.id-rectangle" class="rectangle">
+                                    @Html.Partial("FrameContentFullView", (bookChapterPageFrame)this.ViewBag.Table, new ViewDataDictionary { { "actualFrame", frame }, { "target", "rectangle" } })
+                                </div>
+                                frameYPosition=frameYPosition + frameHeight;
+                                break;
+                            case "square":
 
-            var $container = $('#flip'),
-                $pages = $container.children().hide();
-
-            Modernizr.load({
-                test: Modernizr.csstransforms3d && Modernizr.csstransitions,
-                yep: ['../Scripts/jquery.tmpl.min.js', '../Scripts/jquery.history.js', '../Scripts/core.string.js', '../Scripts/jquery.touchSwipe-1.2.5.js', '../Scripts/jquery.flips.js'],
-                nope: '../Content/fallback.css',
-                callback: function(url, result, key) {
-
-                    if (url === '../Content/fallback.css') {
-                        $pages.show();
-                    } else if (url === '../Scripts/jquery.flips.js') {
-                        $container.flips();
+                            <div style="top:@(frameYPosition)px;" ignore="1" id="@chapter.id-@page.id-@frame.id-left" class="squareLeft">
+                                @Html.Partial("FrameContentSplitView", (bookChapterPageFrame)this.ViewBag.Table, new ViewDataDictionary { { "actualFrame", frame }, { "target", "left" } })
+                            </div>
+                                <div style="left:50%;top:@(frameYPosition)px;" ignore="1" id="@chapter.id-@page.id-@frame.id-right" class="squareRight">
+                                  @Html.Partial("FrameContentSplitView", (bookChapterPageFrame)this.ViewBag.Table, new ViewDataDictionary { { "actualFrame", frame }, { "target", "right" } })
+                                </div>
+                                frameYPosition = frameYPosition + frameHeight;
+                                break;
+                        }
                     }
+                </div>
+            }
+        }}
+</div>
+@section scripts
+    {
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(init);
+       
+        });
+        function init() {
+            $("#flipbook").turn({
+                width: 800,
+                height:600,
+                display: "single",
+                when: {
+                    turned: function (event, page, pageObj) {
+                        console.log("the current page is " + page);
+                    }
                 }
             });
-            $(document).ready(function() {
-                $(checkForChanges);
-            });
-            function checkForChanges() {
-                if ($('.rectangle').hasClass('box-expanded'))
-                    $('.contentIntern').css('height', '50%');
-                else
-                    $('.contentIntern').css('height', '100%');
-                    setTimeout(checkForChanges, 500);
-            }
-        </script>
-    }
+        }
+
+  
+    </script>
+}
